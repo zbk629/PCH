@@ -52,6 +52,7 @@ window.DriverPlace2 = (function() {
             function popupArea(e) {
                 _self.gearArea = document.createElement("div");
                 _self.gearArea.className = "gearArea";
+                $('body').css({'overflow':'hidden','position':'fixed'});
                 _self.gearArea.innerHTML = '<div class="area_ctrl slideInUp">' +
                     '<div class="area_btn_box">' +
                     '<div class="area_btn larea_cancel">取消</div>' +
@@ -339,6 +340,7 @@ window.DriverPlace2 = (function() {
             var evt = new CustomEvent('input');
             _self.trigger.dispatchEvent(evt);
             document.body.removeChild(_self.gearArea);
+            $('body').css({'overflow':'auto','position':'relative'});
         }
     }
     return MobileArea;

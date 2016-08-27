@@ -20,10 +20,18 @@
     <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="/resource/js/style.js" type="text/javascript"></script>
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css">
-    <link href="/resource/css/LCalendar.css" rel="stylesheet" type="text/css">
 
-    <script src="/resource/js/LCalendar.js" type="text/javascript"></script>
+
+    <link href="/resource/css/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/resource/css/mobile-select-area.css" rel="stylesheet" type="text/css">
+    <%--<link href="/resource/css/LCalendar.css" rel="stylesheet" type="text/css">--%>
+
+    <%--<script src="/resource/js/LCalendar.js" type="text/javascript"></script>--%>
     <script src="/resource/js/jquery.cookie.js" type="text/javascript"></script>
+
+    <script src="/resource/js/dialog.js" type="text/javascript"></script>
+    <script src="/resource/js/mobile-select-area.js" type="text/javascript"></script>
+    <script src="/resource/js/zepto.js" type="text/javascript"></script>
 
     <style type="text/css">
 
@@ -149,6 +157,7 @@
             background-color: #fff;
             padding: 1rem 1.4rem;
             position: relative;
+            cursor: pointer;
         }
 
         .departure_li_city {
@@ -327,6 +336,8 @@
             box-shadow: -2px 6px 10px 0px #e8e8e8;
             width: 100%;
             margin: -2px -1px;
+            max-height: 35rem;
+            overflow: auto;
         }
 
         .publish_slide_li2:hover {
@@ -346,6 +357,13 @@
             position: relative;
             top: 0rem;
             margin-left: 4.4rem;
+        }
+        .not_more{
+            height: 4rem;
+            line-height: 4rem;
+            width: 100%;
+            text-align: center;
+            display: inline-block;
         }
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
@@ -369,16 +387,28 @@
                 $('body,html').animate({scrollTop:0},400);
                 return false;
             });
+
             //分页操作
             $(window).scroll(function () {
                         var Scroll = $(document).scrollTop();
                         var height = $(window).height();
                         var WD = $(document).height();
                         if ( Scroll +height == WD) {
-                            if(page_list<Math.ceil(total/size)){
-                                loadPageList(page_list);
-                                page_list++;
+                            if(total<10){
+                                page_list = 1;
+                            }else{
+                                if(page_list<Math.ceil(total/size)){
+                                    page_list++;
+                                    if(page_list != Math.ceil(total/size)){
+                                        loadPageList(page_list);
+                                    }
+
+                                }else{
+                                    $('.not_more').remove();
+                                    $('.footer').prepend('<span class="not_more">没有更多数据</span>')
+                                }
                             }
+
                         }
                     }
             )
@@ -389,7 +419,6 @@
         var mobile=0;
         var city_array = [];
         //选择位置（都有哪几个）数组
-        var city_select = [];
         var placeData = [];
         var array_date = [];
         var send_time;
@@ -405,16 +434,27 @@
         var size=10;
         var page_list = 0;
         var load_start_time;
-
+        //判断列表底部样式
+        function checkList(){
+            var body_heigth = $(window).height();
+            var height_top1 = $('.departure_container_top').height();
+            var height_top2 = $('#upload_form').height();
+            var height_top3 = $('.departure_container_list').height();
+            var height_bottom = $('.footer').height();
+            if((body_heigth - height_top1-height_top2 -height_top3 -height_bottom)>0){
+                $('.footer').css({'position': 'fixed','bottom':'-1rem'})
+            }else{
+                $('.footer').css({'position': 'relative','bottom':'-1rem'})
+            }
+            console.log((body_heigth - height_top1-height_top2 -height_top3 -height_bottom))
+        }
         function loadPageList(page_list) {
-
             departure_city = city_array[0];
             destination_city = city_array[1];
             if(departure_city==undefined ||departure_city=="" ||departure_city =="全部"){
                 departure_city="";
                 destination_city="";
             }
-
             var obj = {};
             obj.action = 'show';
             obj.page = page_list;
@@ -441,6 +481,7 @@
             }
             if(flag == true){
                 mobile=1;
+
                 callback1();
             }else{
                 mobile=0;
@@ -457,13 +498,21 @@
             //地点选择器
             $('.publish_li_click').show();
             $('.publish_list_box2').hide();
-            var driverPlace = new DriverPlace2();
-            driverPlace.init({
-                'trigger': '#demo_place',//触发选择控件的文本框，同时选择完毕后name属性输出到该位置
-                'keys': {id: 'id', name: 'name'},//绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
-                'type': 1,//数据源类型
-                'data': placeData,//数据源,
-                'status': 0
+//            var driverPlace = new DriverPlace2();
+//            driverPlace.init({
+//                'trigger': '#demo_place',//触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+//                'keys': {id: 'id', name: 'name'},//绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+//                'type': 1,//数据源类型
+//                'data': placeData,//数据源,
+//                'status': 0
+//            });
+            var selectArea = new MobileSelectArea();
+            selectArea.init({
+                trigger:$('#demo_place'),
+//                value:"全部",
+                data:placeData,
+                position:'bottom',
+                level: 2
             });
             getStartPlace();
         }
@@ -531,7 +580,7 @@
                 destination_city=decodeURI(destination_city);
                 city_array.push(departure_city);
                 city_array.push(destination_city);
-                if(mobile==1){
+                if(mobile==0){
                     var destination_city_text;
                     var departure_city_text;
                     if(destination_city==""){
@@ -544,6 +593,7 @@
                     }else{
                         departure_city_text=departure_city;
                     }
+                    console.log(begin_time+departure_city+destination_city)
                     $('.publish_start_city').text(departure_city_text);
                     $('.publish_end_city').text(destination_city_text);
                     loadEndRoute(departure_city_text);
@@ -571,8 +621,9 @@
                 insertMessage();
                 $('.not_message').css('display','none');
                 checkCookie();
-            }
 
+            }
+            checkList();
         }
         function sendPageMessage() {
             total=global_data.result.total;
@@ -583,8 +634,9 @@
                 insertMessage();
                 $('.not_message').css('display','none');
                 checkCookie();
-            }
 
+            }
+            checkList();
         }
         //添加用户数据
         function insertMessage() {
@@ -647,7 +699,6 @@
                 }
 
             }
-
         }
 
         function addDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
@@ -705,20 +756,45 @@
 
         //车辆行程信息2
         var carPlace = (function () {
-            //将车辆行程信息据封装进数组
+//            //将车辆行程信息据封装进数组
             function addCarStart() {
+//                {
+//                    "id": 1,
+//                        "name": "浙江省",
+//                        "child": [{
+//                    "id": "1",
+//                    "name": "杭州市",
+//                    "child": [{
+//                        "id": 1,
+//                        "name": "滨江区"
+//                    }]
+//                }]
+//                }, {
+//                    "id": 2,
+//                            "name": "江苏省",
+//                            "child": [{
+//                        "id": "1",
+//                        "name": "南京",
+//                        "child": [{
+//                            "id": 1,
+//                            "name": "解放区"
+//                        }]
+//                    }]
+//                }, {
+//                    "id": 3,
+//                            "name": "湖北省"
+//                }
                 var data1 = global_data.result;
                 var contact = new Object();
+                contact.id = -1;
                 contact.name = "全部";
-                contact.id = 1;
-                contact.child = "";
+                contact.child = [{id:-11,name:""}];
                 placeData.push(contact);
                 for (var i = 0; i < data1.data.length; i++) {
                     var departure1 = data1.data[i].departure;
                     var contact = new Object();
-
+                    contact.id = i+1;
                     contact.name = departure1;
-                    contact.id = 1;
                     $.ajax({
                         type: "POST",
                         url: "/db/pch/route",
@@ -731,8 +807,8 @@
 
                                 for (var j = 0; j < data.result.data.length; j++) {
                                     var obj = {};
-                                    obj.name = data.result.data[j].destination;
                                     obj.id = 1000 + j;
+                                    obj.name = data.result.data[j].destination;
                                     array_end.push(obj);
                                 }
                                 contact.child = array_end;
@@ -766,7 +842,7 @@
         }
         //查找信息
         function findMessage() {
-
+            alert("11");
             var obj = {};
             var start_time_status = $('.publish_status').attr('index');
             var start_time;
@@ -774,6 +850,7 @@
             var destination_city = "";
             var title_city;
             page_list = 0;
+
             if (start_time_status == "") {
                 if($('.publish_status').text()=="" || $('.publish_status').text().trim()=="全部" || $('.publish_status').text().trim()=="出发时间"){
                     start_time = "";
@@ -822,7 +899,7 @@
 
 
             if(departure_city==""){
-                $('#demo_place').val("");
+                $('#demo_place').val("全部");
             }else{
                 if(destination_city==""){
                     $('#demo_place').val(departure_city+"——全部");

@@ -80,6 +80,7 @@
             bottom: 0;
             width: 100%;
             text-align: center;
+            z-index: 1;
         }
 
         .publish_message_driver_title {
@@ -391,6 +392,14 @@
         var item_id = url.split("?id=")[1];
         item_id = item_id.split("&")[0];
         var click_type;
+        //判断列表底部样式
+        function checkList(){
+            if(($(window).height()-$('.publish_container').height()-$('.publish_bottom').height())>0){
+                $('.footer').css({'position': 'fixed','bottom':'-2rem'})
+            }else{
+                $('.footer').css({'position': 'relative','bottom':'-2rem'})
+            }
+        }
         //判断是否是修改信息
         function checkId() {
             if(role==1){
@@ -540,6 +549,7 @@
                     $('.end_city').text(destination);
                 }
             }
+            checkList();
         }
 
         function returnCheck() {

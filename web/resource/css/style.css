@@ -13,6 +13,10 @@ body {
     font-size: 1.4rem;
     max-width: 1080px;
     height: 100%;
+    overflow: auto;
+    left:0px;
+    top:0px;
+    width: 100%;
 }
 .dn {
     display: none;

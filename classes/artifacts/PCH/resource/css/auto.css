@@ -1,0 +1,58 @@
+@charset "utf-8";
+/*
+ *@media (max-width: 400px; m:480px; m:600px; .... m:920px; m: )
+ *
+ */
+@media screen and (max-width: 2000px) {
+    body{
+        max-width: 1080px;
+    }
+    .not_message{
+        margin-top: 30%;
+    }
+    .backtop{
+        right: 11rem;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .backtop{
+        right: 8rem;
+    }
+    .not_message{
+        margin-top: 40%;
+    }
+}
+@media screen and (max-width: 1080px) {
+    .backtop{
+        right: 1.1rem;
+    }
+    .departure_top_box_img{
+        width: 10.6rem;
+    }
+}
+@media screen and (max-width: 1024px) {
+
+    .departure_top_box_img{
+        width: 9.6rem;
+    }
+}
+@media screen and (max-width: 800px) {
+
+    .not_message{
+        margin-top: 50%;
+    }
+}
+@media screen and (max-width: 630px) {
+    .publish_list2{
+        width: 14%;
+    }
+    .not_message{
+        margin-top: 50%;
+    }
+}
+@media screen and (max-width: 568px) {
+
+    .departure_top_box_img{
+        width: 8.6rem;
+    }
+}

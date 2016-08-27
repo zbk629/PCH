@@ -1,0 +1,102 @@
+<?xml    version="1.0"    encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+    <task:annotation-driven/>
+    <task:executor id="executor" pool-size="10" queue-capacity="100"/>
+    <mvc:annotation-driven/>
+    <mvc:resources location="/resource/" mapping="/resource/**"/>
+    <mvc:resources location="/upload/" mapping="/upload/**"/>
+    <context:annotation-config/>
+    <!--扫描注解 -->
+    <context:component-scan base-package="com"/>
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver ">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+    <!--Druid数据缓冲池配置-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://rdska466r2fvvzh5vr7gb.mysql.rds.aliyuncs.com:3306/cyparty_pc"/>
+        <property name="username" value="cyparty_pc"/>
+        <property name="password" value="Cyparty2016"/>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="maxActive" value="20"/>
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000"/>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+
+        <property name="validationQuery" value="SELECT 'x'"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat"/>
+    </bean>
+    <bean id="ossConfigure" class="com.cyparty.laihui.utilities.OssConfigure">
+        <property name="accessKeyId" value="D3TTVw1GOGZyzUCs"/>
+        <property name="accessKeySecret" value="o0lvAyo60wp1LmYrvGay24ZvaY7afs"/>
+        <property name="accessUrl" value="cyparty-now.oss-cn-beijing.aliyuncs.com"/>
+        <property name="bucketName" value="cyparty-now"/>
+        <property name="endpoint" value="http://oss-cn-beijing.aliyuncs.com"/>
+    </bean>
+    <bean id="ossUtil" class="com.cyparty.laihui.utilities.OssUtil">
+        <property name="ossConfigure" ref="ossConfigure"/>
+    </bean>
+    <!--fileuplode-->
+    <bean id="methodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+        <property name="paramName">
+            <value>action</value>
+        </property>
+        <property name="defaultMethodName">
+            <value>index</value>
+        </property>
+    </bean>
+    <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size (100M)in bytes -->
+        <property name="maxUploadSize" value="104857600"/>
+        <property name="maxInMemorySize" value="4096"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+    <bean id="laiHuiDB" class="com.cyparty.laihui.db.LaiHuiDB">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="is_debug" class="com.cyparty.laihui.utilities.DebugStatusConfig">
+        <property name="status" value="true"></property>
+    </bean>
+   <!-- <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+        <bean class="com.cyparty.laihui.utilities.UrlInterceptor">
+            <property name="unCheckUrl">
+                <list>
+                    <value>/db/route_list</value>
+                    <value>/db/departure_list</value>
+                    <value>/404</value>
+                </list>
+            </property>
+        </bean>
+    </mvc:interceptors>-->
+</beans>
