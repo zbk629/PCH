@@ -1,0 +1,8 @@
+# 忽略.idea
+.idea/
+# 忽略 out
+out/
+# 忽略 .iml
+*.iml
+# 忽略 target
+target/
