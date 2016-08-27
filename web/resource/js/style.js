@@ -27,7 +27,7 @@ var validate = (function(){
             }
         })
     };
-
+    //同步传输
     var validate_submit2 = function(url,array,callback){
         $.ajax({
             type: "POST",
@@ -51,6 +51,8 @@ var validate = (function(){
             }
         })
     };
+
+
     var baidu_api = function(url,callback){
         $.ajax({
             type: "POST",
@@ -97,7 +99,8 @@ var validate = (function(){
         hideTips:hideTips,
         onlyNum:onlyNum,
         baidu_api:baidu_api,
-        validate_submit2:validate_submit2
+        validate_submit2:validate_submit2,
+
     }
 
 })();

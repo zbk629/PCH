@@ -112,6 +112,7 @@
 					dialog.touch($('.ui-confirm-submit', c), function() {
 						settings.callback && settings.callback.call(dialog, 'yes', c);
 						city_array=$('#demo_place').val().split(" ");
+						$('body').css({'overflow':'auto','position':'relative'});
 						findMessage();
 					});
 					dialog.touch($('.ui-confirm-no', c), function() {
@@ -168,6 +169,7 @@
 		$.Dialog($.extend(options, settings));
 	}
 	var Dialog = function() {
+
 		var rnd = Math.random().toString().replace('.', '');
 		this.id = 'dialog_' + rnd;
 		this.settings = {};
@@ -179,6 +181,7 @@
 	}
 	Dialog.prototype = {
 		init: function(settings) {
+
 			var _this = this;
 			this.settings = $.extend({
 				fixed: false //是否固定位置，
@@ -188,6 +191,7 @@
 				$('body').append(this.mask);
 			}
 			$('body').append('<div class="ui-dialog" id="' + this.id + '"></div>');
+
 			this.dialogContainer = $('#' + this.id);
 			var zIndex = this.settings.zIndex || 10;
 			this.dialogContainer.css({
@@ -233,6 +237,7 @@
 			});
 		},
 		bindEvent: function() {
+
 			var _this = this;
 			if (this.settings.trigger) {
 				$(this.settings.trigger).click(function() {
@@ -262,11 +267,13 @@
 			})
 		},
 		dispose: function() {
+			$('body').css({'overflow':'auto','position':'relative'});
 			this.dialogContainer.remove();
 			this.mask.remove();
 			this.timer && clearInterval(this.timer);
 		},
 		hide: function() {
+
 			var _this = this;
 			if (_this.settings.beforeHide) {
 				_this.settings.beforeHide.call(_this, _this.dialogContainer);
@@ -297,6 +304,7 @@
 
 		},
 		show: function() {
+			$('body').css({'overflow':'auto','position':'fixed'});
 			if (typeof this.settings.target === "string") {
 				if (/^(\.|\#\w+)/gi.test(this.settings.target)) {
 					this.dailogContent = $(this.settings.target);
@@ -332,6 +340,7 @@
 			if (this.settings.animate) {
 				this.dialogContainer.addClass('zoomIn').removeClass('zoomOut').addClass('animated');
 			}
+
 		},
 		setPosition: function() {
 			if (this.showed) {

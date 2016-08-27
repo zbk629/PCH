@@ -229,41 +229,7 @@
             }
 
         }
-        /*弹出框样式*/
-        .float_container{
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            font-size: 1.4rem;
-            background-color: #fff;
-            border-radius: 5px;
-            padding: 1.4rem;
-            width:80%;
-            -webkit-transform: translateX(-50%) translateY(-50%);
-            -moz-transform: translateX(-50%) translateY(-50%);
-            -ms-transform: translateX(-50%) translateY(-50%);
-            transform: translateX(-50%) translateY(-50%);
-            z-index: 10;
-        }
-        .float_button{
-            text-align: right;
-            margin-top: .4rem;
-        }
-        .float_remove{
-            padding: .5rem;
-            color: #999;
-            cursor: pointer;
-            display: inline-block;
-            margin-right: 1.4rem;
-        }
-        .float_sure{
-            padding: .5rem;
-            cursor: pointer;
-            color: #e74c3c;
-            display: inline-block;
-        }
-        /*弹出框样式结束*/
+
         .float_message_title{
             line-height: 3.2rem;
         }

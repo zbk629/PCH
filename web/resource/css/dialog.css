@@ -151,11 +151,13 @@
   color: #f5ad4e;
   border: none;
   outline: none;
+  font-size: 16px;
   cursor: pointer;
   box-sizing: border-box;
   padding: 0; }
 .ui-dialog-action .ui-confirm-close, .ui-dialog-action .ui-confirm-no {
   color: #747474;
+  font-size: 16px!important;
   border-left: 1px solid #dcdcdc; }
 
 .ui-alert {

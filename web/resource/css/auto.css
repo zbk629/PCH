@@ -56,3 +56,9 @@
         width: 8.6rem;
     }
 }
+@media screen and (max-height: 320px) {
+
+    .login_title {
+        margin: 2rem auto 2rem;
+    }
+}

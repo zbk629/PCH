@@ -1026,8 +1026,6 @@
                 <div class="publish_li_click">
                     <input type="button" id="demo_place" value="起止城市选择" readonly="true" class="input_disabled"
                            name="route"/>
-
-                        <%--<div id="demo_place"class="input_disabled" name="route"></div>--%>
                 </div>
                 <div class="publish_list_box2">
                     <div class="publish_list2">
