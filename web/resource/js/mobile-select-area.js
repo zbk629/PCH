@@ -34,7 +34,7 @@
 		this.oldtext=[];
 		this.text = ['', '', ''];
 		this.level = 3;
-		this.mtop = 30;
+		this.mtop = 34;
 		this.separator = ' ';
 	};
 	MobileSelectArea.prototype = {

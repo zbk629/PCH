@@ -56,12 +56,20 @@ a img {
     border: none;
 }
 
+a,input, textarea {
+    -webkit-tap-highlight-color:#fff;
+    -webkit-appearance:none;
+    border: 0;
+}
 li {
     list-style: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
-
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    outline:none;
 }
 .clear{
     clear: both;

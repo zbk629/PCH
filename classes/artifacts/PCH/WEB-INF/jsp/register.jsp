@@ -16,6 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <%--<meta name="msapplication-tap-highlight" content="no">--%>
     <title>来回拼车-登陆界面</title>
     <link rel="shortcut icon" href="/resource/images/pc_logo.ico"/>
     <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
@@ -58,7 +59,7 @@
             height: 5rem;
             text-indent: 1.8rem;
             border:none;
-
+            line-height: 5rem;
         }
         .login_line{
             border-top: 1px solid #e8e8e8;
@@ -100,6 +101,9 @@
         }
         .user_mobile{
             margin-bottom: 1px;
+            -webkit-tap-highlight-color:rgba(255,0,0,0);
+            -webkit-appearance:none;
+            border: 0;
         }
 
     </style>
@@ -197,8 +201,8 @@
                 success: function (data) {
                     global_data=data;
                     if(global_data.status==true){
-                        console.log("交互成功");
-                        showFloat("验证通过");
+
+                        window.location.href="/auth/base"
                     }else{
                         showFloat(global_data.message);
                     }

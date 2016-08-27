@@ -207,7 +207,7 @@
             font-size: 1.2rem;
         }
         .footer{
-            margin-bottom: 6rem;
+            margin-bottom: 3rem;
         }
         .footer img{
             width: 100%;
@@ -361,9 +361,9 @@
         //判断列表底部样式
         function checkList(){
             if(($(window).height()-$('.publish_container').height()-$('.publish_bottom').height())>0){
-                $('.footer').css({'position': 'fixed','bottom':'-2rem'})
+                $('.footer').css({'position': 'fixed','bottom':'0rem'})
             }else{
-                $('.footer').css({'position': 'relative','bottom':'-2rem'})
+                $('.footer').css({'position': 'relative','bottom':'0rem'})
             }
         }
         //判断是否是修改信息

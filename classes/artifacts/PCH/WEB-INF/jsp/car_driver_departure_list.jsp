@@ -158,8 +158,8 @@
             padding: 1rem 1.4rem;
             position: relative;
             cursor: pointer;
-        }
 
+        }
         .departure_li_city {
             font-size: 1.4rem;
             line-height: 3rem;
