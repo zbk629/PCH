@@ -75,7 +75,11 @@ public class LoginController {
         }
         return "register";
     }
+    @RequestMapping("/auth/base")
+    public String self(HttpServletRequest request, Model model) {
 
+        return "auth_base";
+    }
     @ResponseBody
     @RequestMapping(value = "/api/reg", method = RequestMethod.POST)
     public ResponseEntity<String> reg(HttpServletRequest request) {

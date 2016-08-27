@@ -25,7 +25,8 @@ public class Utils {
 
     public static void main(String[] args) {
         //System.out.println(Memcache.getMemcache("3d2d8b6b8fdfcbadedb20072010ea842"));
-        System.out.println(getOrderNumber(5));
+        //System.out.println(getOrderNumber(5));
+        System.out.println(date2TimeStamp("2016-8-27 05:06:40"));
     }
 
 
@@ -316,6 +317,29 @@ public class Utils {
         }
         return randomNum;
     }
+    /**
+     * 日期格式字符串转换成时间戳
+     * @param date 字符串日期
+     * @return
+     */
+    public static long date2TimeStamp(String date){
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            //return String.valueOf(sdf.parse(date).getTime()/1000);
+            return sdf.parse(date).getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    /**
+     * 取得当前时间戳（精确到毫秒）
+     * @return
+     */
+    public static long getCurrenTimeStamp(){
+        long time = System.currentTimeMillis();
+        return time;
+    }
     public static String getOrderNumber(int current_id){
         String result="";
         result= Utils.getTimestamp()+random(4)+current_id;
@@ -323,13 +347,20 @@ public class Utils {
     }
     public static String sendCodeMessage(String mobile){
         String rand= SendSMSUtil.randomNum();
-        String code="#code#="+rand;
-        boolean send_isSuccess= SendSMSUtil.sendSMS(mobile, 18365, code);
+        String typ_val="#code#="+rand;
+        boolean send_isSuccess= SendSMSUtil.sendSMS(mobile, 18365, typ_val);
         if(!send_isSuccess){
-            code=null;
+            typ_val=null;
         }else {
-            code=rand;
+            typ_val=rand;
         }
-        return code;
+        return typ_val;
+    }
+    public static boolean isLogined(HttpServletRequest request){
+        boolean is_logined=false;
+        if(request.getSession().getAttribute("user_id")!=null){
+            is_logined=true;
+        }
+        return is_logined;
     }
 }

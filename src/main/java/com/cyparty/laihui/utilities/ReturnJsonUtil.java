@@ -135,37 +135,64 @@ public class ReturnJsonUtil {
         if(id==0){
             if(user_id!=0){
                 where=" where is_enable=1 and user_id="+user_id;
-            }
-            if(departure_city!=null&&!departure_city.trim().equals("")){
-                where=where+" and departure_city='"+departure_city+"'";
-            }
-            if(destination_city!=null&&!destination_city.trim().equals("")){
-                where=where+" and destination_city='"+destination_city+"'";
-            }
-            if(status!=null){
-                if(status.equals("0")){
-                    where=where+" and info_status=0 ";
+                if(departure_city!=null&&!departure_city.trim().equals("")){
+                    where=where+" and departure_city='"+departure_city+"'";
                 }
-                if(status.equals("1")){
-                    where=where+" and info_status=1 ";
+                if(destination_city!=null&&!destination_city.trim().equals("")){
+                    where=where+" and destination_city='"+destination_city+"'";
                 }
-                if(status.equals("-1")){
-                    where=where+" and info_status=-1 ";
+                if(status!=null){
+                    if(status.equals("0")){
+                        where=where+" and info_status=0 ";
+                    }
+                    if(status.equals("1")){
+                        where=where+" and info_status=1 ";
+                    }
+                    if(status.equals("-1")){
+                        where=where+" and info_status=-1 ";
+                    }
                 }
-            }
-            if(start_time!=null&&!start_time.trim().equals("")){
-                where=where+" and start_time >'"+start_time+" 00:00:00' and start_time < '"+start_time+" 24:00:00'" ;
+                if(start_time!=null&&!start_time.trim().equals("")){
+                    where=where+" and start_time >'"+start_time+"'" ;
+                }
+                if(end_time!=null&&!end_time.trim().equals("")){
+                    where=where+" and end_time <'"+end_time+"'";
+                }
+                if(keyword!=null&&!keyword.trim().equals("")){
+                    where=where+" and (mobile like '%"+keyword+"%' or driving_name like '%"+keyword+"%') ";
+                }
+                where=where+" order by start_time DESC";
             }else {
-                //Utils.getCurrentTimeSubOrAdd(-120)
-                where=where+" and start_time>'"+Utils.getCurrentTime().split(" ")[0]+" 00:00:00"+"'";
+                if(departure_city!=null&&!departure_city.trim().equals("")){
+                    where=where+" and departure_city='"+departure_city+"'";
+                }
+                if(destination_city!=null&&!destination_city.trim().equals("")){
+                    where=where+" and destination_city='"+destination_city+"'";
+                }
+                if(status!=null){
+                    if(status.equals("0")){
+                        where=where+" and info_status=0 ";
+                    }
+                    if(status.equals("1")){
+                        where=where+" and info_status=1 ";
+                    }
+                    if(status.equals("-1")){
+                        where=where+" and info_status=-1 ";
+                    }
+                }
+                if(start_time!=null&&!start_time.trim().equals("")){
+                    where=where+" and start_time >'"+start_time+" 00:00:00' and start_time < '"+start_time+" 24:00:00'" ;
+                }
+                if(end_time!=null&&!end_time.trim().equals("")){
+                    where=where+" and end_time <'"+end_time+"'";
+                }else {
+                    where=where+" and end_time <'"+Utils.getCurrentTime()+"'";
+                }
+                if(keyword!=null&&!keyword.trim().equals("")){
+                    where=where+" and (mobile like '%"+keyword+"%' or driving_name like '%"+keyword+"%') ";
+                }
+                where=where+" order by start_time ASC";
             }
-            if(end_time!=null&&!end_time.trim().equals("")){
-                where=where+" and end_time <'"+end_time+"'";
-            }
-            if(keyword!=null&&!keyword.trim().equals("")){
-                where=where+" and (mobile like '%"+keyword+"%' or driving_name like '%"+keyword+"%') ";
-            }
-            where=where+" order by start_time ASC";
         }else {
             where="where is_enable=1 and _id="+id;
         }
@@ -176,9 +203,16 @@ public class ReturnJsonUtil {
         List<DepartureInfo> departureInfoList =laiHuiDB.getPCHDepartureInfo(where);
         for(DepartureInfo departure:departureInfoList){
             JSONObject jsonObject=new JSONObject();
+            boolean is_editor=false;
             jsonObject.put("id",departure.getR_id());
             jsonObject.put("start_time",departure.getStart_time());
             jsonObject.put("end_time",departure.getEnd_time());
+            long current=Utils.getCurrenTimeStamp();
+            long end_date=Utils.date2TimeStamp(departure.getEnd_time());
+            if(end_date>current){
+                is_editor=true;
+            }
+            jsonObject.put("is_editor",is_editor);
             jsonObject.put("departure_city",departure.getDeparture_city());
             jsonObject.put("destination_city",departure.getDestination_city());
             jsonObject.put("inits_seats",departure.getInit_seats());

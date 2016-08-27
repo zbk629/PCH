@@ -64,9 +64,7 @@ public class PCXXHController {
             String start_time = request.getParameter("start_time");
             String end_time = request.getParameter("end_time");
             String where="";
-
             switch (action) {
-
                 case "show":
                     json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoute(laiHuiDB, page, size), "线路信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
