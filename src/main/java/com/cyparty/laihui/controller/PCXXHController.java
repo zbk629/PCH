@@ -2,8 +2,11 @@ package com.cyparty.laihui.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
+import com.cyparty.laihui.domain.DepartureInfo;
 import com.cyparty.laihui.utilities.OssUtil;
 import com.cyparty.laihui.utilities.ReturnJsonUtil;
+import com.cyparty.laihui.utilities.SendSMSUtil;
+import com.cyparty.laihui.utilities.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -54,16 +57,24 @@ public class PCXXHController {
             }
             int id = 0;
             boolean is_success = true;
-            String departure = request.getParameter("departure");
+            String departure_city = request.getParameter("departure");
+            String destination_city = request.getParameter("destination_city");
+
+            String mobile = request.getParameter("mobile");
+            String start_time = request.getParameter("start_time");
+            String end_time = request.getParameter("end_time");
+            String where="";
+
             switch (action) {
+
                 case "show":
                     json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoute(laiHuiDB, page, size), "线路信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "departure":
-                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoutePlace(laiHuiDB, departure), "出发市信息获取成功");
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoutePlace(laiHuiDB, departure_city), "出发市信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "destination":
-                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoutePlace(laiHuiDB, departure), "目的地市获取成功");
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoutePlace(laiHuiDB, departure_city), "目的地市获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
             }
             json = ReturnJsonUtil.returnFailJsonString(result, "获取参数错误");
@@ -117,8 +128,81 @@ public class PCXXHController {
             if(request.getParameter("id")!=null){
                 id=Integer.parseInt(request.getParameter("id"));
             }
+            int user_id=0;
+            if(request.getParameter("user_id")!=null){
+                try {
+                    user_id=Integer.parseInt(request.getParameter("user_id"));
+                } catch (NumberFormatException e) {
+                    user_id=0;
+                    e.printStackTrace();
+                }
+            }
             switch (action) {
+                case "add":
+                    if(user_id>0){
+                        DepartureInfo departure = new DepartureInfo();
+                        int init_seats = Integer.parseInt(request.getParameter("init_seats"));
+                        String points=request.getParameter("points");
+                        String description=request.getParameter("description");
 
+                        String departure_county=request.getParameter("departure_county");
+                        String destination=request.getParameter("destination");
+                        String tag_yes_content=request.getParameter("tag_yes_content");
+                        String tag_no_content=request.getParameter("tag_no_content");
+                        String driving_name=request.getParameter("driving_name");
+                        String car_brand=request.getParameter("car_brand");
+
+                        String date=start_time.split(" ")[0].split("-")[0]+"年"+start_time.split(" ")[0].split("-")[1]+"月"+start_time.split(" ")[0].split("-")[2]+"日";
+                        departure.setUser_id(user_id);
+                        departure.setMobile(mobile);
+                        departure.setStart_time(start_time);
+                        departure.setEnd_time(end_time);
+                        departure.setDeparture_city(departure_city);
+                        departure.setDestination_city(destination_city);
+                        departure.setInit_seats(init_seats);
+                        departure.setPoints(points);
+                        departure.setDescription(description);
+                        departure.setDeparture_county(departure_county);
+                        departure.setDestination(destination);
+                        departure.setTag_yes_content(tag_yes_content);
+                        departure.setTag_no_content(tag_no_content);
+                        departure.setDriving_name(driving_name);
+                        departure.setCar_brand(car_brand);
+                        //创建出车信息
+                        if(id>0){
+                            //更新
+                            where=" set start_time='"+start_time+"', end_time='"+end_time+"',departure_city='"+departure_city+"',destination_city='"+destination_city+"',init_seats="+init_seats+",mobile='"+mobile+"',points='"+points+"',description='"+description+"',car_brand='"+car_brand+"',departure='"+departure_county+"',destination='"+destination+"',driving_name='"+driving_name+"',tag_yes_content='"+tag_yes_content+"',tag_no_content='"+tag_no_content+"' where _id="+id;
+                            is_success=laiHuiDB.update("pch_publish_info",where);
+                            if(is_success){
+                                json = ReturnJsonUtil.returnSuccessJsonString(result, "修改成功！");
+                                return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                            }else {
+                                json = ReturnJsonUtil.returnFailJsonString(result, "修改失败！");
+                                return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                            }
+                        }else {
+                            //添加
+                            id=laiHuiDB.createPCHDeparture(departure);
+                            result.put("id",id);
+                            json = ReturnJsonUtil.returnSuccessJsonString(result, "创建成功！");
+                            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                        }
+                        /*if(id>0){
+                            String token= Utils.getRandomToken(id);
+                            String url="laihui.cyparty.com/laihui/car/detail?token="+token;
+                            //String url="http://10.81.108.52/laihui/car/detail?token="+token;
+                            SendSMSUtil.sendSMSToDriver(mobile, date, url);
+                            json = ReturnJsonUtil.returnSuccessJsonString(result, "创建成功！");
+                            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                        }
+                        else {
+                            json = ReturnJsonUtil.returnFailJsonString(result, "创建失败！");
+                            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                        }*/
+                    }else {
+                        json = ReturnJsonUtil.returnFailJsonString(result, "请登陆！");
+                        return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                    }
                 case "delete":
                     id = Integer.parseInt(request.getParameter("id"));
                     where = " set is_enable=0 where _id=" + id;
@@ -130,7 +214,7 @@ public class PCXXHController {
                     }
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show":
-                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id), "出车信息获取成功");
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id,user_id), "出车信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "update":
                     String info_status= request.getParameter("info_status");

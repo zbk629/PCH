@@ -138,5 +138,41 @@ public class LaiHuiDB {
         List<Code> codeList = jdbcTemplateObject.query(SQL, new CodeMapper());
         return codeList;
     }
+    public int createPCHDeparture(final DepartureInfo departureInfo) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        int autoIncId = 0;
+
+        jdbcTemplateObject.update(new PreparedStatementCreator() {
+
+            public PreparedStatement createPreparedStatement(Connection con)
+                    throws SQLException {
+                String sql = "insert into pch_publish_info(mobile,start_time,end_time,departure_city,destination_city,init_seats,create_time,is_enable,points,description,departure,destination,tag_yes_content,driving_name,car_brand,info_status,tag_no_content,user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+                ps.setString(1, departureInfo.getMobile());
+                ps.setString(2, departureInfo.getStart_time());
+                ps.setString(3, departureInfo.getEnd_time());
+                ps.setString(4, departureInfo.getDeparture_city());
+                ps.setString(5, departureInfo.getDestination_city());
+                ps.setInt(6, departureInfo.getInit_seats());
+                ps.setString(7, Utils.getCurrentTime());
+                ps.setInt(8, 1);
+                ps.setString(9, departureInfo.getPoints());
+                ps.setString(10, departureInfo.getDescription());
+                ps.setString(11, departureInfo.getDeparture_county());
+                ps.setString(12, departureInfo.getDestination());
+                ps.setString(13, departureInfo.getTag_yes_content());
+                ps.setString(14, departureInfo.getDriving_name());
+                ps.setString(15, departureInfo.getCar_brand());
+                ps.setInt(16, 1);
+                ps.setString(17, departureInfo.getTag_no_content());
+                ps.setInt(18,departureInfo.getUser_id());
+                return ps;
+            }
+        }, keyHolder);
+
+        autoIncId = keyHolder.getKey().intValue();
+        return autoIncId;
+    }
+
 }
 

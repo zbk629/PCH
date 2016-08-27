@@ -77,7 +77,7 @@ public class LoginController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/api/reg/driver", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/reg", method = RequestMethod.POST)
     public ResponseEntity<String> reg(HttpServletRequest request) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
@@ -88,10 +88,17 @@ public class LoginController {
             String mobile = request.getParameter("mobile");
             String action = request.getParameter("action");
             int id = 0;
-            if (request.getSession().getAttribute("user_id") != null) {
-
+            /*if (request.getSession().getAttribute("user_id") != null) {
                 try {
                     id = (Integer) request.getSession().getAttribute("user_id");
+                } catch (Exception e) {
+                    id = 0;
+                    e.printStackTrace();
+                }
+            }*/
+            if (request.getParameter("user_id") != null) {
+                try {
+                    id = (Integer.parseInt(request.getParameter("user_id"))) ;
                 } catch (Exception e) {
                     id = 0;
                     e.printStackTrace();
@@ -185,10 +192,18 @@ public class LoginController {
             //得到有效的手机号
             String action = request.getParameter("action");
             int id = 0;
-            if (request.getSession().getAttribute("user_id") != null) {
+            /*if (request.getSession().getAttribute("user_id") != null) {
 
                 try {
                     id = (Integer) request.getSession().getAttribute("user_id");
+                } catch (Exception e) {
+                    id = 0;
+                    e.printStackTrace();
+                }
+            }*/
+            if (request.getParameter("user_id") != null) {
+                try {
+                    id = (Integer.parseInt(request.getParameter("user_id"))) ;
                 } catch (Exception e) {
                     id = 0;
                     e.printStackTrace();

@@ -128,11 +128,14 @@ public class ReturnJsonUtil {
         result_json.put("size",size);
         return result_json;
     }
-    public static JSONObject getPCHDepartureInfo(LaiHuiDB laiHuiDB,int page ,int size,String departure_city,String destination_city,String status,String start_time,String end_time,String keyword,int id){
+    public static JSONObject getPCHDepartureInfo(LaiHuiDB laiHuiDB,int page ,int size,String departure_city,String destination_city,String status,String start_time,String end_time,String keyword,int id,int user_id){
         JSONObject result_json=new JSONObject();
         JSONArray dataArray=new JSONArray();
         String where=" where is_enable=1 and info_status!=-1";
         if(id==0){
+            if(user_id!=0){
+                where=" where is_enable=1 and user_id="+user_id;
+            }
             if(departure_city!=null&&!departure_city.trim().equals("")){
                 where=where+" and departure_city='"+departure_city+"'";
             }
