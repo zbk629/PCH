@@ -842,7 +842,6 @@
         }
         //查找信息
         function findMessage() {
-            alert("11");
             var obj = {};
             var start_time_status = $('.publish_status').attr('index');
             var start_time;
@@ -902,9 +901,9 @@
                 $('#demo_place').val("全部");
             }else{
                 if(destination_city==""){
-                    $('#demo_place').val(departure_city+"——全部");
+                    $('#demo_place').val(departure_city+" 全部");
                 }else{
-                    $('#demo_place').val(departure_city+"——"+destination_city);
+                    $('#demo_place').val(departure_city+" "+destination_city);
                 }
 
             }

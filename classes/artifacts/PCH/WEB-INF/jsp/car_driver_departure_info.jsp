@@ -434,96 +434,100 @@
         }
         //添加用户数据
         function insertMessage() {
-            for (var i = 0; i < global_data.result.data.length; i++) {
-                var driving_name = global_data.result.data[i].driving_name;//车主姓名
-                var info_status = global_data.result.data[i].info_status;//状态信息1：有空位；2：已满；-1：已取消
-                var start_time = global_data.result.data[i].start_time;//开始时间
-                var end_time = global_data.result.data[i].end_time;//结束时间
-                var mobile = global_data.result.data[i].mobile;//手机号
-                var departure_city = global_data.result.data[i].departure_city;//出发城市
-                var destination_city = global_data.result.data[i].destination_city;//目的城市
-                var departure = global_data.result.data[i].departure;//出发小城
-                var destination = global_data.result.data[i].destination;//目的小城市
-                var description = global_data.result.data[i].description;//描述信息
-                var tag_yes_content = global_data.result.data[i].tag_yes_content;//yes标签
-                var tag_no_content = global_data.result.data[i].tag_no_content;//no标签
-                var points = global_data.result.data[i].points;//地点
-                var inits_seats = global_data.result.data[i].inits_seats;//可用座位
-                var car_brand = global_data.result.data[i].car_brand;//车辆品牌
-                var id = global_data.result.data[i].id;//id
-                var create_time = global_data.result.data[i].create_time;//id
-                if (info_status == 1) {
-                    $($('.item_seat_status')[i]).css('color','#2ecc71');
-                    info_status = "有空位";
-                    click_type=0;
-                } else if (info_status == 2) {
-                    $($('.item_seat_status')[i]).css('color','#e74c3c');
-                    info_status = "已满";
-                    click_type=1;
-                } else {
-                    $($('.item_seat_status')[i]).css('color','##95a5a6');
-                    info_status = "已取消";
-                    click_type=2;
-                }
-                //开始时间设置
-                var insert_time = start_time.substring(0, 10);
-                var time_change = insert_time.split('-');
-                insert_time = time_change[1] + '月' + time_change[2] + '日';
-                //发布时间设置
-                var begin_create_time = create_time.substring(11, 16);
-                create_time = create_time.substring(0, 10);
-                var time_create = create_time.split('-');
-                create_time = time_create[1] + '月' + time_create[2] + '日';
+            if(global_data.result.total == 0){
+                window.location.href="/404"
+            }else
+            {
+                for (var i = 0; i < global_data.result.data.length; i++) {
+                    var driving_name = global_data.result.data[i].driving_name;//车主姓名
+                    var info_status = global_data.result.data[i].info_status;//状态信息1：有空位；2：已满；-1：已取消
+                    var start_time = global_data.result.data[i].start_time;//开始时间
+                    var end_time = global_data.result.data[i].end_time;//结束时间
+                    var mobile = global_data.result.data[i].mobile;//手机号
+                    var departure_city = global_data.result.data[i].departure_city;//出发城市
+                    var destination_city = global_data.result.data[i].destination_city;//目的城市
+                    var departure = global_data.result.data[i].departure;//出发小城
+                    var destination = global_data.result.data[i].destination;//目的小城市
+                    var description = global_data.result.data[i].description;//描述信息
+                    var tag_yes_content = global_data.result.data[i].tag_yes_content;//yes标签
+                    var tag_no_content = global_data.result.data[i].tag_no_content;//no标签
+                    var points = global_data.result.data[i].points;//地点
+                    var inits_seats = global_data.result.data[i].inits_seats;//可用座位
+                    var car_brand = global_data.result.data[i].car_brand;//车辆品牌
+                    var id = global_data.result.data[i].id;//id
+                    var create_time = global_data.result.data[i].create_time;//id
+                    if (info_status == 1) {
+                        $($('.item_seat_status')[i]).css('color','#2ecc71');
+                        info_status = "有空位";
+                        click_type=0;
+                    } else if (info_status == 2) {
+                        $($('.item_seat_status')[i]).css('color','#e74c3c');
+                        info_status = "已满";
+                        click_type=1;
+                    } else {
+                        $($('.item_seat_status')[i]).css('color','##95a5a6');
+                        info_status = "已取消";
+                        click_type=2;
+                    }
+                    //开始时间设置
+                    var insert_time = start_time.substring(0, 10);
+                    var time_change = insert_time.split('-');
+                    insert_time = time_change[1] + '月' + time_change[2] + '日';
+                    //发布时间设置
+                    var begin_create_time = create_time.substring(11, 16);
+                    create_time = create_time.substring(0, 10);
+                    var time_create = create_time.split('-');
+                    create_time = time_create[1] + '月' + time_create[2] + '日';
 
-                //开始结束时间
-                var begin_start_time = start_time.substring(11, 16);
-                var begin_end_time = end_time.substring(11, 16);
-                var title_time = insert_time;
-                var title_city = "来回拼车：" + departure_city + "-" + destination_city + " " + title_time + " " + "拼车信息详情";
+                    //开始结束时间
+                    var begin_start_time = start_time.substring(11, 16);
+                    var begin_end_time = end_time.substring(11, 16);
+                    var title_time = insert_time;
+                    var title_city = "来回拼车：" + departure_city + "-" + destination_city + " " + title_time + " " + "拼车信息详情";
 
-                //添加标题信息
-                $(document).attr("title", title_city);
-                pageTitle = $(document).attr('title');
-                points= points.replace(/丶/g, " - ");
-                tag_yes_content= tag_yes_content.replace(/丶/g, "、");
-                tag_no_content= tag_no_content.replace(/丶/g, "、");
-                $('.departure_city').text(departure_city);
-                $('.destination_city').text(destination_city);
-                $('.item_mobile').text(mobile);
-                $('.item_tips_span').text(description);
-                $('.item_mouth').text(insert_time);
-                $('.item_start_end_times').text(begin_start_time + "-" + begin_end_time);
-                $('.item_seat_status').text(info_status);
-                $('.item_seat').text(inits_seats + "个");
-                $('.item_yes_tips_span').text(tag_yes_content);
-                $('.item_no_tips_span').text(tag_no_content);
-                $('.item_name').text(driving_name);
-                $('.item_points').text(points);
-                $('.item_type').text(car_brand);
-                $('.call_driver').attr('href', 'tel:' + mobile);
+                    //添加标题信息
+                    $(document).attr("title", title_city);
+                    pageTitle = $(document).attr('title');
+                    points= points.replace(/丶/g, " - ");
+                    tag_yes_content= tag_yes_content.replace(/丶/g, "、");
+                    tag_no_content= tag_no_content.replace(/丶/g, "、");
+                    $('.departure_city').text(departure_city);
+                    $('.destination_city').text(destination_city);
+                    $('.item_mobile').text(mobile);
+                    $('.item_tips_span').text(description);
+                    $('.item_mouth').text(insert_time);
+                    $('.item_start_end_times').text(begin_start_time + "-" + begin_end_time);
+                    $('.item_seat_status').text(info_status);
+                    $('.item_seat').text(inits_seats + "个");
+                    $('.item_yes_tips_span').text(tag_yes_content);
+                    $('.item_no_tips_span').text(tag_no_content);
+                    $('.item_name').text(driving_name);
+                    $('.item_points').text(points);
+                    $('.item_type').text(car_brand);
+                    $('.call_driver').attr('href', 'tel:' + mobile);
 
-                if (driving_name == "") {
-                    $('.item_name_li').remove()
-                }
-                if (points == "") {
-                    $('.item_points_li').remove()
-                }
-                if (description == "") {
-                    $('.item_tips').remove();
-                    $('.li_change').addClass('li_last')
-                }
-                if (tag_yes_content == "") {
-                    $('.item_yes_tips').remove()
-                }
-                if (tag_no_content == "") {
-                    $('.item_no_tips').remove()
-                }
-                if(description=="" && tag_yes_content=="" && tag_no_content==""){
-                    $('.item_tips_li').remove()
-                }
-                if (car_brand == "") {
-                    $('.item_type_li').remove()
-                }
+                    if (driving_name == "") {
+                        $('.item_name_li').remove()
+                    }
+                    if (points == "") {
+                        $('.item_points_li').remove()
+                    }
+                    if (description == "") {
+                        $('.item_tips').remove();
+                        $('.li_change').addClass('li_last')
+                    }
+                    if (tag_yes_content == "") {
+                        $('.item_yes_tips').remove()
+                    }
+                    if (tag_no_content == "") {
+                        $('.item_no_tips').remove()
+                    }
+                    if(description=="" && tag_yes_content=="" && tag_no_content==""){
+                        $('.item_tips_li').remove()
+                    }
+                    if (car_brand == "") {
+                        $('.item_type_li').remove()
+                    }
 //                var array_points = points.split("丶");
 //                for (var j = 0; j < array_points.length; j++) {
 //                    $('.publish_message_li_route').append('<li class="publish_route_box_li">' +
@@ -535,21 +539,23 @@
 //                            '</li>')
 //                }
 
-                if (car_brand == "") {
-                    $($('.departure_li_car_type')[i]).remove();
+                    if (car_brand == "") {
+                        $($('.departure_li_car_type')[i]).remove();
+                    }
+                    if (departure == "") {
+                        $('.start_city_type').remove();
+                    } else {
+                        $('.begin_city').text(departure);
+                    }
+                    if (destination == "") {
+                        $('.end_city_type').remove();
+                    } else {
+                        $('.end_city').text(destination);
+                    }
                 }
-                if (departure == "") {
-                    $('.start_city_type').remove();
-                } else {
-                    $('.begin_city').text(departure);
-                }
-                if (destination == "") {
-                    $('.end_city_type').remove();
-                } else {
-                    $('.end_city').text(destination);
-                }
+                checkList();
             }
-            checkList();
+
         }
 
         function returnCheck() {

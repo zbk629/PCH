@@ -901,9 +901,9 @@
                 $('#demo_place').val("全部");
             }else{
                 if(destination_city==""){
-                    $('#demo_place').val(departure_city+"——全部");
+                    $('#demo_place').val(departure_city+" 全部");
                 }else{
-                    $('#demo_place').val(departure_city+"——"+destination_city);
+                    $('#demo_place').val(departure_city+" "+destination_city);
                 }
 
             }

@@ -93,7 +93,9 @@
   <div class="departure_top_box">
     <%--<span class="departure_top_find_car departure_top_button_active">找车</span>--%>
     <%--<span class="departure_top_find_person">找人</span>--%>
-    <img src="/resource/images/pch_share_logo.png" class="departure_top_box_img" alt="来回拼车">
+      <a href="/laihui/car/list">
+        <img src="/resource/images/pch_share_logo.png" class="departure_top_box_img" alt="来回拼车" >
+      </a>
     <%--<span class="departure_top_box_span">来回拼车</span>--%>
   </div>
 </div>
