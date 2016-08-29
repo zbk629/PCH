@@ -74,6 +74,7 @@ public class UserActionController {
             int seats=0;
             int user_id=0;
             int order_id=0;
+            //todo:user_id改为从session中获取
             switch (action) {
                 case "booking":
                     try {

@@ -92,6 +92,7 @@ public class LoginController {
             String mobile = request.getParameter("mobile");
             String action = request.getParameter("action");
             int id = 0;
+            //todo:user_id改为从session中获取
             /*if (request.getSession().getAttribute("user_id") != null) {
                 try {
                     id = (Integer) request.getSession().getAttribute("user_id");
@@ -196,6 +197,7 @@ public class LoginController {
             //得到有效的手机号
             String action = request.getParameter("action");
             int id = 0;
+            //todo:user_id改为从session中获取
             /*if (request.getSession().getAttribute("user_id") != null) {
 
                 try {

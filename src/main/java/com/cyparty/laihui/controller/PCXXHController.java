@@ -129,6 +129,7 @@ public class PCXXHController {
                 id=Integer.parseInt(request.getParameter("id"));
             }
             int user_id=0;
+            //todo:user_id改为从session中获取
             if(request.getParameter("user_id")!=null){
                 try {
                     user_id=Integer.parseInt(request.getParameter("user_id"));
