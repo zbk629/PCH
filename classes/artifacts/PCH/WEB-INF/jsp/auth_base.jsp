@@ -44,6 +44,7 @@
     }
     .message_header img{
       width: 4rem;
+      height: 4rem;
       border-radius: 50%;
       /* display: inline-block; */
       float: left;
@@ -58,7 +59,7 @@
     }
     .layout{
       display: inline-block;
-      color: #555;
+      color: #fff;
       margin-top: 1rem;
       padding: 1rem;
     }
@@ -66,9 +67,10 @@
       background-color: #fff;
     }
     .message_mid_li{
-      line-height: 3.4rem;
-      height: 3.4rem;
+      line-height: 4.2rem;
+      height: 4.2rem;
       padding-left: 2.2rem;
+      border-bottom: 1px solid #e8e8e8;
     }
     .right_icon{
       float: right;
@@ -76,16 +78,43 @@
       color: #999;
       font-size: 2rem;
     }
+    .last_li{
+      border-bottom: none;
+    }
 
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
     $(document).ready(function () {
       changeFontSize();
-
+      loadMessage();
 
     });
-
+    var user_id=86;
+    function loadMessage(){
+      var obj = {};
+      obj.action = 'base';
+      obj.user_id = user_id;
+      validate.validate_submit('/api/user/info', obj, insertMessage);
+    }
+    //添加信息
+    function insertMessage(){
+      var user_name = global_data.result.user_name;
+      var user_avatar = global_data.result.user_avatar;
+      $('.user_name').text(user_name);
+      $('.message_header img').attr('src',user_avatar);
+    }
+    //解绑
+    function layout(){
+      var obj = {};
+      obj.action = 'un_binding';
+      obj.user_id = user_id;
+      validate.validate_submit('/api/user/info', obj, success);
+    }
+    //
+    function success(){
+        showFloatStyle("成功解绑")
+    }
   </script>
 </head>
 <body>
@@ -98,10 +127,10 @@
 <div class="message_container">
   <div class="message_top">
     <div class="message_header">
-      <img src="/resource/images/super.jpg">
+      <img src="/" alt="header">
       <span class="user_name">super超</span>
     </div>
-    <span class="layout">解绑</span>
+    <span class="layout" onclick="layout()">解绑</span>
   </div>
   <div class="message_mid">
     <ul class="message_mid_ul">
@@ -109,15 +138,15 @@
         <span>我的发车信息</span>
         <div class="right_icon">></div>
       </li>
-      <li class="message_mid_li">
+      <li class="message_mid_li last_li">
         <span>我的订座信息</span>
         <div class="right_icon">></div>
       </li>
     </ul>
   </div>
-  <%--<div class="message_bottom">--%>
-    <%----%>
-  <%--</div>--%>
+  <div class="message_bottom">
+
+  </div>
 </div>
 </body>
 </html>

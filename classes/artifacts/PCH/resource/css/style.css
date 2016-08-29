@@ -56,10 +56,10 @@ a img {
     border: none;
 }
 
-a,input, textarea {
+input, textarea {
     -webkit-tap-highlight-color:#fff;
     -webkit-appearance:none;
-    border: 0;
+    border: none;
 }
 li {
     list-style: none;

@@ -53,13 +53,18 @@
         }
         .login_input_box{
             position: relative;
+            margin-bottom: 1px;
+            margin-top: 2px;
+            padding: 1px 0;
+            padding-left: 1.8rem;
         }
         .login_input_box input[type=text]{
             width: 100%;
             height: 5rem;
-            text-indent: 1.8rem;
+            /*text-indent: 1.8rem;*/
             border:none;
-            line-height: 5rem;
+            filter:chroma(color=#000000);
+            /*line-height: 5rem;*/
         }
         .login_line{
             border-top: 1px solid #e8e8e8;
@@ -88,12 +93,12 @@
             background-color: #fff;
             position: relative;
             border-left: 1px solid #e8e8e8;
-
             float: right;
         }
         .get_code:focus{
-            outline: 1px solid #e8e8e8;
             margin:0 -1px;
+            border-left: 1px solid #e8e8e8;
+            border-right: 2px solid #fff;
         }
         .disable{
             background: #e8e8e8;
@@ -114,9 +119,9 @@
             //点击验证码时候的验证
             $('.get_code').click(function () {
                 if ($('.user_mobile').val() == "") {
-                    showFloat("请先输入手机号");
+                    showFloatStyle("请先输入手机号");
                 } else if (!myreg.test($('.user_mobile').val())) {
-                    showFloat("手机号格式不正确");
+                    showFloatStyle("手机号格式不正确");
                 } else {
                     sendCode();
                     time(this);
@@ -137,7 +142,7 @@
         }
         //通过ajax获取验证码
         function sendMessage() {
-            showFloat("验证码已发送，您的手机将在5分钟内进行回收，请保持设备通信状态。");
+            showFloatStyle("验证码已发送，您的手机将在5分钟内进行回收，请保持设备通信状态。");
         }
         //设置定时器
         function time(i) {
@@ -157,16 +162,7 @@
             }
         }
 
-        //展示浮动层
-        function showFloat(errorTips){
-            $('.hover').fadeIn(200);
-            $('.float_container').fadeIn(200);
-            $('.float_box_span').text(errorTips);
-            setTimeout(function () {
-                $('.hover').fadeOut(200);
-                $('.float_container').fadeOut(200);
-            }, 1500);
-        }
+
         function checkCode(obj){
             if($(obj).val()==""){
                 $('.login_submit_btn').addClass('disable').attr("disabled", "disabled");
@@ -177,11 +173,11 @@
         //最终检测
         function loginCheck(){
             if ($('.user_mobile').val() == "") {
-                showFloat("请先输入手机号");
+                showFloatStyle("请先输入手机号");
             } else if (!myreg.test($('.user_mobile').val())) {
-                showFloat("手机号格式不正确");
+                showFloatStyle("手机号格式不正确");
             } else if ($('.user_code').val() == "") {
-                showFloat("请输入验证码");
+                showFloatStyle("请输入验证码");
             }else{
                 sendCheckCode();
             }
@@ -204,12 +200,12 @@
 
                         window.location.href="/auth/base"
                     }else{
-                        showFloat(global_data.message);
+                        showFloatStyle(global_data.message);
                     }
                 },
                 error: function () {
                     console.log("交互失败");
-                    showFloat(global_data.message);
+                    showFloatStyle(global_data.message);
                 }
             })
         }
@@ -235,7 +231,7 @@
             </div>
             <div class="login_line"></div>
             <div class="login_input_box">
-                <input type="text" placeholder="验证码" style="width: 60%" class="user_code" onkeyup="checkCode(this)">
+                <input type="text" placeholder="验证码" style="width: 63%" class="user_code" onkeyup="checkCode(this)">
                 <input type="button" value="获取短信验证码" class="get_code" onselectstart="return false">
                 <div class="clear"></div>
             </div>

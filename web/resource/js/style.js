@@ -159,4 +159,15 @@ $("input").bind("touchstart click",function(e){
         // PC端 click事件处理
     }
 
-})
+});
+
+//展示浮动层
+function showFloatStyle(errorTips){
+    $('.hover').fadeIn(200);
+    $('.float_container').fadeIn(200);
+    $('.float_box_span').text(errorTips);
+    setTimeout(function () {
+        $('.hover').fadeOut(200);
+        $('.float_container').fadeOut(200);
+    }, 1500);
+}
