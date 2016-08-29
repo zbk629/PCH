@@ -345,7 +345,7 @@ public class Utils {
         result= Utils.getTimestamp()+random(4)+current_id;
         return result;
     }
-    public static String sendCodeMessage(String mobile,int tpl_id,String tpl_value){
+    public static String sendCodeMessage(String mobile){
         String rand= SendSMSUtil.randomNum();
         String typ_val="#code#="+rand;
         boolean send_isSuccess= SendSMSUtil.sendSMS(mobile, 18365, typ_val);
