@@ -161,7 +161,7 @@ $("input").bind("touchstart click",function(e){
 
 });
 
-//展示浮动层
+//展示浮动层，自动消失
 function showFloatStyle(errorTips){
     $('.hover').fadeIn(200);
     $('.float_container').fadeIn(200);
@@ -170,4 +170,15 @@ function showFloatStyle(errorTips){
         $('.hover').fadeOut(200);
         $('.float_container').fadeOut(200);
     }, 1500);
+}
+
+//展示浮动层可编辑
+function showFloatStyle2(){
+    $('.hover').fadeIn(200);
+    $('.float_container2').fadeIn(200);
+}
+
+function removeFloatMessage(){
+    $('.hover').fadeOut(200);
+    $('.float_container2').fadeOut(200);
 }

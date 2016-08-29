@@ -16,7 +16,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>来回拼车-我的信息</title>
+  <title>来回拼车-我的信息-微信</title>
   <link rel="shortcut icon" href="/resource/images/pc_logo.ico"/>
   <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
   <script src="/resource/js/style.js" type="text/javascript"></script>
@@ -60,8 +60,12 @@
     .layout{
       display: inline-block;
       color: #fff;
-      margin-top: 1rem;
+      top: 1rem;
+      right: .8rem;
       padding: 1rem;
+      position: absolute;
+      width: 3rem;
+      cursor: pointer;
     }
     .message_mid{
       background-color: #fff;
@@ -71,6 +75,7 @@
       height: 4.2rem;
       padding-left: 2.2rem;
       border-bottom: 1px solid #e8e8e8;
+      cursor: pointer;
     }
     .right_icon{
       float: right;
@@ -80,6 +85,63 @@
     }
     .last_li{
       border-bottom: none;
+    }
+    .type_container_ul{
+      line-height: 7rem;
+      text-align: center;
+      color: #fff;
+      width: 96%;
+      margin: 1rem auto;
+    }
+    .type_container_ul_li{
+      width: 48%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .type_container_left{
+      float: left;
+      background-color: #3498db;
+      /*background: url("/resource/images/pch_icon_publich_bg1.png") no-repeat;*/
+      /*background-size: 100%;*/
+    }
+    .type_container_left:hover{
+      background-color: #2980b9;
+      box-shadow: 2px 2px 10px 2px #C5C5C5;
+    }
+    .type_container_right{
+      float: right;
+      background-color: #2ecc71;
+      /*background: url("/resource/images/pch_icon_publish_bg2.png") no-repeat;*/
+      /*background-size: 100%;*/
+    }
+    .type_container_right:hover{
+      background-color: #27ae60;
+      box-shadow: 2px 2px 10px 2px #C5C5C5;
+    }
+    .message_bottom{
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #fff;
+      height: 6rem;
+      border-top:1px solid #e8e8e8;
+    }
+    .message_bottom_type{
+      width: 33.3%;
+      float: left;
+      text-align: center;
+      line-height: 8rem;
+      color: #888;
+      position: relative;
+    }
+    .icon_style{
+      width: 2.2rem;
+      height: 2.2rem;
+      position: absolute;
+      top: 1rem;
+    }
+    .menu_active{
+      color: #F5AD4E;
     }
 
   </style>
@@ -115,6 +177,21 @@
     function success(){
         showFloatStyle("成功解绑")
     }
+    //跳转
+    function toPublish(){
+      window.location.href="/laihui/driver/create_order"
+    }
+    function toList(){
+      window.location.href="/laihui/car/list"
+    }
+    function toMine(){
+      window.location.href="/auth/base"
+    }
+    function notOpend(){
+//      window.location.href="/laihui/driver/create_order"
+      showFloatStyle("即将开通，敬请期待");
+    }
+
   </script>
 </head>
 <body>
@@ -128,9 +205,22 @@
   <div class="message_top">
     <div class="message_header">
       <img src="/" alt="header">
-      <span class="user_name">super超</span>
+      <span class="user_name"></span>
     </div>
     <span class="layout" onclick="layout()">解绑</span>
+  </div>
+  <div class="type_container">
+    <ul class="type_container_ul">
+      <li class="type_container_ul_li type_container_left" onclick="toPublish()">
+        <span class="type_container_ico">+</span>
+        <span>发布发车信息</span>
+      </li>
+      <li class="type_container_ul_li type_container_right" onclick="notOpend()">
+        <span class="type_container_ico">+</span>
+        <span>发布出行信息</span>
+      </li>
+      <div class="clear"></div>
+    </ul>
   </div>
   <div class="message_mid">
     <ul class="message_mid_ul">
@@ -145,7 +235,18 @@
     </ul>
   </div>
   <div class="message_bottom">
-
+      <div class="message_bottom_type" onclick="toList()">
+        <img src="/resource/images/pch_icon_menu_car.png" class="icon_style icon_car">
+        <span>找车</span>
+      </div>
+      <div class="message_bottom_type" onclick="notOpend()">
+        <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
+        <span>找人</span>
+      </div>
+      <div class="message_bottom_type menu_active" onclick="toMine()">
+        <img src="/resource/images/pch_icon_menu_me_active.png" class="icon_style icon_mine">
+        <span>我的</span>
+      </div>
   </div>
 </div>
 </body>

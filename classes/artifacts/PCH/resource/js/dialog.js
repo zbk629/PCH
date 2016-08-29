@@ -291,7 +291,7 @@
 					if (_this.settings.afterHide) {
 						_this.settings.afterHide.call(_this, _this.dialogContainer);
 					}
-				}, 500);
+				}, 300);
 			} else {
 				this.dialogContainer.hide();
 				if (typeof this.settings.target === "object") {
@@ -335,7 +335,7 @@
 			if (this.settings.fixed) {
 				this.timer = setInterval(function() {
 					_this.setPosition();
-				}, 1000);
+				}, 500);
 			}
 			if (this.settings.animate) {
 				this.dialogContainer.addClass('zoomIn').removeClass('zoomOut').addClass('animated');

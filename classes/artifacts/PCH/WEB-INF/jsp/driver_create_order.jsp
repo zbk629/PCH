@@ -15,7 +15,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>来回拼车-发布信息</title>
+  <title>来回拼车-车主发布-微信</title>
   <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
   <script src="/resource/js/style.js" type="text/javascript"></script>
   <link href="/resource/css/style.css" rel="stylesheet" type="text/css">
@@ -27,12 +27,13 @@
   <script src="/resource/js/zepto.js" type="text/javascript"></script>
   <style type="text/css">
     .publish_top {
-      background-color: #fff;
       text-align: center;
-      line-height: 3.2rem;
+      line-height: 4.2rem;
       font-size: 1.4rem;
       border-bottom: 1px solid #e8e8e8;
       padding: 0 1rem;
+      background-color: #F5AD4E;
+      color: #FFF;
     }
 
     .publish_mid {
@@ -55,13 +56,18 @@
     }
 
     .return_perv_img {
-      width: 1.4rem;
+      width: 1.6rem;
+      display: inline-block;
+      top: 1.2rem;
+      left: 1.4rem;
+      position: absolute;
     }
 
     .publish_mid_li {
       height: 3.8rem;
       line-height: 3.8rem;
       position: relative;
+      margin-bottom: .2rem;
     }
 
     .publish_mid_li_img {
@@ -130,8 +136,8 @@
 
     .publish_bottom {
       position: fixed;
-      height: 4rem;
-      line-height: 4rem;
+      height: 5rem;
+      line-height: 5rem;
       background-color: #f5ad4e;
       color: #fff;
       bottom: 0;
@@ -140,9 +146,9 @@
     }
 
     .input_style {
-      width: 100%;
+      width: 80%;
       height: 2.6rem;
-      text-indent: 2rem;
+      padding-left: 2rem;
       border: none;
     }
 
@@ -179,7 +185,7 @@
     .publish_route_box_input {
       display: inline-block;
       position: relative;
-      width: 16rem;
+      width: 78%;
       margin-left: .2rem;
     }
 
@@ -215,7 +221,7 @@
       background-color: #fff;
       border: none;
       width: 100%;
-      line-height: 3.2rem;
+      height: 3.2rem;
       color: #52514f;
     }
 
@@ -257,6 +263,7 @@
     }
     .publish_mid_li_click{
       float: left;
+      width: 78%;
     }
     .place_input{
       width: 4rem;
@@ -280,7 +287,7 @@
       color: #999;
     }
     .place_time{
-      width: 5rem;
+      width: 5.6rem;
       /*text-align: center;*/
     }
     .place_start_time,.place_end_time{
@@ -293,7 +300,62 @@
     .float_sure{
       color: #2ecc71;
     }
-
+    /*复选*/
+    .slide_select{
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      left: 0px;
+      top: 8px;
+      background-image: url("/resource/images/pch_icon_unselect.png");
+      background-size: 20px;
+    }
+    .slide_select_active{
+      background-image: url("/resource/images/pch_icon_selected.png");
+    }
+    .slide_mid_ul_yes{
+      float: left;
+      width: 40%;
+      margin-right: 8%;
+    }
+    .slide_mid_li{
+      position: relative;
+      line-height: 32px;
+      cursor: pointer;
+      padding-left: 22px;
+    }
+    .tag_right{
+      width: 40%;
+      float: left;
+    }
+    .float_message_mid{
+      margin-top: 1rem;
+    }
+    .publish_mid_li_textarea{
+      width: 76%;
+      float: left;
+      padding-top: 1.4rem;
+      line-height: 2rem;
+      color: #52514f;
+    }
+    .tags_container{
+      width: 100%;
+      resize: none;
+      outline: none;
+      color: #52514f;
+    }
+    .slide_mid_ul_no,.slide_mid_ul_yes{
+      max-height: 30rem;
+      overflow: auto;
+    }
+    .to_city{
+      width: 1.5rem;
+      position: relative;
+      top: -0.2rem;
+    }
+    .place_end_city{
+      margin-left: 1rem;
+    }
   </style>
   <script>
     $(document).ready(function () {
@@ -303,7 +365,7 @@
       getStartPlace();
       addHourStyle();
       addSeat();
-
+//      setShowData();
       //地点选择
       var selectArea = new MobileSelectArea();
       selectArea.init({
@@ -346,10 +408,12 @@
     });
     var array = [];
     var array_seat = [];
-    //加载城市数组
-    var city_array = [];
+    var array_date = [];
+    var user_id = 86;
+//    //加载城市数组
+//    var city_array = [];
     //选择位置（都有哪几个）数组
-    var city_select = [];
+//    var city_select = [];
     //向后端发送的数组
     var send_array = [];
     //时间数据
@@ -363,7 +427,9 @@
     var yes_tags=[];
     var no_tags=[];
     var token="7f5bfcb450e7425a144f3e20aa1d1a6e";
-
+    var no_array=[];
+    var yes_array=[];
+    var route_array=[];
     //添加地点选择
     //获取出发地数据
     function getStartPlace() {
@@ -397,7 +463,11 @@
         var day_time = [];
         for (var i = 0; i < 2; i++) {
           var obj = {};
-          obj.name = i *30+"分";
+          if(i==0){
+            obj.name = "00分";
+          }else{
+            obj.name = i *30+"分";
+          }
           obj.id = 1000 + i;
           day_time.push(obj);
         }
@@ -515,7 +585,7 @@
               '<div class="line_slide"></div>' +
               '<div class="line_circle"></div>' +
               '</div>' +
-              '<input type="text" placeholder="添加行程的主要途径点" index="" class="input_style" oninput="sendKeepDownInput(this)">' +
+              '<input type="text" placeholder="添加行程的主要途径点" index="" class="main_route input_style" oninput="sendKeepDownInput(this)">' +
               '<span class="publish_route_box_remove" onclick="removeInput(this)">X</span>' +
               '<ul class="publish_route_ul">' +
 
@@ -593,12 +663,18 @@
     }
     //检测输入信息是否完整
     function checkDriverMessage(){
-      if($('#demo_time').val()==""){
-        validate.showTips("出发时间不能为空");
-      }else if($('#demo_place').val()==""){
-        validate.showTips("起止路线不能为空");
+      if($('#demo_place').val()==""){
+        showFloatStyle("起止路线不能为空");
+      }else if($('#demo_time').val()==""){
+        showFloatStyle("出发时间不能为空");
+      }else if($('.place_start_time ').val()==""){
+        showFloatStyle("最早时间不能为空");
+      }else if($('.place_end_time').val()==""){
+        showFloatStyle("最晚时间不能为空");
       }else if($('#demo_set').val()==""){
-        validate.showTips("可用座位不能为空");
+        showFloatStyle("可用座位不能为空");
+      }else if($('.publish_mobile').val()==""){
+        showFloatStyle("联系方式不能为空");
       }else{
         setSendData();
         sendFinalMessage();
@@ -607,26 +683,20 @@
     //发送时间的数据
     function setSendData(){
       var time;
-      var str =$('#demo_time').val().substring(0,2);
-      var st2 =parseInt($('#demo_time').val().substring(3,5));
-      if(str=="昨天"){
-        var today=new Date();
-        var t=today.getTime()-1000*60*60*24;
-        time=new Date(t);
-        changeDataStyle(time,st2)
-      }else if(str=="今天"){
+      var str =$('.publish_begin_time').text().substring(0,2);
+      if(str=="今天"){
         time=new Date();
-        changeDataStyle(time,st2)
+        changeDataStyle(time)
       }else{
         var today=new Date();
         var t=today.getTime()+1000*60*60*24;
         time=new Date(t);
-        changeDataStyle(time,st2)
+        changeDataStyle(time)
       }
 
     }
     //转换日期格式
-    function changeDataStyle(time,st2){
+    function changeDataStyle(time){
       var year  = time.getFullYear();
       var month = time.getMonth()+1;
       var date  = time.getDate();
@@ -635,47 +705,94 @@
       }else{
         month = parseInt(month);
       }
-      send_time =year+"-"+month+"-"+date+" "+st2+":00"+":00";
-      send_time2 =year+"-"+month+"-"+date+" "+(st2+1)+":00"+":00";
+      var st2 =$('.place_start_time').val().split("点")[0].trim();
+      var st3 =$('.place_end_time').val().split("点")[0].trim();
+      var st4 =$('.place_start_time').val().split("点")[1].split("分")[0].trim();
+      var st5 =$('.place_end_time').val().split("点")[1].split("分")[0].trim();
+      if(st2.length == 1){
+        send_time =year+"-"+month+"-"+date+" "+"0"+st2+":"+st4+":00";
+      }else{
+        send_time =year+"-"+month+"-"+date+" "+st2+":"+st4+":00";
+      }
+
+      if(st3.length == 1){
+        send_time2 =year+"-"+month+"-"+date+" "+"0"+st3+":"+st5+":00";
+      }else{
+        send_time2 =year+"-"+month+"-"+date+" "+st3+":"+st5+":00";
+      }
     }
     //发送数据到后端
     function sendFinalMessage(){
-      var demo_set = $('#demo_set').val().substring(0,1);
-      var route = {};
-      var is_must_driving=0;
-      var a = $('#demo_place').val().split(' ');
-      route.result=send_array;
-      var json = JSON.stringify(route);
-      var data_obj = {};
-      if($('.publish_mid_driver_img').hasClass('publish_active')){
-        is_must_driving=1;
-      }else{
-        is_must_driving=0;
+      var route="";
+      var mobile;
+      var route_array=[];
+      for(var i=0;i<$('.main_route').length;i++){
+        route_array.push($($('.main_route')[i]).val().trim());
       }
+      for(var i=0;i<route_array.length;i++){
+        if(i==route_array.length-1){
+          route+=route_array[i]
+        }else{
+          route+=route_array[i]+'丶'
+        }
+      }
+      var tag_yes_content="";
+      for(var i=0;i<yes_array.length;i++){
+        if(i==yes_array.length-1){
+          tag_yes_content+=yes_array[i]
+        }else{
+          tag_yes_content+=yes_array[i]+'丶'
+        }
+
+      }
+      var tag_no_content="";
+      for(var i=0;i<no_array.length;i++){
+        if(i==no_array.length-1){
+          tag_no_content+=no_array[i]
+        }else{
+          tag_no_content+=no_array[i]+'丶'
+        }
+      }
+
+
+
+      var data_obj={};
+      var a = $('#demo_place').val().split(' ');
+      mobile = $('.publish_mobile').val().toString();
+      var description=$('.publish_remark').val();
+      var departure_county=$('.place_start_city').val();
+      var destination=$('.place_end_city ').val();
+      var driving_name=$('.publish_name').val();
+      var demo_set=$('#demo_set').val();
+      var car_brand=$('.publish_type').val();
+
+//      if (url.indexOf("=") == -1) {
+//
+//      } else {
+//        data_obj.id = driver_id;
+//      }
+
       data_obj.action = 'add';
+      data_obj.user_id = user_id;
       data_obj.start_time = send_time;
       data_obj.end_time = send_time2;
+      data_obj.mobile = mobile;
       data_obj.departure_city = a[0];
       data_obj.destination_city = a[1];
-      data_obj.route_json =json ;
       data_obj.init_seats = demo_set;
-      data_obj.is_must_driving = is_must_driving;
-      data_obj.token = token;
-      validate.validate_submit('/api/driver/departure', data_obj, success);
+      data_obj.points = route;
+      data_obj.description = description;
+      data_obj.departure_county = departure_county;
+      data_obj.destination = destination;
+      data_obj.tag_yes_content = tag_yes_content;
+      data_obj.tag_no_content = tag_no_content;
+      data_obj.driving_name = driving_name;
+      data_obj.car_brand = car_brand;
+      validate.validate_submit('/api/driver/departure1', data_obj, success);
     }
 
     function success(){
-      alert("数据传送成功")
-    }
-    //展示浮动层
-    function showFloatStyle2(){
-      $('.hover').fadeIn(200);
-      $('.float_container').fadeIn(200);
-    }
-
-    function removeFloatMessage(){
-      $('.hover').fadeOut(200);
-      $('.float_container').fadeOut(200);
+      showFloatStyle("跳转列表页面")
     }
 
     //添加YES/NO标签
@@ -732,18 +849,82 @@
         $(obj).children('.slide_select').addClass('slide_select_active')
       }
     }
+    //将添加的标签存入数组中
+    function inputMessage(){
+      no_array=[];
+      yes_array=[];
+      for(var i=0;i<$('.slide_select_active').length;i++){
+        if($($('.slide_select_active')[i]).parent().hasClass('not_passed')){
+          no_array.splice(i,1,$($('.slide_select_active')[i]).parent().
+                  children('.slide_mid_li_span').text());
+        }else{
+          yes_array.splice(i,1,$($('.slide_select_active')[i]).parent().
+                  children('.slide_mid_li_span').text());
+        }
+      }
+      getTags();
+      removeFloatMessage();
+    }
+    //将数组中的标签取出
+    function getTags(){
+      $('.tags_container').val("");
+      var tags_array=[];
+      var tags_val="";
+      for(var i=0;i<yes_array.length;i++){
+        tags_array.push(yes_array[i]);
+      }
 
+      for(var j=0;j<no_array.length;j++){
+        tags_array.push(no_array[j]);
+      }
+
+      for(var k =0;k<tags_array.length;k++){
+        if(k+1==tags_array.length){
+          tags_val = tags_val+tags_array[k]
+        }else{
+          tags_val = tags_val+tags_array[k]+"、"
+        }
+      }
+      $('.tags_container').val(tags_val);
+    }
+//    //显示今天和明天信息
+//    function setShowData(){
+//      var str_time1=new Date();
+//      for(var i=0;i<2.length;i++){
+//        var obj={};
+//        var str_time2=str_time1.getTime()+(1000*60*60*24)*i;
+//        var time2 = new Date(str_time2);
+//        var year2  = time2.getFullYear();
+//        var month2 = time2.getMonth()+1;
+//        var date2  = time2.getDate();
+//        obj.year = year2;
+//        if(month2.toString().length==1){
+//          obj.month = "0"+month2;
+//        }else{
+//          obj.month = parseInt(month2);
+//        }
+//        obj.date = date2;
+//        array_date.push(obj);
+//      }
+//    }
+    function returnCheck() {
+      if (document.referrer == "") {
+        window.location.href = '/auth/base';
+      } else {
+        window.history.go(-1);
+      }
+    }
   </script>
 </head>
-<body>
+<body scroll="no">
 <div class="hover"></div>
-<div class="float_container">
-  <div class="float_box">
-    <div class="float_message_box">
-      <div class="float_message_title">
+<div class="float_container2">
+  <div class="float_box2">
+    <div class="float_message_box2">
+      <div class="float_message_title2">
         <span>选择标签</span>
       </div>
-      <div class="float_message_mid">
+      <div class="float_message_mid2">
         <div class="tag_left">
             <ul class="slide_mid_ul_yes">
 
@@ -754,21 +935,24 @@
 
             </ul>
         </div>
-      </div>
-      <div class="float_message_mid2">
-        <span class="set_tips"></span>
+        <div class="clear"></div>
       </div>
     </div>
     <div class="float_button">
       <span class="float_remove" onclick="removeFloatMessage()">取消</span>
-      <span class="float_sure" onclick="sendFloatMessage()">确定</span>
+      <span class="float_sure" onclick="inputMessage()">确定</span>
     </div>
+  </div>
+</div>
+<div class="float_container">
+  <div class="float_box">
+    <span class="float_box_span"></span>
   </div>
 </div>
 <div class="publish_container">
   <div class="publish_top">
     <div class="return_perv">
-      <img class="return_perv_img" alt="" src="/resource/images/pc_icon_return.png">
+      <img class="return_perv_img" alt="" src="/resource/images/pc_icon_white_return.png" onclick="returnCheck()">
     </div>
     <span>发布拼车</span>
   </div>
@@ -779,7 +963,7 @@
           <span>起止路线</span>
         </div>
         <div class="publish_mid_li_click" index="1" >
-          <input type="text" id="demo_place" placeholder="选择起止城市" readonly="readonly" class="input_disabled"  onclick="slideCity()"/>
+          <input type="text" id="demo_place" placeholder="选择起止城市" readonly="readonly" class="place_start_to_end input_disabled"  onclick="slideCity()"/>
         </div>
       </li>
       <li class="publish_mid_li">
@@ -787,8 +971,9 @@
           <span>县级城市</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text"  placeholder="出发县城" class="place_city input_disabled"/>
-          <input type="text"  placeholder="目的县城" class="place_city input_disabled"/>
+          <input type="text"  placeholder="出发县城" class="place_city place_start_city input_disabled"/>
+          <img src="/resource/images/pch_icon_to.png" class="to_city">
+          <input type="text"  placeholder="目的县城" class="place_city place_end_city input_disabled"/>
         </div>
       </li>
 
@@ -802,7 +987,7 @@
                 <div class="line_slide"></div>
                 <div class="line_circle"></div>
               </div>
-              <input type="text" placeholder="添加行程的主要途径点" class="input_style"
+              <input type="text" placeholder="添加行程的主要途径点" class="main_route input_style"
                      index="0" oninput="sendKeepDownInput(this)">
               <span class="publish_route_box_remove" onclick="removeInput(this)">X</span>
               <ul class="publish_route_ul">
@@ -841,7 +1026,7 @@
           <span>车辆型号</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text"  placeholder="车辆品牌(大众、奔驰等)"  class="input_disabled"/>
+          <input type="text"  placeholder="车辆品牌(大众、奔驰等)"  class="publish_type input_disabled"/>
         </div>
       </li>
       <li class="publish_mid_li">
@@ -849,7 +1034,7 @@
           <span>车主姓名</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text" placeholder="姓名" class="input_disabled"/>
+          <input type="text" placeholder="姓名" class="publish_name input_disabled"/>
         </div>
       </li>
       <li class="publish_mid_li">
@@ -857,7 +1042,7 @@
           <span>联系电话</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text" placeholder="如果有两个用逗号隔开" class="input_disabled"/>
+          <input type="text" placeholder="若有两个联系方式,请用逗号隔开" class="publish_mobile input_disabled"/>
         </div>
       </li>
       <li class="publish_mid_li">
@@ -865,15 +1050,15 @@
           <span>备注信息</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text" placeholder="如顺路接送、费用等" class="input_disabled"/>
+          <input type="text" placeholder="如顺路接送、费用等" class="publish_remark input_disabled"/>
         </div>
       </li>
       <li class="publish_mid_li">
         <div class="publish_left_span">
           <span>添加标签</span>
         </div>
-        <div class="publish_mid_li_click" onclick="">
-          <input type="text" placeholder="选择YES标签和NO标签" readonly="readonly" class="input_disabled" onclick="showFloatStyle2()"/>
+        <div class="publish_mid_li_textarea" onclick="">
+          <textarea type="text" placeholder="选择YES标签和NO标签" readonly="readonly" class="tags_container" onclick="showFloatStyle2()"/></textarea>
         </div>
       </li>
       <div class="clear"></div>

@@ -17,7 +17,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <%--<meta name="msapplication-tap-highlight" content="no">--%>
-    <title>来回拼车-登陆界面</title>
+    <title>来回拼车-登陆界面-微信</title>
     <link rel="shortcut icon" href="/resource/images/pc_logo.ico"/>
     <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="/resource/js/style.js" type="text/javascript"></script>
@@ -55,7 +55,6 @@
             position: relative;
             margin-bottom: 1px;
             margin-top: 2px;
-            padding: 1px 0;
             padding-left: 1.8rem;
         }
         .login_input_box input[type=text]{
@@ -142,7 +141,7 @@
         }
         //通过ajax获取验证码
         function sendMessage() {
-            showFloatStyle("验证码已发送，您的手机将在5分钟内进行回收，请保持设备通信状态。");
+//            showFloatStyle("验证码已发送");
         }
         //设置定时器
         function time(i) {
