@@ -183,11 +183,14 @@ public class ReturnJsonUtil {
                 if(start_time!=null&&!start_time.trim().equals("")){
                     where=where+" and start_time >'"+start_time+" 00:00:00' and start_time < '"+start_time+" 24:00:00'" ;
                 }
-                if(end_time!=null&&!end_time.trim().equals("")){
+              else {
+                    where=where+" and end_time >'"+Utils.getCurrentTime()+"'";
+                }
+                /*if(end_time!=null&&!end_time.trim().equals("")){
                     where=where+" and end_time <'"+end_time+"'";
                 }else {
-                    where=where+" and end_time <'"+Utils.getCurrentTime()+"'";
-                }
+                    where=where+" and end_time >'"+Utils.getCurrentTime()+"'";
+                }*/
                 if(keyword!=null&&!keyword.trim().equals("")){
                     where=where+" and (mobile like '%"+keyword+"%' or driving_name like '%"+keyword+"%') ";
                 }

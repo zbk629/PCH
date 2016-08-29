@@ -33,7 +33,6 @@ public class DepartureInfoController {
             request.getSession().setAttribute("role", "1");
             request.getSession().setAttribute("own_id", id);
             model.asMap().clear();
-
             return "redirect:/laihui/car/detail?id="+id;
         } else {
             String now_id = request.getParameter("id");

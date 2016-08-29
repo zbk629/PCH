@@ -50,7 +50,7 @@ public class LoginController {
             } else {
                 User now_user = userList.get(0);
                 if (now_user.getUser_mobile() != null && now_user.getUser_mobile().length() == 11) {
-                    request.getSession().setAttribute("user", userList.get(0));
+                    request.getSession().setAttribute("user_id", userList.get(0).getUser_id());
                     return "redirect:/";
                 } else {
                     return "redirect:/reg?id=" + now_user.getUser_id();
@@ -225,7 +225,7 @@ public class LoginController {
                     }
                 case "un_binding":
                     if (id != 0) {
-                        String update_sql=" set mobile=null where user_id="+id;
+                        String update_sql=" set user_mobile=null where user_id="+id;
                         laiHuiDB.update("pc_wx_user",update_sql);
                         json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getUserInfo(laiHuiDB,id), "用户基本信息获取成功！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
