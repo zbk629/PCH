@@ -16,7 +16,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>来回拼车-登陆界面</title>
+  <title>来回拼车-我的信息</title>
   <link rel="shortcut icon" href="/resource/images/pc_logo.ico"/>
   <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
   <script src="/resource/js/style.js" type="text/javascript"></script>

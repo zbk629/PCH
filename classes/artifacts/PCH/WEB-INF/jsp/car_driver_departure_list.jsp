@@ -19,15 +19,14 @@
     <link rel="shortcut icon" href="/resource/images/pc_logo.ico"/>
     <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="/resource/js/style.js" type="text/javascript"></script>
+    <script src="/resource/js/jquery.cookie.js" type="text/javascript"></script>
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css">
 
 
     <link href="/resource/css/dialog.css" rel="stylesheet" type="text/css">
     <link href="/resource/css/mobile-select-area.css" rel="stylesheet" type="text/css">
-    <%--<link href="/resource/css/LCalendar.css" rel="stylesheet" type="text/css">--%>
 
-    <%--<script src="/resource/js/LCalendar.js" type="text/javascript"></script>--%>
-    <script src="/resource/js/jquery.cookie.js" type="text/javascript"></script>
+
 
     <script src="/resource/js/dialog.js" type="text/javascript"></script>
     <script src="/resource/js/mobile-select-area.js" type="text/javascript"></script>
@@ -758,32 +757,6 @@
         var carPlace = (function () {
 //            //将车辆行程信息据封装进数组
             function addCarStart() {
-//                {
-//                    "id": 1,
-//                        "name": "浙江省",
-//                        "child": [{
-//                    "id": "1",
-//                    "name": "杭州市",
-//                    "child": [{
-//                        "id": 1,
-//                        "name": "滨江区"
-//                    }]
-//                }]
-//                }, {
-//                    "id": 2,
-//                            "name": "江苏省",
-//                            "child": [{
-//                        "id": "1",
-//                        "name": "南京",
-//                        "child": [{
-//                            "id": 1,
-//                            "name": "解放区"
-//                        }]
-//                    }]
-//                }, {
-//                    "id": 3,
-//                            "name": "湖北省"
-//                }
                 var data1 = global_data.result;
                 var contact = new Object();
                 contact.id = -1;
