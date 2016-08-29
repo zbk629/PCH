@@ -11,6 +11,15 @@ public class PassengerOrder {
     private String boarding_point;
     private String breakout_ponit;
     private String description;
+    private String create_time;
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
 
     public int get_id() {
         return _id;

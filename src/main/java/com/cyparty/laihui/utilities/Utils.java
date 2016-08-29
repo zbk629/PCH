@@ -345,7 +345,7 @@ public class Utils {
         result= Utils.getTimestamp()+random(4)+current_id;
         return result;
     }
-    public static String sendCodeMessage(String mobile){
+    public static String sendCodeMessage(String mobile,int tpl_id,String tpl_value){
         String rand= SendSMSUtil.randomNum();
         String typ_val="#code#="+rand;
         boolean send_isSuccess= SendSMSUtil.sendSMS(mobile, 18365, typ_val);
@@ -355,6 +355,11 @@ public class Utils {
             typ_val=rand;
         }
         return typ_val;
+    }
+    public static boolean sendNotifyMessage(String d_mobile,String p_mobile,String date){
+        String typ_val="#mobile#="+p_mobile+"&date="+date;
+        boolean send_isSuccess= SendSMSUtil.sendSMS(d_mobile, 19361, typ_val);
+        return send_isSuccess;
     }
     public static boolean isLogined(HttpServletRequest request){
         boolean is_logined=false;

@@ -3,6 +3,7 @@ package com.cyparty.laihui.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.DepartureInfo;
+import com.cyparty.laihui.domain.Tag;
 import com.cyparty.laihui.utilities.OssUtil;
 import com.cyparty.laihui.utilities.ReturnJsonUtil;
 import com.cyparty.laihui.utilities.SendSMSUtil;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by zhu on 2016/5/11.
@@ -229,4 +231,79 @@ public class PCXXHController {
             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.BAD_REQUEST);
         }
     }
+    @ResponseBody
+    @RequestMapping(value = "/api/db/tag", method = RequestMethod.POST)
+    public ResponseEntity<String> tags(HttpServletRequest request) {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
+        JSONObject result = new JSONObject();
+        String json = "";
+        try {
+            String action = request.getParameter("action");
+            int page = 0;
+            int size = 10;
+            if (request.getParameter("page") != null && !request.getParameter("page").trim().equals("")) {
+                try {
+                    page = Integer.parseInt(request.getParameter("page"));
+                } catch (NumberFormatException e) {
+                    page = 0;
+                    e.printStackTrace();
+                }
+            }
+            if (request.getParameter("size") != null && !request.getParameter("size").trim().equals("")) {
+                try {
+                    size = Integer.parseInt(request.getParameter("size"));
+                } catch (NumberFormatException e) {
+                    size = 10;
+                    e.printStackTrace();
+                }
+            }
+            int id = 0;
+            boolean is_success = true;
+            Tag tag=new Tag();
+            int type = 0;
+            if(request.getParameter("type")!=null){
+                type=Integer.parseInt(request.getParameter("type"));
+            }
+            String content = request.getParameter("content");
+            String where ="";
+            switch (action) {
+
+                case "delete":
+                    id = Integer.parseInt(request.getParameter("id"));
+                    where = " set is_enable=0 where _id=" + id;
+                    is_success = laiHuiDB.update("pc_departure_tags",where);
+                    if (is_success) {
+                        json = ReturnJsonUtil.returnSuccessJsonString(result, "删除成功！");
+                    } else {
+                        json = ReturnJsonUtil.returnFailJsonString(result, "删除失败！");
+                    }
+                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                case "update":
+                    id = Integer.parseInt(request.getParameter("id"));
+
+                    where = " set is_enable=1 ";
+
+                    where = where + ",tag_content='"+content+"' where _id=" + id;
+                    is_success = laiHuiDB.update("pc_departure_tags",where);
+                    if (is_success) {
+                        json = ReturnJsonUtil.returnSuccessJsonString(result, "更新成功！");
+                    } else {
+                        json = ReturnJsonUtil.returnFailJsonString(result, "更新失败！");
+                    }
+                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                case "show":
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getTags(laiHuiDB,type), "标签信息获取成功");
+                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+            }
+            json = ReturnJsonUtil.returnFailJsonString(result, "获取参数错误");
+            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            json = ReturnJsonUtil.returnFailJsonString(result, "获取参数错误");
+            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

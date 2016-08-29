@@ -70,21 +70,12 @@ public class UserActionController {
                     e.printStackTrace();
                 }
             }
-            int id = 0;
             boolean is_success = true;
-            String departure_city = request.getParameter("departure");
-            String destination_city = request.getParameter("destination_city");
-
-            String mobile = request.getParameter("mobile");
-            String start_time = request.getParameter("start_time");
-            String end_time = request.getParameter("end_time");
             int seats=0;
             int user_id=0;
             int order_id=0;
-            String where="";
             switch (action) {
                 case "booking":
-
                     try {
                         seats=Integer.parseInt(request.getParameter("booking_seats"));
                         user_id=Integer.parseInt(request.getParameter("user_id"));
@@ -99,7 +90,9 @@ public class UserActionController {
                         String boarding_point=request.getParameter("boarding_point");
                         String breakout_point=request.getParameter("breakout_point");
                         String description=request.getParameter("description");
-
+                        String start_time=request.getParameter("start_time");//司机出车时间
+                        String d_mobile=request.getParameter("mobile");
+                        String date=start_time.split(" ")[0].split("-")[0]+"年"+start_time.split(" ")[0].split("-")[1]+"月"+start_time.split(" ")[0].split("-")[2]+"日";
                         PassengerOrder order=new PassengerOrder();
                         order.setUser_id(user_id);
                         order.setDriver_order_id(order_id);
@@ -110,16 +103,18 @@ public class UserActionController {
 
                         is_success=laiHuiDB.createPassengerOrder(order);
                         if(is_success){
-
                             //通知司机
-                            //todo
+                            String where=" where _id="+user_id;
+                            String p_mobile=laiHuiDB.getWxUser(where).get(0).getUser_mobile();
+                            //发送通知短信
+                            Utils.sendNotifyMessage(d_mobile,p_mobile,date);
                             json = ReturnJsonUtil.returnSuccessJsonString(result, "订单创建成功！");
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                         }
                     }
                     json = ReturnJsonUtil.returnFailJsonString(result, "参数有误！");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
-                case "show_list":
+                case "show":
                     try {
                         user_id=Integer.parseInt("user_id");
                     } catch (NumberFormatException e) {
@@ -128,11 +123,17 @@ public class UserActionController {
                     }
                     if(user_id>0){
                         //返回该用户预定的发车单列表
+                        int now_order_id=0;
+                        try {
+                            now_order_id=Integer.parseInt(request.getParameter("order_id"));
+                        } catch (NumberFormatException e) {
+                            now_order_id=0;
+                            e.printStackTrace();
+                        }
+                        json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getOrderInfo(laiHuiDB, user_id,page,size,now_order_id), "出发市信息获取成功");
+                        return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }
-                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoutePlace(laiHuiDB, departure_city), "出发市信息获取成功");
-                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
-                case "show_info":
-                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoutePlace(laiHuiDB, departure_city), "目的地市获取成功");
+                    json = ReturnJsonUtil.returnFailJsonString(result, "订单信息获取失败！");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
             }
             json = ReturnJsonUtil.returnFailJsonString(result, "获取参数错误");

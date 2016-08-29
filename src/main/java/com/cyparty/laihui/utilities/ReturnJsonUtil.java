@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
-import com.cyparty.laihui.domain.DepartureInfo;
-import com.cyparty.laihui.domain.RouteInfo;
-import com.cyparty.laihui.domain.User;
+import com.cyparty.laihui.domain.*;
 
 import java.util.List;
 
@@ -254,5 +252,69 @@ public class ReturnJsonUtil {
             jsonObject.put("user_sex",user.getSex());
         }
         return jsonObject;
+    }
+    public static JSONObject getOrderInfo(LaiHuiDB laiHuiDB,int user_id,int page,int size,int now_order_id){
+        JSONObject result=new JSONObject();
+        JSONArray dataArray=new JSONArray();
+        String where =" where user_id="+user_id;
+        if(now_order_id!=0){
+            where=where+" and _id="+now_order_id;
+        }
+        int offset=page*size;
+        where=where+" limit "+offset+","+size;
+        List<PassengerOrder> passengerOrderList =laiHuiDB.getPassengerOrder(where);
+        for(PassengerOrder passengerOrder:passengerOrderList){
+            JSONObject jsonObject=new JSONObject();
+            int order_id=passengerOrder.getDriver_order_id();
+            jsonObject.put("order_id",passengerOrder.get_id());
+            jsonObject.put("booking_seats",passengerOrder.getSeats());
+            jsonObject.put("boarding_point",passengerOrder.getBoarding_point());
+            jsonObject.put("breakout_point",passengerOrder.getBreakout_ponit());
+            jsonObject.put("description",passengerOrder.getDescription());
+            jsonObject.put("create_time",passengerOrder.getCreate_time());
+            where="where is_enable=1 and _id="+order_id;
+            List<DepartureInfo> departureInfoList =laiHuiDB.getPCHDepartureInfo(where);
+            for(DepartureInfo departure:departureInfoList){
+
+                jsonObject.put("driver_order_id",departure.getR_id());
+                jsonObject.put("start_time",departure.getStart_time());
+                jsonObject.put("end_time",departure.getEnd_time());
+
+                jsonObject.put("departure_city",departure.getDeparture_city());
+                jsonObject.put("destination_city",departure.getDestination_city());
+                jsonObject.put("inits_seats",departure.getInit_seats());
+                jsonObject.put("mobile",departure.getMobile());
+                jsonObject.put("points",departure.getPoints());
+                jsonObject.put("description",departure.getDescription());
+                jsonObject.put("car_brand",departure.getCar_brand());
+                jsonObject.put("departure",departure.getDeparture_county());
+                jsonObject.put("destination",departure.getDestination());
+                jsonObject.put("driving_name",departure.getDriving_name());
+                jsonObject.put("tag_yes_content",departure.getTag_yes_content());
+                jsonObject.put("tag_no_content",departure.getTag_no_content());
+                jsonObject.put("info_status",departure.getStatus());//-1,1,2
+                jsonObject.put("create_time",departure.getCreate_time());
+
+            }
+            dataArray.add(jsonObject);
+        }
+        result.put("data",dataArray);
+        return result;
+    }
+    public static JSONObject getTags(LaiHuiDB laiHuiDB,int type){
+        JSONObject result_json=new JSONObject();
+        JSONArray dataArray=new JSONArray();
+        String where=" where is_enable=1 and tag_type="+type;
+
+        List<Tag> tags =laiHuiDB.getTags(where);
+        for(Tag tag:tags){
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("id",tag.get_id());
+            jsonObject.put("type",tag.getType());
+            jsonObject.put("content",tag.getContent());
+            dataArray.add(jsonObject);
+        }
+        result_json.put("data",dataArray);
+        return result_json;
     }
 }

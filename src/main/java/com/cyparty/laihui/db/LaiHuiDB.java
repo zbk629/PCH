@@ -183,5 +183,15 @@ public class LaiHuiDB {
         }
         return is_success;
     }
+    public List<PassengerOrder> getPassengerOrder(String where) {
+        String SQL = "SELECT * FROM pc_wx_passenger_orders " + where + " ORDER BY create_time DESC ";
+        List<PassengerOrder> passengerOrders = jdbcTemplateObject.query(SQL, new PassengerOrdersMapper());
+        return passengerOrders;
+    }
+    public List<Tag> getTags(String where) {
+        String SQL = "SELECT * FROM pc_departure_tags " + where;
+        List<Tag> tags = jdbcTemplateObject.query(SQL, new TagMapper());
+        return tags;
+    }
 }
 
