@@ -13,9 +13,15 @@
     .backtop{
         right: 11rem;
     }
+    .bottom_menu{
+        right: 11rem;
+    }
 }
 @media screen and (max-width: 1200px) {
     .backtop{
+        right: 8rem;
+    }
+    .bottom_menu{
         right: 8rem;
     }
     .not_message{
@@ -24,6 +30,9 @@
 }
 @media screen and (max-width: 1080px) {
     .backtop{
+        right: 1.1rem;
+    }
+    .bottom_menu{
         right: 1.1rem;
     }
     .departure_top_box_img{

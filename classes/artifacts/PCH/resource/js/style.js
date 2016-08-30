@@ -112,7 +112,7 @@ function changeFontSize(){
         w = 1080;
         $('html').css('font-size',w/78+'px');
     }else{
-        $('html').css('font-size',w/38+'px');
+        $('html').css('font-size',w/34+'px');
     }
 
 };
@@ -181,4 +181,28 @@ function showFloatStyle2(){
 function removeFloatMessage(){
     $('.hover').fadeOut(200);
     $('.float_container2').fadeOut(200);
+}
+//显示菜单
+function changeMenu(obj){
+    if($(obj).children().hasClass('menu_style_active')){
+        $(obj).children().removeClass('menu_style_active');
+        $(obj).children().attr('src','/resource/images/pch_icon_menu_style.png');
+        $('.message_bottom').animate({'left':'300%'},300)
+    }else{
+        $(obj).children().addClass('menu_style_active');
+        $(obj).children().attr('src','/resource/images/pc_icon_white_return.png');
+        $('.message_bottom').animate({'left':'0'},300)
+    }
+}
+//菜单的跳转
+function toMine(){
+    window.location.href="/auth/base"
+}
+//暂未开放
+function notOpend(){
+//      window.location.href="/laihui/driver/create_order"
+    showFloatStyle("即将开通，敬请期待");
+}
+function toList(){
+    window.location.href="/laihui/car/list"
 }

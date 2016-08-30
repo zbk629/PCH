@@ -53,7 +53,6 @@
         }
         .login_input_box{
             position: relative;
-            margin-bottom: 1px;
             margin-top: 2px;
             padding-left: 1.8rem;
         }
@@ -69,6 +68,7 @@
             border-top: 1px solid #e8e8e8;
             width: 95%;
             float: right;
+            margin-top: 1px;
         }
         .login_submit{
             text-align: center;
@@ -93,6 +93,7 @@
             position: relative;
             border-left: 1px solid #e8e8e8;
             float: right;
+            border-radius: 0;
         }
         .get_code:focus{
             margin:0 -1px;
@@ -102,14 +103,18 @@
         .disable{
             background: #e8e8e8;
             cursor: not-allowed;
+            font-size: 1.8rem;
         }
-        .user_mobile{
-            margin-bottom: 1px;
+        .user_mobile,.user_code{
             -webkit-tap-highlight-color:rgba(255,0,0,0);
             -webkit-appearance:none;
             border: 0;
+            height: 5rem;
+            font-size: 1.6rem;
         }
-
+        .user_mobile{
+            width: 100%;
+        }
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
     <script>
@@ -226,11 +231,11 @@
     <form method="post" id="form_login" onsubmit="return false" action="/">
         <div class="login_mid">
             <div class="login_input_box">
-                <input type="text" placeholder="请输入手机号" class="user_mobile">
+                <input type="tel" placeholder="请输入手机号" class="user_mobile">
             </div>
             <div class="login_line"></div>
             <div class="login_input_box">
-                <input type="text" placeholder="验证码" style="width: 63%" class="user_code" onkeyup="checkCode(this)">
+                <input type="tel" placeholder="验证码" style="width: 63%" class="user_code" onkeyup="checkCode(this)">
                 <input type="button" value="获取短信验证码" class="get_code" onselectstart="return false">
                 <div class="clear"></div>
             </div>

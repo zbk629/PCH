@@ -197,7 +197,7 @@
             color: #e74c3c;
         }
 
-        .call_driver {
+        .call_driver_bottom {
             color: #fff;
         }
         .change_driver {
@@ -457,9 +457,21 @@
                     points= points.replace(/丶/g, " - ");
                     tag_yes_content= tag_yes_content.replace(/丶/g, "、");
                     tag_no_content= tag_no_content.replace(/丶/g, "、");
+                    var mobile_array=[];
+                    mobile_array = mobile.split(',');
+                    for(var i=0;i<mobile_array.length;i++){
+                            $('.mobile_clear').append('<a href="tel:'+mobile_array[i]+'" class="call_driver">' +
+                                    '<div class="publish_message_li_moblie">'+
+                                    '<span class="item_mobile">'+mobile_array[i]+'</span>'+
+                                    '<img src="/resource/images/pc_icon_mobile.png" class="mobile">'+
+                                    '</div>'+
+                                    '<div class="clear"></div>'+
+                                    '</a>'
+                            )
+                    }
+
                     $('.departure_city').text(departure_city);
                     $('.destination_city').text(destination_city);
-                    $('.item_mobile').text(mobile);
                     $('.item_tips_span').text(description);
                     $('.item_mouth').text(insert_time);
                     $('.item_start_end_times').text(begin_start_time + "-" + begin_end_time);
@@ -470,7 +482,7 @@
                     $('.item_name').text(driving_name);
                     $('.item_points').text(points);
                     $('.item_type').text(car_brand);
-                    $('.call_driver').attr('href', 'tel:' + mobile);
+                    $('.call_driver_bottom').attr('href', 'tel:' + mobile_array[0]);
 
                     if (driving_name == "") {
                         $('.item_name_li').remove()
@@ -660,18 +672,17 @@
                 </div>
                 <div class="clear"></div>
             </li>
-            <a href="tel:13764567708" class="call_driver">
+
             <li class="publish_message_li">
                 <div class="publish_message_li_left">
                     <span>电话</span>
                 </div>
-                <div class="publish_message_li_right">
-                    <span class="item_mobile"></span>
-                        <img src="/resource/images/pc_icon_mobile.png" class="mobile">
+                <div class="publish_message_li_right mobile_clear">
+
                 </div>
-                <div class="clear"></div>
+                <div class="clear "></div>
             </li>
-            </a>
+
             <li class="publish_message_li item_points_li">
                 <div class="publish_message_li_left">
                     <span>途径</span>
@@ -728,7 +739,7 @@
             </li>
         </ul>
     </div>
-    <a href="" class="call_driver not_driver" style="display:none;">
+    <a href="" class="call_driver_bottom not_driver" style="display:none;">
         <div class="publish_bottom">
             联系车主
         </div>

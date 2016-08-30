@@ -380,7 +380,7 @@
             movetop();
             checkId();
             $(window).scroll(function () {
-                $(window).scrollTop() > 100 ? $(".backtop").animate({bottom:"100rem;"},300).show() : $(".backtop").hide().css({bottom:"8rem"})
+                $(window).scrollTop() > 100 ? $(".backtop").animate({bottom:"100rem;"},300).show() : $(".backtop").hide().css({bottom:"9.3rem"})
             });
             $(".backtop").click(function () {
                 $('body,html').animate({scrollTop:0},400);
@@ -962,6 +962,12 @@
     </script>
 </head>
 <body id="backtop">
+<div class="hover"></div>
+<div class="float_container">
+    <div class="float_box">
+        <span class="float_box_span"></span>
+    </div>
+</div>
 <img src="/resource/images/pch_logo.png" style="display: none">
 <!--回到顶部-->
 <div class="backtop">
@@ -1030,7 +1036,6 @@
             </div>
         </div>
     </form>
-
     <div class="departure_container_list">
         <ul class="departure_ul">
             <span class="not_message">暂无发布信息</span>
@@ -1040,6 +1045,31 @@
         <img src="/resource/images/pch_icon_bottom.png">
     </div>
 </div>
+<%--底部--%>
+<div class="bottom_menu " onclick="changeMenu(this)">
+    <img src="/resource/images/pch_icon_right_to.png" class="menu_style_icon menu_style_active">
+</div>
+<div class="message_bottom">
+    <div class="message_bottom_type menu_active" onclick="toList()">
+        <div class="img_box">
+            <img src="/resource/images/pch_icon_menu_car_active.png" class="icon_style icon_car">
+        </div>
+        <span>找车</span>
+    </div>
+    <div class="message_bottom_type " onclick="notOpend()">
+        <div class="img_box">
+            <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
+        </div>
+        <span>找人</span>
+    </div>
+    <div class="message_bottom_type " onclick="toMine()">
+        <div class="img_box">
+            <img src="/resource/images/pch_icon_menu_me.png" class="icon_style icon_mine">
+        </div>
+        <span>我的</span>
+    </div>
+</div>
+
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
         wx.config({

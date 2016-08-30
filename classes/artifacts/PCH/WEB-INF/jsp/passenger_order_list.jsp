@@ -44,6 +44,7 @@
             line-height: 2.4rem;
             margin-bottom: .6rem;
             padding: .4rem 1.4rem;
+            display: none;
         }
 
         .mine_mid {
@@ -52,6 +53,7 @@
             line-height: 2.4rem;
             margin-bottom: 5rem;
             padding: .4rem 1.4rem;
+            display: none;
         }
 
         .return_perv {
@@ -276,6 +278,7 @@
         }
         function loadMessage() {
             $('.mine_first_list').remove();
+            $('.mine_list').remove();
             var obj = {};
             obj.action = 'show';
             obj.page = page_list;
@@ -291,6 +294,8 @@
                 $('.mine_mid_first').hide();
                 $('.mine_mid').hide();
             } else {
+                $('.mine_mid_first').show();
+                $('.mine_mid').show();
                 insertMessage();
                 $('.not_message').css('display', 'none');
             }
@@ -314,6 +319,7 @@
                 var inits_seats = global_data.result.data[i].inits_seats;//可用座位
                 var car_brand = global_data.result.data[i].car_brand;//车辆品牌
                 var id = global_data.result.data[i].id;//id
+                var is_editor = global_data.result.data[i].is_editor;//id
                 var create_time = global_data.result.data[i].create_time;//id
                 points= points.replace(/丶/g, " 、");
                 if (info_status == 1) {
@@ -336,8 +342,14 @@
                 var begin_start_time = start_time.substring(11, 16);
                 var begin_end_time = end_time.substring(11, 16);
 
-                addDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
-                        inits_seats, car_brand, id,points);
+                if(is_editor == true){
+                    addDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+                            inits_seats, car_brand, id,points);
+                }else{
+                    addHistoryDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+                            inits_seats, car_brand, id,points);
+                }
+
                 if (info_status == "有空位") {
                     $($('.departure_li_status')[(page_list * size) + i]).css('color', '#2ecc71');
                 } else if (info_status == "已满") {
@@ -355,13 +367,22 @@
                 if (destination == "") {
                     $($('.end_city')[(page_list * size) + i]).hide();
                 }
+                if(points==""){
+                    $($('.departure_li_route')[(page_list * size) + i]).hide();
+                };
 
+            }
+            if($('.mine_list').length==0){
+                $('.mine_mid').hide();
+            }
+            if($('.mine_first_list').length==0){
+                $('.mine_mid_first').hide();
             }
         }
 
         function addDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
                             departure_city, destination_city, departure, destination, inits_seats, car_brand, id,points) {
-            $('.first_clear').before('<li class="mine_first_list" index='+id+'>' +
+            $('.first_clear').before('<li class="mine_first_list" index='+id+' onclick="toDetaile(this)">' +
                     '<div class="mine_first_top">' +
                     '<div class="mine_first_top_left">' +
                     '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
@@ -375,7 +396,7 @@
                     '<div class="clear"></div>' +
                     '</div>' +
                     '<div class="mine_first_mid">' +
-                    '<div class="departure_li_style departure_li_time">' +
+                    '<div class="departure_li_style departure_li_time departure_li_route">' +
                     '<span class="departure_route_left">途径路线</span>' +
                     '<span class="departure_route">'+points+'</span>' +
                     '</div>' +
@@ -396,7 +417,47 @@
                     '</div>' +
                     '</div>' +
                     '<div class="mine_first_bottom">' +
-                    '<span class="mine_type mine_change" onclick="notOpend(this)">修改车单</span>' +
+                    '<span class="mine_type mine_change" onclick="mine_change(this)">修改车单</span>' +
+                    '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除车单</span>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '</li> ')
+        }
+
+        function addHistoryDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
+                                   departure_city, destination_city, departure, destination, inits_seats, car_brand, id,points) {
+            $('.history_clear').before('<li class="mine_list" index='+id+'>' +
+                    '<div class="mine_first_top">' +
+                    '<div class="mine_first_top_left">' +
+                    '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
+                    '<span>'+departure_city+'</span><span class="begin_city" style="color:#999794"><i class="circle"></i>'+departure+'</span>' +
+                    '<span>——</span>' +
+                    '<span>'+destination_city+'</span><span class="end_city" style="color:#999794"><i class="circle"></i>'+destination+'</span>' +
+                    '</div>' +
+                    '<div class="mine_first_top_right end_color">' +
+                    '<span>已完成</span>' +
+                    '</div>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '<div class="mine_first_mid">' +
+                    '<div class="departure_li_style departure_li_time">' +
+                    '<span>出行时间</span>' +
+                    '<span class="departure_time_mouth">'+insert_time+'</span>' +
+                    '<span style="color: #999794">' + begin_start_time + '-' + begin_end_time + '</span>' +
+                    '</div>' +
+                    '<div class="departure_li_style departure_li_time">' +
+                    '<span>发布时间</span>' +
+                    '<span class="departure_time_mouth">' + create_time + '</span>' +
+                    '<span style="color: #999794">' + begin_create_time + '</span>' +
+                    '<span class="departure_time_seat">' + inits_seats + '&nbsp;个座位</span>' +
+                    '</div>' +
+                    '<div class="departure_li_style departure_li_car_type">' +
+                    '<img src="/resource/images/pc_icon_car.png" class="departure_li_style_img">' +
+                    '<span class="departure_li_type">' + car_brand + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="mine_first_bottom">' +
+                    '<span class="mine_type mine_looking" onclick="looking_change(this)">查看车单</span>' +
                     '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除车单</span>' +
                     '<div class="clear"></div>' +
                     '</div>' +
@@ -413,8 +474,15 @@
             showFloatStyle("即将开通，敬请期待");
         }
         //修改车单
-        function mine_change(){
-
+        function mine_change(obj){
+            window.location.href="/laihui/driver/create_order?id="+$(obj).parent().parent().attr('index');
+        }
+        //查看车单
+        function looking_change(obj){
+            window.location.href="/laihui/car/detail?id="+$(obj).parent().parent().attr('index');
+        }
+        function toDetaile(obj){
+            window.location.href="/laihui/car/detail?id="+$(obj).attr('index');
         }
         //删除车单
         function mine_delete(){
@@ -472,81 +540,71 @@
                 <img src="/resource/images/pch_icon_history.png">
                 <span>历史车单</span>
             </div>
-            <li class="mine_list">
-                <div class="mine_first_top">
-                    <div class="mine_first_top_left">
-                        <img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">
-                        <span>郑州</span><span class="begin_city" style="color:#999794"><i class="circle"></i>中牟</span>
-                        <span>——</span>
-                        <span>洛阳</span><span class="end_city" style="color:#999794"><i class="circle"></i>涧西区</span>
-                    </div>
-                    <div class="mine_first_top_right end_color">
-                        <span>已完成</span>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <div class="mine_first_mid">
-                    <div class="departure_li_style departure_li_time">
-                        <span>出行时间</span>
-                        <span class="departure_time_mouth">08月10日</span>
-                        <span style="color: #999794">03:00-05:00</span>
-                    </div>
-                    <div class="departure_li_style departure_li_time">
-                        <span>发布时间</span>
-                        <span class="departure_time_mouth">08月10日</span>
-                        <span style="color: #999794">02:00</span>
-                        <span class="departure_time_seat">4&nbsp;个座位</span>
-                    </div>
-                </div>
-                <div class="mine_first_bottom">
-                    <span class="mine_type mine_looking">查看车单</span>
-                    <span class="mine_type mine_delete">删除车单</span>
-
-                    <div class="clear"></div>
-                </div>
-            </li>
-            <li class="mine_list">
-                <div class="mine_first_top">
-                    <div class="mine_first_top_left">
-                        <img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">
-                        <span>郑州</span><span class="begin_city" style="color:#999794"><i class="circle"></i>中牟</span>
-                        <span>——</span>
-                        <span>洛阳</span><span class="end_city" style="color:#999794"><i class="circle"></i>涧西区</span>
-                    </div>
-                    <div class="mine_first_top_right end_color">
-                        <span>已完成</span>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <div class="mine_first_mid">
-                    <div class="departure_li_style departure_li_time">
-                        <span>出行时间</span>
-                        <span class="departure_time_mouth">08月10日</span>
-                        <span style="color: #999794">03:00-05:00</span>
-                    </div>
-                    <div class="departure_li_style departure_li_time">
-                        <span>发布时间</span>
-                        <span class="departure_time_mouth">08月10日</span>
-                        <span style="color: #999794">02:00</span>
-                        <span class="departure_time_seat">4&nbsp;个座位</span>
-                    </div>
-                    <%--<div class="departure_li_style departure_li_car_type">--%>
-                        <%--<img src="/resource/images/pc_icon_car.png" class="departure_li_style_img">--%>
-                        <%--<span class="departure_li_type">大众</span>--%>
+            <%--<li class="mine_list">--%>
+                <%--<div class="mine_first_top">--%>
+                    <%--<div class="mine_first_top_left">--%>
+                        <%--<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">--%>
+                        <%--<span>郑州</span><span class="begin_city" style="color:#999794"><i class="circle"></i>中牟</span>--%>
+                        <%--<span>——</span>--%>
+                        <%--<span>洛阳</span><span class="end_city" style="color:#999794"><i class="circle"></i>涧西区</span>--%>
                     <%--</div>--%>
-                </div>
-                <div class="mine_first_bottom">
-                    <span class="mine_type mine_looking">查看车单</span>
-                    <span class="mine_type mine_delete">删除车单</span>
+                    <%--<div class="mine_first_top_right end_color">--%>
+                        <%--<span>已完成</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="clear"></div>--%>
+                <%--</div>--%>
+                <%--<div class="mine_first_mid">--%>
+                    <%--<div class="departure_li_style departure_li_time">--%>
+                        <%--<span>出行时间</span>--%>
+                        <%--<span class="departure_time_mouth">08月10日</span>--%>
+                        <%--<span style="color: #999794">03:00-05:00</span>--%>
+                    <%--</div>--%>
+                    <%--<div class="departure_li_style departure_li_time">--%>
+                        <%--<span>发布时间</span>--%>
+                        <%--<span class="departure_time_mouth">08月10日</span>--%>
+                        <%--<span style="color: #999794">02:00</span>--%>
+                        <%--<span class="departure_time_seat">4&nbsp;个座位</span>--%>
+                    <%--</div>--%>
+                    <%--&lt;%&ndash;<div class="departure_li_style departure_li_car_type">&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;<img src="/resource/images/pc_icon_car.png" class="departure_li_style_img">&ndash;%&gt;--%>
+                        <%--&lt;%&ndash;<span class="departure_li_type">大众</span>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
+                <%--</div>--%>
+                <%--<div class="mine_first_bottom">--%>
+                    <%--<span class="mine_type mine_looking">查看车单</span>--%>
+                    <%--<span class="mine_type mine_delete">删除车单</span>--%>
 
-                    <div class="clear"></div>
-                </div>
-            </li>
-            <div class="clear"></div>
+                    <%--<div class="clear"></div>--%>
+                <%--</div>--%>
+            <%--</li>--%>
+            <div class="clear history_clear"></div>
         </ul>
         <span class="not_message">暂无发布信息</span>
     </div>
-
+    <%--底部--%>
+    <div class="bottom_menu " onclick="changeMenu(this)">
+        <img src="/resource/images/pch_icon_toright.png" class="menu_style_icon menu_style_active">
+    </div>
+    <div class="message_bottom">
+        <div class="message_bottom_type" onclick="toList()">
+            <div class="img_box">
+                <img src="/resource/images/pch_icon_menu_car.png" class="icon_style icon_car">
+            </div>
+            <span>找车</span>
+        </div>
+        <div class="message_bottom_type" onclick="notOpend()">
+            <div class="img_box">
+                <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
+            </div>
+            <span>找人</span>
+        </div>
+        <div class="message_bottom_type menu_active" onclick="toMine()">
+            <div class="img_box">
+                <img src="/resource/images/pch_icon_menu_me_active.png" class="icon_style icon_mine">
+            </div>
+            <span>我的</span>
+        </div>
+    </div>
 </div>
 </body>
 </html>

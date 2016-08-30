@@ -82,17 +82,21 @@
 			var btnstr = '';
 			for (var i = 0, l = settings.buttons.length; i < l; i++) {
 				var item = settings.buttons[i];
-				if (item.yes) {
-					btnstr += '<td><button class="ui-confirm-submit " data-type="yes">' + item.yes + '</button></td>';
-				}
-				if (item.no) {
-					btnstr += '<td><button class="ui-confirm-no" data-type="no">' + item.no + '</button></td>';
-				}
-				if (item.close) {
-					btnstr += '<td><button class="ui-confirm-close js-dialog-close" data-type="close">' + item.close + '</button></td>';
-				}
+
+				//if (item.no) {
+				//	btnstr += '<td><button class="ui-confirm-no" data-type="no">' + item.no + '</button></td>';
+				//}
+				//if (item.yes) {
+				//	btnstr += '<td><button class="ui-confirm-submit " data-type="yes">' + item.yes + '</button></td>';
+				//}
+				//if (item.close) {
+				//	btnstr += '<td><button class="ui-confirm-close js-dialog-close" data-type="close">' + item.close + '</button></td>';
+				//}
 			}
-			action = '<table class="ui-dialog-action"><tr>' + btnstr + '</tr></table>';
+			action = '<table class="ui-dialog-action">' +
+				'<tr><td><button class="ui-confirm-no" data-type="no">取消</button></td>' +
+				'<td><button class="ui-confirm-submit " data-type="yes">确定</button></td></tr>' +
+				'</table>';
 			if(settings.position=="bottom"){
 				html=action+html;
 			}else{

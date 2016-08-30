@@ -66,7 +66,7 @@
     }
 
     .publish_mid_li {
-      height: 3.8rem;
+      min-height: 4rem;
       line-height: 3.8rem;
       position: relative;
       margin-bottom: .2rem;
@@ -226,6 +226,7 @@
       border: none;
       width: 100%;
       height: 3.2rem;
+      line-height: 3.2rem;
       color: #52514f;
     }
 
@@ -291,11 +292,14 @@
       color: #999;
     }
     .place_time{
-      width: 5.6rem;
       /*text-align: center;*/
     }
     .place_start_time,.place_end_time{
-      text-align: center;
+      width: 7rem;
+      text-align: left;
+    }
+    .place_date{
+      width: 70%;
     }
     .place_city{
       width: 7rem;
@@ -347,6 +351,9 @@
       resize: none;
       outline: none;
       color: #52514f;
+      font-size: 1.4rem;
+      margin-top: -.3rem;
+      min-height: 5rem;
     }
     .slide_mid_ul_no,.slide_mid_ul_yes{
       max-height: 30rem;
@@ -381,11 +388,11 @@
     $(document).ready(function () {
 
       changeFontSize();
-      addTimeStyle();
       getStartPlace();
       addHourStyle();
       addSeat();
-//      setShowData();
+      setShowData();
+      addTimeStyle();
       //地点选择
       var selectArea = new MobileSelectArea();
       selectArea.init({
@@ -424,7 +431,7 @@
       });
       loadYes();
       loadNo();
-
+      checkId();
     });
     var array = [];
     var array_seat = [];
@@ -435,7 +442,7 @@
     //时间数据
     var timeData = [];
     var hourData = [];
-    var day = ["今天", "明天"];
+    var day = [];
     var array_end = [];
     var placeData = [];
     var send_time;
@@ -446,7 +453,134 @@
     var no_array=[];
     var yes_array=[];
     var route_array=[];
-    //添加地点选择
+    var url = window.location.href;
+    var car_id;
+    var mobile_insert="";//此处填写手机号
+
+    //判断是否是修改信息
+    function checkId() {
+
+        if (url.indexOf("=") == -1) {
+            if(mobile_insert==""){
+              $('.publish_mobile').val(mobile_insert);
+            }else{
+              $('.publish_mobile').val(mobile_insert);
+            }
+        } else {
+          var item_id = url.split("?id=")[1];
+          item_id = item_id.split("&")[0];
+          car_id=item_id;
+          updateMessage(item_id)
+        }
+
+    }
+    //更新信息
+    function updateMessage(item_id) {
+      var obj = {};
+      obj.action = 'show';
+      obj.id = item_id;
+      obj.user_id = user_id;
+      validate.validate_submit('/api/db/departure', obj, insertMessage);
+    }
+    //添加用户数据
+    function insertMessage() {
+      if(global_data.result.total == 0){
+        window.location.href="/404"
+      }else
+      {
+        for (var i = 0; i < global_data.result.data.length; i++) {
+          var driving_name = global_data.result.data[i].driving_name;//车主姓名
+          var info_status = global_data.result.data[i].info_status;//状态信息1：有空位；2：已满；-1：已取消
+          var start_time = global_data.result.data[i].start_time;//开始时间
+          var end_time = global_data.result.data[i].end_time;//结束时间
+          var mobile = global_data.result.data[i].mobile;//手机号
+          var departure_city = global_data.result.data[i].departure_city;//出发城市
+          var destination_city = global_data.result.data[i].destination_city;//目的城市
+          var departure = global_data.result.data[i].departure;//出发小城
+          var destination = global_data.result.data[i].destination;//目的小城市
+          var description = global_data.result.data[i].description;//描述信息
+          var tag_yes_content = global_data.result.data[i].tag_yes_content;//yes标签
+          var tag_no_content = global_data.result.data[i].tag_no_content;//no标签
+          var points = global_data.result.data[i].points;//地点
+          var inits_seats = global_data.result.data[i].inits_seats;//可用座位
+          var car_brand = global_data.result.data[i].car_brand;//车辆品牌
+          var id = global_data.result.data[i].id;//id
+          var create_time = global_data.result.data[i].create_time;//id
+
+          //开始时间设置
+          var insert_time = start_time.substring(0, 10);
+          var time_change = insert_time.split('-');
+          //发布时间设置
+          var begin_create_time = create_time.substring(11, 16);
+          create_time = create_time.substring(0, 10);
+          var time_create = create_time.split('-');
+          create_time = time_create[1] + '月' + time_create[2] + '日';
+
+          //开始结束时间
+          var begin_start_time = start_time.substring(11, 16);
+          var begin_end_time = end_time.substring(11, 16);
+          begin_start_time = begin_start_time.split(":")[0]+"点 "+begin_start_time.split(":")[1]+"分";
+          begin_end_time = begin_end_time.split(":")[0]+"点 "+begin_end_time.split(":")[1]+"分";
+          var demo_place_val=departure_city+" "+destination_city;
+          //添加标题信息
+
+
+          tag_yes_content= tag_yes_content.replace(/丶/g, "、");
+          tag_no_content= tag_no_content.replace(/丶/g, "、");
+
+          var time=new Date();
+          var date  = time.getDate();
+
+          if(date == time_change[2]){
+            insert_time = "今天("+time_change[1] + '-' + time_change[2]+")";
+          }else{
+            insert_time = "明天("+time_change[1] + '-' + time_change[2]+")";
+          }
+
+          no_array=[];
+          yes_array=[];
+          route_array= points.split("丶");
+          no_array=tag_no_content.split('、');
+          yes_array=tag_yes_content.split('、');
+          var text_tags;
+          if(tag_yes_content=="" && tag_no_content == ""){
+            text_tags=""
+          }else{
+            if(tag_no_content==""){
+              text_tags=tag_yes_content
+            }else if(tag_yes_content==""){
+              text_tags=tag_no_content
+            }else{
+              text_tags=tag_no_content+"、"+tag_yes_content;
+            }
+          }
+          var tags_text=tag_yes_content+tag_no_content;
+          $('#demo_place').val(demo_place_val);
+
+          $('.publish_mobile').val(mobile);
+          $('.publish_remark').val(description);
+          $('#demo_time').val(insert_time);
+          $('#demo_hour').val(begin_start_time);
+          $('#demo_min').val(begin_end_time);
+          $('#demo_set').val(inits_seats);
+          $('.tags_container').val(text_tags);
+          $('.publish_name').val(driving_name);
+          $('.publish_type').val(car_brand);
+          $('.item_points').text(points);
+          addTabManagerStyle();
+          if(route_array[0]==""){
+            $('.publish_li_route').hide()
+          }else{
+            $('.publish_li_route').show();
+            addRouteStyle();
+            $('.publish_route_box_span').show();
+          }
+
+        }
+      }
+
+    }
+
     //获取出发地数据
     function getStartPlace() {
       var data_obj = {};
@@ -640,7 +774,7 @@
     //发送时间的数据
     function setSendData(){
       var time;
-      var str =$('.publish_begin_time').text().substring(0,2);
+      var str =$('#demo_time').val().substring(0,2);
       if(str=="今天"){
         time=new Date();
         changeDataStyle(time)
@@ -710,25 +844,25 @@
           tag_no_content+=no_array[i]+'丶'
         }
       }
-
-
-
       var data_obj={};
       var a = $('#demo_place').val().split(' ');
-      mobile = $('.publish_mobile').val().toString();
+      mobile = $('.publish_mobile').val().toString().trim();
+      if(mobile.length>11){
+       if(mobile.indexOf("，")==-1){
+         mobile.replace("，",",")
+       }
+      }
       var description=$('.publish_remark').val();
       var departure_county=$('.place_start_city').val();
       var destination=$('.place_end_city ').val();
       var driving_name=$('.publish_name').val();
       var demo_set=$('#demo_set').val();
       var car_brand=$('.publish_type').val();
+      if (url.indexOf("=") == -1) {
 
-//      if (url.indexOf("=") == -1) {
-//
-//      } else {
-//        data_obj.id = driver_id;
-//      }
-
+      } else {
+        data_obj.id = car_id;
+      }
       data_obj.action = 'add';
       data_obj.user_id = user_id;
       data_obj.start_time = send_time;
@@ -779,7 +913,47 @@
       }
       addNoTagsStyle();
     }
+    //添加下滑
+    function addTabManagerStyle(){
+      //判断取消再次显示情况下数据
+      for(var i=0;i<$('.success_passed').length;i++){
+        var text1=$($('.success_passed')[i]).children('.slide_mid_li_span').text();
+        for(var j=0;j<yes_array.length;j++){
+          var text2=yes_array[j];
+          if(text1==text2){
+            $($('.success_passed')[i]).children('.slide_select').addClass('slide_select_active')
+          }
+        }
+      }
+      for(var i=0;i<$('.not_passed').length;i++){
+        var text1=$($('.not_passed')[i]).children('.slide_mid_li_span').text();
+        for(var j=0;j<no_array.length;j++){
+          var text2=no_array[j];
+          if(text1==text2){
+            $($('.not_passed')[i]).children('.slide_select').addClass('slide_select_active')
+          }
+        }
+      }
+    }
+    //添加路线
+    function addRouteStyle(){
+      $('.publish_route_container').remove();
+      for(var i=0;i<route_array.length;i++){
+        $('.publish_route_box_span').before('<div class="publish_route_container">' +
+                '<div class="publish_route_box_input">' +
+                '<div class="line_container">' +
+                '<div class="line_slide"></div>' +
+                '<div class="line_circle"></div>' +
+                '</div>' +
+                '<input type="text" value="'+route_array[i]+'" index="" class="main_route input_style" oninput="sendKeepDownInput(this)">' +
+                '<span class="publish_route_box_remove" onclick="removeInput(this)">X</span>' +
+                '<ul class="publish_route_ul">' +
 
+                '</ul>' +
+                '</div>' +
+                '</div>');
+      }
+    }
     //添加标签列表
     function addYesTagsStyle(){
       for(var i=0;i<yes_tags.length;i++){
@@ -853,7 +1027,37 @@
       }
     }
 
+    //显示今天和明天信息
+    function setShowData(){
 
+      var str_time1=new Date();
+      for(var i=0;i<2;i++){
+        var obj={};
+        var str_time2=str_time1.getTime()+(1000*60*60*24)*i;
+        var time2 = new Date(str_time2);
+        var year2  = time2.getFullYear();
+        var month2 = time2.getMonth()+1;
+        var date2  = time2.getDate();
+        obj.year = year2;
+        if(month2.toString().length==1){
+          obj.month = "0"+month2;
+        }else{
+          obj.month = parseInt(month2);
+        }
+        obj.date = date2;
+        array_date.push(obj);
+      }
+
+      for(var j=0;j<2;j++){
+        if(j==0){
+          day.push("今天("+array_date[j].month+"-"+array_date[j].date+")")
+          $('#demo_time').val("今天("+array_date[j].month+"-"+array_date[j].date+")")
+        }else{
+          day.push("明天("+array_date[j].month+"-"+array_date[j].date+")")
+        }
+
+      }
+    }
   </script>
 </head>
 <body scroll="no">
@@ -906,7 +1110,7 @@
           <input type="text" id="demo_place" placeholder="选择起止城市" readonly="readonly" class="place_start_to_end input_disabled"  onclick="slideCity()"/>
         </div>
       </li>
-      <li class="publish_mid_li">
+      <li class="publish_mid_li" style="display: none">
         <div class="publish_left_span">
           <span>县级城市</span>
         </div>
@@ -946,11 +1150,12 @@
           <span>出行时间</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text" id="demo_time" placeholder="出行时间" readonly="readonly" class="place_time input_disabled"/>
-          <input type="text" id="demo_hour" placeholder="开始时间" readonly="readonly" class="place_time place_start_time input_disabled"/>
-          <span>-</span>
-          <input type="text" id="demo_min" placeholder="结束时间" readonly="readonly" class="place_time place_end_time input_disabled"/>
+          <input type="text" id="demo_time" placeholder="选择日期" readonly="readonly" class="place_time place_date input_disabled"/>
+          <input type="text" id="demo_hour" placeholder="最早" readonly="readonly" class="place_time place_start_time input_disabled"/>
+          <span>--  </span>
+          <input type="text" id="demo_min" placeholder="最晚" readonly="readonly" class="place_time place_end_time input_disabled"/>
         </div>
+        <div class="clear"></div>
       </li>
 
       <li class="publish_mid_li">
@@ -958,7 +1163,7 @@
           <span>可用座位</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text" id="demo_set" placeholder="可用座位" readonly="readonly" class="input_disabled"/>
+          <input type="tel" id="demo_set" placeholder="可用座位" readonly="readonly" class="input_disabled"/>
         </div>
       </li>
       <li class="publish_mid_li">
@@ -982,7 +1187,7 @@
           <span>联系电话</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text" placeholder="若有两个联系方式,请用逗号隔开" class="publish_mobile input_disabled"/>
+          <input type="tel" placeholder="若有两个联系方式,请用逗号隔开" class="publish_mobile input_disabled"/>
         </div>
       </li>
       <li class="publish_mid_li">

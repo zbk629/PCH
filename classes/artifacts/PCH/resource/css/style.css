@@ -63,6 +63,7 @@ input, textarea {
     -webkit-tap-highlight-color:rgba(255,0,0,0);
     -webkit-appearance:none;
     border: none;
+    font-size: 1.4rem;
 }
 li {
     list-style: none;
@@ -88,7 +89,7 @@ input:focus{
     width: 4rem;
     position: fixed;
     right: 1.1rem;
-    bottom: 8rem;
+    bottom: 9.3rem;
     z-index: 99;
     display: none;
 }
@@ -366,3 +367,62 @@ input:focus{
     text-align: center;
 }
 /*弹出框样式结束*/
+
+/*底部操作*/
+.message_bottom{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    height: 4.2rem;
+    border-top:1px solid #e8e8e8;
+}
+.message_bottom_type{
+    width: 33.3%;
+    float: left;
+    text-align: center;
+    line-height: 6.4rem;
+    color: #888;
+    position: relative;
+    cursor: pointer;
+}
+.icon_style{
+    width: 100%;
+}
+.img_box{
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: -1.2rem;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+.menu_active{
+    color: #F5AD4E;
+}
+.type_container_ico{
+    font-size: 1.8rem;
+}
+.bottom_menu{
+    position: fixed;
+    bottom: 4.6rem;
+    right: 1rem;
+    width: 4rem;
+    background-color: #000;
+    border-radius: 50%;
+    height: 4rem;
+    opacity: 0.5;
+}
+.bottom_menu img{
+    width: 70%;
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    top: .6rem;
+}
+.menu_style_active{
+    /*transform: rotate(180deg);*/
+    right: -.2rem;
+}
+/*底部操作结束*/

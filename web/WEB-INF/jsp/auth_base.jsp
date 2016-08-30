@@ -38,13 +38,13 @@
     .message_header{
       width: 80%;
       float: left;
-      padding-top: 3rem;
+      padding-top: 2rem;
       padding-left: 2rem;
       height: 4rem;
     }
     .message_header img{
-      width: 4rem;
-      height: 4rem;
+      width: 5rem;
+      height: 5rem;
       border-radius: 50%;
       /* display: inline-block; */
       float: left;
@@ -119,41 +119,7 @@
       background-color: #27ae60;
       box-shadow: 2px 2px 10px 2px #C5C5C5;
     }
-    .message_bottom{
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #fff;
-      height: 4.2rem;
-      border-top:1px solid #e8e8e8;
-    }
-    .message_bottom_type{
-      width: 33.3%;
-      float: left;
-      text-align: center;
-      line-height: 6.4rem;
-      color: #888;
-      position: relative;
-      cursor: pointer;
-    }
-    .icon_style{
-      width: 100%;
-    }
-    .img_box{
-      width: 2rem;
-      height: 2rem;
-      position: absolute;
-      top: -1.2rem;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
-    }
-    .menu_active{
-      color: #F5AD4E;
-    }
-    .type_container_ico{
-      font-size: 1.8rem;
-    }
+
     @media screen and (max-width: 2000px) {
       body{
         max-width: 1080px;
@@ -170,6 +136,7 @@
       }
 
     }
+
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
@@ -208,20 +175,13 @@
     function toPublish(){
       window.location.href="/laihui/driver/create_order"
     }
-    function toList(){
-      window.location.href="/laihui/car/list"
-    }
-    function toMine(){
-      window.location.href="/auth/base"
-    }
 
-    function notOpend(){
-//      window.location.href="/laihui/driver/create_order"
-      showFloatStyle("即将开通，敬请期待");
-    }
+
+
     function toMyList(){
       window.location.href="/laihui/passenger/order_list"
     }
+
   </script>
 </head>
 <body>
@@ -258,12 +218,16 @@
         <span>我的发车信息</span>
         <div class="right_icon">></div>
       </li>
-      <li class="message_mid_li last_li">
+      <li class="message_mid_li last_li" onclick="notOpend()">
         <span>我的订座信息</span>
         <div class="right_icon">></div>
       </li>
     </ul>
   </div>
+</div>
+<%--底部--%>
+<div class="bottom_menu " onclick="changeMenu(this)">
+  <img src="/resource/images/pch_icon_right_to.png" class="menu_style_icon menu_style_active">
 </div>
 <div class="message_bottom">
   <div class="message_bottom_type" onclick="toList()">
