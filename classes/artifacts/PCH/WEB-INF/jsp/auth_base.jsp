@@ -234,19 +234,19 @@
       </li>
     </ul>
   </div>
-  <div class="message_bottom">
-      <div class="message_bottom_type" onclick="toList()">
-        <img src="/resource/images/pch_icon_menu_car.png" class="icon_style icon_car">
-        <span>找车</span>
-      </div>
-      <div class="message_bottom_type" onclick="notOpend()">
-        <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
-        <span>找人</span>
-      </div>
-      <div class="message_bottom_type menu_active" onclick="toMine()">
-        <img src="/resource/images/pch_icon_menu_me_active.png" class="icon_style icon_mine">
-        <span>我的</span>
-      </div>
+</div>
+<div class="message_bottom">
+  <div class="message_bottom_type" onclick="toList()">
+    <img src="/resource/images/pch_icon_menu_car.png" class="icon_style icon_car">
+    <span>找车</span>
+  </div>
+  <div class="message_bottom_type" onclick="notOpend()">
+    <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
+    <span>找人</span>
+  </div>
+  <div class="message_bottom_type menu_active" onclick="toMine()">
+    <img src="/resource/images/pch_icon_menu_me_active.png" class="icon_style icon_mine">
+    <span>我的</span>
   </div>
 </div>
 </body>

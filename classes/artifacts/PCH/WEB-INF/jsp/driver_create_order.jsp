@@ -788,7 +788,7 @@
       data_obj.tag_no_content = tag_no_content;
       data_obj.driving_name = driving_name;
       data_obj.car_brand = car_brand;
-      validate.validate_submit('/api/driver/departure1', data_obj, success);
+      validate.validate_submit('/api/driver/departure', data_obj, success);
     }
 
     function success(){
@@ -914,6 +914,8 @@
         window.history.go(-1);
       }
     }
+
+
   </script>
 </head>
 <body scroll="no">

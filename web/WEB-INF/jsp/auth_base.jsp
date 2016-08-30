@@ -143,7 +143,22 @@
     .menu_active{
       color: #F5AD4E;
     }
+    @media screen and (max-width: 2000px) {
+      body{
+        max-width: 1080px;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+      }
 
+    }
+    @media screen and (max-width: 1080px) {
+      body{
+        max-width: 1080px;
+        transform: none;
+        -webkit-transform: none;
+      }
+
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
@@ -234,19 +249,19 @@
       </li>
     </ul>
   </div>
-  <div class="message_bottom">
-      <div class="message_bottom_type" onclick="toList()">
-        <img src="/resource/images/pch_icon_menu_car.png" class="icon_style icon_car">
-        <span>找车</span>
-      </div>
-      <div class="message_bottom_type" onclick="notOpend()">
-        <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
-        <span>找人</span>
-      </div>
-      <div class="message_bottom_type menu_active" onclick="toMine()">
-        <img src="/resource/images/pch_icon_menu_me_active.png" class="icon_style icon_mine">
-        <span>我的</span>
-      </div>
+</div>
+<div class="message_bottom">
+  <div class="message_bottom_type" onclick="toList()">
+    <img src="/resource/images/pch_icon_menu_car.png" class="icon_style icon_car">
+    <span>找车</span>
+  </div>
+  <div class="message_bottom_type" onclick="notOpend()">
+    <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
+    <span>找人</span>
+  </div>
+  <div class="message_bottom_type menu_active" onclick="toMine()">
+    <img src="/resource/images/pch_icon_menu_me_active.png" class="icon_style icon_mine">
+    <span>我的</span>
   </div>
 </div>
 </body>
