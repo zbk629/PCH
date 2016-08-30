@@ -26,10 +26,12 @@
   <script src="/resource/js/mobile-select-area.js" type="text/javascript"></script>
   <script src="/resource/js/zepto.js" type="text/javascript"></script>
   <style type="text/css">
+
     .publish_top {
       text-align: center;
       line-height: 4.2rem;
-      font-size: 1.4rem;
+      font-size: 1.8rem;
+      font-weight: bold;
       border-bottom: 1px solid #e8e8e8;
       padding: 0 1rem;
       background-color: #F5AD4E;
@@ -136,12 +138,14 @@
 
     .publish_bottom {
       position: fixed;
-      height: 5rem;
-      line-height: 5rem;
+      height: 4.2rem;
+      line-height: 4.2rem;
       background-color: #f5ad4e;
       color: #fff;
       bottom: 0;
       width: 100%;
+      font-size: 1.8rem;
+      font-weight: bold;
       text-align: center;
     }
 
@@ -420,17 +424,13 @@
       });
       loadYes();
       loadNo();
-//      hideUl();
+
     });
     var array = [];
     var array_seat = [];
     var array_date = [];
     var user_id = 86;
-//    //加载城市数组
-//    var city_array = [];
-    //选择位置（都有哪几个）数组
-//    var city_select = [];
-    //向后端发送的数组
+
     var send_array = [];
     //时间数据
     var timeData = [];
@@ -456,11 +456,7 @@
     function findMessage(){
       return true;
     }
-//    function hideUl(){
-//      $(document).click(function(e){
-//        $(".publish_route_ul").empty();
-//      });
-//    }
+
     //添加日期格式
     function addTimeStyle() {
       for (var j=0;j<day.length;j++) {
@@ -556,34 +552,6 @@
       }
     })();
 
-//    //改变诚信必发颜色
-//    function changeMustSelect(obj) {
-//      if ($(obj).children('.publish_mid_driver_img').attr('src') == '/resource/images/pc_icon_shiyuan.png') {
-//        $(obj).children('.publish_mid_driver_img').attr('src', '/resource/images/pc_icon_kongyuan.png').removeClass('publish_active');;
-//        $('.to_pay').hide();
-//      } else {
-//        $(obj).children('.publish_mid_driver_img').attr('src', '/resource/images/pc_icon_shiyuan.png').addClass('publish_active');
-//        $('.to_pay').show();
-//      }
-//
-//    }
-//    //发送ajax获取城市信息
-//    function sendMessage(key, city) {
-//      var obj = {};
-//      obj.key = key;
-//      obj.city = city;
-//      var url = "/place_suggestion";
-//      validate.validate_submit2(url, obj, pushToArray);
-//    }
-//    //将信息存入数组
-//    function pushToArray() {
-//      city_array = [];
-//      for (var i = 0; i < global_data.result.length; i++) {
-//        city_array.push(global_data.result[i]);
-//      }
-//      addCitySlide(city_array);
-//    }
-
     //移除输入框
     function removeInput(obj) {
       $(obj).parent().parent().remove();
@@ -616,34 +584,7 @@
         $($('.input_style')[i]).attr('index',i);
       }
     }
-//    //添加城市下拉列表样式
-//    function addCitySlide(city_array) {
-//      $('.publish_route_li').remove();
-//      for (var i = 0; i < city_array.length; i++) {
-//        var name = city_array[i].name;
-//        var city = city_array[i].city;
-//        var district = city_array[i].district;
-//        var index = i;
-//        addCitySlideStyle(name, city, district, index);
-//      }
-//    }
-//    //添加城市下拉列表样式
-//    function addCitySlideStyle(name, city, district, index) {
-//      $('.publish_route_ul').append('<li class="publish_route_li" index=' + index + ' onclick="selectCity(this)">' +
-//              '<span class="key">'+name+'</span>' +
-//              '<span class="city" style="color: #999794">'+city+district+'</span>' +
-//              '</li>')
-//    }
-//    //选择城市
-//    function selectCity(obj) {
-//      //显示用的数据
-//      var name = $(obj).children('.key').text();
-//      var city = $(obj).children('.city').text();
-//      var number = $(obj).parent().parent().children('.input_style').attr('index');
-//      $(obj).parent().parent().children('input').val(name+" "+city);
-//      $(obj).parent().hide();
-//      send_array.splice(number,1,city_array[$(obj).attr('index')]);
-//    }
+
     //按键请求城市信息
     function sendKeepDownInput(obj) {
       if($(obj).val() ==""){
@@ -804,11 +745,11 @@
       data_obj.tag_no_content = tag_no_content;
       data_obj.driving_name = driving_name;
       data_obj.car_brand = car_brand;
-      validate.validate_submit('/api/driver/departure', data_obj, success);
+      validate.validate_submit('/api/db/departure', data_obj, success);
     }
 
     function success(){
-      showFloatStyle("跳转列表页面")
+      window.location.href="/laihui/passenger/order_list";
     }
 
     //添加YES/NO标签
@@ -903,26 +844,7 @@
       }
       $('.tags_container').val(tags_val);
     }
-//    //显示今天和明天信息
-//    function setShowData(){
-//      var str_time1=new Date();
-//      for(var i=0;i<2.length;i++){
-//        var obj={};
-//        var str_time2=str_time1.getTime()+(1000*60*60*24)*i;
-//        var time2 = new Date(str_time2);
-//        var year2  = time2.getFullYear();
-//        var month2 = time2.getMonth()+1;
-//        var date2  = time2.getDate();
-//        obj.year = year2;
-//        if(month2.toString().length==1){
-//          obj.month = "0"+month2;
-//        }else{
-//          obj.month = parseInt(month2);
-//        }
-//        obj.date = date2;
-//        array_date.push(obj);
-//      }
-//    }
+
     function returnCheck() {
       if (document.referrer == "") {
         window.location.href = '/auth/base';

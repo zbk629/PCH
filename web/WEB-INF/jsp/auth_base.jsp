@@ -56,6 +56,7 @@
       float: left;
       color: #fff;
       margin-left: 1rem;
+      font-size: 1.8rem;
     }
     .layout{
       display: inline-block;
@@ -123,25 +124,35 @@
       bottom: 0;
       width: 100%;
       background-color: #fff;
-      height: 6rem;
+      height: 4.2rem;
       border-top:1px solid #e8e8e8;
     }
     .message_bottom_type{
       width: 33.3%;
       float: left;
       text-align: center;
-      line-height: 8rem;
+      line-height: 6.4rem;
       color: #888;
       position: relative;
+      cursor: pointer;
     }
     .icon_style{
-      width: 2.2rem;
-      height: 2.2rem;
+      width: 100%;
+    }
+    .img_box{
+      width: 2rem;
+      height: 2rem;
       position: absolute;
-      top: 1rem;
+      top: -1.2rem;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
     }
     .menu_active{
       color: #F5AD4E;
+    }
+    .type_container_ico{
+      font-size: 1.8rem;
     }
     @media screen and (max-width: 2000px) {
       body{
@@ -202,11 +213,14 @@
     function toMine(){
       window.location.href="/auth/base"
     }
+
     function notOpend(){
 //      window.location.href="/laihui/driver/create_order"
       showFloatStyle("即将开通，敬请期待");
     }
-
+    function toMyList(){
+      window.location.href="/laihui/passenger/order_list"
+    }
   </script>
 </head>
 <body>
@@ -239,7 +253,7 @@
   </div>
   <div class="message_mid">
     <ul class="message_mid_ul">
-      <li class="message_mid_li">
+      <li class="message_mid_li" onclick="toMyList()">
         <span>我的发车信息</span>
         <div class="right_icon">></div>
       </li>
@@ -252,15 +266,21 @@
 </div>
 <div class="message_bottom">
   <div class="message_bottom_type" onclick="toList()">
-    <img src="/resource/images/pch_icon_menu_car.png" class="icon_style icon_car">
+    <div class="img_box">
+      <img src="/resource/images/pch_icon_menu_car.png" class="icon_style icon_car">
+    </div>
     <span>找车</span>
   </div>
   <div class="message_bottom_type" onclick="notOpend()">
-    <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
+    <div class="img_box">
+      <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
+    </div>
     <span>找人</span>
   </div>
   <div class="message_bottom_type menu_active" onclick="toMine()">
-    <img src="/resource/images/pch_icon_menu_me_active.png" class="icon_style icon_mine">
+    <div class="img_box">
+      <img src="/resource/images/pch_icon_menu_me_active.png" class="icon_style icon_mine">
+    </div>
     <span>我的</span>
   </div>
 </div>

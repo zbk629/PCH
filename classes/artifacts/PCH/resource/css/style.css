@@ -2,7 +2,10 @@
     margin: 0;
     padding: 0;
 }
-
+html{
+    height: 100%;
+    background-color: #fafafa;
+}
 body {
     background: #f2efeb;
     -webkit-font-smoothing: antialiased;
