@@ -3,6 +3,7 @@ package com.cyparty.laihui.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.DepartureInfo;
+import com.cyparty.laihui.domain.ErrorCodeMessage;
 import com.cyparty.laihui.domain.Tag;
 import com.cyparty.laihui.utilities.OssUtil;
 import com.cyparty.laihui.utilities.ReturnJsonUtil;
@@ -130,14 +131,23 @@ public class PCXXHController {
             }
             int user_id=0;
             //todo:user_id改为从session中获取
-            if(request.getParameter("user_id")!=null){
+            if (request.getSession().getAttribute("user_id") != null) {
+
+                try {
+                    user_id = (Integer) request.getSession().getAttribute("user_id");
+                } catch (Exception e) {
+                    id = 0;
+                    e.printStackTrace();
+                }
+            }
+            /*if(request.getParameter("user_id")!=null){
                 try {
                     user_id=Integer.parseInt(request.getParameter("user_id"));
                 } catch (NumberFormatException e) {
                     user_id=0;
                     e.printStackTrace();
                 }
-            }
+            }*/
             switch (action) {
                 case "add":
                     if(user_id>0){
@@ -201,6 +211,7 @@ public class PCXXHController {
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                         }*/
                     }else {
+                        result.put("error_code", ErrorCodeMessage.getLoginError_code());
                         json = ReturnJsonUtil.returnFailJsonString(result, "请登陆！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }

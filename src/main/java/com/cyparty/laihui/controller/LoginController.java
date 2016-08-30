@@ -3,6 +3,7 @@ package com.cyparty.laihui.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.Code;
+import com.cyparty.laihui.domain.ErrorCodeMessage;
 import com.cyparty.laihui.domain.User;
 import com.cyparty.laihui.utilities.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +47,16 @@ public class LoginController {
                 int id = laiHuiDB.createWxUser(user);
                 //下面保存手机号和密码
                 request.getSession().setAttribute("user_id", id);
-                return "redirect:/reg?id=" + id;
+                //return "redirect:/reg?id=" + id;
+                return "redirect:/reg" ;
             } else {
                 User now_user = userList.get(0);
                 if (now_user.getUser_mobile() != null && now_user.getUser_mobile().length() == 11) {
                     request.getSession().setAttribute("user_id", userList.get(0).getUser_id());
-                    return "redirect:/";
+                    return "redirect:/auth/base";
                 } else {
-                    return "redirect:/reg?id=" + now_user.getUser_id();
+                    return "redirect:/reg";
+                    //return "redirect:/reg?id=" + now_user.getUser_id();
                 }
             }
         }
@@ -61,7 +64,8 @@ public class LoginController {
     }
     @RequestMapping("/reg")
     public String register(HttpServletRequest request, Model model) {
-        String user_id = request.getParameter("id");
+        //String user_id = request.getParameter("id");
+        String user_id=(String)request.getSession().getAttribute("user_id");
         if (user_id != null) {
             int id = 0;
             try {
@@ -93,22 +97,22 @@ public class LoginController {
             String action = request.getParameter("action");
             int id = 0;
             //todo:user_id改为从session中获取
-            /*if (request.getSession().getAttribute("user_id") != null) {
+            if (request.getSession().getAttribute("user_id") != null) {
                 try {
                     id = (Integer) request.getSession().getAttribute("user_id");
                 } catch (Exception e) {
                     id = 0;
                     e.printStackTrace();
                 }
-            }*/
-            if (request.getParameter("user_id") != null) {
+            }
+            /*if (request.getParameter("user_id") != null) {
                 try {
                     id = (Integer.parseInt(request.getParameter("user_id"))) ;
                 } catch (Exception e) {
                     id = 0;
                     e.printStackTrace();
                 }
-            }
+            }*/
             String code = "";
             boolean is_success = true;
             switch (action) {
@@ -133,6 +137,7 @@ public class LoginController {
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                         }
                     } else {
+                        result.put("error_code", ErrorCodeMessage.getLoginError_code());
                         json = ReturnJsonUtil.returnFailJsonString(result, "链接失效，请重新打开！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }
@@ -172,6 +177,7 @@ public class LoginController {
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                         }
                     } else {
+                        result.put("error_code", ErrorCodeMessage.getLoginError_code());
                         json = ReturnJsonUtil.returnFailJsonString(result, "链接失效，请重新打开！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }
@@ -198,7 +204,7 @@ public class LoginController {
             String action = request.getParameter("action");
             int id = 0;
             //todo:user_id改为从session中获取
-            /*if (request.getSession().getAttribute("user_id") != null) {
+            if (request.getSession().getAttribute("user_id") != null) {
 
                 try {
                     id = (Integer) request.getSession().getAttribute("user_id");
@@ -206,35 +212,37 @@ public class LoginController {
                     id = 0;
                     e.printStackTrace();
                 }
-            }*/
-            if (request.getParameter("user_id") != null) {
+            }
+            /*if (request.getParameter("user_id") != null) {
                 try {
                     id = (Integer.parseInt(request.getParameter("user_id"))) ;
                 } catch (Exception e) {
                     id = 0;
                     e.printStackTrace();
                 }
-            }
+            }*/
             boolean is_success = true;
             switch (action) {
                 case "base":
                     if (id != 0) {
                         json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getUserInfo(laiHuiDB,id), "用户基本信息获取成功！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
-                    } else {
-                        json = ReturnJsonUtil.returnFailJsonString(result, "登陆状态失效，请重新登陆！");
-                        return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }
+                    result.put("error_code", ErrorCodeMessage.getLoginError_code());
+                    json = ReturnJsonUtil.returnFailJsonString(result, "登陆状态失效，请重新登陆！");
+                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+
                 case "un_binding":
                     if (id != 0) {
                         String update_sql=" set user_mobile=null where user_id="+id;
                         laiHuiDB.update("pc_wx_user",update_sql);
-                        json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getUserInfo(laiHuiDB,id), "用户基本信息获取成功！");
-                        return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
-                    } else {
-                        json = ReturnJsonUtil.returnFailJsonString(result, "登陆状态失效，请重新登陆！");
+                        json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getUserInfo(laiHuiDB,id), "解绑成功！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }
+                    result.put("error_code", ErrorCodeMessage.getLoginError_code());
+                    json = ReturnJsonUtil.returnFailJsonString(result, "登陆状态失效，请重新登陆！");
+                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+
             }
             json = ReturnJsonUtil.returnFailJsonString(result, "获取参数错误");
             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.BAD_REQUEST);
