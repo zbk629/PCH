@@ -201,7 +201,8 @@
     }
     //
     function success(){
-        showFloatStyle("成功解绑")
+        showFloatStyle("成功解绑");
+        window.location.href='/reg';
     }
     //跳转
     function toPublish(){
