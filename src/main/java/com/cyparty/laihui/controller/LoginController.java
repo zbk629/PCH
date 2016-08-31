@@ -44,11 +44,16 @@ public class LoginController {
                 isExisting = true;
             }
             if (!isExisting) {
-                int id = laiHuiDB.createWxUser(user);
+                int id=0;
+                if(user.getUser_token()!=null&&user.getUser_unionid()!=null){
+                    id = laiHuiDB.createWxUser(user);
+                }
                 //下面保存手机号和密码
-                request.getSession().setAttribute("user_id", id);
-                //return "redirect:/reg?id=" + id;
-                return "redirect:/reg" ;
+                if(id!=0){
+                    request.getSession().setAttribute("user_id", id);
+                    return "redirect:/reg" ;
+                }
+                return "/";
             } else {
                 User now_user = userList.get(0);
                 if (now_user.getUser_mobile() != null && now_user.getUser_mobile().length() == 11) {

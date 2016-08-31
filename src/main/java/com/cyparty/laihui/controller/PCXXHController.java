@@ -7,8 +7,6 @@ import com.cyparty.laihui.domain.ErrorCodeMessage;
 import com.cyparty.laihui.domain.Tag;
 import com.cyparty.laihui.utilities.OssUtil;
 import com.cyparty.laihui.utilities.ReturnJsonUtil;
-import com.cyparty.laihui.utilities.SendSMSUtil;
-import com.cyparty.laihui.utilities.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * Created by zhu on 2016/5/11.
@@ -194,6 +191,10 @@ public class PCXXHController {
                         }else {
                             //添加
                             id=laiHuiDB.createPCHDeparture(departure);
+
+                            //更新用户角色
+                            String update_sql=" set user_role=1 where user_id="+user_id ;
+                            laiHuiDB.update("pc_wx_user",update_sql);
                             result.put("id",id);
                             json = ReturnJsonUtil.returnSuccessJsonString(result, "创建成功！");
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
