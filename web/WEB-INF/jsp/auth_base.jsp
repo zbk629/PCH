@@ -173,7 +173,7 @@
     }
     //跳转
     function toPublish(){
-      window.location.href="/laihui/driver/create_order"
+      window.location.href="/laihui/driver/create_order?id"
     }
 
 
