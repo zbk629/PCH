@@ -241,7 +241,7 @@
             </div>
         </div>
         <div class="login_submit">
-            <input type="submit" value="登陆" class="btn login_submit_btn disable" disabled="disabled" onclick="loginCheck()">
+            <input type="submit" value="登录" class="btn login_submit_btn disable" disabled="disabled" onclick="loginCheck()">
         </div>
     </form>
 
