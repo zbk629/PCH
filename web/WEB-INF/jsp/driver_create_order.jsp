@@ -799,7 +799,7 @@
       var st2 =$('.place_start_time').val().split("点")[0].trim();
       var st3 =$('.place_end_time').val().split("点")[0].trim();
       var st4 =$('.place_start_time').val().split("点")[1].split("分")[0].trim();
-      var st5 =$('.place_end_time').val().split("点")[1].split("分")[0].trim();
+      var st5 =$('.place_end_time') .val().split("点")[1].split("分")[0].trim();
       if(st2.length == 1){
         send_time =year+"-"+month+"-"+date+" "+"0"+st2+":"+st4+":00";
       }else{

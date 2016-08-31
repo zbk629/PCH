@@ -77,6 +77,7 @@
             line-height: 4.6rem;
             background-color: #f5ad4e;
             color: #fff;
+            max-width: 1080px;
             bottom: 0;
             width: 100%;
             text-align: center;
@@ -213,23 +214,6 @@
             width: 100%;
 
         }
-        @media screen and (max-width: 2000px) {
-            body{
-                max-width: 1080px;
-                transform: translateZ(0);
-                -webkit-transform: translateZ(0);
-            }
-
-        }
-        @media screen and (max-width: 1080px) {
-            body{
-                max-width: 1080px;
-                transform: none;
-                -webkit-transform: none;
-            }
-
-        }
-
         .float_message_title{
             line-height: 3.2rem;
         }
