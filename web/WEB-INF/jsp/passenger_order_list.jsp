@@ -383,7 +383,7 @@
         function addDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
                             departure_city, destination_city, departure, destination, inits_seats, car_brand, id,points) {
             $('.first_clear').before('<li class="mine_first_list" index='+id+'>' +
-                    '<div class="mine_first_top">' +
+                    '<div class="mine_first_top" onclick="toDetaile(this)">' +
                     '<div class="mine_first_top_left">' +
                     '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
                     '<span>'+departure_city+'</span><span class="begin_city" style="color:#999794"><i class="circle"></i>'+departure+'</span>' +
@@ -395,7 +395,7 @@
                     '</div>' +
                     '<div class="clear"></div>' +
                     '</div>' +
-                    '<div class="mine_first_mid">' +
+                    '<div class="mine_first_mid"  onclick="toDetaile(this)">' +
                     '<div class="departure_li_style departure_li_time departure_li_route">' +
                     '<span class="departure_route_left">途径路线</span>' +
                     '<span class="departure_route">'+points+'</span>' +
@@ -427,7 +427,7 @@
         function addHistoryDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
                                    departure_city, destination_city, departure, destination, inits_seats, car_brand, id,points) {
             $('.history_clear').before('<li class="mine_list" index='+id+'>' +
-                    '<div class="mine_first_top">' +
+                    '<div class="mine_first_top"  onclick="toDetaile(this)">' +
                     '<div class="mine_first_top_left">' +
                     '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
                     '<span>'+departure_city+'</span><span class="begin_city" style="color:#999794"><i class="circle"></i>'+departure+'</span>' +
@@ -439,7 +439,7 @@
                     '</div>' +
                     '<div class="clear"></div>' +
                     '</div>' +
-                    '<div class="mine_first_mid">' +
+                    '<div class="mine_first_mid" onclick="toDetaile(this)">' +
                     '<div class="departure_li_style departure_li_time">' +
                     '<span>出行时间</span>' +
                     '<span class="departure_time_mouth">'+insert_time+'</span>' +
@@ -482,7 +482,7 @@
             window.location.href="/laihui/car/detail?id="+$(obj).parent().parent().attr('index');
         }
         function toDetaile(obj){
-            window.location.href="/laihui/car/detail?id="+$(obj).attr('index');
+            window.location.href="/laihui/car/detail?id="+$(obj).parent().attr('index');
         }
         //删除车单
         function mine_delete(){
