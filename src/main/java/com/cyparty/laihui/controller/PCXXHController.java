@@ -214,7 +214,10 @@ public class PCXXHController {
                     }
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show":
-                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id,user_id), "出车信息获取成功");
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id), "全部出车信息获取成功");
+                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                case "show_myself":
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getMySelfDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id,user_id), "出车信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "update":
                     String info_status= request.getParameter("info_status");

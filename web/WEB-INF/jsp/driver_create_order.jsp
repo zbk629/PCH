@@ -1,3 +1,4 @@
+<%@ page import="com.cyparty.laihui.domain.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: zhu
@@ -455,7 +456,7 @@
     var route_array=[];
     var url = window.location.href;
     var car_id;
-    var mobile_insert="";//此处填写手机号
+    var mobile_insert=<%=(String)request.getSession().getAttribute("user_mobile")%>;//此处填写手机号
 
     //判断是否是修改信息
     function checkId() {

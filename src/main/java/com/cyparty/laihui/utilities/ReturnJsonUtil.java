@@ -126,7 +126,88 @@ public class ReturnJsonUtil {
         result_json.put("size",size);
         return result_json;
     }
-    public static JSONObject getPCHDepartureInfo(LaiHuiDB laiHuiDB,int page ,int size,String departure_city,String destination_city,String status,String start_time,String end_time,String keyword,int id,int user_id){
+    public static JSONObject getPCHDepartureInfo(LaiHuiDB laiHuiDB,int page ,int size,String departure_city,String destination_city,String status,String start_time,String end_time,String keyword,int id){
+        JSONObject result_json=new JSONObject();
+        JSONArray dataArray=new JSONArray();
+        String where=" where is_enable=1 and info_status!=-1";
+        if(id==0){
+                if(departure_city!=null&&!departure_city.trim().equals("")){
+                    where=where+" and departure_city='"+departure_city+"'";
+                }
+                if(destination_city!=null&&!destination_city.trim().equals("")){
+                    where=where+" and destination_city='"+destination_city+"'";
+                }
+                if(status!=null){
+                    if(status.equals("0")){
+                        where=where+" and info_status=0 ";
+                    }
+                    if(status.equals("1")){
+                        where=where+" and info_status=1 ";
+                    }
+                    if(status.equals("-1")){
+                        where=where+" and info_status=-1 ";
+                    }
+                }
+                if(start_time!=null&&!start_time.trim().equals("")){
+                    where=where+" and start_time >'"+start_time+" 00:00:00' and start_time < '"+start_time+" 24:00:00'" ;
+                }
+                else {
+                    where=where+" and end_time >'"+Utils.getCurrentTime()+"'";
+                }
+                /*if(end_time!=null&&!end_time.trim().equals("")){
+                    where=where+" and end_time <'"+end_time+"'";
+                }else {
+                    where=where+" and end_time >'"+Utils.getCurrentTime()+"'";
+                }*/
+                if(keyword!=null&&!keyword.trim().equals("")){
+                    where=where+" and (mobile like '%"+keyword+"%' or driving_name like '%"+keyword+"%') ";
+                }
+                where=where+" order by start_time ASC";
+
+        }else {
+            where="where is_enable=1 and _id="+id;
+        }
+
+        int count=laiHuiDB.getPCHDepartureInfo(where).size();
+        int offset=page*size;
+        where=where+" limit "+offset+","+size;
+        List<DepartureInfo> departureInfoList =laiHuiDB.getPCHDepartureInfo(where);
+        for(DepartureInfo departure:departureInfoList){
+            JSONObject jsonObject=new JSONObject();
+            boolean is_editor=false;
+            jsonObject.put("id",departure.getR_id());
+            jsonObject.put("start_time",departure.getStart_time());
+            jsonObject.put("end_time",departure.getEnd_time());
+            long current=Utils.getCurrenTimeStamp();
+            long end_date=Utils.date2TimeStamp(departure.getEnd_time());
+            if(end_date>current){
+                is_editor=true;
+            }
+            jsonObject.put("is_editor",is_editor);
+            jsonObject.put("departure_city",departure.getDeparture_city());
+            jsonObject.put("destination_city",departure.getDestination_city());
+            jsonObject.put("inits_seats",departure.getInit_seats());
+            jsonObject.put("mobile",departure.getMobile());
+            jsonObject.put("points",departure.getPoints());
+            jsonObject.put("description",departure.getDescription());
+            jsonObject.put("car_brand",departure.getCar_brand());
+            jsonObject.put("departure",departure.getDeparture_county());
+            jsonObject.put("destination",departure.getDestination());
+            jsonObject.put("driving_name",departure.getDriving_name());
+            jsonObject.put("tag_yes_content",departure.getTag_yes_content());
+            jsonObject.put("tag_no_content",departure.getTag_no_content());
+            jsonObject.put("info_status",departure.getStatus());//-1,1,2
+            jsonObject.put("create_time",departure.getCreate_time());
+
+            dataArray.add(jsonObject);
+        }
+        result_json.put("data",dataArray);
+        result_json.put("total",count);
+        result_json.put("page",page);
+        result_json.put("size",size);
+        return result_json;
+    }
+    public static JSONObject getMySelfDepartureInfo(LaiHuiDB laiHuiDB,int page ,int size,String departure_city,String destination_city,String status,String start_time,String end_time,String keyword,int id,int user_id){
         JSONObject result_json=new JSONObject();
         JSONArray dataArray=new JSONArray();
         String where=" where is_enable=1 and info_status!=-1";
@@ -181,7 +262,7 @@ public class ReturnJsonUtil {
                 if(start_time!=null&&!start_time.trim().equals("")){
                     where=where+" and start_time >'"+start_time+" 00:00:00' and start_time < '"+start_time+" 24:00:00'" ;
                 }
-              else {
+                else {
                     where=where+" and end_time >'"+Utils.getCurrentTime()+"'";
                 }
                 /*if(end_time!=null&&!end_time.trim().equals("")){

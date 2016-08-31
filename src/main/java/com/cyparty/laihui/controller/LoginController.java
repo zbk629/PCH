@@ -53,7 +53,7 @@ public class LoginController {
                 User now_user = userList.get(0);
                 if (now_user.getUser_mobile() != null && now_user.getUser_mobile().length() == 11) {
                     request.getSession().setAttribute("user_id", userList.get(0).getUser_id());
-                    request.getSession().setAttribute("user", userList.get(0));
+                    request.getSession().setAttribute("user_mobile",userList.get(0).getUser_mobile());
                     return "redirect:/auth/base";
                 } else {
                     return "redirect:/reg";
@@ -167,7 +167,7 @@ public class LoginController {
                                 laiHuiDB.update("pc_wx_user", update_sql);
                                 String where_now=" where user_id="+id;
                                 User user=laiHuiDB.getWxUser(where_now).get(0);
-                                request.getSession().setAttribute("user",user);
+                                request.getSession().setAttribute("user_mobile",user.getUser_mobile());
                             /*where = " where user_mobile='" + mobile + "' ";
                             List<User> userList = laiHuiDB.getUserList(where);
                             if (userList.size() > 0) {
