@@ -382,7 +382,7 @@
 
         function addDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
                             departure_city, destination_city, departure, destination, inits_seats, car_brand, id,points) {
-            $('.first_clear').before('<li class="mine_first_list" index='+id+' onclick="toDetaile(this)">' +
+            $('.first_clear').before('<li class="mine_first_list" index='+id+'>' +
                     '<div class="mine_first_top">' +
                     '<div class="mine_first_top_left">' +
                     '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
