@@ -131,7 +131,7 @@ public class PCXXHController {
             }
             int user_id=0;
             //todo:user_id改为从session中获取
-            /*if (request.getSession().getAttribute("user_id") != null) {
+            if (request.getSession().getAttribute("user_id") != null) {
 
                 try {
                     user_id = (Integer) request.getSession().getAttribute("user_id");
@@ -139,15 +139,15 @@ public class PCXXHController {
                     id = 0;
                     e.printStackTrace();
                 }
-            }*/
-            if(request.getParameter("user_id")!=null){
+            }
+            /*if(request.getParameter("user_id")!=null){
                 try {
                     user_id=Integer.parseInt(request.getParameter("user_id"));
                 } catch (NumberFormatException e) {
                     user_id=0;
                     e.printStackTrace();
                 }
-            }
+            }*/
             switch (action) {
                 case "add":
                     if(user_id>0){
@@ -198,18 +198,6 @@ public class PCXXHController {
                             json = ReturnJsonUtil.returnSuccessJsonString(result, "创建成功！");
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                         }
-                        /*if(id>0){
-                            String token= Utils.getRandomToken(id);
-                            String url="laihui.cyparty.com/laihui/car/detail?token="+token;
-                            //String url="http://10.81.108.52/laihui/car/detail?token="+token;
-                            SendSMSUtil.sendSMSToDriver(mobile, date, url);
-                            json = ReturnJsonUtil.returnSuccessJsonString(result, "创建成功！");
-                            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
-                        }
-                        else {
-                            json = ReturnJsonUtil.returnFailJsonString(result, "创建失败！");
-                            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
-                        }*/
                     }else {
                         result.put("error_code", ErrorCodeMessage.getLoginError_code());
                         json = ReturnJsonUtil.returnFailJsonString(result, "请登陆！");

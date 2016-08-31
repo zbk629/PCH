@@ -153,13 +153,13 @@ public class SendSMSUtil {
     public static String randomNum(){
         String randomNum="";
         int i=0;
-        int [] all=new int[6];
-        while (i<6){
+        int [] all=new int[4];
+        while (i<4){
             int t=(int)(Math.random()*10);
             all[i]=t;
             i++;
         }
-        for(int k=0;k<6;k++){
+        for(int k=0;k<4;k++){
             randomNum=randomNum+all[k];
         }
         return randomNum;

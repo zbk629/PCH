@@ -26,7 +26,7 @@ import java.util.List;
 public class LoginController {
     @Autowired
     LaiHuiDB laiHuiDB;
-
+    boolean is_logined=false;
     @RequestMapping("/login")
     public String car_departure(Model model, HttpServletRequest request) {
         String mode = request.getParameter("mode");
@@ -53,6 +53,7 @@ public class LoginController {
                 User now_user = userList.get(0);
                 if (now_user.getUser_mobile() != null && now_user.getUser_mobile().length() == 11) {
                     request.getSession().setAttribute("user_id", userList.get(0).getUser_id());
+                    request.getSession().setAttribute("user", userList.get(0));
                     return "redirect:/auth/base";
                 } else {
                     return "redirect:/reg";
@@ -65,8 +66,8 @@ public class LoginController {
     @RequestMapping("/reg")
     public String register(HttpServletRequest request, Model model) {
         //String user_id = request.getParameter("id");
-        String user_id=(String)request.getSession().getAttribute("user_id");
-        if (user_id != null) {
+        /*int user_id=(Integer)request.getSession().getAttribute("user_id");
+        if (user_id != 0) {
             int id = 0;
             try {
                 id = Integer.parseInt(user_id);
@@ -76,13 +77,25 @@ public class LoginController {
             if (id > 0) {
                 request.getSession().setAttribute("user_id", id);
             }
+        }*/
+        is_logined=Utils.isLogined(request);
+        if(is_logined){
+            return "register";
         }
-        return "register";
+        return "redirect:/";
     }
     @RequestMapping("/auth/base")
     public String self(HttpServletRequest request, Model model) {
+        is_logined=Utils.isLogined(request);
+        if(is_logined){
+            return "auth_base";
+        }
+        return "redirect:/";
+    }
+    @RequestMapping("/wx/login")
+    public String weixin(HttpServletRequest request, Model model) {
 
-        return "auth_base";
+        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
     }
     @ResponseBody
     @RequestMapping(value = "/api/reg", method = RequestMethod.POST)
@@ -152,6 +165,9 @@ public class LoginController {
                                 //创建该用户
                                 String update_sql = " set user_mobile='" + mobile + "' where user_id=" + id;
                                 laiHuiDB.update("pc_wx_user", update_sql);
+                                String where_now=" where user_id="+id;
+                                User user=laiHuiDB.getWxUser(where_now).get(0);
+                                request.getSession().setAttribute("user",user);
                             /*where = " where user_mobile='" + mobile + "' ";
                             List<User> userList = laiHuiDB.getUserList(where);
                             if (userList.size() > 0) {

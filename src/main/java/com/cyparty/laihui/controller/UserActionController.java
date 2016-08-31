@@ -30,18 +30,28 @@ public class UserActionController {
     @RequestMapping("/laihui/driver/order_list")
     public String car_departure(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-        return "driver_order_list";
+        if(is_logined){
+
+            return "driver_order_list";
+        }
+        return "redirect:/";
     }
     @RequestMapping("/laihui/driver/create_order")
     public String create_order(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-        return "driver_create_order";
+        if(is_logined){
+
+            return "driver_create_order";
+        }
+        return "redirect:/";
     }
     @RequestMapping("/laihui/passenger/order_list")
     public String passenger_order_list(Model model, HttpServletRequest request,HttpServletResponse response) {
-
+        is_logined= Utils.isLogined(request);
+        if(is_logined){
             return "passenger_order_list";
-
+        }
+        return "redirect:/";
     }
     @ResponseBody
     @RequestMapping(value = "/api/db/passenger/departure", method = RequestMethod.POST)
@@ -74,11 +84,12 @@ public class UserActionController {
             int seats=0;
             int user_id=0;
             int order_id=0;
-            //todo:user_id改为从session中获取
+
             switch (action) {
                 case "booking":
                     try {
                         seats=Integer.parseInt(request.getParameter("booking_seats"));
+                        //todo:user_id改为从session中获取
                         user_id=Integer.parseInt(request.getParameter("user_id"));
                         order_id=Integer.parseInt(request.getParameter("order_id"));
                     } catch (NumberFormatException e) {
