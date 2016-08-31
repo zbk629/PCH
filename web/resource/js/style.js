@@ -190,7 +190,7 @@ function changeMenu(obj){
         $('.message_bottom').animate({'left':'300%'},300)
     }else{
         $(obj).children().addClass('menu_style_active');
-        $(obj).children().attr('src','/resource/images/pc_icon_white_return.png');
+        $(obj).children().attr('src','/resource/images/pch_icon_toright.png');
         $('.message_bottom').animate({'left':'0'},300)
     }
 }
