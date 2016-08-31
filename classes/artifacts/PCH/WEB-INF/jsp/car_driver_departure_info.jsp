@@ -23,15 +23,6 @@
     <script src="/resource/js/LCalendar.js" type="text/javascript"></script>
     <link href="/resource/css/LCalendar.css" rel="stylesheet" type="text/css">
     <style type="text/css">
-        .publish_top {
-            background-color: #F5AD4E;
-            text-align: center;
-            line-height: 4.2rem;
-            font-size: 1.4rem;
-            border-bottom: 1px solid #e8e8e8;
-            padding: 0 1rem;
-            color: #fff;
-        }
 
         .publish_top_right {
             float: right;
@@ -71,18 +62,7 @@
             padding: 1rem 0 0rem 1.4rem;
         }
 
-        .publish_bottom {
-            position: fixed;
-            height: 4.6rem;
-            line-height: 4.6rem;
-            background-color: #f5ad4e;
-            color: #fff;
-            max-width: 1080px;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-            z-index: 1;
-        }
+
 
         .publish_message_driver_title {
             font-size: 1.4rem;

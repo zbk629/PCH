@@ -24,17 +24,6 @@
   <style type="text/css">
 
 
-    .publish_bottom {
-      position: fixed;
-      height: 4.6rem;
-      line-height: 4.6rem;
-      background-color: #f5ad4e;
-      color: #fff;
-      bottom: 0;
-      width: 100%;
-      text-align: center;
-    }
-
 
 
     .footer{

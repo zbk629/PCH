@@ -367,7 +367,29 @@ input:focus{
     text-align: center;
 }
 /*弹出框样式结束*/
+.publish_top {
+    text-align: center;
+    line-height: 4.2rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 0 1rem;
+    background-color: #F5AD4E;
+    color: #FFF;
+}
 
+.publish_bottom {
+    position: fixed;
+    height: 4.2rem;
+    line-height: 4.2rem;
+    background-color: #f5ad4e;
+    color: #fff;
+    bottom: 0;
+    width: 100%;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+}
 /*底部操作*/
 .message_bottom{
     position: fixed;
@@ -377,6 +399,7 @@ input:focus{
     background-color: #fff;
     height: 4.2rem;
     border-top:1px solid #e8e8e8;
+    font-size: 1.3rem;
 }
 .message_bottom_type{
     width: 33.3%;

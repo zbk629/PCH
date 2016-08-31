@@ -1,3 +1,4 @@
+<%@ page import="com.cyparty.laihui.domain.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: zhu
@@ -27,16 +28,6 @@
   <script src="/resource/js/zepto.js" type="text/javascript"></script>
   <style type="text/css">
 
-    .publish_top {
-      text-align: center;
-      line-height: 4.2rem;
-      font-size: 1.8rem;
-      font-weight: bold;
-      border-bottom: 1px solid #e8e8e8;
-      padding: 0 1rem;
-      background-color: #F5AD4E;
-      color: #FFF;
-    }
 
     .publish_mid {
       font-size: 1.4rem;
@@ -136,18 +127,7 @@
       height: 3rem;
     }
 
-    .publish_bottom {
-      position: fixed;
-      height: 4.2rem;
-      line-height: 4.2rem;
-      background-color: #f5ad4e;
-      color: #fff;
-      bottom: 0;
-      width: 100%;
-      font-size: 1.8rem;
-      font-weight: bold;
-      text-align: center;
-    }
+
 
     .input_style {
       width: 80%;
@@ -455,7 +435,7 @@
     var route_array=[];
     var url = window.location.href;
     var car_id;
-    var mobile_insert="";//此处填写手机号
+    var mobile_insert=<%=(String)request.getSession().getAttribute("user_mobile")%>;//此处填写手机号
 
     //判断是否是修改信息
     function checkId() {
@@ -642,10 +622,6 @@
       function addCarStart() {
         var data1 = global_data.result;
         var contact = new Object();
-        contact.id = -1;
-        contact.name = "全部";
-        contact.child = [{id:-11,name:""}];
-        placeData.push(contact);
         for (var i = 0; i < data1.data.length; i++) {
           var departure1 = data1.data[i].departure;
           var contact = new Object();
@@ -1215,5 +1191,22 @@
     <span>确认发布</span>
   </div>
 </div>
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+              (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-82806911-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>
