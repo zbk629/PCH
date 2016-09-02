@@ -25,6 +25,7 @@
   <link href="/resource/css/mobile-select-area.css" rel="stylesheet" type="text/css">
   <script src="/resource/js/dialog.js" type="text/javascript"></script>
   <script src="/resource/js/mobile-select-area.js" type="text/javascript"></script>
+  <script src="/resource/js/city_select.js" type="text/javascript"></script>
   <script src="/resource/js/zepto.js" type="text/javascript"></script>
   <style type="text/css">
 
@@ -276,10 +277,10 @@
     }
     .place_start_time,.place_end_time{
       width: 7rem;
-      text-align: left;
+      text-align: center;
     }
     .place_date{
-      width: 70%;
+      width: 100%;
     }
     .place_city{
       width: 7rem;
@@ -363,6 +364,10 @@
       }
 
     }
+    .hover_all{
+      background-color: #000;
+    }
+
   </style>
   <script>
     $(document).ready(function () {
@@ -374,37 +379,40 @@
       setShowData();
       addTimeStyle();
       //地点选择
-      var selectArea = new MobileSelectArea();
+      var selectArea = new MobileSelectArea2();
       selectArea.init({
         trigger:$('#demo_place'),
         data:placeData,
         level: 2
+//        default:0*
       });
-      var selectArea = new MobileSelectArea();
+      var selectDate = new MobileSelectArea();
       //今明选择
-      selectArea.init({
+      selectDate.init({
         trigger:$('#demo_time'),
         data:timeData,
         level: 1
+
       });
 //      开始时间
-      var selectArea = new MobileSelectArea();
-      selectArea.init({
+      var selectStartTime = new MobileSelectArea();
+      selectStartTime.init({
         trigger:$('#demo_hour'),
         data:hourData,
-        level: 2
+        level: 2,
+//        value:$('#hd_hour').val()
       });
 //      结束时间
-      var selectArea = new MobileSelectArea();
-      selectArea.init({
+      var selectEndTime = new MobileSelectArea();
+      selectEndTime.init({
         trigger:$('#demo_min'),
         data:hourData,
-        level: 2
+        level: 2,
+//        value:$('#hd_min').val()
       });
       //座位选择
-      var selectArea = new MobileSelectArea();
-
-      selectArea.init({
+      var selectSeat = new MobileSelectArea();
+      selectSeat.init({
         trigger:$('#demo_set'),
         data:array_seat,
         level: 1
@@ -462,13 +470,22 @@
       obj.user_id = user_id;
       validate.validate_submit('/api/db/departure', obj, insertMessage);
     }
+    //如果用户曾经发过信息则自动补充原始数据
+    function checkUserMessage(departure_city,destination_city){
+      var obj = {};
+      obj.action = 'show_myself';
+      obj.departure_city = departure_city;
+      obj.destination_city = destination_city;
+      obj.size = 1000;
+      validate.validate_submit('/api/db/departure', obj, insertMessage);
+    }
     //添加用户数据
     function insertMessage() {
       if(global_data.result.total == 0){
-        window.location.href="/404"
+
       }else
       {
-        for (var i = 0; i < global_data.result.data.length; i++) {
+          var i=(global_data.result.total-1);
           var driving_name = global_data.result.data[i].driving_name;//车主姓名
           var info_status = global_data.result.data[i].info_status;//状态信息1：有空位；2：已满；-1：已取消
           var start_time = global_data.result.data[i].start_time;//开始时间
@@ -501,7 +518,7 @@
           var begin_end_time = end_time.substring(11, 16);
           begin_start_time = begin_start_time.split(":")[0]+"点 "+begin_start_time.split(":")[1]+"分";
           begin_end_time = begin_end_time.split(":")[0]+"点 "+begin_end_time.split(":")[1]+"分";
-          var demo_place_val=departure_city+" "+destination_city;
+          var demo_place_val=departure_city+"——"+destination_city;
           //添加标题信息
 
 
@@ -556,7 +573,7 @@
             $('.publish_route_box_span').show();
           }
 
-        }
+
       }
 
     }
@@ -772,6 +789,11 @@
       }else{
         month = parseInt(month);
       }
+      if(date.toString().length==1){
+        date = "0"+date;
+      }else{
+        date = parseInt(date);
+      }
       var st2 =$('.place_start_time').val().split("点")[0].trim();
       var st3 =$('.place_end_time').val().split("点")[0].trim();
       var st4 =$('.place_start_time').val().split("点")[1].split("分")[0].trim();
@@ -821,7 +843,7 @@
         }
       }
       var data_obj={};
-      var a = $('#demo_place').val().split(' ');
+      var a = $('#demo_place').val().split('——');
       mobile = $('.publish_mobile').val().toString().trim();
       if(mobile.length>11){
        if(mobile.indexOf("，")==-1){
@@ -1014,13 +1036,37 @@
         var year2  = time2.getFullYear();
         var month2 = time2.getMonth()+1;
         var date2  = time2.getDate();
+        var hours2  = time2.getHours();
+        var minutes2  = time2.getMinutes();
         obj.year = year2;
         if(month2.toString().length==1){
           obj.month = "0"+month2;
         }else{
           obj.month = parseInt(month2);
         }
-        obj.date = date2;
+
+        if(date2.toString().length==1){
+          obj.date = "0"+date2;
+        }else{
+          obj.date = parseInt(date2);
+        }
+
+
+        if(minutes2<30){
+          if(hours2.toString().length==1){
+            obj.hours = "0"+hours2;
+          }else{
+            obj.hours = parseInt(hours2);
+          }
+            obj.minutes = "30";
+        }else{
+          if(hours2.toString().length==1){
+            obj.hours = "0"+(hours2+1);
+          }else{
+            obj.hours = parseInt(hours2+1);
+          }
+          obj.minutes = "00";
+        }
         array_date.push(obj);
       }
 
@@ -1031,12 +1077,16 @@
         }else{
           day.push("明天("+array_date[j].month+"-"+array_date[j].date+")")
         }
-
+//        $('#demo_hour').val()
       }
     }
   </script>
 </head>
 <body scroll="no">
+<div class="hover_all"></div>
+<div class="loading_box">
+  <img class="loading" src="/resource/images/loading.gif" alt="请等待">
+</div>
 <div class="hover"></div>
 <div class="float_container2">
   <div class="float_box2">
@@ -1127,9 +1177,11 @@
         </div>
         <div class="publish_mid_li_click" onclick="">
           <input type="text" id="demo_time" placeholder="选择日期" readonly="readonly" class="place_time place_date input_disabled"/>
-          <input type="text" id="demo_hour" placeholder="最早" readonly="readonly" class="place_time place_start_time input_disabled"/>
+          <input type="text" id="demo_hour" placeholder="最早" readonly="readonly" class="place_time place_start_time input_disabled" />
+          <%--<input type="hidden" id="hd_hour" value="13,1000"/>--%>
           <span>--  </span>
-          <input type="text" id="demo_min" placeholder="最晚" readonly="readonly" class="place_time place_end_time input_disabled"/>
+          <input type="text" id="demo_min" placeholder="最晚" readonly="readonly" class="place_time place_end_time input_disabled" />
+          <%--<input type="hidden" id="hd_min" value="13,1000"/>--%>
         </div>
         <div class="clear"></div>
       </li>

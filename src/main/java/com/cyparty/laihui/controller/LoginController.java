@@ -92,6 +92,7 @@ public class LoginController {
     @RequestMapping("/auth/base")
     public String self(HttpServletRequest request, Model model) {
         is_logined=Utils.isLogined(request);
+//        is_logined=true;
         if(is_logined){
             return "auth_base";
         }

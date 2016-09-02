@@ -78,6 +78,11 @@
 
 </head>
 <body>
+<div class="hover"></div>
+<div class="hover_all"></div>
+<div class="loading_box">
+  <img class="loading" src="/resource/images/loading.gif" alt="请等待">
+</div>
 <div class="departure_container_top">
   <div class="departure_top_box">
     <%--<span class="departure_top_find_car departure_top_button_active">找车</span>--%>

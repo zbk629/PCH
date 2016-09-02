@@ -31,11 +31,13 @@ var validate = (function(){
             url: url,
             data: array,
             dataType: "json",
+            beforeSend: loading,//执行ajax前执行loading函数.直到success
             success: function (data) {
                 global_data=data;
                 if(global_data.status==true){
                     console.log("交互成功");
                     callback();
+                    closeLoading();
                 }else{
                     validate.showTips("身份证格式不正确");
                 }
@@ -70,7 +72,6 @@ var validate = (function(){
             }
         })
     };
-
 
     var baidu_api = function(url,callback){
         $.ajax({
@@ -118,7 +119,7 @@ var validate = (function(){
         hideTips:hideTips,
         onlyNum:onlyNum,
         baidu_api:baidu_api,
-        validate_submit2:validate_submit2,
+        validate_submit2:validate_submit2
 
     }
 
@@ -138,11 +139,11 @@ function changeFontSize(){
 
 //ajax加载画面
 function loading(){
-    $('.hover').show();
+    $('.hover_all').show();
     $('.loading_box').show();
 }
 function closeLoading(){
-    $('.hover').hide();
+    $('.hover_all').hide();
     $('.loading_box').hide();
 }
 

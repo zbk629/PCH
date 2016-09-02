@@ -128,7 +128,7 @@ public class PCXXHController {
             }
             int user_id=0;
             //todo:user_id改为从session中获取
-            if (request.getSession().getAttribute("user_id") != null) {
+            /*if (request.getSession().getAttribute("user_id") != null) {
 
                 try {
                     user_id = (Integer) request.getSession().getAttribute("user_id");
@@ -136,15 +136,15 @@ public class PCXXHController {
                     id = 0;
                     e.printStackTrace();
                 }
-            }
-            /*if(request.getParameter("user_id")!=null){
+            }*/
+            if(request.getParameter("user_id")!=null){
                 try {
                     user_id=Integer.parseInt(request.getParameter("user_id"));
                 } catch (NumberFormatException e) {
                     user_id=0;
                     e.printStackTrace();
                 }
-            }*/
+            }
             switch (action) {
                 case "add":
                     if(user_id>0){

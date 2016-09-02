@@ -25,7 +25,7 @@
 
     <link href="/resource/css/dialog.css" rel="stylesheet" type="text/css">
     <link href="/resource/css/mobile-select-area.css" rel="stylesheet" type="text/css">
-
+    <script src="/resource/js/city_select.js" type="text/javascript"></script>
 
 
     <script src="/resource/js/dialog.js" type="text/javascript"></script>
@@ -310,6 +310,7 @@
         }
         .footer img{
             width: 100%;
+            padding-bottom: 2.4rem;
         }
         /*城市下拉框*/
         .publish_list_box2{
@@ -410,8 +411,7 @@
 
                         }
                     }
-            )
-
+            );
         });
 
         //加载城市数组
@@ -505,7 +505,7 @@
 //                'data': placeData,//数据源,
 //                'status': 0
 //            });
-            var selectArea = new MobileSelectArea();
+            var selectArea = new MobileSelectArea2();
             selectArea.init({
                 trigger:$('#demo_place'),
 //                value:"全部",
@@ -876,7 +876,7 @@
                 if(destination_city==""){
                     $('#demo_place').val(departure_city+" 全部");
                 }else{
-                    $('#demo_place').val(departure_city+" "+destination_city);
+                    $('#demo_place').val(departure_city+"——"+destination_city);
                 }
 
             }
@@ -932,9 +932,11 @@
                 if(month2.toString().length==1){
                     month2="0"+month2;
                 }
+                if(date2.toString().length==1){
+                    date2="0"+date2;
+                }
                 obj.year = year2;
                 obj.month = month2;
-
                 obj.date = date2;
                 array_date.push(obj);
             }
@@ -962,6 +964,10 @@
     </script>
 </head>
 <body id="backtop">
+<div class="hover_all"></div>
+<div class="loading_box">
+    <img class="loading" src="/resource/images/loading.gif" alt="请等待">
+</div>
 <div class="hover"></div>
 <div class="float_container">
     <div class="float_box">

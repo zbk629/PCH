@@ -217,6 +217,10 @@
     </script>
 </head>
 <body>
+<div class="loading_box">
+    <img class="loading" src="/resource/images/loading.gif" alt="请等待">
+</div>
+<div class="hover_all"></div>
 <div class="hover"></div>
 <div class="float_container">
     <div class="float_box">

@@ -30,6 +30,7 @@ public class UserActionController {
     @RequestMapping("/laihui/driver/order_list")
     public String car_departure(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
+//        is_logined=true;
         if(is_logined){
 
             return "driver_order_list";
@@ -39,6 +40,8 @@ public class UserActionController {
     @RequestMapping("/laihui/driver/create_order")
     public String create_order(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
+//        is_logined=true;
+
         if(is_logined){
 
             return "driver_create_order";
@@ -48,6 +51,7 @@ public class UserActionController {
     @RequestMapping("/laihui/passenger/order_list")
     public String passenger_order_list(Model model, HttpServletRequest request,HttpServletResponse response) {
         is_logined= Utils.isLogined(request);
+//        is_logined=true;
         if(is_logined){
             return "passenger_order_list";
         }

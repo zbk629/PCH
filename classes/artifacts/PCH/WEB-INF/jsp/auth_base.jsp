@@ -67,6 +67,8 @@
       position: absolute;
       width: 3rem;
       cursor: pointer;
+      -webkit-tap-highlight-color:rgba(255,0,0,0);
+      -webkit-appearance:none;
     }
     .message_mid{
       background-color: #fff;
@@ -185,7 +187,11 @@
   </script>
 </head>
 <body>
+<div class="loading_box">
+  <img class="loading" src="/resource/images/loading.gif" alt="请等待">
+</div>
 <div class="hover"></div>
+<div class="hover_all"></div>
 <div class="float_container">
   <div class="float_box">
     <span class="float_box_span"></span>

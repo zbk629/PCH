@@ -33,9 +33,9 @@
 		this.oldvalue;
 		this.oldtext=[];
 		this.text = ['', '', ''];
-		this.level = 3;
-		this.mtop = 34;
-		this.separator = ' ';
+		this.level = 3;//控制显示几个
+		this.mtop = 34;//控制行高
+		this.separator=" ";//控制输出样式
 	};
 	MobileSelectArea.prototype = {
 		init: function(settings) {
@@ -48,9 +48,11 @@
 			this.level = level > 0 ? level : 3;
 			this.trigger.attr("readonly", "readonly");
 			this.value = (this.settings.value && this.settings.value.split(",")) || [0, 0, 0];
+
 			this.text = this.settings.text || this.trigger.val().split(' ') || ['', '', ''];
 			this.oldvalue = this.value.concat([]);
 			this.oldtext = this.text.concat([]);
+
 			this.clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
 			this.clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
 			// this.promise = this.getData();
@@ -174,7 +176,7 @@
 			var _this = this;
 			var child = _this.scroller.children();
 			this.f(this.data);
-			console.log(_this.text)
+			console.log(_this.text);
 		},
 		f: function(data) {
 			var _this = this;
@@ -182,21 +184,24 @@
 			if (!item) {
 				item = [];
 			};
-			var str = '<dl><dd ref="0">——</dd>';
+			var str = '<dl index="1"><dd ref="0">——</dd>';
 			var focus = 0,
 				childData, top = _this.mtop;
+
 			if (_this.index !== 0 && _this.value[_this.index - 1] == "0" && this.default == 0) {
-				str = '<dl><dd ref="0" class="focus">——</dd>';
+				str = '<dl index="2"><dd ref="0" class="focus">——</dd>';
 				_this.value[_this.index] = 0;
 				_this.text[_this.index] = "";
 				focus = 0;
+
 			} else {
 				if (_this.value[_this.index] == "0") {
-					str = '<dl><dd ref="0" class="focus">——</dd>';
+					str = '<dl index="3"><dd ref="0" class="focus">——</dd>';
 					focus = 0;
+
 				}
 				if (item.length > 0 && this.default == 1) {
-					str = '<dl>';
+					str = '<dl index="4">';
 					var pid = item[0].pid || 0;
 					var id = item[0].id || 0;
 					focus = item[0].id;
@@ -206,6 +211,7 @@
 						_this.text[this.index] = item[0].name;
 					}
 					str += '<dd pid="' + pid + '" class="' + cls + '" ref="' + id + '">' + item[0].name + '</dd>';
+
 				}
 				for (var j = _this.default, len = item.length; j < len; j++) {
 					var pid = item[j].pid || 0;
@@ -233,15 +239,24 @@
 			_this.f(childData);
 		},
 		submit: function() {
+
 			this.oldvalue = this.value.concat([]);
 			this.oldtext = this.text.concat([]);
+
 			if (this.trigger[0].nodeType == 1) {
 				//input
+				//console.log(":"+this.text);
+				//if(this.text==""){
+				//	this.text="12点,00分";
+				//}
+				//alert(this.separator)
 				this.trigger.val(this.text.join(this.separator));
+				//this.trigger.val(this.text);
 				this.trigger.attr('data-value', this.value.join(','));
 			}
 			this.trigger.next(':hidden').val(this.value.join(','));
 			this.settings.callback && this.settings.callback.call(this, this.scroller, this.text, this.value);
+
 		},
 		cancel: function() {
 			this.value = this.oldvalue.concat([]);

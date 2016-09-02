@@ -115,7 +115,20 @@
 				beforeShow: function(c) {
 					dialog.touch($('.ui-confirm-submit', c), function() {
 						settings.callback && settings.callback.call(dialog, 'yes', c);
-						city_array=$('#demo_place').val().split(" ");
+						if($('#demo_place').val().substring(0,2)=="全部"){
+							$('#demo_place').val("全部");
+						}
+						//修改信息
+						city_array=$('#demo_place').val().split("——");
+						if (url.indexOf("=") == -1) {
+							//alert("11");
+							var departure_city = city_array[0];
+							var destination_city = city_array[1];
+							checkUserMessage(departure_city,destination_city);
+						} else {
+
+						}
+						//修改信息结束
 						$('body').css({'overflow':'auto','position':'relative'});
 						findMessage();
 					});

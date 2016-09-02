@@ -563,6 +563,10 @@
     </script>
 </head>
 <body>
+<div class="hover_all"></div>
+<div class="loading_box">
+    <img class="loading" src="/resource/images/loading.gif" alt="请等待">
+</div>
 <img src="/resource/images/pch_logo.png" style="display: none">
 <div class="hover"></div>
 <div class="float_container">

@@ -42,9 +42,9 @@
             font-size: 1.4rem;
             background-color: #fff;
             line-height: 2.4rem;
-            margin-bottom: .6rem;
             padding: .4rem 1.4rem;
             display: none;
+            margin-bottom: 4.2rem;
         }
 
         .mine_mid {
@@ -496,6 +496,10 @@
     </script>
 </head>
 <body scroll="no">
+<div class="hover_all"></div>
+<div class="loading_box">
+    <img class="loading" src="/resource/images/loading.gif" alt="请等待">
+</div>
 <div class="hover"></div>
 <div class="float_container2">
     <div class="float_box2">
