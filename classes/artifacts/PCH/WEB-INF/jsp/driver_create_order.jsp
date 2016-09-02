@@ -425,7 +425,7 @@
     var array_seat = [];
     var array_date = [];
     var user_id = 86;
-
+    var city_array=[]
     var send_array = [];
     //时间数据
     var timeData = [];
@@ -1133,7 +1133,7 @@
           <span>起止路线</span>
         </div>
         <div class="publish_mid_li_click" index="1" >
-          <input type="text" id="demo_place" placeholder="选择起止城市" readonly="readonly" class="place_start_to_end input_disabled"  onclick="slideCity()"/>
+          <input type="text" id="demo_place" placeholder="选择起止城市" readonly="readonly" class="place_start_to_end input_disabled" onchange="alert('1')" onclick="slideCity()"/>
         </div>
       </li>
       <li class="publish_mid_li" style="display: none">
