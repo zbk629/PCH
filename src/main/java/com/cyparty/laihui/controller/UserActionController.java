@@ -178,8 +178,14 @@ public class UserActionController {
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show":
                     try {
-                        user_id=Integer.parseInt("user_id");
-                        order_id=Integer.parseInt("order_id");
+                        if(request.getParameter("user_id")!=null){
+
+                            user_id=Integer.parseInt(request.getParameter("user_id"));
+                        }
+                        if(request.getParameter("order_id")!=null){
+                            order_id=Integer.parseInt(request.getParameter("order_id"));
+                        }
+
                     } catch (NumberFormatException e) {
                         user_id=0;
                         order_id=0;

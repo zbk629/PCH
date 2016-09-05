@@ -203,7 +203,7 @@ public class LaiHuiDB {
         return is_success;
     }
     public List<PassengerOrder> getPassengerPublishInfo(String where) {
-        String SQL = "SELECT * FROM pch_passenger_publish_info " + where + " ORDER BY create_time DESC ";
+        String SQL = "SELECT * FROM pch_passenger_publish_info " + where ;
         List<PassengerOrder> passengerOrders = jdbcTemplateObject.query(SQL, new PassengerPublishInfoMapper());
         return passengerOrders;
     }
