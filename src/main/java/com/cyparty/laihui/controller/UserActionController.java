@@ -42,22 +42,43 @@ public class UserActionController {
     @RequestMapping("/laihui/driver/create_order")
     public String create_order(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
+        //is_logined=true;
         is_has_openid=Utils.isHasMapOpenid(request);
         if(is_logined){
             //if(is_has_openid){
 
-                return "driver_create_order";
+                return "_create_order";
             //}
             //return "redirect:/wx/map/login";
         }
         return "redirect:/";
     }
     @RequestMapping("/laihui/passenger/order_list")
+    public String passenger_order_list(Model model, HttpServletRequest request) {
+        is_logined= Utils.isLogined(request);
+        is_logined=true;
+        if(is_logined){
+
+            return "passenger_order_list";
+        }
+        return "redirect:/";
+    }
+    @RequestMapping("/laihui/passenger/create_list")
+    public String passenger_create_list(Model model, HttpServletRequest request) {
+        is_logined= Utils.isLogined(request);
+        is_logined=true;
+        if(is_logined){
+
+            return "passenger_create_order";
+        }
+        return "redirect:/";
+    }
+    @RequestMapping("/laihui/passenger/my_order_list")
     public String passenger_order_list(Model model, HttpServletRequest request,HttpServletResponse response) {
         is_logined= Utils.isLogined(request);
-//        is_logined=true;
+        is_logined=true;
         if(is_logined){
-            return "passenger_order_list";
+            return "passenger_my_order_list";
         }
         return "redirect:/";
     }
