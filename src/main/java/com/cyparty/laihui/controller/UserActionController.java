@@ -175,23 +175,16 @@ public class UserActionController {
                 case "show":
                     try {
                         user_id=Integer.parseInt("user_id");
+                        order_id=Integer.parseInt("order_id");
                     } catch (NumberFormatException e) {
                         user_id=0;
+                        order_id=0;
                         e.printStackTrace();
                     }
-                    if(user_id>0){
-                        //返回该用户预定的发车单列表
-                        int now_order_id=0;
-                        try {
-                            now_order_id=Integer.parseInt(request.getParameter("order_id"));
-                        } catch (NumberFormatException e) {
-                            now_order_id=0;
-                            e.printStackTrace();
-                        }
-                        json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, user_id, page, size, now_order_id), "出发市信息获取成功");
-                        return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
-                    }
-                    json = ReturnJsonUtil.returnFailJsonString(result, "订单信息获取失败！");
+                    String now_date=request.getParameter("date");
+                    String departure_city=request.getParameter("departure_city");
+                    String destination_city=request.getParameter("destination_city");
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, user_id, page, size, order_id,now_date,departure_city,destination_city), "出发市信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "delete":
                     String where =" where _id="+order_id;

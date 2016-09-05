@@ -397,6 +397,12 @@ public class ReturnJsonUtil {
                 where=where+" and end_time >'"+Utils.getCurrentTime()+"'";
             }
         }
+        if(departure_city!=null&&!departure_city.trim().equals("")){
+            where=where+" and departure_city ='"+departure_city+"'";
+        }
+        if(destination_city!=null&&!destination_city.trim().equals("")){
+            where=where+" and destination_city ='"+destination_city+"'";
+        }
         if(now_order_id!=0){
             where=where+" and _id="+now_order_id;
         }
