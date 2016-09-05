@@ -40,8 +40,8 @@ public class LaiHuiDB {
         return routeInfoList;
     }
 
-    public int getPCHDepartureCount(String where) {
-        String sql = "SELECT count(*)total FROM pch_publish_info " + where;
+    public int getCount(String table,String where) {
+        String sql = "SELECT count(*)total FROM  "+table + where;
         //int count=jdbcTemplateObject.queryForInt(sql);
         Map<String, Object> now = jdbcTemplateObject.queryForMap(sql);
         int total = Integer.parseInt(String.valueOf((long) now.get("total")));
@@ -62,7 +62,15 @@ public class LaiHuiDB {
         }
         return is_success;
     }
-
+    public boolean delete(String table_name, String where) {
+        boolean is_success = true;
+        String SQL = "DELETE  FROM " + table_name + where;
+        int count = jdbcTemplateObject.update(SQL);
+        if (count < 1) {
+            is_success = false;
+        }
+        return is_success;
+    }
     public List<RouteInfo> getPCHRoute(String where) {
         String SQL = "SELECT * FROM pch_route_manage " + where;
         List<RouteInfo> routeInfoList = jdbcTemplateObject.query(SQL, new PCHRouteInfoMapper());
@@ -98,7 +106,7 @@ public class LaiHuiDB {
 
             public PreparedStatement createPreparedStatement(Connection con)
                     throws SQLException {
-                String sql="insert into pc_wx_user(user_name,user_avatar,user_wx_token,user_wx_unionid,user_sex,user_enabled,user_create_time,user_last_login) values(?,?,?,?,?,?,?,?)";
+                String sql="insert into pc_wx_user(user_name,user_avatar,user_wx_token,user_wx_unionid,user_sex,user_enabled,user_create_time,user_last_login,user_wx_openid) values(?,?,?,?,?,?,?,?,?)";
                 PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setString(1,user.getUser_nickname());
                 ps.setString(2,user.getUser_avatar());
@@ -108,6 +116,7 @@ public class LaiHuiDB {
                 ps.setInt(6,1);
                 ps.setString(7,Utils.getCurrentTime());
                 ps.setString(8,Utils.getCurrentTime());
+                ps.setString(9,user.getOpenid());
                 return ps;
             }
         }, keyHolder);
@@ -182,6 +191,21 @@ public class LaiHuiDB {
             is_success = false;
         }
         return is_success;
+    }
+    //创建乘客发车单
+    public boolean createPassengerPublishInfo(PassengerOrder passengerOrder) {
+        boolean is_success = true;
+        String SQL = "insert into pch_passenger_publish_info(user_id,departure_city,destination_city,booking_seats,boarding_point,breakout_point,description,start_time,end_time,user_name,user_mobile,create_time) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        int count = jdbcTemplateObject.update(SQL, new Object[]{passengerOrder.getUser_id(), passengerOrder.getDeparture_city(),passengerOrder.getDestination_city(),passengerOrder.getSeats(), passengerOrder.getBoarding_point(), passengerOrder.getBreakout_ponit(),passengerOrder.getDescription(),passengerOrder.getStart_time(),passengerOrder.getEnd_time(),passengerOrder.getName(),passengerOrder.getMobile(),Utils.getCurrentTime()});
+        if (count < 1) {
+            is_success = false;
+        }
+        return is_success;
+    }
+    public List<PassengerOrder> getPassengerPublishInfo(String where) {
+        String SQL = "SELECT * FROM pch_passenger_publish_info " + where + " ORDER BY create_time DESC ";
+        List<PassengerOrder> passengerOrders = jdbcTemplateObject.query(SQL, new PassengerPublishInfoMapper());
+        return passengerOrders;
     }
     public List<PassengerOrder> getPassengerOrder(String where) {
         String SQL = "SELECT * FROM pc_wx_passenger_orders " + where + " ORDER BY create_time DESC ";

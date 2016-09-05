@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by zhu on 2016/5/11.
@@ -18,6 +19,11 @@ public class DepartureInfoController {
         //微信分享模块
         String title = "来回拼车，你值得拥有！";
         WXUtils.wx_intro(request, model, title, "eat.gif");
+        /*try {
+            WXUtils.pinCheNotify(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
         return "car_driver_departure_list";
     }
 

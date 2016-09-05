@@ -16,7 +16,17 @@ public class User {
     private int user_enabled;
     private String user_nickname;
     private String user_avatar;
+    private String openid;
+
     private int sex;
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
 
     public int getUser_privilege() {
         return user_privilege;

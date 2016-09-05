@@ -10,8 +10,62 @@ public class PassengerOrder {
     private int seats;
     private String boarding_point;
     private String breakout_ponit;
+    private String departure_city;
+    private String destination_city;
     private String description;
+    private String name;
     private String create_time;
+    private String start_time;
+    private String end_time;
+    private String mobile;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
+    }
+
+    public String getDeparture_city() {
+        return departure_city;
+    }
+
+    public void setDeparture_city(String departure_city) {
+        this.departure_city = departure_city;
+    }
+
+    public String getDestination_city() {
+        return destination_city;
+    }
+
+    public void setDestination_city(String destination_city) {
+        this.destination_city = destination_city;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getCreate_time() {
         return create_time;

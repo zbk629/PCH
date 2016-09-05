@@ -17,6 +17,7 @@ public class UserMapper implements RowMapper<User> {
 
         user.setUser_id(resultSet.getInt("user_id"));
         user.setUser_mobile(Utils.checkNull(resultSet.getString("user_mobile")));
+        user.setOpenid(Utils.checkNull(resultSet.getString("user_map_openid")));
         user.setUser_nickname(Utils.checkNull(resultSet.getString("user_name")));
         user.setUser_created(Utils.checkNull(resultSet.getString("user_create_time")));
         user.setUser_token(Utils.checkNull(resultSet.getString("user_wx_token")));

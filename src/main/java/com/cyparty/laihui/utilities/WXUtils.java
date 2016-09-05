@@ -1,6 +1,13 @@
 package com.cyparty.laihui.utilities;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
@@ -164,5 +171,102 @@ public class WXUtils {
         model.addAttribute("wx_encryption", wx_encryption);
         String imageUrl=wx_url_base+"/resource/images/"+image_name;
         model.addAttribute("imageUrl",imageUrl);
+    }
+    //得到微信公众号的token
+    public static String getWXPublishAccessToken()
+    {
+        String access_token="";
+        String wx_app_id="wx79fccf65feb81e80";
+        String wx_app_secret="659703bcdaa78b9d1a7ec5954bf6a6ff";
+        String token_url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+wx_app_id+"&secret="+wx_app_secret;
+        String json_string=loadJson(token_url);
+        JSONObject jsonObject=JSONObject.parseObject(json_string);
+        access_token=jsonObject.getString("access_token");
+        //System.out.println("Access_token:"+access_token);
+        return access_token;
+    }
+    public static JSONObject pinCheNotify(HttpServletRequest request,String openid,String departure_city,String destination_city,String date,String mobile) throws ClientProtocolException, IOException {
+
+        String token = (String) request.getSession().getServletContext().getAttribute("access_token");
+        long last_time = 0;
+        if (request.getSession().getServletContext().getAttribute("time") != null) {
+            last_time = (Long) request.getSession().getServletContext().getAttribute("time");
+        }
+        long now_time = Long.parseLong(getWxTimestamp());
+        //6000
+        if (token == null || now_time - last_time > 6000) {
+            token = getWXPublishAccessToken();
+            request.getSession().getServletContext().setAttribute("access_token", token);
+            request.getSession().getServletContext().setAttribute("time", now_time);
+        }
+        JSONObject result = new JSONObject();
+        String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token;
+
+       /*JSONObject jsonObject=new JSONObject();
+        jsonObject.put("touser","");
+        jsonObject.put("template_id","wKsNLWJCpYrbsBqTRKG_JeeqxrlFxSAhRzC8cwL9CDM");
+        jsonObject.put("url","http://weixin.qq.com/download");
+        JSONObject firstObject=new JSONObject();
+        firstObject.put("value","从郑州到博爱的拼车发布成功！");
+        firstObject.put("color","#173177");
+        JSONObject keyword1Object=new JSONObject();
+        keyword1Object.put("value","2016年9月3日");
+        keyword1Object.put("color","#173177");
+        JSONObject keyword2Object=new JSONObject();
+        keyword2Object.put("value","郑州东站");
+        keyword2Object.put("color","#173177");
+        JSONObject keyword3Object=new JSONObject();
+        keyword3Object.put("value","中州大道");
+        keyword3Object.put("color","#173177");
+        JSONObject keyword4Object=new JSONObject();
+        keyword4Object.put("value","13838741275");
+        keyword4Object.put("color","#173177");
+        JSONObject remarkObject=new JSONObject();
+        remarkObject.put("value","感谢你的使用");
+        remarkObject.put("color","#173177");*/
+
+        String json="{\n" +
+                "           \"touser\":\""+openid+"\",\n" +
+                "           \"template_id\":\"wKsNLWJCpYrbsBqTRKG_JeeqxrlFxSAhRzC8cwL9CDM\",\n" +
+                "           \"url\":\"http://weixin.qq.com/download\",            \n" +
+                "           \"data\":{\n" +
+                "                   \"first\": {\n" +
+                "                       \"value\":\"从"+departure_city+"到"+destination_city+"的拼车发布成功！\",\n" +
+                "                       \"color\":\"#173177\"\n" +
+                "                   },\n" +
+                "                   \"keyword1\":{\n" +
+                "                       \"value\":\""+date+"\",\n" +
+                "                       \"color\":\"#173177\"\n" +
+                "                   },\n" +
+                "                   \"keyword2\": {\n" +
+                "                       \"value\":\""+departure_city+"\",\n" +
+                "                       \"color\":\"#173177\"\n" +
+                "                   },\n" +
+                "                   \"keyword3\": {\n" +
+                "                       \"value\":\""+destination_city+"\",\n" +
+                "                       \"color\":\"#173177\"\n" +
+                "                   },\n" +
+                "                   \"keyword4\": {\n" +
+                "                       \"value\":\""+mobile+"\",\n" +
+                "                       \"color\":\"#173177\"\n" +
+                "                   },\n" +
+                "                   \"remark\":{\n" +
+                "                       \"value\":\"感谢您的使用！\",\n" +
+                "                       \"color\":\"#173177\"\n" +
+                "                   }\n" +
+                "           }\n" +
+                "       }";
+
+
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost post = new HttpPost(url);
+        StringEntity postingString = new StringEntity(json);// json传递
+        post.setEntity(postingString);
+        post.setHeader("Content-type", "application/json");
+        HttpResponse response = httpClient.execute(post);
+        String content = EntityUtils.toString(response.getEntity());
+        result=JSONObject.parseObject(content);
+        //System.out.println(result);
+        return result;
     }
 }

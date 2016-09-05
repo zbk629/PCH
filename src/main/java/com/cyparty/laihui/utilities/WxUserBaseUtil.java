@@ -58,9 +58,13 @@ public class WxUserBaseUtil {
         }
         return result;
     }
-    public static User getUserWXIntro(String code){
+    public static User getUserWXIntro(String code,String source){
         //1.得到access_token
+
         String jsonUrl="https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxc0d2e309454d7e18&secret=9ae79e7280fdf5b38a1d0106cbf496ef&code="+code+"&grant_type=authorization_code";
+        if(source.equals("wx_map")){
+            jsonUrl="https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx79fccf65feb81e80&secret=659703bcdaa78b9d1a7ec5954bf6a6ff&code="+code+"&grant_type=authorization_code";
+        }
         String jsonResponse=sendGet(jsonUrl);
         System.out.println("返回JSON数据："+jsonResponse);
         //2.对json数据进行解析
@@ -74,9 +78,12 @@ public class WxUserBaseUtil {
         JSONObject userJsonObject=JSONObject.parseObject(userResponse);
         //https://api.weixin.qq.com/sns/userinfo?access_token=OezXcEiiBSKSxW0eoylIeL3jZIQj6Cfx04JBB1CyyaP7OHDG5vOUo8KkhQoXUzbC0NXGka-oYx5mglmZNnQRS68HPaxlVxIwhboAJoYAyG_MVSejqbNRxIIL-7Pt6ztUbFRb8oCX1UFtixb2NNo-Qw&openid=oNCQdt2r8XgaWQNIUWY2iqRqoVNQ
         String unionid=userJsonObject.getString("unionid");
+
         String nickname=userJsonObject.getString("nickname");
         String headimgurl=userJsonObject.getString("headimgurl");
+        String now_openid=userJsonObject.getString("openid");
         int sex=userJsonObject.getIntValue("sex");
+
         User user=new User();
 
         user.setUser_unionid(unionid);
@@ -84,6 +91,7 @@ public class WxUserBaseUtil {
         user.setUser_nickname(nickname);
         user.setUser_avatar(headimgurl);
         user.setSex(sex);
+        user.setOpenid(openid);
 
         return user;
     }

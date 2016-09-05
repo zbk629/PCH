@@ -1,6 +1,7 @@
 package com.cyparty.laihui.utilities;
 
 
+import com.cyparty.laihui.domain.User;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -367,5 +368,17 @@ public class Utils {
             is_logined=true;
         }
         return is_logined;
+    }
+    public static boolean isHasMapOpenid(HttpServletRequest request){
+        boolean is_has=false;
+        if(request.getSession().getAttribute("user")!=null){
+            User user=(User)request.getSession().getAttribute("user");
+            if(user.getOpenid()!=null&&!user.getOpenid().trim().equals("")){
+                is_has=true;
+            }else {
+                is_has=false;
+            }
+        }
+        return is_has;
     }
 }

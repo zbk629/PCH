@@ -5,8 +5,11 @@ import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.DepartureInfo;
 import com.cyparty.laihui.domain.ErrorCodeMessage;
 import com.cyparty.laihui.domain.Tag;
+import com.cyparty.laihui.domain.User;
 import com.cyparty.laihui.utilities.OssUtil;
 import com.cyparty.laihui.utilities.ReturnJsonUtil;
+import com.cyparty.laihui.utilities.Utils;
+import com.cyparty.laihui.utilities.WXUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -127,24 +130,25 @@ public class PCXXHController {
                 id=Integer.parseInt(request.getParameter("id"));
             }
             int user_id=0;
-            //todo:user_id改为从session中获取
-            /*if (request.getSession().getAttribute("user_id") != null) {
 
+            //todo:user_id改为从session中获取
+            if (request.getSession().getAttribute("user_id") != null) {
                 try {
                     user_id = (Integer) request.getSession().getAttribute("user_id");
                 } catch (Exception e) {
                     id = 0;
                     e.printStackTrace();
                 }
-            }*/
-            if(request.getParameter("user_id")!=null){
+            }
+
+            /*if(request.getParameter("user_id")!=null){
                 try {
                     user_id=Integer.parseInt(request.getParameter("user_id"));
                 } catch (NumberFormatException e) {
                     user_id=0;
                     e.printStackTrace();
                 }
-            }
+            }*/
             switch (action) {
                 case "add":
                     if(user_id>0){
@@ -195,6 +199,10 @@ public class PCXXHController {
                             //更新用户角色
                             String update_sql=" set user_role=1 where user_id="+user_id ;
                             laiHuiDB.update("pc_wx_user",update_sql);
+                            //发送通知
+                            User user=(User)request.getSession().getAttribute("user");
+
+                            WXUtils.pinCheNotify(request,user.getOpenid(),departure.getDeparture_city(),departure.getDestination_city(),date,user.getUser_mobile());
                             result.put("id",id);
                             json = ReturnJsonUtil.returnSuccessJsonString(result, "创建成功！");
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);

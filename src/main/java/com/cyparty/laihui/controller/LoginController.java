@@ -33,7 +33,7 @@ public class LoginController {
         //微信登陆
         if (mode != null && mode.equals("wx")) {
             String code = request.getParameter("code");
-            User user = WxUserBaseUtil.getUserWXIntro(code);
+            User user = WxUserBaseUtil.getUserWXIntro(code,"wx");
             boolean isExisting = false;
             //把该微信用户存入数据库
             String where = " where user_wx_unionid ='" + user.getUser_unionid() + "'";
@@ -58,6 +58,7 @@ public class LoginController {
                 User now_user = userList.get(0);
                 if (now_user.getUser_mobile() != null && now_user.getUser_mobile().length() == 11) {
                     request.getSession().setAttribute("user_id", userList.get(0).getUser_id());
+                    request.getSession().setAttribute("user", userList.get(0));
                     request.getSession().setAttribute("user_mobile",userList.get(0).getUser_mobile());
                     return "redirect:/auth/base";
                 } else {
@@ -65,8 +66,31 @@ public class LoginController {
                     //return "redirect:/reg?id=" + now_user.getUser_id();
                 }
             }
+        }else if (mode != null && mode.equals("wx_map")) {
+            String code = request.getParameter("code");
+            User user = WxUserBaseUtil.getUserWXIntro(code,"wx_map");
+            int user_id=0;
+            try {
+                user_id=(Integer)request.getSession().getAttribute("user_id");
+            } catch (Exception e) {
+                user_id=0;
+                e.printStackTrace();
+            }
+            if(user_id!=0){
+                //update
+                if(user.getOpenid()!=null){
+
+                    String update_sql=" update pc_wx_user set user_map_openid='"+user.getOpenid()+"' where user_id="+user_id;
+                    boolean is_success=laiHuiDB.update("pc_wx_user",update_sql);
+                    if(is_success){
+                        String where =" where user_id="+user_id;
+                        User now_user=laiHuiDB.getWxUser(where).get(0);
+                        request.getSession().setAttribute("user",now_user);
+                    }
+                }
+            }
         }
-        return "car_driver_departure_list";
+        return "redirect:/";
     }
     @RequestMapping("/reg")
     public String register(HttpServletRequest request, Model model) {
@@ -102,6 +126,11 @@ public class LoginController {
     public String weixin(HttpServletRequest request, Model model) {
 
         return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+    }
+    @RequestMapping("/wx/map/login")
+    public String weixin_map(HttpServletRequest request, Model model) {
+
+        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx_map&response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
     }
     @ResponseBody
     @RequestMapping(value = "/api/reg", method = RequestMethod.POST)
@@ -168,26 +197,14 @@ public class LoginController {
                         if (codeList.size() > 0) {
                             Code now_code = codeList.get(0);
                             if (now_code.getCode().equals(code)) {
-                                //创建该用户
+                                //更新该用户手机号
                                 String update_sql = " set user_mobile='" + mobile + "' where user_id=" + id;
                                 laiHuiDB.update("pc_wx_user", update_sql);
                                 String where_now=" where user_id="+id;
                                 User user=laiHuiDB.getWxUser(where_now).get(0);
                                 request.getSession().setAttribute("user_mobile",user.getUser_mobile());
-                            /*where = " where user_mobile='" + mobile + "' ";
-                            List<User> userList = laiHuiDB.getUserList(where);
-                            if (userList.size() > 0) {
-                                //update
-                                id = userList.get(0).getUser_id();
-                                token = IDTransform.transformID(id);
-                                laiHuiDB.procedureUpdateUser("create_user", mobile, 1, "", "", id, token, addr);
-                            } else {
-                                //create
-                                laiHuiDB.procedureUpdateUser("create_user", mobile, 0, "", "", id, "", addr);
-                                id = laiHuiDB.getUserList(where).get(0).getUser_id();
-                                token = IDTransform.transformID(id);
-                                laiHuiDB.createUserToken(token, id);
-                            }*/
+                                request.getSession().setAttribute("user",user);
+
                                 json = ReturnJsonUtil.returnSuccessJsonString(result, "验证码校验通过！");
                                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                             } else {

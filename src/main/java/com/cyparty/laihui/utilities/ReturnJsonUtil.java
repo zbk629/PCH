@@ -101,14 +101,14 @@ public class ReturnJsonUtil {
 
             String current_time=Utils.getCurrentTime().split(" ")[0]+" 00:00:00";
             where="  where is_enable=1 and departure_city='"+routeInfo.getDeparture()+"' and destination_city='"+routeInfo.getDestination()+"' ";
-            int all_info_count=laiHuiDB.getPCHDepartureCount(where);
+            int all_info_count=laiHuiDB.getCount("pch_publish_info",where);
             int all_driver_count=0;
             if(all_info_count>0){
                 where=where+" group by mobile";
                 all_driver_count=laiHuiDB.getPCHDepartureInfo(where).size();
             }
             where=" where is_enable=1 and departure_city='"+routeInfo.getDeparture()+"' and destination_city='"+routeInfo.getDestination()+"' and start_time>'"+current_time+"'";
-            int today_info_count=laiHuiDB.getPCHDepartureCount(where);
+            int today_info_count=laiHuiDB.getCount("pch_publish_info",where);
             int today_driver_count=0;
             if(today_info_count>0){
                 where=where+" group by mobile";
@@ -214,6 +214,7 @@ public class ReturnJsonUtil {
         if(id==0){
             if(user_id!=0){
                 where=" where is_enable=1 and user_id="+user_id;
+
                 if(departure_city!=null&&!departure_city.trim().equals("")){
                     where=where+" and departure_city='"+departure_city+"'";
                 }
@@ -379,6 +380,44 @@ public class ReturnJsonUtil {
             }
             dataArray.add(jsonObject);
         }
+        result.put("data",dataArray);
+        return result;
+    }
+    public static JSONObject getPassengerPublishInfo(LaiHuiDB laiHuiDB,int user_id,int page,int size,int now_order_id){
+        JSONObject result=new JSONObject();
+        JSONArray dataArray=new JSONArray();
+        String where =" where user_id > 0";
+        if(user_id!=0){
+            where=" where user_id = "+user_id;
+        }
+        if(now_order_id!=0){
+            where=where+" and _id="+now_order_id;
+        }
+        int offset=page*size;
+        int count=laiHuiDB.getCount("pch_passenger_publish_info",where);
+        where=where+" limit "+offset+","+size;
+        List<PassengerOrder> passengerOrderList =laiHuiDB.getPassengerPublishInfo(where);
+        for(PassengerOrder passengerOrder:passengerOrderList){
+            JSONObject jsonObject=new JSONObject();
+
+            jsonObject.put("order_id",passengerOrder.get_id());
+            jsonObject.put("start_time",passengerOrder.getStart_time());
+            jsonObject.put("end_time",passengerOrder.getEnd_time());
+            jsonObject.put("departure_city",passengerOrder.getDeparture_city());
+            jsonObject.put("destination_city",passengerOrder.getDestination_city());
+            jsonObject.put("booking_seats",passengerOrder.getSeats());
+            jsonObject.put("boarding_point",passengerOrder.getBoarding_point());
+            jsonObject.put("breakout_point",passengerOrder.getBreakout_ponit());
+            jsonObject.put("mobile",passengerOrder.getMobile());
+            jsonObject.put("name",passengerOrder.getName());
+            jsonObject.put("description",passengerOrder.getDescription());
+            jsonObject.put("create_time",passengerOrder.getCreate_time());
+
+            dataArray.add(jsonObject);
+        }
+        result.put("count",count);
+        result.put("page",page);
+        result.put("size",size);
         result.put("data",dataArray);
         return result;
     }
