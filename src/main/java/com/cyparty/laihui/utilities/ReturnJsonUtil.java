@@ -413,10 +413,16 @@ public class ReturnJsonUtil {
         List<PassengerOrder> passengerOrderList =laiHuiDB.getPassengerPublishInfo(where);
         for(PassengerOrder passengerOrder:passengerOrderList){
             JSONObject jsonObject=new JSONObject();
-
+            boolean is_editor=false;
             jsonObject.put("order_id",passengerOrder.get_id());
             jsonObject.put("start_time",passengerOrder.getStart_time());
             jsonObject.put("end_time",passengerOrder.getEnd_time());
+            long current=Utils.getCurrenTimeStamp();
+            long end_date=Utils.date2TimeStamp(passengerOrder.getEnd_time());
+            if(end_date>current){
+                is_editor=true;
+            }
+            jsonObject.put("is_editor",is_editor);
             jsonObject.put("departure_city",passengerOrder.getDeparture_city());
             jsonObject.put("destination_city",passengerOrder.getDestination_city());
             jsonObject.put("booking_seats",passengerOrder.getSeats());
