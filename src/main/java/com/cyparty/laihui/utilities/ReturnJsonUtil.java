@@ -279,7 +279,7 @@ public class ReturnJsonUtil {
         }else {
             where="where is_enable=1 and _id="+id;
         }
-        where=where+" order by end_time ASC";
+
         int count=laiHuiDB.getPCHDepartureInfo(where).size();
         int offset=page*size;
         where=where+" limit "+offset+","+size;

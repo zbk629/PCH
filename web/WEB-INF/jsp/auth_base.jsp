@@ -177,11 +177,15 @@
     function toPublish(){
       window.location.href="/laihui/driver/create_order?id"
     }
+    //跳转
+    function toPassengerPublish(){
+      window.location.href="/laihui/passenger/create_order?id"
+    }
 
 
 
     function toMyList(){
-      window.location.href="/laihui/passenger/order_list"
+      window.location.href="/laihui/driver/order_list"
     }
 
   </script>
@@ -191,7 +195,7 @@
   <img class="loading" src="/resource/images/loading.gif" alt="请等待">
 </div>
 <div class="hover"></div>
-<div class="hover_all"></div>
+<%--<div class="hover_all"></div>--%>
 <div class="float_container">
   <div class="float_box">
     <span class="float_box_span"></span>
@@ -211,7 +215,7 @@
         <span class="type_container_ico">+</span>
         <span>发布发车信息</span>
       </li>
-      <li class="type_container_ul_li type_container_right" onclick="notOpend()">
+      <li class="type_container_ul_li type_container_right" onclick="toPassengerPublish()">
         <span class="type_container_ico">+</span>
         <span>发布出行信息</span>
       </li>

@@ -3,7 +3,7 @@
   User: zhu
   Date: 2016/7/25
   Time: 15:06
-  describtion:移动端--车主发布出行信息（带诚信必发标志）
+  describtion:移动端--乘客发布出行信息历史列表
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,13 +15,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>来回拼车-车主发布-微信</title>
+    <title>来回拼车-乘客出行订单-微信</title>
     <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="/resource/js/style.js" type="text/javascript"></script>
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css">
 
     <link href="/resource/css/dialog.css" rel="stylesheet" type="text/css">
     <link href="/resource/css/mobile-select-area.css" rel="stylesheet" type="text/css">
+
     <script src="/resource/js/dialog.js" type="text/javascript"></script>
     <script src="/resource/js/mobile-select-area.js" type="text/javascript"></script>
     <script src="/resource/js/zepto.js" type="text/javascript"></script>
@@ -44,7 +45,7 @@
             line-height: 2.4rem;
             padding: .4rem 1.4rem;
             display: none;
-            margin-bottom: 4.2rem;
+            margin-bottom: 1.2rem;
         }
 
         .mine_mid {
@@ -229,7 +230,7 @@
             top: .4rem;
         }
 
-        .mine_list,.mine_first_list {
+        .mine_list, .mine_first_list {
             border-top: 1px dashed #e8e8e8;
             padding: .8rem 0;
             margin-top: -1px;
@@ -247,25 +248,61 @@
             margin-bottom: 6rem;
             font-size: 2rem;
         }
-        .float_container2{
+
+        .float_container2 {
             width: 62%;
         }
-        .float_message_title2{
+
+        .float_message_title2 {
             margin-top: 1rem;
         }
-        .float_message_tips{
+
+        .float_message_tips {
             color: #999;
             margin-left: 2rem;
             margin-top: 1rem;
         }
-        .float_sure{
+
+        .float_sure {
             color: #e74c3c;
         }
+
+        .mine_made {
+            margin-right: 1.4rem;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+        }
+
+        .input_list {
+            padding: .2rem;
+        }
+
+        .input_list_left {
+            float: left;
+        }
+
+        .input_list_right {
+            float: left;
+            width: 22rem;
+        }
+        .float_button_tips{
+            color: #999;
+            display: inline-block;
+            float: left;
+            font-size: 1rem;
+            margin-top: .6rem;
+        }
     </style>
+    <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
     <script>
         $(document).ready(function () {
             changeFontSize();
             loadMessage();
+
+            $('.hover').click(function(){
+                removeFloatMessage();
+            })
         });
 
         var user_id = 86;
@@ -321,7 +358,7 @@
                 var id = global_data.result.data[i].id;//id
                 var is_editor = global_data.result.data[i].is_editor;//id
                 var create_time = global_data.result.data[i].create_time;//id
-                points= points.replace(/丶/g, " 、");
+                points = points.replace(/丶/g, " 、");
                 if (info_status == 1) {
                     info_status = "有空位"
                 } else if (info_status == 2) {
@@ -342,12 +379,12 @@
                 var begin_start_time = start_time.substring(11, 16);
                 var begin_end_time = end_time.substring(11, 16);
 
-                if(is_editor == true){
-                    addDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
-                            inits_seats, car_brand, id,points);
-                }else{
-                    addHistoryDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
-                            inits_seats, car_brand, id,points);
+                if (is_editor == true) {
+                    addDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+                            inits_seats, car_brand, id, points);
+                } else {
+                    addHistoryDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+                            inits_seats, car_brand, id, points);
                 }
 
                 if (info_status == "有空位") {
@@ -367,42 +404,43 @@
                 if (destination == "") {
                     $($('.end_city')[(page_list * size) + i]).hide();
                 }
-                if(points==""){
+                if (points == "") {
                     $($('.departure_li_route')[(page_list * size) + i]).hide();
-                };
+                }
+                ;
 
             }
-            if($('.mine_list').length==0){
+            if ($('.mine_list').length == 0) {
                 $('.mine_mid').hide();
             }
-            if($('.mine_first_list').length==0){
+            if ($('.mine_first_list').length == 0) {
                 $('.mine_mid_first').hide();
             }
         }
 
-        function addDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
-                            departure_city, destination_city, departure, destination, inits_seats, car_brand, id,points) {
-            $('.first_clear').before('<li class="mine_first_list" index='+id+'>' +
+        function addDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
+                            departure_city, destination_city, departure, destination, inits_seats, car_brand, id, points) {
+            $('.first_clear').before('<li class="mine_first_list" index=' + id + '>' +
                     '<div class="mine_first_top" onclick="toDetaile(this)">' +
                     '<div class="mine_first_top_left">' +
                     '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
-                    '<span>'+departure_city+'</span><span class="begin_city" style="color:#999794"><i class="circle"></i>'+departure+'</span>' +
+                    '<span>' + departure_city + '</span><span class="begin_city" style="color:#999794"><i class="circle"></i>' + departure + '</span>' +
                     '<span>——</span>' +
-                    '<span>'+destination_city+'</span><span class="end_city" style="color:#999794"><i class="circle"></i>'+destination+'</span>' +
+                    '<span>' + destination_city + '</span><span class="end_city" style="color:#999794"><i class="circle"></i>' + destination + '</span>' +
                     '</div>' +
                     '<div class="mine_first_top_right">' +
-                    '<span class="departure_li_status">'+info_status+'</span>' +
+                    '<span class="departure_li_status">' + info_status + '</span>' +
                     '</div>' +
                     '<div class="clear"></div>' +
                     '</div>' +
                     '<div class="mine_first_mid"  onclick="toDetaile(this)">' +
                     '<div class="departure_li_style departure_li_time departure_li_route">' +
                     '<span class="departure_route_left">途径路线</span>' +
-                    '<span class="departure_route">'+points+'</span>' +
+                    '<span class="departure_route">' + points + '</span>' +
                     '</div>' +
                     '<div class="departure_li_style departure_li_time">' +
                     '<span>出行时间</span>' +
-                    '<span class="departure_time_mouth">'+insert_time+'</span>' +
+                    '<span class="departure_time_mouth">' + insert_time + '</span>' +
                     '<span style="color: #999794">' + begin_start_time + '-' + begin_end_time + '</span>' +
                     '</div>' +
                     '<div class="departure_li_style departure_li_time">' +
@@ -417,22 +455,24 @@
                     '</div>' +
                     '</div>' +
                     '<div class="mine_first_bottom">' +
+
                     '<span class="mine_type mine_change" onclick="mine_change(this)">修改车单</span>' +
                     '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除车单</span>' +
+                    '<span class="mine_type mine_made" onclick="mine_made(this)" index=' + i + '>生成文字信息</span>' +
                     '<div class="clear"></div>' +
                     '</div>' +
                     '</li> ')
         }
 
-        function addHistoryDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
-                                   departure_city, destination_city, departure, destination, inits_seats, car_brand, id,points) {
-            $('.history_clear').before('<li class="mine_list" index='+id+'>' +
+        function addHistoryDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
+                                   departure_city, destination_city, departure, destination, inits_seats, car_brand, id, points) {
+            $('.history_clear').before('<li class="mine_list" index=' + id + '>' +
                     '<div class="mine_first_top"  onclick="toDetaile(this)">' +
                     '<div class="mine_first_top_left">' +
                     '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
-                    '<span>'+departure_city+'</span><span class="begin_city" style="color:#999794"><i class="circle"></i>'+departure+'</span>' +
+                    '<span>' + departure_city + '</span><span class="begin_city" style="color:#999794"><i class="circle"></i>' + departure + '</span>' +
                     '<span>——</span>' +
-                    '<span>'+destination_city+'</span><span class="end_city" style="color:#999794"><i class="circle"></i>'+destination+'</span>' +
+                    '<span>' + destination_city + '</span><span class="end_city" style="color:#999794"><i class="circle"></i>' + destination + '</span>' +
                     '</div>' +
                     '<div class="mine_first_top_right end_color">' +
                     '<span>已完成</span>' +
@@ -442,7 +482,7 @@
                     '<div class="mine_first_mid" onclick="toDetaile(this)">' +
                     '<div class="departure_li_style departure_li_time">' +
                     '<span>出行时间</span>' +
-                    '<span class="departure_time_mouth">'+insert_time+'</span>' +
+                    '<span class="departure_time_mouth">' + insert_time + '</span>' +
                     '<span style="color: #999794">' + begin_start_time + '-' + begin_end_time + '</span>' +
                     '</div>' +
                     '<div class="departure_li_style departure_li_time">' +
@@ -459,36 +499,207 @@
                     '<div class="mine_first_bottom">' +
                     '<span class="mine_type mine_looking" onclick="looking_change(this)">查看车单</span>' +
                     '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除车单</span>' +
+//                    '<span class="mine_type mine_made" onclick="mine_made(this)" index=' + i + '>生成文字信息</span>' +
                     '<div class="clear"></div>' +
                     '</div>' +
                     '</li> ')
         }
-        //展示浮动层可编辑
-        function showDeleteFloatStyle(obj){
-            $('.hover').fadeIn(200);
-            $('.float_container2').fadeIn(200);
-            index_id=$(obj).parent().parent().attr('index');
+        //生成文字信息
+        function mine_made(obj) {
+            var index = $(obj).attr('index');
+            mine_made_style();
+            var driving_name = global_data.result.data[index].driving_name;//车主姓名
+            var start_time = global_data.result.data[index].start_time;//开始时间
+            var end_time = global_data.result.data[index].end_time;//结束时间
+            var mobile = global_data.result.data[index].mobile;//手机号
+            var departure_city = global_data.result.data[index].departure_city;//出发城市
+            var destination_city = global_data.result.data[index].destination_city;//目的城市
+            var departure = global_data.result.data[index].departure;//出发小城
+            var destination = global_data.result.data[index].destination;//目的小城市
+            var description = global_data.result.data[index].description;//描述信息
+            var tag_yes_content = global_data.result.data[index].tag_yes_content;//yes标签
+            var tag_no_content = global_data.result.data[index].tag_no_content;//no标签
+            var points = global_data.result.data[index].points;//地点
+            var inits_seats = global_data.result.data[index].inits_seats;//可用座位
+            var car_brand = global_data.result.data[index].car_brand;//车辆品牌
+            var id = global_data.result.data[index].id;//id
+            points = points.replace(/丶/g, " 、");
+            tag_yes_content = tag_yes_content.replace(/丶/g, " 、");
+            tag_no_content = tag_no_content.replace(/丶/g, " 、");
+            var insert_time = start_time.substring(0, 10);
+            var time_change = insert_time.split('-');
+            insert_time = time_change[1] + '月' + time_change[2] + '日';
+
+            var text_tags;
+            if (tag_yes_content == "" && tag_no_content == "") {
+                text_tags = ""
+            } else {
+                if (tag_no_content == "") {
+                    text_tags = tag_yes_content;
+                } else if (tag_yes_content == "") {
+                    text_tags = tag_no_content;
+                } else {
+                    text_tags = tag_no_content + "、" + tag_yes_content;
+                }
+            }
+            if (description == "") {
+                text_tags = text_tags + description;
+            } else {
+                text_tags = text_tags + "、" + description;
+            }
+
+            if (departure != "") {
+                departure += "(" + departure + ")";
+            }
+            if (destination != "") {
+                destination += "(" + destination + ")";
+            }
+
+            $('.slide_container').animate({"top": "22%", "opacity": "1"}, 300);
+            $('.find_city_span').text(departure_city + departure + "至" + destination + destination_city);
+            $('.find_time_span').text(insert_time);
+            $('.find_route_span').text(points);
+            $('.find_seat_span').text(inits_seats);
+            $('.find_type_span').text(car_brand);
+//            $('.find_tell_span').text(mobile);
+            $('.find_discript_span').append(text_tags);
+            $('.find_href_span').text("http://pinchenet.com/laihui/car/detail?id=" + id);
+
+            if ($('.find_route_span').text() == "" || $('.find_route_span').text() == "、") {
+                $('.find_route').remove()
+            }
+            if ($('.find_type_span').text() == "") {
+                $('.find_type').remove()
+            }
+            if ($('.find_discript_span').text() == "") {
+                $('.find_discript').remove()
+            }
+
+
         }
-        function notOpend(){
+        function mine_made_style() {
+            $('.hover').fadeIn(100);
+            $('.float_container2').fadeIn(100).css({'width': '88%', 'font-size': '1.3rem'});
+            $('.float_container2').empty().append('<span style="display: inline-block;padding: .2rem;">【来回拼车】牵起你生活中的每一次来回</span>' +
+                    '<div class="input_list find_city">' +
+                    '<div class="input_list_left">' +
+                    '<span>【找人】</span>' +
+                    '</div>' +
+                    '<div class="input_list_right">' +
+                    '<span class="find_city_span"></span>' +
+                    '</div>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '<div class="input_list find_time">' +
+                    '<div class="input_list_left">' +
+                    '<span>【时间】</span>' +
+                    '</div>' +
+                    '<div class="input_list_right">' +
+                    '<span class="find_time_span"></span>' +
+                    '</div>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '<div class="input_list find_route">' +
+                    '<div class="input_list_left">' +
+                    '<span>【路线】</span>' +
+                    '</div>' +
+                    '<div class="input_list_right">' +
+                    '<span class="find_route_span"></span>' +
+                    '</div>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '<div class="input_list find_seat">' +
+                    '<div class="input_list_left">' +
+                    '<span>【空位】</span>' +
+                    '</div>' +
+                    '<div class="input_list_right">' +
+                    '<span class="find_seat_span"></span>' +
+                    '</div>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '<div class="input_list find_type">' +
+                    '<div class="input_list_left">' +
+                    '<span>【车型】</span>' +
+                    '</div>' +
+                    '<div class="input_list_right">' +
+                    '<span class="find_type_span"></span>' +
+                    '</div>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '<div class="input_list find_tell">' +
+                    '<div class="input_list_left">' +
+                    '<span>【电话】</span>' +
+                    '</div>' +
+                    '<div class="input_list_right">' +
+                    '<span class="find_tell_span">点击下面链接查看详情</span>' +
+                    '</div>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '<div class="input_list find_discript">' +
+                    '<div class="input_list_left">' +
+                    '<span>【备注】</span>' +
+                    '</div>' +
+                    '<div class="input_list_right">' +
+                    '<span class="find_discript_span"></span>' +
+                    '</div>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '<div class="input_list find_href">' +
+                    '<div class="input_list_left">' +
+                    '<span>【链接】</span>' +
+                    '</div>' +
+                    '<div class="input_list_right">' +
+                    '<span class="find_href_span"></span>' +
+                    '</div>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '<div class="float_button">' +
+                    '<span class="float_button_tips" style="color: #999">手指长按内容复制</span>'+
+                    '<span class="float_remove" style="color: #e74c3c" onclick="removeFloatMessage()">关闭</span>' +
+                    '</div>'
+            )
+        }
+        //展示浮动层可编辑
+        function showDeleteFloatStyle(obj) {
+            $('.hover').fadeIn(100);
+            $('.float_container2').empty().fadeIn(100).css({'width': '62%', 'font-size': '1.4rem'});
+            $('.float_container2').append('<div class="float_box2">' +
+                    '<div class="float_message_box2">' +
+                    '<div class="float_message_title2">' +
+                    '<span>确认删除？</span>' +
+                    '</div>' +
+                    '<div class="float_message_tips">' +
+                    '<span>删除后将不再出现在发车列表中</span>' +
+                    '</div>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="float_button">' +
+                    '<span class="float_remove" onclick="removeFloatMessage()">取消</span>' +
+                    '<span class="float_sure" onclick="mine_delete()">确定</span>' +
+                    '</div>');
+            index_id = $(obj).parent().parent().attr('index');
+        }
+        function notOpend() {
 //      window.location.href="/laihui/driver/create_order"
             showFloatStyle("即将开通，敬请期待");
         }
         //修改车单
-        function mine_change(obj){
-            window.location.href="/laihui/driver/create_order?id="+$(obj).parent().parent().attr('index');
+        function mine_change(obj) {
+            window.location.href = "/laihui/driver/create_order?id=" + $(obj).parent().parent().attr('index');
         }
         //查看车单
-        function looking_change(obj){
-            window.location.href="/laihui/car/detail?id="+$(obj).parent().parent().attr('index');
+        function looking_change(obj) {
+            window.location.href = "/laihui/car/detail?id=" + $(obj).parent().parent().attr('index');
         }
-        function toDetaile(obj){
-            window.location.href="/laihui/car/detail?id="+$(obj).parent().attr('index');
+        function toDetaile(obj) {
+            window.location.href = "/laihui/car/detail?id=" + $(obj).parent().attr('index');
         }
         //删除车单
-        function mine_delete(){
+        function mine_delete() {
             var obj = {};
             obj.action = 'delete';
-            obj.id=index_id;
+            obj.id = index_id;
             obj.user_id = user_id;
             validate.validate_submit("/api/db/departure", obj, loadMessage);
             removeFloatMessage();
@@ -502,22 +713,7 @@
 </div>
 <div class="hover"></div>
 <div class="float_container2">
-    <div class="float_box2">
-        <div class="float_message_box2">
-            <div class="float_message_title2">
-                <span>确认删除？</span>
-            </div>
-            <div class="float_message_tips">
-                <span>删除后将不再出现在发车列表中</span>
-            </div>
-                <div class="clear"></div>
-            </div>
-        </div>
-        <div class="float_button">
-            <span class="float_remove" onclick="removeFloatMessage()">取消</span>
-            <span class="float_sure" onclick="mine_delete()">确定</span>
-        </div>
-    </div>
+
 </div>
 <div class="float_container">
     <div class="float_box">
@@ -544,43 +740,7 @@
                 <img src="/resource/images/pch_icon_history.png">
                 <span>历史车单</span>
             </div>
-            <%--<li class="mine_list">--%>
-                <%--<div class="mine_first_top">--%>
-                    <%--<div class="mine_first_top_left">--%>
-                        <%--<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">--%>
-                        <%--<span>郑州</span><span class="begin_city" style="color:#999794"><i class="circle"></i>中牟</span>--%>
-                        <%--<span>——</span>--%>
-                        <%--<span>洛阳</span><span class="end_city" style="color:#999794"><i class="circle"></i>涧西区</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="mine_first_top_right end_color">--%>
-                        <%--<span>已完成</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="clear"></div>--%>
-                <%--</div>--%>
-                <%--<div class="mine_first_mid">--%>
-                    <%--<div class="departure_li_style departure_li_time">--%>
-                        <%--<span>出行时间</span>--%>
-                        <%--<span class="departure_time_mouth">08月10日</span>--%>
-                        <%--<span style="color: #999794">03:00-05:00</span>--%>
-                    <%--</div>--%>
-                    <%--<div class="departure_li_style departure_li_time">--%>
-                        <%--<span>发布时间</span>--%>
-                        <%--<span class="departure_time_mouth">08月10日</span>--%>
-                        <%--<span style="color: #999794">02:00</span>--%>
-                        <%--<span class="departure_time_seat">4&nbsp;个座位</span>--%>
-                    <%--</div>--%>
-                    <%--&lt;%&ndash;<div class="departure_li_style departure_li_car_type">&ndash;%&gt;--%>
-                        <%--&lt;%&ndash;<img src="/resource/images/pc_icon_car.png" class="departure_li_style_img">&ndash;%&gt;--%>
-                        <%--&lt;%&ndash;<span class="departure_li_type">大众</span>&ndash;%&gt;--%>
-                    <%--&lt;%&ndash;</div>&ndash;%&gt;--%>
-                <%--</div>--%>
-                <%--<div class="mine_first_bottom">--%>
-                    <%--<span class="mine_type mine_looking">查看车单</span>--%>
-                    <%--<span class="mine_type mine_delete">删除车单</span>--%>
 
-                    <%--<div class="clear"></div>--%>
-                <%--</div>--%>
-            <%--</li>--%>
             <div class="clear history_clear"></div>
         </ul>
         <span class="not_message">暂无发布信息</span>

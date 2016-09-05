@@ -59,12 +59,51 @@
         margin-top: 50%;
     }
 }
+@media screen and (max-width: 630px) {
+
+    .departure_top_box_img{
+        width: 8.6rem;
+    }
+}
 @media screen and (max-width: 568px) {
 
     .departure_top_box_img{
         width: 8.6rem;
     }
 }
+@media screen and (max-width: 400px) {
+
+    .input_list_right{
+        width: 20rem;
+    }
+}
+@media screen and (max-width: 368px) {
+
+    .input_list_right{
+        width: 17rem;
+    }
+}
+
+@media screen and (max-height: 560px) {
+
+
+    .slide_mid_ul_no, .slide_mid_ul_yes{
+        max-height: 30rem;
+    }
+}
+
+
+@media screen and (max-height: 480px) {
+
+    .login_title {
+        margin: 2rem auto 2rem;
+    }
+
+    .slide_mid_ul_no, .slide_mid_ul_yes{
+        max-height: 24rem;
+    }
+}
+
 @media screen and (max-height: 320px) {
 
     .login_title {

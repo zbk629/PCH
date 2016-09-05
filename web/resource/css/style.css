@@ -155,7 +155,7 @@ input:focus{
     width: 3rem;
 }
 .hover{
-     z-index: 5;
+     z-index: 101;
      display: none;
      position: fixed;
      width: 100%;
@@ -165,7 +165,7 @@ input:focus{
      margin-top: -10rem;
  }
 .hover_all{
-     z-index: 500;
+     z-index: 102;
      display: none;
      position: fixed;
      width: 100%;
@@ -270,7 +270,7 @@ input:focus{
 /*认证信息结束*/
 /*图片放大操作*/
 .image_tips {
-    z-index: 6;
+    z-index: 103;
     width: 100%;
     position: fixed;
     top: 14rem;
@@ -286,7 +286,7 @@ input:focus{
     position: fixed;
     top: 3rem;
     right: 2.6rem;
-    z-index: 5;
+    z-index: 103;
     font-size: 2.6rem;
     color: #fff;
     display: none;
@@ -325,11 +325,16 @@ input:focus{
     -moz-transform: translateX(-50%) translateY(-50%);
     -ms-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-    z-index: 10;
+    z-index: 101;
 }
 .float_button{
     text-align: right;
     margin-top: .4rem;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
 }
 .float_remove{
     padding: .5rem;
@@ -360,7 +365,7 @@ input:focus{
     -moz-transform: translateX(-50%) translateY(-50%);
     -ms-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-    z-index: 10;
+    z-index: 101;
 }
 .float_button2{
     text-align: right;
@@ -403,7 +408,7 @@ input:focus{
     color: #fff;
     bottom: 0;
     width: 100%;
-    z-index: 100;
+    z-index: 101;
     font-size: 1.8rem;
     font-weight: bold;
     text-align: center;

@@ -304,7 +304,7 @@
     }
     .slide_mid_ul_yes{
       float: left;
-      width: 40%;
+      width: 45%;
       margin-right: 8%;
     }
     .slide_mid_li{
@@ -314,7 +314,7 @@
       padding-left: 22px;
     }
     .tag_right{
-      width: 40%;
+      width: 45%;
       float: left;
     }
     .float_message_mid{
@@ -425,7 +425,7 @@
     var array_seat = [];
     var array_date = [];
     var user_id = 86;
-    var city_array=[]
+    var city_array=[];
     var send_array = [];
     //时间数据
     var timeData = [];
@@ -477,6 +477,7 @@
       obj.departure_city = departure_city;
       obj.destination_city = destination_city;
       obj.size = 1000;
+      obj.user_id = user_id;
       validate.validate_submit('/api/db/departure', obj, insertMessage);
     }
     //添加用户数据
@@ -881,7 +882,7 @@
     }
 
     function success(){
-      window.location.href="/laihui/passenger/order_list";
+      window.location.href="/laihui/driver/order_list";
     }
 
     //添加YES/NO标签
