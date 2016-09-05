@@ -108,7 +108,7 @@ public class ReturnJsonUtil {
                 all_driver_count=laiHuiDB.getPCHDepartureInfo(where).size();
             }
             where=" where is_enable=1 and departure_city='"+routeInfo.getDeparture()+"' and destination_city='"+routeInfo.getDestination()+"' and start_time>'"+current_time+"'";
-            int today_info_count=laiHuiDB.getCount("pch_publish_info",where);
+            int today_info_count=laiHuiDB.getCount("pch_publish_info", where);
             int today_driver_count=0;
             if(today_info_count>0){
                 where=where+" group by mobile";
@@ -279,7 +279,7 @@ public class ReturnJsonUtil {
         }else {
             where="where is_enable=1 and _id="+id;
         }
-
+        where=where+" order by end_time ASC";
         int count=laiHuiDB.getPCHDepartureInfo(where).size();
         int offset=page*size;
         where=where+" limit "+offset+","+size;
@@ -383,16 +383,24 @@ public class ReturnJsonUtil {
         result.put("data",dataArray);
         return result;
     }
-    public static JSONObject getPassengerPublishInfo(LaiHuiDB laiHuiDB,int user_id,int page,int size,int now_order_id){
+    public static JSONObject getPassengerPublishInfo(LaiHuiDB laiHuiDB,int user_id,int page,int size,int now_order_id,String date,String departure_city,String destination_city){
         JSONObject result=new JSONObject();
         JSONArray dataArray=new JSONArray();
         String where =" where user_id > 0";
         if(user_id!=0){
             where=" where user_id = "+user_id;
+        }else {
+            if(date!=null&&!date.trim().equals("")){
+                where=where+" and start_time >'"+date+" 00:00:00' and start_time < '"+date+" 24:00:00'" ;
+            }
+            else {
+                where=where+" and end_time >'"+Utils.getCurrentTime()+"'";
+            }
         }
         if(now_order_id!=0){
             where=where+" and _id="+now_order_id;
         }
+        where=where+ " order by end_time ASC";
         int offset=page*size;
         int count=laiHuiDB.getCount("pch_passenger_publish_info",where);
         where=where+" limit "+offset+","+size;
