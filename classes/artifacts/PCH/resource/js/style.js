@@ -72,7 +72,31 @@ var validate = (function(){
             }
         })
     };
-
+//同步传输
+    var validate_submit3 = function(url,array,callback){
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: array,
+            async:false,
+            dataType: "json",
+            beforeSend: loading,//执行ajax前执行loading函数.直到success
+            success: function (data) {
+                global_data=data;
+                if(global_data.status==true){
+                    console.log("交互成功");
+                    callback();
+                    closeLoading();
+                }else{
+                    validate.showTips("身份证格式不正确");
+                }
+            },
+            error: function () {
+                console.log("交互失败");
+                callback();
+            }
+        })
+    };
     var baidu_api = function(url,callback){
         $.ajax({
             type: "POST",
@@ -119,7 +143,8 @@ var validate = (function(){
         hideTips:hideTips,
         onlyNum:onlyNum,
         baidu_api:baidu_api,
-        validate_submit2:validate_submit2
+        validate_submit2:validate_submit2,
+        validate_submit3:validate_submit3
 
     }
 

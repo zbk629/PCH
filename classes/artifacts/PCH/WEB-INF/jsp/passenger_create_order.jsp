@@ -537,7 +537,7 @@
     function getStartPlace() {
       var data_obj = {};
       data_obj.action = 'departure';
-      validate.validate_submit('/db/pch/route', data_obj, carPlace.addCarStart);
+      validate.validate_submit3('/db/pch/route', data_obj, carPlace.addCarStart);
     }
     function findMessage(){
       return true;
@@ -654,6 +654,8 @@
         showFloatStyle("可用座位不能为空");
       }else if($('.publish_mobile').val()==""){
         showFloatStyle("联系方式不能为空");
+      }else if($('.place_start_time').val().substring(0,1)>$('.place_end_time').val().substring(0,1)){
+        showFloatStyle("最早出发时间不能大于最晚出发时间");
       }else{
         setSendData();
         sendFinalMessage();

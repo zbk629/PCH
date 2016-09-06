@@ -387,7 +387,7 @@
 
           if (info_status == true) {
             $($('.item_seat_status')[i]).css('color','#2ecc71');
-            info_status = "预定中";
+            info_status = "接受预定";
             click_type=0;
           } else {
             $($('.item_seat_status')[i]).css('color','##95a5a6');
@@ -489,7 +489,7 @@
 
     }
     function showFloat(){
-      if($('.item_seat_status').text().trim() == "预定"){
+      if($('.item_seat_status').text().trim() == "接受预定"){
         $('.float_message_mid').children('div').removeClass('set_active');
         $('.set_have').addClass('set_active');
       }else{

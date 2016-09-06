@@ -760,6 +760,8 @@
         showFloatStyle("可用座位不能为空");
       }else if($('.publish_mobile').val()==""){
         showFloatStyle("联系方式不能为空");
+      }else if(parseInt($('.place_start_time').val().split("点")[0])>parseInt($('.place_end_time').val().split("点")[0])){
+        showFloatStyle("最早出发时间不能大于最晚出发时间");
       }else{
         setSendData();
         sendFinalMessage();

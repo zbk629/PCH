@@ -324,11 +324,11 @@
             $('.mine_first_list').remove();
             $('.mine_list').remove();
             var obj = {};
-            obj.action = 'show';
+            obj.action = 'show_mine';
             obj.page = page_list;
             obj.size = size;
             obj.user_id = user_id;
-            validate.validate_submit(" /api/db/passenger/departure", obj, sendPageMessage);
+            validate.validate_submit("/api/db/passenger/departure", obj, sendPageMessage);
         }
 
         function sendPageMessage() {
@@ -584,8 +584,8 @@
                     '<div class="float_button">' +
                     '<span class="float_button_tips" style="color: #999">手指长按内容复制</span>'+
                     '<span class="float_remove" style="color: #e74c3c" onclick="removeFloatMessage()">关闭</span>' +
-                    '</div>'
-            )
+                    '<div class="clear"></div>'+
+                    '</div>')
         }
         //展示浮动层可编辑
         function showDeleteFloatStyle(obj) {
@@ -618,10 +618,10 @@
         }
         //查看车单
         function looking_change(obj) {
-            window.location.href = "/laihui/car/detail?id=" + $(obj).parent().parent().attr('index');
+            window.location.href = "/laihui/passenger/order_info?id=" + $(obj).parent().parent().attr('index');
         }
         function toDetaile(obj) {
-            window.location.href = "/laihui/car/detail?id=" + $(obj).parent().attr('index');
+            window.location.href = "/laihui/passenger/order_info?id=" + $(obj).parent().attr('index');
         }
         //删除车单
         function mine_delete() {

@@ -324,11 +324,11 @@
             $('.mine_first_list').remove();
             $('.mine_list').remove();
             var obj = {};
-            obj.action = 'show';
+            obj.action = 'show_mine';
             obj.page = page_list;
             obj.size = size;
             obj.user_id = user_id;
-            validate.validate_submit(" /api/db/passenger/departure", obj, sendPageMessage);
+            validate.validate_submit("/api/db/passenger/departure", obj, sendPageMessage);
         }
 
         function sendPageMessage() {
