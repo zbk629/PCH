@@ -553,7 +553,7 @@
       <img class="return_perv_img" alt="" src="/resource/images/pc_icon_home.png"
            onclick="returnCheck()">
     </div>
-    <span style="font-size: 1.6rem">来回拼车</span>
+    <span style="font-size: 1.6rem">来回拼车--乘客信息</span>
   </div>
   <div class="publish_message_driver">
     <div class="publish_message_driver_title">

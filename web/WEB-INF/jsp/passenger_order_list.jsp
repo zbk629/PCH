@@ -395,6 +395,9 @@
                     $($('.end_city')[(page_list * size) + i]).hide();
                 }
 
+                if (description == "") {
+                    $($('.departure_li_car_type')[(page_list*size)+i]).hide();
+                }
             }
             if ($('.mine_list').length == 0) {
                 $('.mine_mid').hide();

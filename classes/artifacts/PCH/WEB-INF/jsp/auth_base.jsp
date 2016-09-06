@@ -142,7 +142,13 @@
       width: 1.7rem;
       top: .3rem;
     }
-
+    .type_container_ico{
+      font-size: 1.8rem;
+      width: 2.2rem;
+      position: relative;
+      top: .6rem;
+      margin-right: .4rem;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
