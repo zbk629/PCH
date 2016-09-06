@@ -32,7 +32,7 @@ public class UserActionController {
     @RequestMapping("/laihui/driver/order_list")
     public String car_departure(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-        is_logined=true;
+        //is_logined=true;
         if(is_logined){
 
             return "driver_order_list";
@@ -42,7 +42,7 @@ public class UserActionController {
     @RequestMapping("/laihui/driver/create_order")
     public String create_order(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-        is_logined=true;
+        //is_logined=true;
         is_has_openid=Utils.isHasMapOpenid(request);
         if(is_logined){
             //if(is_has_openid){
@@ -57,7 +57,7 @@ public class UserActionController {
     @RequestMapping("/laihui/passenger/create_order")
     public String passenger_create_list(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-        is_logined=true;
+        //is_logined=true;
         if(is_logined){
 
             return "passenger_create_order";
@@ -67,7 +67,7 @@ public class UserActionController {
     @RequestMapping("/laihui/passenger/order_list")
     public String passenger_order_list(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-        is_logined=true;
+        //is_logined=true;
         if(is_logined){
 
             return "passenger_order_list";
@@ -76,7 +76,7 @@ public class UserActionController {
     }
     @RequestMapping("/laihui/passenger/order_info")
     public String passenger_order_info(Model model, HttpServletRequest request) {
-        is_logined= Utils.isLogined(request);
+        //is_logined= Utils.isLogined(request);
         is_logined=true;
         if(is_logined){
 
@@ -86,7 +86,7 @@ public class UserActionController {
     }
     @RequestMapping("/laihui/passenger/my_order_list")
     public String passenger_order_list(Model model, HttpServletRequest request,HttpServletResponse response) {
-        is_logined= Utils.isLogined(request);
+        //is_logined= Utils.isLogined(request);
         is_logined=true;
         if(is_logined){
             return "passenger_my_order_list";
@@ -124,7 +124,16 @@ public class UserActionController {
             int seats=0;
             int user_id=0;
             int order_id=0;
+            //todo:user_id改为从session中获取
+            if(request.getSession().getAttribute("user_id")!=null){
 
+                try {
+                    user_id=(Integer)request.getSession().getAttribute("user_id");
+                } catch (Exception e) {
+                    user_id=0;
+                    e.printStackTrace();
+                }
+            }
             switch (action) {
                 case "add":
                     try {
@@ -132,8 +141,7 @@ public class UserActionController {
 
                             seats=Integer.parseInt(request.getParameter("booking_seats"));
                         }
-                        //todo:user_id改为从session中获取
-                        user_id=Integer.parseInt(request.getParameter("user_id"));
+
                         if(request.getParameter("order_id")!=null){
                             order_id=Integer.parseInt(request.getParameter("order_id"));
                         }
@@ -144,9 +152,7 @@ public class UserActionController {
                         order_id=0;
                         e.printStackTrace();
                     }
-
                     if(user_id>0){
-
                         String departure_city=request.getParameter("departure_city");
                         String destination_city=request.getParameter("destination_city");
                         String boarding_point=request.getParameter("boarding_point");
@@ -175,12 +181,10 @@ public class UserActionController {
                         }else {
 
                             is_success=laiHuiDB.createPassengerPublishInfo(order);
+                            //更新状态，成为发过出行信息的乘客
+                            String update_sql=" set user_role=0 where user_id="+user_id;
+                            laiHuiDB.update("pc_wx_user",update_sql);
                             if(is_success){
-                                //通知司机
-                            /*String where=" where _id="+user_id;
-                            String p_mobile=laiHuiDB.getWxUser(where).get(0).getUser_mobile();
-                            //发送通知短信
-                            Utils.sendNotifyMessage(d_mobile,p_mobile,date);*/
                                 json = ReturnJsonUtil.returnSuccessJsonString(result, "行程单创建成功！");
                                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                             }
@@ -191,10 +195,21 @@ public class UserActionController {
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show":
                     try {
-                        if(request.getParameter("user_id")!=null){
-
-                            user_id=Integer.parseInt(request.getParameter("user_id"));
+                        if(request.getParameter("order_id")!=null){
+                            order_id=Integer.parseInt(request.getParameter("order_id"));
                         }
+
+                    } catch (NumberFormatException e) {
+                        order_id=0;
+                        e.printStackTrace();
+                    }
+                    String now_date=request.getParameter("date");
+                    String departure_city=request.getParameter("departure_city");
+                    String destination_city=request.getParameter("destination_city");
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, 0, page, size, order_id, now_date, departure_city, destination_city), "出发市信息获取成功");
+                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                case "show_mine":
+                    try {
                         if(request.getParameter("order_id")!=null){
                             order_id=Integer.parseInt(request.getParameter("order_id"));
                         }
@@ -204,10 +219,7 @@ public class UserActionController {
                         order_id=0;
                         e.printStackTrace();
                     }
-                    String now_date=request.getParameter("date");
-                    String departure_city=request.getParameter("departure_city");
-                    String destination_city=request.getParameter("destination_city");
-                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, user_id, page, size, order_id, now_date, departure_city, destination_city), "出发市信息获取成功");
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, user_id, page, size, order_id, null, null, null), "出发市信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "delete":
                     order_id=Integer.parseInt(request.getParameter("order_id"));
