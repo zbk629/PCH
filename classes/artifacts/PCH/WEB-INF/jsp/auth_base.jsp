@@ -187,6 +187,10 @@
     function toMyList(){
       window.location.href="/laihui/driver/order_list"
     }
+    function toMyMadeList(){
+      window.location.href="/laihui/passenger/order_list"
+    }
+
 
   </script>
 </head>
@@ -228,7 +232,7 @@
         <span>我的发车信息</span>
         <div class="right_icon">></div>
       </li>
-      <li class="message_mid_li last_li" onclick="notOpend()">
+      <li class="message_mid_li last_li" onclick="toMyMadeList()">
         <span>我的订座信息</span>
         <div class="right_icon">></div>
       </li>
@@ -246,7 +250,7 @@
     </div>
     <span>找车</span>
   </div>
-  <div class="message_bottom_type" onclick="notOpend()">
+  <div class="message_bottom_type" onclick="toPassengerList()">
     <div class="img_box">
       <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
     </div>

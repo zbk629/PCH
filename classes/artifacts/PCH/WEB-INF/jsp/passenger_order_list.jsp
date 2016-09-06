@@ -295,6 +295,7 @@
         }
         .departure_li_type{
             color: #999;
+            font-size: 1.2rem;
         }
         .begin_city , .end_city{
             font-size: 1.2rem;
@@ -383,7 +384,6 @@
                             inits_seats, id);
                 }
 
-
                 if (departure == "") {
 
                     $($('.begin_city')[(page_list * size) + i]).hide();
@@ -426,7 +426,7 @@
                     '<span>发布时间</span>' +
                     '<span class="departure_time_mouth">' + create_time + '</span>' +
                     '<span style="color: #999794">' + begin_create_time + '</span>' +
-                    '<span class="departure_time_seat">预定座位' + inits_seats + '&nbsp;个</span>' +
+                    '<span class="departure_time_seat">订座' + inits_seats + '&nbsp;个</span>' +
                     '</div>' +
                     '<div class="departure_li_style departure_li_car_type">' +
                     '<img src="/resource/images/pc_icon_beihzu.png" class="departure_li_style_img">' +
@@ -468,7 +468,7 @@
                     '<span>发布时间</span>' +
                     '<span class="departure_time_mouth">' + create_time + '</span>' +
                     '<span style="color: #999794">' + begin_create_time + '</span>' +
-                    '<span class="departure_time_seat">预定座位' + inits_seats + '&nbsp;个</span>' +
+                    '<span class="departure_time_seat">订座' + inits_seats + '&nbsp;个</span>' +
                     '</div>' +
                     '</div>' +
                     '<div class="mine_first_bottom">' +
@@ -483,69 +483,40 @@
         function mine_made(obj) {
             var index = $(obj).attr('index');
             mine_made_style();
-            var driving_name = global_data.result.data[index].driving_name;//车主姓名
+            var driving_name = global_data.result.data[index].name;//车主姓名
             var start_time = global_data.result.data[index].start_time;//开始时间
             var end_time = global_data.result.data[index].end_time;//结束时间
             var mobile = global_data.result.data[index].mobile;//手机号
             var departure_city = global_data.result.data[index].departure_city;//出发城市
             var destination_city = global_data.result.data[index].destination_city;//目的城市
-            var departure = global_data.result.data[index].departure;//出发小城
-            var destination = global_data.result.data[index].destination;//目的小城市
+            var departure = global_data.result.data[index].boarding_point;//出发小城
+            var destination = global_data.result.data[index].breakout_point;//目的小城市
             var description = global_data.result.data[index].description;//描述信息
-            var tag_yes_content = global_data.result.data[index].tag_yes_content;//yes标签
-            var tag_no_content = global_data.result.data[index].tag_no_content;//no标签
-            var points = global_data.result.data[index].points;//地点
-            var inits_seats = global_data.result.data[index].inits_seats;//可用座位
-            var car_brand = global_data.result.data[index].car_brand;//车辆品牌
-            var id = global_data.result.data[index].id;//id
-            points = points.replace(/丶/g, " 、");
-            tag_yes_content = tag_yes_content.replace(/丶/g, " 、");
-            tag_no_content = tag_no_content.replace(/丶/g, " 、");
+            var inits_seats = global_data.result.data[index].booking_seats;//可用座位
+            var id = global_data.result.data[index].order_id;//id
+
             var insert_time = start_time.substring(0, 10);
             var time_change = insert_time.split('-');
             insert_time = time_change[1] + '月' + time_change[2] + '日';
+            var begin_start_time = start_time.substring(11, 16);
+            var begin_end_time = end_time.substring(11, 16);
 
-            var text_tags;
-            if (tag_yes_content == "" && tag_no_content == "") {
-                text_tags = ""
-            } else {
-                if (tag_no_content == "") {
-                    text_tags = tag_yes_content;
-                } else if (tag_yes_content == "") {
-                    text_tags = tag_no_content;
-                } else {
-                    text_tags = tag_no_content + "、" + tag_yes_content;
-                }
-            }
-            if (description == "") {
-                text_tags = text_tags + description;
-            } else {
-                text_tags = text_tags + "、" + description;
-            }
+            insert_time = insert_time+" "+begin_start_time+"~"+begin_end_time;
 
             if (departure != "") {
-                departure += "(" + departure + ")";
+                departure = "(" + departure + ")";
             }
             if (destination != "") {
-                destination += "(" + destination + ")";
+                destination = "(" + destination + ")";
             }
 
             $('.slide_container').animate({"top": "22%", "opacity": "1"}, 300);
-            $('.find_city_span').text(departure_city + departure + "至" + destination + destination_city);
+            $('.find_city_span').text(departure_city + departure + "至"  + destination_city+destination);
             $('.find_time_span').text(insert_time);
-            $('.find_route_span').text(points);
             $('.find_seat_span').text(inits_seats);
-            $('.find_type_span').text(car_brand);
-//            $('.find_tell_span').text(mobile);
-            $('.find_discript_span').append(text_tags);
+            $('.find_discript_span').append(description);
             $('.find_href_span').text("http://pinchenet.com/laihui/car/detail?id=" + id);
 
-            if ($('.find_route_span').text() == "" || $('.find_route_span').text() == "、") {
-                $('.find_route').remove()
-            }
-            if ($('.find_type_span').text() == "") {
-                $('.find_type').remove()
-            }
             if ($('.find_discript_span').text() == "") {
                 $('.find_discript').remove()
             }
@@ -558,7 +529,7 @@
             $('.float_container2').empty().append('<span style="display: inline-block;padding: .2rem;">【来回拼车】牵起你生活中的每一次来回</span>' +
                     '<div class="input_list find_city">' +
                     '<div class="input_list_left">' +
-                    '<span>【找人】</span>' +
+                    '<span>【找车】</span>' +
                     '</div>' +
                     '<div class="input_list_right">' +
                     '<span class="find_city_span"></span>' +
@@ -574,30 +545,12 @@
                     '</div>' +
                     '<div class="clear"></div>' +
                     '</div>' +
-                    '<div class="input_list find_route">' +
-                    '<div class="input_list_left">' +
-                    '<span>【路线】</span>' +
-                    '</div>' +
-                    '<div class="input_list_right">' +
-                    '<span class="find_route_span"></span>' +
-                    '</div>' +
-                    '<div class="clear"></div>' +
-                    '</div>' +
                     '<div class="input_list find_seat">' +
                     '<div class="input_list_left">' +
-                    '<span>【空位】</span>' +
+                    '<span>【订座】</span>' +
                     '</div>' +
                     '<div class="input_list_right">' +
                     '<span class="find_seat_span"></span>' +
-                    '</div>' +
-                    '<div class="clear"></div>' +
-                    '</div>' +
-                    '<div class="input_list find_type">' +
-                    '<div class="input_list_left">' +
-                    '<span>【车型】</span>' +
-                    '</div>' +
-                    '<div class="input_list_right">' +
-                    '<span class="find_type_span"></span>' +
                     '</div>' +
                     '<div class="clear"></div>' +
                     '</div>' +
@@ -731,7 +684,7 @@
             </div>
             <span>找车</span>
         </div>
-        <div class="message_bottom_type" onclick="notOpend()">
+        <div class="message_bottom_type" onclick="toPassengerList()">
             <div class="img_box">
                 <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
             </div>

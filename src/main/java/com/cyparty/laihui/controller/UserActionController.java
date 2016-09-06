@@ -74,6 +74,16 @@ public class UserActionController {
         }
         return "redirect:/";
     }
+    @RequestMapping("/laihui/passenger/order_info")
+    public String passenger_order_info(Model model, HttpServletRequest request) {
+        is_logined= Utils.isLogined(request);
+        is_logined=true;
+        if(is_logined){
+
+            return "passenger_order_info";
+        }
+        return "redirect:/";
+    }
     @RequestMapping("/laihui/passenger/my_order_list")
     public String passenger_order_list(Model model, HttpServletRequest request,HttpServletResponse response) {
         is_logined= Utils.isLogined(request);
@@ -118,7 +128,10 @@ public class UserActionController {
             switch (action) {
                 case "add":
                     try {
-                        seats=Integer.parseInt(request.getParameter("booking_seats"));
+                        if(request.getParameter("booking_seats")!=null){
+
+                            seats=Integer.parseInt(request.getParameter("booking_seats"));
+                        }
                         //todo:user_id改为从session中获取
                         user_id=Integer.parseInt(request.getParameter("user_id"));
                         if(request.getParameter("order_id")!=null){
@@ -157,7 +170,7 @@ public class UserActionController {
                         order.setName(name);
                         order.setMobile(mobile);
                         if(order_id>0){
-                            String update_sql=" update pch_passenger_publish_info set departure_city='"+departure_city+"',destination_city='"+destination_city+"',boarding_point='"+boarding_point+"',breakout_point='"+breakout_point+"',booking_seats="+seats+",start_time='"+start_time+"',end_time='"+end_time+"',description='"+description+"' where user_id="+user_id;
+                            String update_sql="  set departure_city='"+departure_city+"',destination_city='"+destination_city+"',boarding_point='"+boarding_point+"',breakout_point='"+breakout_point+"',booking_seats="+seats+",start_time='"+start_time+"',end_time='"+end_time+"',description='"+description+"' where user_id="+user_id;
                             laiHuiDB.update("pch_passenger_publish_info",update_sql);
                         }else {
 
@@ -197,6 +210,7 @@ public class UserActionController {
                     json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, user_id, page, size, order_id, now_date, departure_city, destination_city), "出发市信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "delete":
+                    order_id=Integer.parseInt(request.getParameter("order_id"));
                     String where =" where _id="+order_id;
                     is_success = laiHuiDB.delete("pch_passenger_publish_info ", where);
                     if(is_success){

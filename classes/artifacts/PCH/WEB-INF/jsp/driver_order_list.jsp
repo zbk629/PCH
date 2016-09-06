@@ -529,6 +529,10 @@
       var insert_time = start_time.substring(0, 10);
       var time_change = insert_time.split('-');
       insert_time = time_change[1] + '月' + time_change[2] + '日';
+      var begin_start_time = start_time.substring(11, 16);
+      var begin_end_time = end_time.substring(11, 16);
+
+      insert_time = insert_time+" "+begin_start_time+"~"+begin_end_time;
 
       var text_tags;
       if (tag_yes_content == "" && tag_no_content == "") {
@@ -549,14 +553,14 @@
       }
 
       if (departure != "") {
-        departure += "(" + departure + ")";
+        departure = "(" + departure + ")";
       }
       if (destination != "") {
-        destination += "(" + destination + ")";
+        destination = "(" + destination + ")";
       }
 
       $('.slide_container').animate({"top": "22%", "opacity": "1"}, 300);
-      $('.find_city_span').text(departure_city + departure + "至" + destination + destination_city);
+      $('.find_city_span').text(departure_city + departure + "至"  + destination_city+destination);
       $('.find_time_span').text(insert_time);
       $('.find_route_span').text(points);
       $('.find_seat_span').text(inits_seats);
@@ -756,7 +760,7 @@
       </div>
       <span>找车</span>
     </div>
-    <div class="message_bottom_type" onclick="notOpend()">
+    <div class="message_bottom_type" onclick="toPassengerList()">
       <div class="img_box">
         <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
       </div>

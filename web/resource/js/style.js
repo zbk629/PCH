@@ -250,3 +250,6 @@ function notOpend(){
 function toList(){
     window.location.href="/laihui/car/list"
 }
+function toPassengerList(){
+    window.location.href="/laihui/passenger/my_order_list"
+}
