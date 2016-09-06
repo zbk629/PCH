@@ -293,6 +293,9 @@
       font-size: 1rem;
       margin-top: .6rem;
     }
+    .find_href_span{
+      word-wrap: break-word;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
@@ -660,6 +663,7 @@
               '<div class="float_button">' +
               '<span class="float_button_tips" style="color: #999">手指长按内容复制</span>'+
               '<span class="float_remove" style="color: #e74c3c" onclick="removeFloatMessage()">关闭</span>' +
+              '<div class="clear"></div>'+
               '</div>'
       )
     }

@@ -880,7 +880,7 @@
       data_obj.tag_no_content = tag_no_content;
       data_obj.driving_name = driving_name;
       data_obj.car_brand = car_brand;
-      validate.validate_submit('/api/db/departure', data_obj, success);
+      validate.validate_submit4('/api/db/departure', data_obj, success);
     }
 
     function success(){

@@ -300,6 +300,9 @@
         .begin_city , .end_city{
             font-size: 1.2rem;
         }
+        .find_href_span{
+            word-wrap: break-word;
+        }
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
     <script>
@@ -515,7 +518,7 @@
             $('.find_time_span').text(insert_time);
             $('.find_seat_span').text(inits_seats);
             $('.find_discript_span').append(description);
-            $('.find_href_span').text("http://pinchenet.com/laihui/car/detail?id=" + id);
+            $('.find_href_span').text("http://pinchenet.com/laihui/passenger/order_info?id=" + id);
 
             if ($('.find_discript_span').text() == "") {
                 $('.find_discript').remove()
@@ -653,7 +656,7 @@
         <div class="return_perv">
             <img class="return_perv_img" alt="" src="/resource/images/pc_icon_white_return.png" onclick="returnCheck()">
         </div>
-        <span>我的车单</span>
+        <span>我的订单</span>
     </div>
     <div class="mine_message">
         <ul class="mine_mid_first">

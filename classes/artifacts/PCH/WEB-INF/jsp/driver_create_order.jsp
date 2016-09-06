@@ -760,6 +760,8 @@
         showFloatStyle("可用座位不能为空");
       }else if($('.publish_mobile').val()==""){
         showFloatStyle("联系方式不能为空");
+      }else if(parseInt($('.place_start_time').val().split("点")[0])>parseInt($('.place_end_time').val().split("点")[0])){
+        showFloatStyle("最早出发时间不能大于最晚出发时间");
       }else{
         setSendData();
         sendFinalMessage();
@@ -878,7 +880,7 @@
       data_obj.tag_no_content = tag_no_content;
       data_obj.driving_name = driving_name;
       data_obj.car_brand = car_brand;
-      validate.validate_submit('/api/db/departure', data_obj, success);
+      validate.validate_submit4('/api/db/departure', data_obj, success);
     }
 
     function success(){

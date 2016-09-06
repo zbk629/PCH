@@ -319,7 +319,7 @@
     });
     var url = window.location.href;
     /*var role=${role};*/
-    var role=<%=request.getSession().getAttribute("role")%>;
+    <%--var role=<%=request.getSession().getAttribute("role")%>;--%>
     var item_id = url.split("?id=")[1];
     item_id = item_id.split("&")[0];
     var click_type;
@@ -333,11 +333,11 @@
     }
     //判断是否是修改信息
     function checkId() {
-      if(role==1){
-        $('.not_driver').hide();
-        $('.change_driver').show();
-        updateMessage(item_id)
-      }else{
+//      if(role==1){
+//        $('.not_driver').hide();
+//        $('.change_driver').show();
+//        updateMessage(item_id)
+//      }else{
         $('.not_driver').show();
         $('.change_driver').hide();
         if (url.indexOf("=") == -1) {
@@ -345,21 +345,19 @@
         } else {
           updateMessage(item_id)
         }
-      }
-
     }
     //更新信息
     function updateMessage() {
       var obj = {};
       obj.action = 'show';
-      obj.id = item_id;
+      obj.order_id = item_id;
       validate.validate_submit('/api/db/passenger/departure', obj, insertMessage);
     }
     //更新信息
     function sendMessage(status) {
       var obj = {};
       obj.action = 'update';
-      obj.id = item_id;
+      obj.order_id = item_id;
       obj.info_status = status;
       validate.validate_submit('/api/db/passenger/departure', obj, updateMessage);
     }

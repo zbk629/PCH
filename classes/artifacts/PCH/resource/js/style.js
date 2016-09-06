@@ -23,9 +23,9 @@ var browser = {
 };
 
 //检测信息
-var validate = (function(){
+var validate = (function () {
 
-    var validate_submit = function(url,array,callback){
+    var validate_submit = function (url, array, callback) {
         $.ajax({
             type: "POST",
             url: url,
@@ -33,12 +33,12 @@ var validate = (function(){
             dataType: "json",
             beforeSend: loading,//执行ajax前执行loading函数.直到success
             success: function (data) {
-                global_data=data;
-                if(global_data.status==true){
+                global_data = data;
+                if (global_data.status == true) {
                     console.log("交互成功");
                     callback();
                     closeLoading();
-                }else{
+                } else {
                     validate.showTips("身份证格式不正确");
                 }
             },
@@ -49,21 +49,21 @@ var validate = (function(){
         })
     };
     //同步传输
-    var validate_submit2 = function(url,array,callback){
+    var validate_submit2 = function (url, array, callback) {
         $.ajax({
             type: "POST",
             url: url,
             data: array,
-            async:false,
+            async: false,
             dataType: "json",
             beforeSend: loading,//执行ajax前执行loading函数.直到success
             success: function (data) {
                 closeLoading();
-                if(data.status==true){
-                    global_data=data.result;
+                if (data.status == true) {
+                    global_data = data.result;
                     console.log("交互成功");
                     callback();
-                }else{
+                } else {
                     showErrorTips(data.message);
                 }
             },
@@ -72,22 +72,22 @@ var validate = (function(){
             }
         })
     };
-//同步传输
-    var validate_submit3 = function(url,array,callback){
+    //同步传输,数据格式同1
+    var validate_submit3 = function (url, array, callback) {
         $.ajax({
             type: "POST",
             url: url,
             data: array,
-            async:false,
+            async: false,
             dataType: "json",
             beforeSend: loading,//执行ajax前执行loading函数.直到success
             success: function (data) {
-                global_data=data;
-                if(global_data.status==true){
+                global_data = data;
+                if (global_data.status == true) {
                     console.log("交互成功");
                     callback();
                     closeLoading();
-                }else{
+                } else {
                     validate.showTips("身份证格式不正确");
                 }
             },
@@ -97,84 +97,108 @@ var validate = (function(){
             }
         })
     };
-    var baidu_api = function(url,callback){
+    //提交设置，不结束loading
+    var validate_submit4 = function (url, array, callback) {
         $.ajax({
             type: "POST",
             url: url,
+            data: array,
             dataType: "json",
-            //dataType: 'jsonp',
-            crossDomain: true,
+            beforeSend: loading,//执行ajax前执行loading函数.直到success
             success: function (data) {
-                global_data=data;
-                if(global_data.status==0){
+                global_data = data;
+                if (global_data.status == true) {
                     console.log("交互成功");
                     callback();
-                }else{
-                    validate.showTips("身份证格式不正确");
+                } else {
+                    validate.showTips("交互失败");
                 }
             },
             error: function () {
-                global_data=city_obj;
                 console.log("交互失败");
+                callback();
             }
         })
     };
+    //var baidu_api = function(url,callback){
+    //    $.ajax({
+    //        type: "POST",
+    //        url: url,
+    //        dataType: "json",
+    //        //dataType: 'jsonp',
+    //        crossDomain: true,
+    //        success: function (data) {
+    //            global_data=data;
+    //            if(global_data.status==0){
+    //                console.log("交互成功");
+    //                callback();
+    //            }else{
+    //                validate.showTips("身份证格式不正确");
+    //            }
+    //        },
+    //        error: function () {
+    //            global_data=city_obj;
+    //            console.log("交互失败");
+    //        }
+    //    })
+    //};
 
-    function showTips(message){
+    function showTips(message) {
         $('.validate_error_tips').show().text(message);
     };
 
-    function hideTips(){
+    function hideTips() {
         $('.validate_error_tips').hide().text("");
     }
+
     //控制输入的只能是数字
-    function onlyNum(obj)
-    {
-        if(isNaN($(obj).val())){
+    function onlyNum(obj) {
+        if (isNaN($(obj).val())) {
             $(obj).val("");
             validate.showTips("请输入合法的身份证号");
-        }else{
+        } else {
             validate.hideTips();
         }
     }
+
     return {
-        validate_submit : validate_submit,
-        showTips:showTips,
-        hideTips:hideTips,
-        onlyNum:onlyNum,
-        baidu_api:baidu_api,
-        validate_submit2:validate_submit2,
-        validate_submit3:validate_submit3
+        validate_submit: validate_submit,
+        showTips: showTips,
+        hideTips: hideTips,
+        onlyNum: onlyNum,
+        validate_submit2: validate_submit2,
+        validate_submit3: validate_submit3,
+        validate_submit4: validate_submit4
 
     }
 
 })();
 //改变字体适应效果
 //改变字体适应效果
-function changeFontSize(){
+function changeFontSize() {
     var w = $(document.body).width();
-    if(w>=1080) {
+    if (w >= 1080) {
         w = 1080;
-        $('html').css('font-size',w/78+'px');
-    }else{
-        $('html').css('font-size',w/34+'px');
+        $('html').css('font-size', w / 78 + 'px');
+    } else {
+        $('html').css('font-size', w / 34 + 'px');
     }
 
 };
 
 //ajax加载画面
-function loading(){
+function loading() {
     $('.hover_all').show();
     $('.loading_box').show();
 }
-function closeLoading(){
+function closeLoading() {
     $('.hover_all').hide();
     $('.loading_box').hide();
 }
 
 
 //查看大图
-var changeImg = (function(){
+var changeImg = (function () {
     //查看大图
     function showBigImg(obj) {
         $('.hover').show();
@@ -182,32 +206,33 @@ var changeImg = (function(){
         $('.reload_img').show();
         $('.cancel').show();
     }
-    function cancelBigImg(){
+
+    function cancelBigImg() {
         $('.hover').hide();
         $('.image_tips').hide();
         $('.cancel').hide();
     }
 
     return {
-        showBigImg : showBigImg,
-        cancelBigImg:cancelBigImg
+        showBigImg: showBigImg,
+        cancelBigImg: cancelBigImg
     }
 
 })();
 
-$("input").bind("touchstart click",function(e){
+$("input").bind("touchstart click", function (e) {
     e.stopPropagation()
-    if(e.originalEvent.touches){
+    if (e.originalEvent.touches) {
         //touch 移动端事件处理
         return false;
-    }else{
+    } else {
         // PC端 click事件处理
     }
 
 });
 
 //展示浮动层，自动消失
-function showFloatStyle(errorTips){
+function showFloatStyle(errorTips) {
     $('.hover').fadeIn(200);
     $('.float_container').fadeIn(200);
     $('.float_box_span').text(errorTips);
@@ -218,29 +243,30 @@ function showFloatStyle(errorTips){
 }
 
 //展示浮动层可编辑
-function showFloatStyle2(){
+function showFloatStyle2() {
     $('.hover').fadeIn(200);
     $('.float_container2').fadeIn(200);
 }
 
-function removeFloatMessage(){
+function removeFloatMessage() {
     $('.hover').fadeOut(200);
     $('.float_container2').fadeOut(200);
 }
 //显示菜单
-function changeMenu(obj){
-    if($(obj).children().hasClass('menu_style_active')){
+function changeMenu(obj) {
+    if ($(obj).children().hasClass('menu_style_active')) {
         $(obj).children().removeClass('menu_style_active');
-        $(obj).children().attr('src','/resource/images/pch_icon_menu_style.png');
-        $('.message_bottom').animate({'left':'300%'},300)
-    }else{
+        $(obj).children().attr('src', '/resource/images/pch_icon_menu_style.png');
+        $('.message_bottom').animate({'left': '300%'}, 300)
+    } else {
         $(obj).children().addClass('menu_style_active');
-        $(obj).children().attr('src','/resource/images/pch_icon_toright.png');
-        $('.message_bottom').animate({'left':'0'},300)
+        $(obj).children().attr('src', '/resource/images/pch_icon_toright.png');
+        $('.message_bottom').animate({'left': '0'}, 300)
     }
 }
 //菜单的跳转
-function toMine(){
+function toMine() {
+    loading();
     //if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
     //    alert("移动")
     //    window.location.href="/wx/login";
@@ -265,16 +291,16 @@ function toMine(){
     //    //否则就是PC浏览器打开
     //    window.location.href="/auth/base"
     //}
-    window.location.href="/wx/login";
+    window.location.href = "/wx/login";
 }
 //暂未开放
-function notOpend(){
+function notOpend() {
 //      window.location.href="/laihui/driver/create_order"
     showFloatStyle("即将开通，敬请期待");
 }
-function toList(){
-    window.location.href="/laihui/car/list"
+function toList() {
+    window.location.href = "/laihui/car/list"
 }
-function toPassengerList(){
-    window.location.href="/laihui/passenger/my_order_list"
+function toPassengerList() {
+    window.location.href = "/laihui/passenger/my_order_list"
 }

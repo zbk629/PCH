@@ -300,6 +300,9 @@
         .begin_city , .end_city{
             font-size: 1.2rem;
         }
+        .find_href_span{
+            word-wrap: break-word;
+        }
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
     <script>
@@ -515,7 +518,7 @@
             $('.find_time_span').text(insert_time);
             $('.find_seat_span').text(inits_seats);
             $('.find_discript_span').append(description);
-            $('.find_href_span').text("http://pinchenet.com/laihui/car/detail?id=" + id);
+            $('.find_href_span').text("http://pinchenet.com/laihui/passenger/order_info?id=" + id);
 
             if ($('.find_discript_span').text() == "") {
                 $('.find_discript').remove()
@@ -584,8 +587,8 @@
                     '<div class="float_button">' +
                     '<span class="float_button_tips" style="color: #999">手指长按内容复制</span>'+
                     '<span class="float_remove" style="color: #e74c3c" onclick="removeFloatMessage()">关闭</span>' +
-                    '</div>'
-            )
+                    '<div class="clear"></div>'+
+                    '</div>')
         }
         //展示浮动层可编辑
         function showDeleteFloatStyle(obj) {
@@ -618,10 +621,10 @@
         }
         //查看车单
         function looking_change(obj) {
-            window.location.href = "/laihui/car/detail?id=" + $(obj).parent().parent().attr('index');
+            window.location.href = "/laihui/passenger/order_info?id=" + $(obj).parent().parent().attr('index');
         }
         function toDetaile(obj) {
-            window.location.href = "/laihui/car/detail?id=" + $(obj).parent().attr('index');
+            window.location.href = "/laihui/passenger/order_info?id=" + $(obj).parent().attr('index');
         }
         //删除车单
         function mine_delete() {
@@ -653,7 +656,7 @@
         <div class="return_perv">
             <img class="return_perv_img" alt="" src="/resource/images/pc_icon_white_return.png" onclick="returnCheck()">
         </div>
-        <span>我的车单</span>
+        <span>我的订单</span>
     </div>
     <div class="mine_message">
         <ul class="mine_mid_first">

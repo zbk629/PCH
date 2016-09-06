@@ -537,7 +537,7 @@
     function getStartPlace() {
       var data_obj = {};
       data_obj.action = 'departure';
-      validate.validate_submit3('/db/pch/route', data_obj, carPlace.addCarStart);
+      validate.validate_submit('/db/pch/route', data_obj, carPlace.addCarStart);
     }
     function findMessage(){
       return true;
@@ -855,7 +855,7 @@
     <div class="return_perv">
       <img class="return_perv_img" alt="" src="/resource/images/pc_icon_white_return.png" onclick="returnCheck()">
     </div>
-    <span>发布拼车</span>
+    <span>发布出行</span>
   </div>
   <div class="publish_message">
     <ul class="publish_mid">

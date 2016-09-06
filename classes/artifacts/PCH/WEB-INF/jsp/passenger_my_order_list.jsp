@@ -594,7 +594,7 @@
           }else{
             departure_city_text=departure_city;
           }
-          console.log(begin_time+departure_city+destination_city)
+          console.log(begin_time+departure_city+destination_city);
           $('.publish_start_city').text(departure_city_text);
           $('.publish_end_city').text(destination_city_text);
           loadEndRoute(departure_city_text);
@@ -677,6 +677,9 @@
         }
         if (destination == "") {
           $($('.end_city')[(page_list*size)+i]).hide();
+        }
+        if (description == "") {
+          $($('.departure_li_car_type')[(page_list*size)+i]).hide();
         }
 
       }

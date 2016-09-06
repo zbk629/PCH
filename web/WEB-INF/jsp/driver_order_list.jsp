@@ -293,6 +293,9 @@
       font-size: 1rem;
       margin-top: .6rem;
     }
+    .find_href_span{
+      word-wrap: break-word;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
