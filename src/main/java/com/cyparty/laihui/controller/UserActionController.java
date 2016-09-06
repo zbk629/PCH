@@ -206,7 +206,8 @@ public class UserActionController {
                     String now_date=request.getParameter("date");
                     String departure_city=request.getParameter("departure_city");
                     String destination_city=request.getParameter("destination_city");
-                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, 0, page, size, order_id, now_date, departure_city, destination_city), "出发市信息获取成功");
+                    result=ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, 0, page, size, order_id, now_date, departure_city, destination_city);
+                    json = ReturnJsonUtil.returnSuccessJsonString(result, "出发市信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show_mine":
                     try {

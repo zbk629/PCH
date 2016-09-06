@@ -171,6 +171,10 @@ public class ReturnJsonUtil {
         int count=laiHuiDB.getPCHDepartureInfo(where).size();
         int offset=page*size;
         where=where+" limit "+offset+","+size;
+        result_json=Memcache.getMemcache(where);
+        if(result_json.getString("status")==null){
+            return result_json;
+        }
         List<DepartureInfo> departureInfoList =laiHuiDB.getPCHDepartureInfo(where);
         for(DepartureInfo departure:departureInfoList){
             JSONObject jsonObject=new JSONObject();
@@ -205,6 +209,7 @@ public class ReturnJsonUtil {
         result_json.put("total",count);
         result_json.put("page",page);
         result_json.put("size",size);
+        Memcache.setMemcache(where,result_json);
         return result_json;
     }
     public static JSONObject getMySelfDepartureInfo(LaiHuiDB laiHuiDB,int page ,int size,String departure_city,String destination_city,String status,String start_time,String end_time,String keyword,int id,int user_id){
@@ -283,6 +288,10 @@ public class ReturnJsonUtil {
         int count=laiHuiDB.getPCHDepartureInfo(where).size();
         int offset=page*size;
         where=where+" limit "+offset+","+size;
+        result_json=Memcache.getMemcache(where);
+        if(result_json.getString("status")==null){
+            return result_json;
+        }
         List<DepartureInfo> departureInfoList =laiHuiDB.getPCHDepartureInfo(where);
         for(DepartureInfo departure:departureInfoList){
             JSONObject jsonObject=new JSONObject();
@@ -317,6 +326,7 @@ public class ReturnJsonUtil {
         result_json.put("total",count);
         result_json.put("page",page);
         result_json.put("size",size);
+        Memcache.setMemcache(where,result_json);
         return result_json;
     }
     public static JSONObject getUserInfo(LaiHuiDB laiHuiDB,int id){
@@ -410,6 +420,10 @@ public class ReturnJsonUtil {
         int offset=page*size;
         int count=laiHuiDB.getCount("pch_passenger_publish_info",where);
         where=where+" limit "+offset+","+size;
+        result=Memcache.getMemcache(where);
+        if(result.getString("status")==null){
+            return result;
+        }
         List<PassengerOrder> passengerOrderList =laiHuiDB.getPassengerPublishInfo(where);
         for(PassengerOrder passengerOrder:passengerOrderList){
             JSONObject jsonObject=new JSONObject();
@@ -439,6 +453,7 @@ public class ReturnJsonUtil {
         result.put("page",page);
         result.put("size",size);
         result.put("data",dataArray);
+        Memcache.setMemcache(where,result);
         return result;
     }
     public static JSONObject getTags(LaiHuiDB laiHuiDB,int type){
