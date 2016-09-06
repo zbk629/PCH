@@ -16,7 +16,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>来回拼车-拼车信息汇</title>
+  <title>来回拼车-乘客拼车信息汇</title>
   <link rel="shortcut icon" href="/resource/images/pc_logo.ico"/>
   <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
   <script src="/resource/js/style.js" type="text/javascript"></script>
@@ -944,7 +944,9 @@
       send_time = year + "-" + month + "-" + date;
     }
 
-
+    function toAuthList(){
+      window.location.href = "/laihui/passenger/my_order_list";
+    }
 
   </script>
 </head>
@@ -1047,7 +1049,7 @@
     </div>
     <span>找车</span>
   </div>
-  <div class="message_bottom_type menu_active" onclick="toPassengerList()">
+  <div class="message_bottom_type menu_active" onclick="toAuthList()">
     <div class="img_box">
       <img src="/resource/images/pch_icon_menu_people_active.png" class="icon_style icon_people">
     </div>

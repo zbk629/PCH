@@ -512,11 +512,10 @@
         var date  = time.getDate();
 
         if(date == time_change[2]){
-          insert_time = time_change[1] + '-' + time_change[2];
+          insert_time = "今天("+time_change[1] + '-' + time_change[2]+")";
         }else{
-          insert_time = time_change[1] + '-' + time_change[2];
+          insert_time = "明天("+time_change[1] + '-' + time_change[2]+")";
         }
-
 
         $('#demo_place').val(demo_place_val);
 
@@ -855,7 +854,7 @@
     <div class="return_perv">
       <img class="return_perv_img" alt="" src="/resource/images/pc_icon_white_return.png" onclick="returnCheck()">
     </div>
-    <span>发布出行</span>
+    <span>乘客发布</span>
   </div>
   <div class="publish_message">
     <ul class="publish_mid">

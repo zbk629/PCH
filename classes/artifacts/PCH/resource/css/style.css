@@ -454,6 +454,10 @@ input:focus{
 }
 .type_container_ico{
     font-size: 1.8rem;
+    width: 2.2rem;
+    position: relative;
+    top: .6rem;
+    margin-right: .4rem;
 }
 .bottom_menu{
     position: fixed;

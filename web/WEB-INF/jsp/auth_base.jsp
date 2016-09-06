@@ -138,6 +138,10 @@
       }
 
     }
+    .type_user{
+      width: 1.7rem;
+      top: .3rem;
+    }
 
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
@@ -190,10 +194,10 @@
     function toMyMadeList(){
       window.location.href="/laihui/passenger/order_list"
     }
-
     function toAuthList(){
-      window.location.href="/laihui/passenger/my_order_list"
+      window.location.href = "/laihui/passenger/my_order_list";
     }
+
   </script>
 </head>
 <body>
@@ -218,12 +222,12 @@
   <div class="type_container">
     <ul class="type_container_ul">
       <li class="type_container_ul_li type_container_left" onclick="toPublish()">
-        <span class="type_container_ico">+</span>
-        <span>发布发车信息</span>
+        <img src="/resource/images/pch_icon_white_car.png" class="type_container_ico"/>
+        <span>车主发布</span>
       </li>
       <li class="type_container_ul_li type_container_right" onclick="toPassengerPublish()">
-        <span class="type_container_ico">+</span>
-        <span>发布出行信息</span>
+        <img src="/resource/images/pch_icon_white_people.png" class="type_container_ico type_user"/>
+        <span>乘客发布</span>
       </li>
       <div class="clear"></div>
     </ul>

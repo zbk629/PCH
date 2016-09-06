@@ -961,7 +961,9 @@
         }
 
 
-
+        function toAuthList(){
+            window.location.href = "/laihui/passenger/my_order_list";
+        }
     </script>
 </head>
 <body id="backtop">
@@ -1063,7 +1065,7 @@
         </div>
         <span>找车</span>
     </div>
-    <div class="message_bottom_type " onclick="toPassengerList()">
+    <div class="message_bottom_type " onclick="toAuthList()">
         <div class="img_box">
             <img src="/resource/images/pch_icon_menu_people.png" class="icon_style icon_people">
         </div>

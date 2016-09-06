@@ -603,7 +603,7 @@
       </li>
       <li class="publish_message_li li_change">
         <div class="publish_message_li_left">
-          <span>预定座位</span>
+          <span>乘客数量</span>
         </div>
         <div class="publish_message_li_right">
           <span class="item_seat"></span>

@@ -299,8 +299,8 @@ function notOpend() {
     showFloatStyle("即将开通，敬请期待");
 }
 function toList() {
-    window.location.href = "/laihui/car/list"
+    window.location.href = "/laihui/car/list";
 }
 function toPassengerList() {
-    window.location.href = "/laihui/passenger/my_order_list"
+    window.location.href = "/laihui/passenger/my_order_list";
 }
