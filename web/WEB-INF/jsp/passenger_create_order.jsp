@@ -392,7 +392,6 @@
         trigger:$('#demo_time'),
         data:timeData,
         level: 1
-
       });
 //      开始时间
       var selectStartTime = new MobileSelectArea();
@@ -400,7 +399,7 @@
         trigger:$('#demo_hour'),
         data:hourData,
         level: 2,
-//        value:$('#hd_hour').val()
+        value:$('#hd_hour').val()
       });
 //      结束时间
       var selectEndTime = new MobileSelectArea();
@@ -408,7 +407,7 @@
         trigger:$('#demo_min'),
         data:hourData,
         level: 2,
-//        value:$('#hd_min').val()
+        value:$('#hd_min').val()
       });
       //座位选择
       var selectSeat = new MobileSelectArea();
@@ -807,9 +806,11 @@
         }else{
           day.push("明天("+array_date[j].month+"-"+array_date[j].date+")")
         }
-//        $('#demo_hour').val()
       }
     }
+//    function text(){
+//      alert('11')
+//    }
   </script>
 </head>
 <body scroll="no">
@@ -883,11 +884,11 @@
         </div>
         <div class="publish_mid_li_click" onclick="">
           <input type="text" id="demo_time" placeholder="选择日期" readonly="readonly" class="place_time place_date input_disabled"/>
-          <input type="text" id="demo_hour" placeholder="最早" readonly="readonly" class="place_time place_start_time input_disabled" />
-          <%--<input type="hidden" id="hd_hour" value="13,1000"/>--%>
+          <input type="text" id="demo_hour" placeholder="最早" value="9点 00分" readonly="readonly" class="place_time place_start_time input_disabled"/>
+          <input type="hidden" id="hd_hour" value="10,1000"/>
           <span>--  </span>
-          <input type="text" id="demo_min" placeholder="最晚" readonly="readonly" class="place_time place_end_time input_disabled" />
-          <%--<input type="hidden" id="hd_min" value="13,1000"/>--%>
+          <input type="text" id="demo_min" placeholder="最晚" value="11点 00分" readonly="readonly" class="place_time place_end_time input_disabled" />
+          <input type="hidden" id="hd_min" value="12,1000"/>
         </div>
         <div class="clear"></div>
       </li>

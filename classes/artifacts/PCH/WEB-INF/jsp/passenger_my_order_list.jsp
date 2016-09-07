@@ -740,7 +740,7 @@
 
     //车辆行程信息2
     var carPlace = (function () {
-//            //将车辆行程信息据封装进数组
+    //将车辆行程信息据封装进数组
       function addCarStart() {
         var data1 = global_data.result;
         var contact = new Object();
@@ -971,7 +971,7 @@
     <div class="departure_top_box">
       <%--<span class="departure_top_find_car departure_top_button_active">找车</span>--%>
       <%--<span class="departure_top_find_person">找人</span>--%>
-      <img src="/resource/images/pch_share_logo.png" class="departure_top_box_img" alt="来回拼车">
+      <img src="/resource/images/pch_logo_findPeople.png" class="departure_top_box_img" alt="来回拼车">
       <%--<span class="departure_top_box_span">来回拼车</span>--%>
     </div>
   </div>

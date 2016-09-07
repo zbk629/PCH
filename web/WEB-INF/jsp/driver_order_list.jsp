@@ -310,7 +310,7 @@
 
     var user_id = 86;
     var page_list = 0;
-    var size = 10;
+    var size = 100;
     var total;
     var index_id;
     function returnCheck() {

@@ -36,13 +36,13 @@
         right: 1.1rem;
     }
     .departure_top_box_img{
-        width: 10.6rem;
+        width: 20.6rem;
     }
 }
 @media screen and (max-width: 1024px) {
 
     .departure_top_box_img{
-        width: 9.6rem;
+        width: 19.6rem;
     }
 }
 @media screen and (max-width: 800px) {
@@ -62,13 +62,13 @@
 @media screen and (max-width: 630px) {
 
     .departure_top_box_img{
-        width: 8.6rem;
+        width: 18.6rem;
     }
 }
 @media screen and (max-width: 568px) {
 
     .departure_top_box_img{
-        width: 8.6rem;
+        width: 18.6rem;
     }
 }
 @media screen and (max-width: 400px) {

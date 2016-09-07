@@ -298,7 +298,7 @@
             font-size: 2rem;
         }
         .departure_top_box_img{
-            width: 10.6rem;
+            width: 20.6rem;
             position: relative;
             top: .4rem;
         }
@@ -987,7 +987,8 @@
         <div class="departure_top_box">
             <%--<span class="departure_top_find_car departure_top_button_active">找车</span>--%>
             <%--<span class="departure_top_find_person">找人</span>--%>
-                <img src="/resource/images/pch_share_logo.png" class="departure_top_box_img" alt="来回拼车">
+                <img src="/resource/images/pch_logo_findCar.png" class="departure_top_box_img" alt="来回拼车">
+                <%--<span style="color: #52514f;font-size: 1.4rem;position: relative;display: inline-block;top: -.6rem;left: -1rem;">—找车</span>--%>
             <%--<span class="departure_top_box_span">来回拼车</span>--%>
         </div>
     </div>

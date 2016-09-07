@@ -67,7 +67,7 @@ public class UserActionController {
     @RequestMapping("/laihui/passenger/order_list")
     public String passenger_order_list(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-        is_logined=true;
+//        is_logined=true;
         if(is_logined){
 
             return "passenger_order_list";
@@ -77,7 +77,7 @@ public class UserActionController {
     @RequestMapping("/laihui/passenger/order_info")
     public String passenger_order_info(Model model, HttpServletRequest request) {
         //is_logined= Utils.isLogined(request);
-//        is_logined=true;
+        is_logined=true;
         if(is_logined){
 
             return "passenger_order_info";
