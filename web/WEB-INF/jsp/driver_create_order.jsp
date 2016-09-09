@@ -371,6 +371,7 @@
   </style>
   <script>
     $(document).ready(function () {
+
       changeFontSize();
       getStartPlace();
       addHourStyle();
@@ -580,7 +581,6 @@
 
     //获取出发地数据
     function getStartPlace() {
-
       var data_obj = {};
       data_obj.action = 'show_all';
       validate.validate_submit('/db/pch/route', data_obj, carPlace.addCarStart);

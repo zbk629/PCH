@@ -56,9 +56,7 @@ var validate = (function () {
             data: array,
             async: false,
             dataType: "json",
-            beforeSend: loading,//执行ajax前执行loading函数.直到success
             success: function (data) {
-                closeLoading();
                 if (data.status == true) {
                     global_data = data.result;
                     console.log("交互成功");
