@@ -480,8 +480,7 @@
                 }
             }
             if(flag == true){
-                mobile=1;
-
+                mobile=1
                 callback1();
             }else{
                 mobile=0;
@@ -506,6 +505,8 @@
 //                'data': placeData,//数据源,
 //                'status': 0
 //            });
+
+            getStartPlace();
             var selectArea = new MobileSelectArea2();
             selectArea.init({
                 trigger:$('#demo_place'),
@@ -514,7 +515,6 @@
                 position:'bottom',
                 level: 2
             });
-            getStartPlace();
         }
 
         //出发路线
@@ -593,7 +593,7 @@
                     }else{
                         departure_city_text=departure_city;
                     }
-                    console.log(begin_time+departure_city+destination_city)
+                    console.log(begin_time+departure_city+destination_city);
                     $('.publish_start_city').text(departure_city_text);
                     $('.publish_end_city').text(destination_city_text);
                     loadEndRoute(departure_city_text);
@@ -750,7 +750,7 @@
         //获取出发地数据
         function getStartPlace() {
             var data_obj = {};
-            data_obj.action = 'departure';
+            data_obj.action = 'show_all';
             validate.validate_submit('/db/pch/route', data_obj, carPlace.addCarStart);
         }
 
@@ -765,38 +765,22 @@
                 contact.child = [{id:-11,name:""}];
                 placeData.push(contact);
                 for (var i = 0; i < data1.data.length; i++) {
-                    var departure1 = data1.data[i].departure;
+                    var departure1 = data1.data[i].name;
+                    var departure_id = data1.data[i].id;
                     var contact = new Object();
-                    contact.id = i+1;
+                    contact.id = departure_id;
                     contact.name = departure1;
-                    $.ajax({
-                        type: "POST",
-                        url: "/db/pch/route",
-                        async: false,
-                        data: {"action": "departure", "departure": departure1},
-                        dataType: "json",
-                        success: function (data) {
-                            if (data.status == true) {
-                                var array_end = [];
-
-                                for (var j = 0; j < data.result.data.length; j++) {
-                                    var obj = {};
-                                    obj.id = 1000 + j;
-                                    obj.name = data.result.data[j].destination;
-                                    array_end.push(obj);
-                                }
-                                contact.child = array_end;
-                                placeData.push(contact);
-
-                            } else {
-                                validate.showTips("格式不正确");
-                            }
-                        },
-                        error: function () {
-                            console.log("交互失败");
-                        }
-                    })
-
+                    var array_end = [];
+                    for (var j = 0; j < data1.data[i].child.length; j++) {
+                        var name = data1.data[i].child[j].name;
+                        var id = data1.data[i].child[j].id;
+                        var obj_array = new Object();
+                        obj_array.id = id;
+                        obj_array.name = name;
+                        array_end.push(obj_array);
+                    }
+                    contact.child = array_end;
+                    placeData.push(contact);
                 }
             };
 
@@ -804,6 +788,7 @@
                 addCarStart: addCarStart
             }
         })();
+
 
         //显示下拉
         function showTagsUl(obj) {

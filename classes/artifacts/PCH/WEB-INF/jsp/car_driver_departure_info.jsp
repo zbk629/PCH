@@ -115,7 +115,7 @@
             width: 2rem;
             float: right;
             position: absolute;
-            top: 1rem;
+            top: .6rem;
             right: 2rem;
         }
 
@@ -223,7 +223,57 @@
             line-height: 2rem;
 
         }
-
+        .call_driver{
+            background-color: #f5ad4e;
+            color: #fff;
+            padding: .3rem 3rem;
+            display: inline-block;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .phone_input{
+            line-height: 3.2rem;
+            height: 3.2rem;
+            border-bottom: 1px solid #f5ad4e;
+            width: 100%;
+            margin-top: 2rem;
+            font-size: 1.6rem;
+            text-indent: 1rem;
+        }
+        .phone_next{
+            width: 100%;
+            line-height: 3.2rem;
+            background-color: #f5ad4e;
+            color: #fff;
+            border-radius: 5px;
+            margin-top: 3rem;
+        }
+        .close_x{
+            position: absolute;
+            right: -.8rem;
+            top: -1.6rem;
+            font-size: 2.4rem;
+            line-height: 2.2rem;
+            color: #999;
+            padding: 0 .4rem;
+        }
+        .success_title{
+            font-size: 2rem;
+            display: inline-block;
+            color: #2ecc71;
+            margin-bottom: 2rem;
+            margin-top: 1rem;
+        }
+        .success_call{
+            line-height: 3.2rem;
+            position: relative;
+        }
+        .success_driver_call{
+            padding-right: 2rem;
+        }
+        .phone_box_title{
+            margin-top: .4rem;
+        }
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -424,16 +474,16 @@
                     tag_no_content= tag_no_content.replace(/丶/g, "、");
                     var mobile_array=[];
                     mobile_array = mobile.split(',');
-                    for(var i=0;i<mobile_array.length;i++){
-                            $('.mobile_clear').append('<a href="tel:'+mobile_array[i]+'" class="call_driver">' +
-                                    '<div class="publish_message_li_moblie">'+
-                                    '<span class="item_mobile">'+mobile_array[i]+'</span>'+
-                                    '<img src="/resource/images/pc_icon_mobile.png" class="mobile">'+
-                                    '</div>'+
-                                    '<div class="clear"></div>'+
-                                    '</a>'
-                            )
-                    }
+//                    for(var i=0;i<mobile_array.length;i++){
+//                            $('.mobile_clear').append('<a href="tel:'+mobile_array[i]+'" class="call_driver">' +
+//                                    '<div class="publish_message_li_moblie">'+
+//                                    '<span class="item_mobile">'+mobile_array[i]+'</span>'+
+//                                    '<img src="/resource/images/pc_icon_mobile.png" class="mobile">'+
+//                                    '</div>'+
+//                                    '<div class="clear"></div>'+
+//                                    '</a>'
+//                            )
+//                    }
 
                     $('.departure_city').text(departure_city);
                     $('.destination_city').text(destination_city);
@@ -447,7 +497,7 @@
                     $('.item_name').text(driving_name);
                     $('.item_points').text(points);
                     $('.item_type').text(car_brand);
-                    $('.call_driver_bottom').attr('href', 'tel:' + mobile_array[0]);
+//                    $('.call_driver_bottom').attr('href', 'tel:' + mobile_array[0]);
 
                     if (driving_name == "") {
                         $('.item_name_li').remove()
@@ -561,6 +611,31 @@
                 $('.float_message_mid').show();
             }
         }
+
+        function clearFloat(){
+            $('.float_message_box').empty();
+            $('.float_button').remove();
+            $('.float_message_box').append('<div class="phone_box">' +
+                    '<div class="phone_box_title">填写您的手机号，方便车主与您取得联系' +
+                    '<div class="close_x" onclick="removeFloatMessage()">x</div>' +
+                    '</div>' +
+                    '<input class="phone_input" placeholder="请输入手机号">' +
+                    '<div class="phone_next" onclick="showSuccess()">下一步</div>' +
+                    '</div>');
+            showFloat();
+        }
+        function showSuccess(){
+            $('.float_message_box').empty();
+            $('.float_message_box').append('<div class="success_box">' +
+                    '<span class="success_title">成功向车主预约</span>' +
+                    '<div class="close_x" onclick="removeFloatMessage()">x</div>' +
+                    '<div class="success_call" onclick="showSuccess()">' +
+                    '<span class="success_driver">联系车主：</span>' +
+                    '<span class="success_driver_call">18838164316</span>' +
+                    '<img src="/resource/images/pc_icon_mobile.png" class="mobile">'+
+                    '</div>' +
+                    '</div>');
+        }
     </script>
 </head>
 <body>
@@ -597,6 +672,7 @@
         </div>
     </div>
 </div>
+
 <div class="publish_container">
     <div class="publish_top">
         <div class="return_perv">
@@ -644,10 +720,10 @@
 
             <li class="publish_message_li">
                 <div class="publish_message_li_left">
-                    <span>电话</span>
+                    <span>联系车主</span>
                 </div>
-                <div class="publish_message_li_right mobile_clear">
-
+                <div class="publish_message_li_right mobile_clear" onclick="clearFloat();">
+                    <span class="call_driver">预约</span>
                 </div>
                 <div class="clear "></div>
             </li>
@@ -708,9 +784,9 @@
             </li>
         </ul>
     </div>
-    <a href="" class="call_driver_bottom not_driver" style="display:none;">
+    <a href="javascript:(0)" class="call_driver_bottom not_driver" style="display:none;">
         <div class="publish_bottom">
-            联系车主
+            预约车主
         </div>
     </a>
     <a href="javascript:(0)" class="change_driver" onclick="showFloat()" >

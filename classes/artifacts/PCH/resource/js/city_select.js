@@ -172,7 +172,6 @@
         },
         format: function() {
             var _this = this;
-            var child = _this.scroller.children();
             this.f(this.data);
             console.log(_this.text);
         },

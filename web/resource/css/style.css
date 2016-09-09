@@ -15,7 +15,7 @@ body {
     color: #52514f;
     font-size: 1.4rem;
     max-width: 1080px;
-    /*height: 100%;*/
+    min-height: 100%;
     overflow: auto;
     width: 100%;
     overflow-x:hidden;
@@ -388,6 +388,7 @@ input:focus{
 .float_box{
     width: 100%;
     text-align: center;
+    position:relative;
 }
 /*弹出框样式结束*/
 .publish_top {
@@ -409,7 +410,7 @@ input:focus{
     color: #fff;
     bottom: 0;
     width: 100%;
-    z-index: 101;
+    z-index: 100;
     font-size: 1.8rem;
     font-weight: bold;
     text-align: center;
