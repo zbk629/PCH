@@ -51,15 +51,12 @@ public class ReturnJsonUtil {
      * @return
      */
 
-
     public static JSONObject getPCHRoutePlace(LaiHuiDB laiHuiDB, String departure) {
         JSONObject result_json = new JSONObject();
         JSONArray dataArray = new JSONArray();
         String where = "";
         if (departure == null || departure.trim().equals("")) {
             where = "  where is_enable=1 group by departure_city order by _id";
-            int i = 1;
-            int j = 1;
             List<RouteInfo> routeInfoList = laiHuiDB.getPCHRoute(where);
             for (RouteInfo routeInfo : routeInfoList) {
                 JSONObject jsonObject = new JSONObject();
