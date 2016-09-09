@@ -208,39 +208,6 @@ public class WXUtils {
 
             String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token;
 
-            /*JSONObject jsonObject=new JSONObject();
-            JSONObject dataObject=new JSONObject();
-            jsonObject.put("touser",openid);
-            jsonObject.put("template_id","wKsNLWJCpYrbsBqTRKG_JeeqxrlFxSAhRzC8cwL9CDM");
-            jsonObject.put("url","http://weixin.qq.com/download");
-            JSONObject firstObject=new JSONObject();
-            firstObject.put("value","从郑州到博爱的拼车发布成功！");
-            firstObject.put("color","#173177");
-            JSONObject keyword1Object=new JSONObject();
-            keyword1Object.put("value",date);
-            keyword1Object.put("color","#173177");
-            JSONObject keyword2Object=new JSONObject();
-            keyword2Object.put("value","郑州东站");
-            keyword2Object.put("color","#173177");
-            JSONObject keyword3Object=new JSONObject();
-            keyword3Object.put("value","中州大道");
-            keyword3Object.put("color","#173177");
-            JSONObject keyword4Object=new JSONObject();
-            keyword4Object.put("value",mobile);
-            keyword4Object.put("color","#173177");
-            JSONObject remarkObject=new JSONObject();
-            remarkObject.put("value","感谢你的使用");
-            remarkObject.put("color","#173177");
-
-            dataObject.put("first",firstObject);
-            dataObject.put("keyword1",keyword1Object);
-            dataObject.put("keyword2",keyword2Object);
-            dataObject.put("keyword3",keyword3Object);
-            dataObject.put("keyword4",keyword4Object);
-            dataObject.put("remark",remarkObject);
-            jsonObject.put("data",dataObject);*/
-            //String first=java.net.URLEncoder.encode("",);
-            //String openid,String departure_city,String destination_city,String date,String mobile
             User user=(User)request.getSession().getAttribute("user");
             String json="{\n" +
                     "           \"touser\":\""+user.getOpenid()+"\",\n" +

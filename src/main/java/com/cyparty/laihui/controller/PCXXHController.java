@@ -71,6 +71,9 @@ public class PCXXHController {
                 case "departure":
                     json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoutePlace(laiHuiDB, departure_city), "出发市信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                case "show_all":
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHAllRoutePlace(laiHuiDB), "出发市信息获取成功");
+                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "destination":
                     json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoutePlace(laiHuiDB, departure_city), "目的地市获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
