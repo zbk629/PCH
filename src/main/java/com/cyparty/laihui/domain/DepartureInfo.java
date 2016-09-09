@@ -21,12 +21,21 @@ public class DepartureInfo {
     private String points;
     private String description;
     private String mobile;
+    private String date;
     String departure_county;
     String destination;
     String tag_yes_content;
     String tag_no_content;
     String driving_name;
     String car_brand;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public int getStatus() {
         return status;

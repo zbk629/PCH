@@ -43,10 +43,9 @@ public class UserActionController {
     public String create_order(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
         //is_logined=true;
-        is_has_openid=Utils.isHasMapOpenid(request);
+        //is_has_openid=Utils.isHasMapOpenid(request);
         if(is_logined){
             //if(is_has_openid){
-
                 return "driver_create_order";
             //}
             //return "redirect:/wx/map/login";
@@ -59,7 +58,6 @@ public class UserActionController {
         is_logined= Utils.isLogined(request);
 //        is_logined=true;
         if(is_logined){
-
             return "passenger_create_order";
         }
         return "redirect:/";
@@ -122,11 +120,10 @@ public class UserActionController {
             }
             boolean is_success = true;
             int seats=0;
-            int user_id=0;
+            int user_id=86;
             int order_id=0;
             //todo:user_id改为从session中获取
             if(request.getSession().getAttribute("user_id")!=null){
-
                 try {
                     user_id=(Integer)request.getSession().getAttribute("user_id");
                 } catch (Exception e) {
@@ -182,7 +179,7 @@ public class UserActionController {
 
                             is_success=laiHuiDB.createPassengerPublishInfo(order);
                             //更新状态，成为发过出行信息的乘客
-                            String update_sql=" set user_role=0 where user_id="+user_id;
+                            String update_sql=" set is_passenger=1 where user_id="+user_id;
                             laiHuiDB.update("pc_wx_user",update_sql);
                             if(is_success){
                                 json = ReturnJsonUtil.returnSuccessJsonString(result, "行程单创建成功！");

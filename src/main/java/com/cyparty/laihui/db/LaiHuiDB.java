@@ -106,7 +106,7 @@ public class LaiHuiDB {
 
             public PreparedStatement createPreparedStatement(Connection con)
                     throws SQLException {
-                String sql="insert into pc_wx_user(user_name,user_avatar,user_wx_token,user_wx_unionid,user_sex,user_enabled,user_create_time,user_last_login,user_wx_openid) values(?,?,?,?,?,?,?,?,?)";
+                String sql="insert into pc_wx_user(user_name,user_avatar,user_wx_token,user_wx_unionid,user_sex,user_enabled,user_create_time,user_last_login,user_wx_openid,is_driver,is_passenger) values(?,?,?,?,?,?,?,?,?,?,?)";
                 PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setString(1,user.getUser_nickname());
                 ps.setString(2,user.getUser_avatar());
@@ -117,6 +117,8 @@ public class LaiHuiDB {
                 ps.setString(7,Utils.getCurrentTime());
                 ps.setString(8,Utils.getCurrentTime());
                 ps.setString(9,user.getOpenid());
+                ps.setInt(10,0);
+                ps.setInt(11,0);
                 return ps;
             }
         }, keyHolder);
@@ -155,7 +157,7 @@ public class LaiHuiDB {
 
             public PreparedStatement createPreparedStatement(Connection con)
                     throws SQLException {
-                String sql = "insert into pch_publish_info(mobile,start_time,end_time,departure_city,destination_city,init_seats,create_time,is_enable,points,description,departure,destination,tag_yes_content,driving_name,car_brand,info_status,tag_no_content,user_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sql = "insert into pch_publish_info(mobile,start_time,end_time,departure_city,destination_city,init_seats,create_time,is_enable,points,description,departure,destination,tag_yes_content,driving_name,car_brand,info_status,tag_no_content,user_id,info_source) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setString(1, departureInfo.getMobile());
                 ps.setString(2, departureInfo.getStart_time());
@@ -175,6 +177,7 @@ public class LaiHuiDB {
                 ps.setInt(16, 1);
                 ps.setString(17, departureInfo.getTag_no_content());
                 ps.setInt(18,departureInfo.getUser_id());
+                ps.setInt(19,0);
                 return ps;
             }
         }, keyHolder);

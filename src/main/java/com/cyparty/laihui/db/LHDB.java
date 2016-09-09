@@ -102,7 +102,6 @@ public class LHDB {
                 e.printStackTrace();
             } finally {
                 closeBizConnection();
-
             }
         }
     }

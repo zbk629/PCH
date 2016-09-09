@@ -67,6 +67,7 @@ public class LoginController {
                 }
             }
         }else if (mode != null && mode.equals("wx_map")) {
+            String ref=request.getHeader("referer");
             String code = request.getParameter("code");
             User user = WxUserBaseUtil.getUserWXIntro(code,"wx_map");
             int user_id=0;
@@ -79,8 +80,7 @@ public class LoginController {
             if(user_id!=0){
                 //update
                 if(user.getOpenid()!=null){
-
-                    String update_sql=" update pc_wx_user set user_map_openid='"+user.getOpenid()+"' where user_id="+user_id;
+                    String update_sql=" set user_map_openid='"+user.getOpenid()+"' where user_id="+user_id;
                     boolean is_success=laiHuiDB.update("pc_wx_user",update_sql);
                     if(is_success){
                         String where =" where user_id="+user_id;
@@ -88,25 +88,22 @@ public class LoginController {
                         request.getSession().setAttribute("user",now_user);
                     }
                 }
+                return "redirect:/auth/base";
             }
+            /*model.addAttribute("code",code);
+            model.addAttribute("user",user);
+            return "wx_map";*/
+
         }
         return "redirect:/";
     }
+    @RequestMapping("/wx_map")
+    public String wx_map(HttpServletRequest request, Model model) {
+            return "wx_map";
+    }
     @RequestMapping("/reg")
     public String register(HttpServletRequest request, Model model) {
-        //String user_id = request.getParameter("id");
-        /*int user_id=(Integer)request.getSession().getAttribute("user_id");
-        if (user_id != 0) {
-            int id = 0;
-            try {
-                id = Integer.parseInt(user_id);
-            } catch (NumberFormatException e) {
-                id = 0;
-            }
-            if (id > 0) {
-                request.getSession().setAttribute("user_id", id);
-            }
-        }*/
+
         is_logined=Utils.isLogined(request);
         if(is_logined){
             return "register";
@@ -130,7 +127,7 @@ public class LoginController {
     @RequestMapping("/wx/map/login")
     public String weixin_map(HttpServletRequest request, Model model) {
 
-        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx_map&response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2Fhuodong.pinchenet.com%2Ftransfer?mode=wx_map&response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
     }
     @ResponseBody
     @RequestMapping(value = "/api/reg", method = RequestMethod.POST)

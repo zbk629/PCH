@@ -6,10 +6,7 @@ import com.cyparty.laihui.domain.DepartureInfo;
 import com.cyparty.laihui.domain.ErrorCodeMessage;
 import com.cyparty.laihui.domain.Tag;
 import com.cyparty.laihui.domain.User;
-import com.cyparty.laihui.utilities.OssUtil;
-import com.cyparty.laihui.utilities.ReturnJsonUtil;
-import com.cyparty.laihui.utilities.Utils;
-import com.cyparty.laihui.utilities.WXUtils;
+import com.cyparty.laihui.utilities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -180,6 +177,7 @@ public class PCXXHController {
                         departure.setTag_no_content(tag_no_content);
                         departure.setDriving_name(driving_name);
                         departure.setCar_brand(car_brand);
+                        departure.setDate(date);
                         //创建出车信息
                         if(id>0){
                             //更新
@@ -195,14 +193,12 @@ public class PCXXHController {
                         }else {
                             //添加
                             id=laiHuiDB.createPCHDeparture(departure);
-
+                            departure.setR_id(id);
                             //更新用户角色
-                            String update_sql=" set user_role=1 where user_id="+user_id ;
+                            String update_sql=" set is_driver=1 where user_id="+user_id ;
                             laiHuiDB.update("pc_wx_user",update_sql);
                             //发送通知
-                            User user=(User)request.getSession().getAttribute("user");
-
-                            WXUtils.pinCheNotify(request,user.getOpenid(),departure.getDeparture_city(),departure.getDestination_city(),date,user.getUser_mobile());
+                            WXUtils.pinCheNotify(request,departure);
                             result.put("id",id);
                             json = ReturnJsonUtil.returnSuccessJsonString(result, "创建成功！");
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
@@ -223,9 +219,24 @@ public class PCXXHController {
                     }
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show":
-                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id), "全部出车信息获取成功");
+
+                   /* String key=page+size+departure_city+destination_city+status+start_time+end_time+keyword+id+"show";
+                    result= Memcache.getMemcache(key);
+                    if(result.getString("cache_status")!=null){*/
+                        //说明之前没有有缓存
+                        result=ReturnJsonUtil.getPCHDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id);
+                      /*  Memcache.setMemcache(key,result);
+                    }*/
+                    json = ReturnJsonUtil.returnSuccessJsonString(result, "全部出车信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show_myself":
+                    String key2=page+size+departure_city+destination_city+status+start_time+end_time+keyword+id+"show_myself";
+                    result= Memcache.getMemcache(key2);
+                    if(result.getString("cache_status")!=null){
+                        //说明之前没有有缓存
+                        result=ReturnJsonUtil.getPCHDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id);
+                        Memcache.setMemcache(key2,result);
+                    }
                     json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getMySelfDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id,user_id), "出车信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "update":

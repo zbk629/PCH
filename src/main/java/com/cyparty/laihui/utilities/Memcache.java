@@ -30,7 +30,7 @@ public class Memcache {
         try {
             MemcachedClient cacheClient=getCache();
             if (cacheClient.get(where)==null){
-                result.put("status","0");
+                result.put("cache_status","0");
                 return result;
             }else {
                 return (JSONObject)cacheClient.get(where);
