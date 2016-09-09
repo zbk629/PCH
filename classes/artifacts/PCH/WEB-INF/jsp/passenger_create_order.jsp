@@ -534,9 +534,44 @@
     //获取出发地数据
     function getStartPlace() {
       var data_obj = {};
-      data_obj.action = 'departure';
+      data_obj.action = 'show_all';
       validate.validate_submit('/db/pch/route', data_obj, carPlace.addCarStart);
     }
+
+    //车辆行程信息2
+    var carPlace = (function () {
+//            //将车辆行程信息据封装进数组
+      function addCarStart() {
+        var data1 = global_data.result;
+        var contact = new Object();
+        contact.id = -1;
+        contact.name = "全部";
+        contact.child = [{id:-11,name:""}];
+        placeData.push(contact);
+        for (var i = 0; i < data1.data.length; i++) {
+          var departure1 = data1.data[i].name;
+          var departure_id = data1.data[i].id;
+          var contact = new Object();
+          contact.id = departure_id;
+          contact.name = departure1;
+          var array_end = [];
+          for (var j = 0; j < data1.data[i].child.length; j++) {
+            var name = data1.data[i].child[j].name;
+            var id = data1.data[i].child[j].id;
+            var obj_array = new Object();
+            obj_array.id = id;
+            obj_array.name = name;
+            array_end.push(obj_array);
+          }
+          contact.child = array_end;
+          placeData.push(contact);
+        }
+      };
+
+      return {
+        addCarStart: addCarStart
+      }
+    })();
     function findMessage(){
       return true;
     }
@@ -586,51 +621,6 @@
       }
     }
 
-    //车辆行程信息2
-    var carPlace = (function () {
-      //将车辆行程信息据封装进数组
-      function addCarStart() {
-        var data1 = global_data.result;
-        var contact = new Object();
-        for (var i = 0; i < data1.data.length; i++) {
-          var departure1 = data1.data[i].departure;
-          var contact = new Object();
-          contact.id = i+1;
-          contact.name = departure1;
-          $.ajax({
-            type: "POST",
-            url: "/db/pch/route",
-            async: false,
-            data: {"action": "departure", "departure": departure1},
-            dataType: "json",
-            success: function (data) {
-              if (data.status == true) {
-                var array_end = [];
-
-                for (var j = 0; j < data.result.data.length; j++) {
-                  var obj = {};
-                  obj.id = 1000 + j;
-                  obj.name = data.result.data[j].destination;
-                  array_end.push(obj);
-                }
-                contact.child = array_end;
-                placeData.push(contact);
-
-              } else {
-                validate.showTips("格式不正确");
-              }
-            },
-            error: function () {
-              console.log("交互失败");
-            }
-          })
-
-        }
-      };
-      return {
-        addCarStart: addCarStart
-      }
-    })();
 
     function setIndex(){
       for(var i=0;i<$('.input_style').length;i++){
