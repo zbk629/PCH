@@ -55,7 +55,7 @@ public class Memcache {
             JSONObject value =resultObject;
             int expireTime = 60*60*24*10; // 过期时间10day，单位s; 从写入时刻开始计时，超过expireTime s后，该数据过期失效，无法再读出；
             OperationFuture future = cacheClient.set(key, expireTime, value);
-            System.out.println("Set操作完成token为"+key);
+            System.out.println("Set操作完成key为"+key);
 
             future.get(); //  确保之前(mc.set())操作已经结束
             //执行get操作，从缓存中读数据,读取key为"ocs"的数据

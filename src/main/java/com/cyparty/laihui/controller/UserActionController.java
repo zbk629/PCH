@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.ErrorCodeMessage;
 import com.cyparty.laihui.domain.PassengerOrder;
+import com.cyparty.laihui.domain.UserRoleAction;
 import com.cyparty.laihui.utilities.ReturnJsonUtil;
 import com.cyparty.laihui.utilities.Utils;
 import com.cyparty.laihui.utilities.WXUtils;
@@ -181,6 +182,17 @@ public class UserActionController {
                             //更新状态，成为发过出行信息的乘客
                             String update_sql=" set is_passenger=1 where user_id="+user_id;
                             laiHuiDB.update("pc_wx_user",update_sql);
+
+                            //保存用户操作记录
+                            int id=laiHuiDB.getMaxPassengerPublishInfo();
+
+                            UserRoleAction userRoleAction=new UserRoleAction();
+                            userRoleAction.setDriver_order_id(id);
+                            userRoleAction.setOrder_type(2);
+                            userRoleAction.setOrder_source(0);
+                            userRoleAction.setUser_mobile(mobile);
+
+                            laiHuiDB.createUserAction(userRoleAction);
                             if(is_success){
                                 json = ReturnJsonUtil.returnSuccessJsonString(result, "行程单创建成功！");
                                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);

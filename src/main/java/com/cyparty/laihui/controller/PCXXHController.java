@@ -1,11 +1,9 @@
 package com.cyparty.laihui.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
-import com.cyparty.laihui.domain.DepartureInfo;
-import com.cyparty.laihui.domain.ErrorCodeMessage;
-import com.cyparty.laihui.domain.Tag;
-import com.cyparty.laihui.domain.User;
+import com.cyparty.laihui.domain.*;
 import com.cyparty.laihui.utilities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -15,8 +13,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhu on 2016/5/11.
@@ -200,6 +206,34 @@ public class PCXXHController {
                             //更新用户角色
                             String update_sql=" set is_driver=1 where user_id="+user_id ;
                             laiHuiDB.update("pc_wx_user",update_sql);
+                            //添加出发地，目的地坐标
+                            String route_json = request.getParameter("route_json");
+                            JSONObject data_json = JSONObject.parseObject(route_json);
+                            JSONArray data_array = data_json.getJSONArray("result");
+                            List<RoutePoint> routePointList = new ArrayList<>();
+                            for (int i = 0; i < data_array.size(); i++) {
+                                JSONObject jsonObject = data_array.getJSONObject(i);
+                                RoutePoint point = new RoutePoint();
+                                point.setPoint_seq(i + 1);
+                                point.setRoute_id(id);
+                                point.setPoint_name(jsonObject.getString("name"));
+                                point.setPoint_lat(jsonObject.getJSONObject("location").getString("lat"));
+                                point.setPoint_lng(jsonObject.getJSONObject("location").getString("lng"));
+                                point.setPoint_uid(jsonObject.getString("uid"));
+                                point.setPoint_city(jsonObject.getString("city"));
+                                point.setPoint_district(jsonObject.getString("district"));
+
+                                routePointList.add(point);
+                            }
+                            is_success = laiHuiDB.createRoutePoint(routePointList);
+                            //保存用户操作记录
+                            UserRoleAction userRoleAction=new UserRoleAction();
+                            userRoleAction.setDriver_order_id(id);
+                            userRoleAction.setOrder_type(1);
+                            userRoleAction.setOrder_source(0);
+                            userRoleAction.setUser_mobile(mobile);
+
+                            laiHuiDB.createUserAction(userRoleAction);
                             //发送通知
                             WXUtils.pinCheNotify(request,departure);
                             result.put("id",id);
@@ -257,6 +291,31 @@ public class PCXXHController {
             json = ReturnJsonUtil.returnFailJsonString(result, "获取参数错误");
             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.BAD_REQUEST);
         }
+    }
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.OK)
+    @RequestMapping(value = "/place_suggestion", produces = "application/json; charset=utf-8")
+    public String getAPPJson(HttpServletRequest request) {
+        String key = request.getParameter("key");
+        String city = request.getParameter("city");
+        String result = "";
+        URL file_url = null;
+
+        try {
+            key = URLEncoder.encode(key, "utf-8");
+            city = URLEncoder.encode(city, "utf-8");
+            String json_url = "http://api.map.baidu.com/place/v2/suggestion?query=" + key + "&region=" + city + "&output=json&ak=154d93b0ed8e18c429725a9e8589bd6b";
+            file_url = new URL(json_url);
+            InputStream content = (InputStream) file_url.getContent();
+            BufferedReader in = new BufferedReader(new InputStreamReader(content, "utf-8"));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result = result + line;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
     @ResponseBody
     @RequestMapping(value = "/api/db/tag", method = RequestMethod.POST)

@@ -195,6 +195,13 @@ public class LaiHuiDB {
         }
         return is_success;
     }
+    public int getMaxPassengerPublishInfo() {
+        String sql = "SELECT Max(_id)id FROM  pch_passenger_publish_info" ;
+        //int count=jdbcTemplateObject.queryForInt(sql);
+        Map<String, Object> now = jdbcTemplateObject.queryForMap(sql);
+        int id = Integer.parseInt(String.valueOf((long) now.get("id")));
+        return id;
+    }
     //创建乘客发车单
     public boolean createPassengerPublishInfo(PassengerOrder passengerOrder) {
         boolean is_success = true;
@@ -219,6 +226,28 @@ public class LaiHuiDB {
         String SQL = "SELECT * FROM pc_departure_tags " + where;
         List<Tag> tags = jdbcTemplateObject.query(SQL, new TagMapper());
         return tags;
+    }
+    public boolean createUserAction(UserRoleAction user) {
+        boolean is_success = true;
+
+        String SQL = "insert into pc_user_role_action(driver_order_id,passenger_order_id,order_type,user_mobile,create_time,order_source) VALUES (?,?,?,?,?,?)";
+        int count = jdbcTemplateObject.update(SQL, new Object[]{user.getDriver_order_id(), user.getPassenger_order_id(), user.getOrder_type(), user.getUser_mobile(), Utils.getCurrentTime(), user.getOrder_source()});
+        if(count<1){
+            is_success=false;
+        }
+        return is_success;
+    }
+
+    public boolean createRoutePoint(List<RoutePoint> pointList) {
+        boolean is_success = true;
+        for (RoutePoint point : pointList) {
+            String SQL = "insert into pc_route_points(route_id,point_name,point_lat,point_lng,point_uid,point_city,point_district,point_create_time,point_seq) VALUES (?,?,?,?,?,?,?,?,?)";
+            int count = jdbcTemplateObject.update(SQL, new Object[]{point.getRoute_id(), point.getPoint_name(), point.getPoint_lat(), point.getPoint_lng(), point.getPoint_uid(), point.getPoint_city(), point.getPoint_district(), Utils.getCurrentTime(), point.getPoint_seq()});
+            if (count < 1) {
+                is_success = false;
+            }
+        }
+        return is_success;
     }
 }
 
