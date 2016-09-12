@@ -440,9 +440,8 @@
                     '</div>' +
                     '</div>' +
                     '<div class="mine_first_bottom">' +
-
 //                    '<span class="mine_type mine_change" onclick="mine_change(this)">修改订单</span>' +
-                    '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
+                    '<span class="mine_type mine_delete" style="margin-right: 0rem;" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
                     '<span class="mine_type mine_made" onclick="mine_made(this)" index=' + i + '>生成文字信息</span>' +
                     '<div class="clear"></div>' +
                     '</div>' +

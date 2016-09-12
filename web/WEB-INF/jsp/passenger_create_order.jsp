@@ -728,7 +728,7 @@
       data_obj.boarding_point = boarding_point;
       data_obj.breakout_point = breakout_point;
       data_obj.name = name;
-      validate.validate_submit('/api/db/passenger/departure', data_obj, success);
+      validate.validate_submit4('/api/db/passenger/departure', data_obj, success);
     }
 
     function success(){

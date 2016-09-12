@@ -180,7 +180,7 @@
     }
 
     .publish_li_route {
-      display: none;
+      display: block;
       height: auto;
     }
 
@@ -283,7 +283,7 @@
       width: 100%;
     }
     .place_city{
-      width: 7rem;
+      width: 100%;
       display: inline-block;
     }
     .float_sure{
@@ -341,9 +341,9 @@
       overflow: auto;
     }
     .to_city{
-      width: 1.5rem;
-      position: relative;
-      top: -0.2rem;
+      width: 1.9rem;
+      left: 0rem;
+      transform: rotate(90deg);
     }
     .place_end_city{
       margin-left: 1rem;
@@ -366,6 +366,27 @@
     }
     .hover_all{
       background-color: #000;
+    }
+    .publish_place_box{
+      display:block;
+      position: relative;
+    }
+
+    .main_route{
+      border: 0;
+      background-color: transparent;
+      color: #666464;
+      height: auto;
+      padding-left: inherit;
+      margin-left: 2rem;
+      overflow-y: visible;
+      resize: none;
+      padding-top: .6rem;
+      min-height: 4rem;
+    }
+    .main_route:focus{
+
+      outline: none;
     }
 
   </style>
@@ -420,6 +441,14 @@
       loadYes();
       loadNo();
       checkId();
+      $(document).click(function(e){
+        e = window.event || e;
+        var obj = e.srcElement || e.target;
+        if($(obj).is(".publish_route_ul")) {
+        }else{
+          $(".publish_route_ul").fadeOut(100);
+        }
+      });
     });
     var array = [];
     var array_seat = [];
@@ -444,7 +473,7 @@
     var url = window.location.href;
     var car_id;
     var mobile_insert=<%=(String)request.getSession().getAttribute("user_mobile")%>;//此处填写手机号
-
+    var is_insert=0;
     //判断是否是修改信息
     function checkId() {
 
@@ -472,6 +501,7 @@
     }
     //如果用户曾经发过信息则自动补充原始数据
     function checkUserMessage(departure_city,destination_city){
+      is_insert=1;
       var obj = {};
       obj.action = 'show_myself';
       obj.departure_city = departure_city;
@@ -529,7 +559,19 @@
           var time=new Date();
           var date  = time.getDate();
 
-          if(date == time_change[2]){
+//          if( ){
+//          date = "0"+date;
+//          }else{
+//          date = parseInt(date);
+//          }
+
+        if(date.toString().length==1){
+          date = "0"+date;
+        }else{
+          date = parseInt(date);
+        }
+
+        if(date == time_change[2]){
             insert_time = "今天("+time_change[1] + '-' + time_change[2]+")";
           }else{
             insert_time = "明天("+time_change[1] + '-' + time_change[2]+")";
@@ -557,7 +599,9 @@
 
           $('.publish_mobile').val(mobile);
           $('.publish_remark').val(description);
+        if(is_insert==0){
           $('#demo_time').val(insert_time);
+        }
           $('#demo_hour').val(begin_start_time);
           $('#demo_min').val(begin_end_time);
           $('#demo_set').val(inits_seats);
@@ -566,14 +610,13 @@
           $('.publish_type').val(car_brand);
           $('.item_points').text(points);
           addTabManagerStyle();
-          if(route_array[0]==""){
-            $('.publish_li_route').hide()
-          }else{
-            $('.publish_li_route').show();
-            addRouteStyle();
-            $('.publish_route_box_span').show();
-          }
-
+//          if(route_array[0]==""){
+//            $('.publish_li_route').hide()
+//          }else{
+//            $('.publish_li_route').show();
+////            addRouteStyle();
+//            $('.publish_route_box_span').show();
+//          }
 
       }
 
@@ -592,10 +635,10 @@
       function addCarStart() {
         var data1 = global_data.result;
         var contact = new Object();
-        contact.id = -1;
-        contact.name = "全部";
-        contact.child = [{id:-11,name:""}];
-        placeData.push(contact);
+//        contact.id = -1;
+//        contact.name = "全部";
+//        contact.child = [{id:-11,name:""}];
+//        placeData.push(contact);
         for (var i = 0; i < data1.data.length; i++) {
           var departure1 = data1.data[i].name;
           var departure_id = data1.data[i].id;
@@ -673,32 +716,32 @@
 
 
     //移除输入框
-    function removeInput(obj) {
-      $(obj).parent().parent().remove();
-      var city = $(obj).children('.city').text();
-      var number = $(obj).parent().children('.input_style').attr('index');
-      send_array.splice(number,1);
-      isFirstInput();
-      setIndex();
-    }
-    //添加输入
-    function addInput() {
-      $('.publish_route_box_span').before('<div class="publish_route_container">' +
-              '<div class="publish_route_box_input">' +
-              '<div class="line_container">' +
-              '<div class="line_slide"></div>' +
-              '<div class="line_circle"></div>' +
-              '</div>' +
-              '<input type="text" placeholder="添加行程的主要途径点" index="" class="main_route input_style" oninput="sendKeepDownInput(this)">' +
-              '<span class="publish_route_box_remove" onclick="removeInput(this)">X</span>' +
-              '<ul class="publish_route_ul">' +
-
-              '</ul>' +
-              '</div>' +
-              '</div>');
-      isFirstInput();
-      setIndex();
-    }
+//    function removeInput(obj) {
+//      $(obj).parent().parent().remove();
+//      var city = $(obj).children('.city').text();
+//      var number = $(obj).parent().children('.input_style').attr('index');
+//      send_array.splice(number,1);
+//      isFirstInput();
+//      setIndex();
+//    }
+//    //添加输入
+//    function addInput() {
+//      $('.publish_route_box_span').before('<div class="publish_route_container">' +
+//              '<div class="publish_route_box_input">' +
+//              '<div class="line_container">' +
+//              '<div class="line_slide"></div>' +
+//              '<div class="line_circle"></div>' +
+//              '</div>' +
+//              '<input type="text" placeholder="添加行程的主要途径点" index="" class="main_route input_style" oninput="sendKeepDownInput(this)">' +
+//              '<span class="publish_route_box_remove" onclick="removeInput(this)">X</span>' +
+//              '<ul class="publish_route_ul">' +
+//
+//              '</ul>' +
+//              '</div>' +
+//              '</div>');
+//      isFirstInput();
+//      setIndex();
+//    }
     function setIndex(){
       for(var i=0;i<$('.input_style').length;i++){
         $($('.input_style')[i]).attr('index',i);
@@ -714,24 +757,68 @@
         $(obj).parent().children('.publish_route_ul').show();
         var key = $(obj).val().trim();
         var city = "全国";
-//        sendMessage(key, city);
+        sendMessage(key, city);
       }
-      isFirstInput();
+//      isFirstInput();
     }
-    //检测输入框是否是第一个
-    function isFirstInput() {
-      var l_input = $('.publish_route_container').length;
-      if (l_input == 1) {
-        $('.publish_route_box_remove').hide();
-        if ($('.input_style').val() == "") {
-          $('.publish_route_box_span').hide();
-        } else {
-          $('.publish_route_box_span').show();
-        }
-      } else {
-        $('.publish_route_box_remove').show();
-        $('.publish_route_box_span').show();
+//    //检测输入框是否是第一个
+//    function isFirstInput() {
+//      var l_input = $('.publish_route_container').length;
+//      if (l_input == 1) {
+//        $('.publish_route_box_remove').hide();
+//        if ($('.input_style').val() == "") {
+//          $('.publish_route_box_span').hide();
+//        } else {
+//          $('.publish_route_box_span').show();
+//        }
+//      } else {
+//        $('.publish_route_box_remove').show();
+//        $('.publish_route_box_span').show();
+//      }
+//    }
+    //发送ajax获取城市信息
+    function sendMessage(key, city) {
+      var obj = {};
+      obj.key = key;
+      obj.city = city;
+      var url = "/place_suggestion";
+      validate.baidu_api(url, obj, pushToArray);
+    }
+    //将信息存入数组
+    function pushToArray() {
+      city_array = [];
+      for (var i = 0; i < global_data.result.length; i++) {
+        city_array.push(global_data.result[i]);
       }
+      addCitySlide(city_array);
+    }
+    //添加城市下拉列表样式
+    function addCitySlide(city_array) {
+      $('.publish_route_li').remove();
+      for (var i = 0; i < city_array.length; i++) {
+        var name = city_array[i].name;
+        var city = city_array[i].city;
+        var district = city_array[i].district;
+        var index = i;
+        addCitySlideStyle(name, city, district, index);
+      }
+    }
+    //添加城市下拉列表样式
+    function addCitySlideStyle(name, city, district, index) {
+      $('.publish_route_ul').append('<li class="publish_route_li" index=' + index + ' onclick="selectCity(this)">' +
+              '<span class="key">'+name+'</span>' +
+              '<span class="city" style="color: #999794">'+city+district+'</span>' +
+              '</li>')
+    }
+    //选择城市
+    function selectCity(obj) {
+      //显示用的数据
+      var name = $(obj).children('.key').text();
+      var city = $(obj).children('.city').text();
+      var number = $(obj).parent().parent().children('.place_city').attr('index');
+      $(obj).parent().parent().children('input').val(name+" "+city);
+      $(obj).parent().hide();
+      send_array.splice(number,1,city_array[$(obj).attr('index')]);
     }
     //显示途径和下滑菜单
     function slideCity() {
@@ -807,6 +894,9 @@
     function sendFinalMessage(){
       var route="";
       var mobile;
+      var city = {};
+      city.result=send_array;
+      var json = JSON.stringify(city);
       var route_array=[];
       for(var i=0;i<$('.main_route').length;i++){
         route_array.push($($('.main_route')[i]).val().trim());
@@ -870,7 +960,8 @@
       data_obj.tag_no_content = tag_no_content;
       data_obj.driving_name = driving_name;
       data_obj.car_brand = car_brand;
-      validate.validate_submit('/api/db/departure', data_obj, success);
+      data_obj.route_json =json ;
+      validate.validate_submit4('/api/db/departure', data_obj, success);
     }
 
     function success(){
@@ -926,25 +1017,25 @@
         }
       }
     }
-    //添加路线
-    function addRouteStyle(){
-      $('.publish_route_container').remove();
-      for(var i=0;i<route_array.length;i++){
-        $('.publish_route_box_span').before('<div class="publish_route_container">' +
-                '<div class="publish_route_box_input">' +
-                '<div class="line_container">' +
-                '<div class="line_slide"></div>' +
-                '<div class="line_circle"></div>' +
-                '</div>' +
-                '<input type="text" value="'+route_array[i]+'" index="" class="main_route input_style" oninput="sendKeepDownInput(this)">' +
-                '<span class="publish_route_box_remove" onclick="removeInput(this)">X</span>' +
-                '<ul class="publish_route_ul">' +
-
-                '</ul>' +
-                '</div>' +
-                '</div>');
-      }
-    }
+//    //添加路线
+//    function addRouteStyle(){
+//      $('.publish_route_container').remove();
+//      for(var i=0;i<route_array.length;i++){
+//        $('.publish_route_box_span').before('<div class="publish_route_container">' +
+//                '<div class="publish_route_box_input">' +
+//                '<div class="line_container">' +
+//                '<div class="line_slide"></div>' +
+//                '<div class="line_circle"></div>' +
+//                '</div>' +
+//                '<input type="text" value="'+route_array[i]+'" index="" class="main_route input_style" oninput="sendKeepDownInput(this)">' +
+//                '<span class="publish_route_box_remove" onclick="removeInput(this)">X</span>' +
+//                '<ul class="publish_route_ul">' +
+//
+//                '</ul>' +
+//                '</div>' +
+//                '</div>');
+//      }
+//    }
     //添加标签列表
     function addYesTagsStyle(){
       for(var i=0;i<yes_tags.length;i++){
@@ -1134,12 +1225,34 @@
           <span>县级城市</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text"  placeholder="出发县城" class="place_city place_start_city input_disabled"/>
+          <input type="text"  placeholder="出发县城"  class="place_city place_start_city input_disabled" oninput="sendKeepDownInput(this)"/>
           <img src="/resource/images/pch_icon_to.png" class="to_city">
-          <input type="text"  placeholder="目的县城" class="place_city place_end_city input_disabled"/>
+          <input type="text"  placeholder="目的县城"  class="place_city place_end_city input_disabled" oninput="sendKeepDownInput(this)"/>
         </div>
       </li>
+      <li class="publish_mid_li">
+        <div class="publish_left_span">
+          <span>出发位置</span>
+        </div>
+        <div class="publish_mid_li_click" onclick="">
+          <div class="publish_place_box">
+            <input type="text"  placeholder="上车地点" index="0" class="place_city place_start_place input_disabled" oninput="sendKeepDownInput(this)"/>
+            <ul class="publish_route_ul">
 
+            </ul>
+          </div>
+
+          <img src="/resource/images/pch_icon_to.png" class="to_city">
+          <div class="publish_place_box">
+            <input type="text"  placeholder="下车地点" index="1" class="place_city place_end_place input_disabled" oninput="sendKeepDownInput(this)"/>
+            <ul class="publish_route_ul">
+
+            </ul>
+          </div>
+
+        </div>
+        <div class="clear"></div>
+      </li>
       <li class="publish_mid_li publish_li_route">
         <span class="publish_route_span">途经点：</span>
 
@@ -1150,15 +1263,14 @@
                 <div class="line_slide"></div>
                 <div class="line_circle"></div>
               </div>
-              <input type="text" placeholder="添加行程的主要途径点" class="main_route input_style"
-                     index="0" oninput="sendKeepDownInput(this)">
-              <span class="publish_route_box_remove" onclick="removeInput(this)">X</span>
-              <ul class="publish_route_ul">
+              <textarea type="text" placeholder="添加行程的主要途径点" class="main_route input_style"></textarea>
+              <%--<span class="publish_route_box_remove" onclick="removeInput(this)">X</span>--%>
+              <%--<ul class="publish_route_ul">--%>
 
-              </ul>
+              <%--</ul>--%>
             </div>
           </div>
-          <span class="publish_route_box_span" onclick="addInput()">+添加</span>
+          <%--<span class="publish_route_box_span" onclick="addInput()">+添加</span>--%>
 
           <div class="clear"></div>
         </div>

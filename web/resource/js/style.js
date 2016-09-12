@@ -62,7 +62,7 @@ var validate = (function () {
                     console.log("交互成功");
                     callback();
                 } else {
-                    showErrorTips(data.message);
+                    showFloatStyle(data.message);
                 }
             },
             error: function () {
@@ -141,6 +141,28 @@ var validate = (function () {
     //    })
     //};
 
+    var baidu_api = function(url,array,callback){
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: array,
+            dataType: "json",
+            success: function (data) {
+                global_data=data;
+                if(global_data.status==0){
+                    console.log("交互成功");
+                    callback();
+                }else{
+                    showFloatStyle(data.message);
+                }
+            },
+            error: function () {
+                global_data=city_obj;
+                console.log("交互失败");
+            }
+        })
+    };
+
     function showTips(message) {
         $('.validate_error_tips').show().text(message);
     };
@@ -166,7 +188,8 @@ var validate = (function () {
         onlyNum: onlyNum,
         validate_submit2: validate_submit2,
         validate_submit3: validate_submit3,
-        validate_submit4: validate_submit4
+        validate_submit4: validate_submit4,
+        baidu_api:baidu_api
 
     }
 
