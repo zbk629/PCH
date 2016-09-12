@@ -43,7 +43,7 @@ public class UserActionController {
     @RequestMapping("/laihui/driver/create_order")
     public String create_order(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-        //is_logined=true;
+        is_logined=true;
         //is_has_openid=Utils.isHasMapOpenid(request);
         if(is_logined){
             //if(is_has_openid){

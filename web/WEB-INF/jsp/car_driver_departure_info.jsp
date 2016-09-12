@@ -223,6 +223,97 @@
             line-height: 2rem;
 
         }
+        /*预约操作*/
+        .booking_span{
+            display: inline-block;
+            background-color: #f5ad4e;
+            color: #fff;
+            border-radius: 5px;
+            padding: 0 2rem;
+        }
+        .close_booking{
+            position: absolute;
+            right: 1rem;
+            top: 0;
+            font-size: 24px;
+            color: #999;
+        }
+        .booking_top{
+            text-align: center;
+            margin-top: .4rem;
+            margin-bottom: 1.6rem;
+            position: relative;
+        }
+        .booking_container{
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .input_style{
+            padding: 0 .6rem;
+            border-bottom: 1px solid #f5ad4e;
+            width: 100%;
+            font-size: 1.5rem;
+            line-height: 3.2rem;
+        }
+        .booking_bottom{
+            text-align: center;
+            color: #fff;
+            background-color: #f5ad4e;
+            border-radius: 5px;
+            line-height: 3.2rem;
+            cursor: pointer;
+        }
+        .booking_bottom:hover{
+            background-color: #FF8F0c;
+        }
+        .booking_li{
+            margin-bottom: .8rem;
+            position: relative;
+        }
+        .booking_box{
+            font-size: 1.5rem;
+        }
+        .booking_error{
+            position: absolute;
+            top: 3.8rem;
+            font-size: 1.3rem;
+            color: #e74c3c;
+            left: 2rem;
+        }
+        .success_tip{
+            color: #27ae60;
+            font-size: 1.6rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .success_href{
+            margin-top: 2rem;
+            display: block;
+            text-align: center;
+            color: #f5ad4e;
+            text-decoration: underline;
+        }
+
+        /*搜索样式*/
+        .publish_route_ul {
+            border: 1px solid #e8e8e8;
+            position: absolute;
+            top: 3.2rem;
+            background-color: #fff;
+            z-index: 1;
+            line-height: 1.6rem;
+            font-size: 1.3rem;
+            overflow-y: auto;
+            max-height: 24rem;
+            width: 100%;
+        }
+
+        .publish_route_li {
+            padding: .2rem .4rem;
+            height: 2.6rem;
+            line-height: 1.4rem;
+        }
 
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
@@ -316,6 +407,14 @@
         $(document).ready(function () {
             changeFontSize();
             checkId();
+            $(document).click(function(e){
+                e = window.event || e;
+                var obj = e.srcElement || e.target;
+                if($(obj).is(".publish_route_ul")) {
+                }else{
+                    $(".publish_route_ul").fadeOut(100);
+                }
+            });
         });
         var url = window.location.href;
         /*var role=${role};*/
@@ -323,6 +422,11 @@
         var item_id = url.split("?id=")[1];
         item_id = item_id.split("&")[0];
         var click_type;
+        var city_array=[];
+        var send_array = [];
+        var global_start_time;
+        var global_mobile;
+        var user_id=86;
         //判断列表底部样式
         function checkList(){
             if(($(window).height()-$('.publish_container').height()-$('.publish_bottom').height())>0){
@@ -387,6 +491,8 @@
                     var car_brand = global_data.result.data[i].car_brand;//车辆品牌
                     var id = global_data.result.data[i].id;//id
                     var create_time = global_data.result.data[i].create_time;//id
+                    global_start_time = start_time;
+                    global_mobile = mobile;
                     if (info_status == 1) {
                         $($('.item_seat_status')[i]).css('color','#2ecc71');
                         info_status = "有空位";
@@ -424,16 +530,16 @@
                     tag_no_content= tag_no_content.replace(/丶/g, "、");
                     var mobile_array=[];
                     mobile_array = mobile.split(',');
-                    for(var i=0;i<mobile_array.length;i++){
-                            $('.mobile_clear').append('<a href="tel:'+mobile_array[i]+'" class="call_driver">' +
-                                    '<div class="publish_message_li_moblie">'+
-                                    '<span class="item_mobile">'+mobile_array[i]+'</span>'+
-                                    '<img src="/resource/images/pc_icon_mobile.png" class="mobile">'+
-                                    '</div>'+
-                                    '<div class="clear"></div>'+
-                                    '</a>'
-                            )
-                    }
+//                    for(var i=0;i<mobile_array.length;i++){
+//                            $('.mobile_clear').append('<a href="tel:'+mobile_array[i]+'" class="call_driver">' +
+//                                    '<div class="publish_message_li_moblie">'+
+//                                    '<span class="item_mobile">'+mobile_array[i]+'</span>'+
+//                                    '<img src="/resource/images/pc_icon_mobile.png" class="mobile">'+
+//                                    '</div>'+
+//                                    '<div class="clear"></div>'+
+//                                    '</a>'
+//                            )
+//                    }
 
                     $('.departure_city').text(departure_city);
                     $('.destination_city').text(destination_city);
@@ -447,7 +553,7 @@
                     $('.item_name').text(driving_name);
                     $('.item_points').text(points);
                     $('.item_type').text(car_brand);
-                    $('.call_driver_bottom').attr('href', 'tel:' + mobile_array[0]);
+//                    $('.call_driver_bottom').attr('href', 'tel:' + mobile_array[0]);
 
                     if (driving_name == "") {
                         $('.item_name_li').remove()
@@ -561,6 +667,141 @@
                 $('.float_message_mid').show();
             }
         }
+        function showBooking(){
+            $('.hover').fadeIn(200);
+            $('.float_container').fadeIn(200);
+            $('.float_container').empty().append('<div class="booking_box">' +
+                    '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
+                    '<p class="booking_top">填写出行信息，方便车主与您取得联系</p>' +
+                    '<span class="booking_error"></span>'+
+                    '<div class="booking_container">' +
+                    '<div class="booking_li">' +
+                    '<input placeholder="请输入上车地点(必填)" type="text" index="0" class="input_style booking_start" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
+                    '<ul class="publish_route_ul"></ul>'+
+                    '</div>' +
+                    '<div class="booking_li">' +
+                    '<input placeholder="请输入下车地点(必填)" type="text" index="1" class="input_style booking_end" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
+                    '<ul class="publish_route_ul"></ul>'+
+                    '</div>' +
+                    '<div class="booking_li">' +
+                    '<input placeholder="请输入座位数(必填)" type="tel" class="input_style booking_seat" value="1" onchange="removeErrorTips()">' +
+                    '</div>' +
+                    '<div class="booking_li">' +
+                    '<input placeholder="备注信息(例如不抽烟，有小件)" type="text" class="input_style booking_description" onchange="removeErrorTips()">' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="booking_bottom" onclick="checkInput()">提交预约</div>' +
+                    '</div>');
+        }
+        function checkInput(){
+            if($('.booking_start').val()==""){
+                showErrorTips("上车地点不能为空");
+            }else if($('.booking_end').val()==""){
+                showErrorTips("下车地点不能为空");
+            }else if($('.booking_seat').val()==""){
+                showErrorTips("座位数不能为空");
+            }else{
+                removeErrorTips();
+                sendMobileMessage()
+            }
+        }
+
+        function showErrorTips(error_message){
+            $('.booking_error').text(error_message).show();
+        }
+        function removeErrorTips(){
+            $('.booking_error').hide();
+        }
+        function sendMobileMessage(){
+            var description = $('.booking_description').val();
+            var data_obj={};
+            var boarding_point = $('.booking_start').val();
+            var breakout_point = $('.breakout_point').val();
+            var booking_seats = $('.booking_seat').val();
+            data_obj.action="booking";
+            data_obj.description=description;
+            data_obj.boarding_point=boarding_point;
+            data_obj.breakout_point=breakout_point;
+            data_obj.start_time=global_start_time;
+            data_obj.mobile=global_mobile;
+            data_obj.user_id=user_id;
+            data_obj.booking_seats=booking_seats;
+            data_obj.order_id=item_id;
+            validate.validate_submit4('/api/db/departure', data_obj, success);
+        }
+        function success(){
+            $('.float_container').empty().append('<div class="booking_box">' +
+                    '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
+                    '<div class="success_tip">预约成功</div>' +
+                    '<a href="#" class="success_href">查看我的预约</a>' +
+                    '</div>');
+        }
+
+        //按键请求城市信息
+        function sendKeepDownInput(obj) {
+                if($(obj).val() ==""){
+                    $(obj).parent().children('.publish_route_ul').empty()
+                }else{
+                    $('.publish_route_ul').hide();
+                    $(obj).parent().children('.publish_route_ul').show();
+                    var key = $(obj).val().trim();
+                    if($(obj).attr('index')==0){
+                        var city = $('.departure_city').text();
+                    }else{
+                        var city = $('.destination_city').text();
+                    }
+                    sendMessage(key, city);
+                }
+        }
+        //发送ajax获取城市信息
+        function sendMessage(key, city) {
+            var obj = {};
+            obj.key = key;
+            obj.city = city;
+            var url = "/place_suggestion";
+            validate.baidu_api(url, obj, pushToArray);
+        }
+        //将信息存入数组
+        function pushToArray() {
+            city_array = [];
+            for (var i = 0; i < global_data.result.length; i++) {
+                city_array.push(global_data.result[i]);
+            }
+            addCitySlide(city_array);
+        }
+        //添加城市下拉列表样式
+        function addCitySlide(city_array) {
+            $('.publish_route_li').remove();
+            for (var i = 0; i < city_array.length; i++) {
+                var name = city_array[i].name;
+                var city = city_array[i].city;
+                var district = city_array[i].district;
+                var index = i;
+                addCitySlideStyle(name, city, district, index);
+            }
+        }
+        //添加城市下拉列表样式
+        function addCitySlideStyle(name, city, district, index) {
+            $('.publish_route_ul').append('<li class="publish_route_li" index=' + index + ' onclick="selectCity(this)">' +
+                    '<span class="key">'+name+'</span>' +
+                    '<span class="city" style="color: #999794">'+city+district+'</span>' +
+                    '</li>')
+        }
+        //选择城市
+        function selectCity(obj) {
+            //显示用的数据
+            var name = $(obj).children('.key').text();
+            var city = $(obj).children('.city').text();
+            var number = $(obj).parent().parent().children('.place_city').attr('index');
+            $(obj).parent().parent().children('input').val(name+" "+city);
+            $(obj).parent().hide();
+            send_array.splice(number,1,city_array[$(obj).attr('index')]);
+        }
+        //显示途径和下滑菜单
+        function slideCity() {
+
+            $('.publish_li_route').show();
+        }
     </script>
 </head>
 <body>
@@ -642,12 +883,12 @@
                 <div class="clear"></div>
             </li>
 
-            <li class="publish_message_li">
+            <li class="publish_message_li" onclick="showBooking()">
                 <div class="publish_message_li_left">
-                    <span>电话</span>
+                    <span>是否预定</span>
                 </div>
                 <div class="publish_message_li_right mobile_clear">
-
+                    <span class="booking_span">预定</span>
                 </div>
                 <div class="clear "></div>
             </li>
@@ -708,9 +949,9 @@
             </li>
         </ul>
     </div>
-    <a href="" class="call_driver_bottom not_driver" style="display:none;">
+    <a href="javascript:(0)" class="call_driver_bottom not_driver" style="display:none;">
         <div class="publish_bottom">
-            联系车主
+            预定车主
         </div>
     </a>
     <a href="javascript:(0)" class="change_driver" onclick="showFloat()" >
