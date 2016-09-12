@@ -716,7 +716,7 @@
             var description = $('.booking_description').val();
             var data_obj={};
             var boarding_point = $('.booking_start').val();
-            var breakout_point = $('.breakout_point').val();
+            var breakout_point = $('.booking_end').val();
             var booking_seats = $('.booking_seat').val();
             data_obj.action="booking";
             data_obj.description=description;
