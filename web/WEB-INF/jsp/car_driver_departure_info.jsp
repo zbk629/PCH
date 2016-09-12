@@ -240,7 +240,7 @@
         }
         .booking_top{
             text-align: center;
-            margin-top: .4rem;
+            margin-top: 1rem;
             margin-bottom: 1.6rem;
             position: relative;
         }

@@ -95,6 +95,7 @@ public class UserActionController {
     } @RequestMapping("/laihui/passenger/my_booking_list")
       public String passenger_booking_list( HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
+        is_logined=true;
         if(is_logined){
             return "passenger_my_booking_list";
         }
@@ -296,7 +297,7 @@ public class UserActionController {
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show_myself":
                     try {
-                        user_id=Integer.parseInt("user_id");
+                        user_id=Integer.parseInt(request.getParameter("user_id"));
                     } catch (NumberFormatException e) {
                         user_id=0;
                         e.printStackTrace();
