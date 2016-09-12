@@ -676,15 +676,15 @@
                     '<span class="booking_error"></span>'+
                     '<div class="booking_container">' +
                     '<div class="booking_li">' +
-                    '<input placeholder="请输入上车地点(必填)" type="text" index="0" class="input_style booking_start" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
+                    '<input placeholder="请输入上车地点" type="text" index="0" class="input_style booking_start" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
                     '<ul class="publish_route_ul"></ul>'+
                     '</div>' +
                     '<div class="booking_li">' +
-                    '<input placeholder="请输入下车地点(必填)" type="text" index="1" class="input_style booking_end" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
+                    '<input placeholder="请输入下车地点" type="text" index="1" class="input_style booking_end" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
                     '<ul class="publish_route_ul"></ul>'+
                     '</div>' +
                     '<div class="booking_li">' +
-                    '<input placeholder="请输入座位数(必填)" type="tel" class="input_style booking_seat" value="1" onchange="removeErrorTips()">' +
+                    '<input placeholder="请输入座位数" type="tel" class="input_style booking_seat" value="1" onchange="removeErrorTips()">' +
                     '</div>' +
                     '<div class="booking_li">' +
                     '<input placeholder="备注信息(例如不抽烟，有小件)" type="text" class="input_style booking_description" onchange="removeErrorTips()">' +
@@ -949,7 +949,7 @@
             </li>
         </ul>
     </div>
-    <a href="javascript:(0)" class="call_driver_bottom not_driver" style="display:none;">
+    <a href="javascript:(0)" class="call_driver_bottom not_driver" style="display:none;" onclick="showBooking()">
         <div class="publish_bottom">
             预定车主
         </div>
