@@ -727,7 +727,7 @@
             data_obj.user_id=user_id;
             data_obj.booking_seats=booking_seats;
             data_obj.order_id=item_id;
-            validate.validate_submit4('/api/db/departure', data_obj, success);
+            validate.validate_submit4('/api/db/passenger/departure', data_obj, success);
         }
         function success(){
             $('.float_container').empty().append('<div class="booking_box">' +
