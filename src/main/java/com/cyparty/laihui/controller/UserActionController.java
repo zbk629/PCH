@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by zhu on 2016/5/11.
@@ -89,6 +90,13 @@ public class UserActionController {
         is_logined=true;
         if(is_logined){
             return "passenger_my_order_list";
+        }
+        return "redirect:/";
+    } @RequestMapping("/laihui/passenger/my_booking_list")
+      public String passenger_booking_list( HttpServletRequest request) {
+        is_logined= Utils.isLogined(request);
+        if(is_logined){
+            return "passenger_my_booking_list";
         }
         return "redirect:/";
     }
@@ -267,11 +275,16 @@ public class UserActionController {
                         order.setBoarding_point(boarding_point);
                         order.setBreakout_ponit(breakout_point);
                         order.setDescription(description);
-
+                        String where_now=" where user_id="+user_id+" and order_id="+order_id;
+                        List<PassengerOrder> passengerOrderList=laiHuiDB.getPassengerOrder(where_now);
+                        if(passengerOrderList.size()>0){
+                            json = ReturnJsonUtil.returnFailJsonString(result, "您已预定过该订单，请不要重复操作！");
+                            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                        }
                         is_success=laiHuiDB.createPassengerOrder(order);
                         if(is_success){
                             //通知司机
-                            String now_where=" where _id="+user_id;
+                            String now_where=" where user_id="+user_id;
                             String p_mobile=laiHuiDB.getWxUser(now_where).get(0).getUser_mobile();
                             //发送通知短信
                             Utils.sendNotifyMessage(d_mobile,p_mobile,date);
