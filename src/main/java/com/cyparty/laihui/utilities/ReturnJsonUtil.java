@@ -208,6 +208,7 @@ public class ReturnJsonUtil {
             JSONObject jsonObject = new JSONObject();
             boolean is_editor = false;
             jsonObject.put("id", departure.getR_id());
+            jsonObject.put("driver_id", departure.getUser_id());
             jsonObject.put("start_time", departure.getStart_time());
             jsonObject.put("end_time", departure.getEnd_time());
             long current = Utils.getCurrenTimeStamp();

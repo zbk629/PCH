@@ -187,7 +187,7 @@ public class WXUtils {
         //System.out.println("Access_token:"+access_token);
         return access_token;
     }
-    public static JSONObject pinCheNotify(HttpServletRequest request,DepartureInfo departureInfo) throws ClientProtocolException, IOException {
+    public static JSONObject pinCheNotify(HttpServletRequest request,DepartureInfo departureInfo,int source) throws ClientProtocolException, IOException {
         boolean is_success=true;
         JSONObject result = new JSONObject();
         int i=0;
@@ -209,39 +209,72 @@ public class WXUtils {
             String url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + token;
 
             User user=(User)request.getSession().getAttribute("user");
-            String json="{\n" +
-                    "           \"touser\":\""+user.getOpenid()+"\",\n" +
-                    "           \"template_id\":\"wKsNLWJCpYrbsBqTRKG_JeeqxrlFxSAhRzC8cwL9CDM\",\n" +
-                    "           \"url\":\"http://wx.pinchenet.com//laihui/car/detail?id="+departureInfo.getR_id()+"\",            \n" +
-                    "           \"data\":{\n" +
-                    "                   \"first\": {\n" +
-                    "                       \"value\":\"从"+departureInfo.getDeparture_city()+"到"+departureInfo.getDestination_city()+"的拼车发布成功！\",\n" +
-                    "                       \"color\":\"#173177\"\n" +
-                    "                   },\n" +
-                    "                   \"keyword1\":{\n" +
-                    "                       \"value\":\""+departureInfo.getDate()+"\",\n" +
-                    "                       \"color\":\"#173177\"\n" +
-                    "                   },\n" +
-                    "                   \"keyword2\": {\n" +
-                    "                       \"value\":\""+departureInfo.getDeparture_city()+"\",\n" +
-                    "                       \"color\":\"#173177\"\n" +
-                    "                   },\n" +
-                    "                   \"keyword3\": {\n" +
-                    "                       \"value\":\""+departureInfo.getDestination_city()+"\",\n" +
-                    "                       \"color\":\"#173177\"\n" +
-                    "                   },\n" +
-                    "                   \"keyword4\": {\n" +
-                    "                       \"value\":\""+user.getUser_mobile()+"\",\n" +
-                    "                       \"color\":\"#173177\"\n" +
-                    "                   },\n" +
-                    "                   \"remark\":{\n" +
-                    "                       \"value\":\"感谢您的使用！\",\n" +
-                    "                       \"color\":\"#173177\"\n" +
-                    "                   }\n" +
-                    "           }\n" +
-                    "       }";
-
-
+            String json="";
+            if(source==1){
+                json="{\n" +
+                        "           \"touser\":\""+user.getOpenid()+"\",\n" +
+                        "           \"template_id\":\"wKsNLWJCpYrbsBqTRKG_JeeqxrlFxSAhRzC8cwL9CDM\",\n" +
+                        "           \"url\":\"http://wx.pinchenet.com//laihui/car/detail?id="+departureInfo.getR_id()+"\",            \n" +
+                        "           \"data\":{\n" +
+                        "                   \"first\": {\n" +
+                        "                       \"value\":\"从"+departureInfo.getDeparture_city()+"到"+departureInfo.getDestination_city()+"的拼车发布成功！\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   },\n" +
+                        "                   \"keyword1\":{\n" +
+                        "                       \"value\":\""+departureInfo.getDate()+"\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   },\n" +
+                        "                   \"keyword2\": {\n" +
+                        "                       \"value\":\""+departureInfo.getDeparture_city()+"\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   },\n" +
+                        "                   \"keyword3\": {\n" +
+                        "                       \"value\":\""+departureInfo.getDestination_city()+"\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   },\n" +
+                        "                   \"keyword4\": {\n" +
+                        "                       \"value\":\""+user.getUser_mobile()+"\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   },\n" +
+                        "                   \"remark\":{\n" +
+                        "                       \"value\":\"感谢您的使用！\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   }\n" +
+                        "           }\n" +
+                        "       }";
+            }else if(source==2){
+                json="{\n" +
+                        "           \"touser\":\""+departureInfo.getOpenid()+"\",\n" +
+                        "           \"template_id\":\"w5Lz_lcVnHRcXAvkzqofCHIjgaFcjIL-ZOcpPDQtjPg\",\n" +
+                        "           \"url\":\"http://wx.pinchenet.com//laihui/car/detail?id="+departureInfo.getR_id()+"\",            \n" +
+                        "           \"data\":{\n" +
+                        "                   \"first\": {\n" +
+                        "                       \"value\":\"尊敬的 车主先生/女士：  有新的拼友预定了您的座位。\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   },\n" +
+                        "                   \"keyword1\":{\n" +
+                        "                       \"value\":\""+departureInfo.getDriving_name()+"\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   },\n" +
+                        "                   \"keyword2\": {\n" +
+                        "                       \"value\":\""+departureInfo.getInit_seats()+"\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   },\n" +
+                        "                   \"keyword3\": {\n" +
+                        "                       \"value\":\""+departureInfo.getMobile()+"\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   },\n" +
+                        "                   \"keyword4\": {\n" +
+                        "                       \"value\":\""+departureInfo.getPoints()+"\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   },\n" +
+                        "                   \"remark\":{\n" +
+                        "                       \"value\":\"[来回]提示：主动电话联系他/她。 相聚是缘，多点理解，多点爱心，生活就很美好！\",\n" +
+                        "                       \"color\":\"#173177\"\n" +
+                        "                   }\n" +
+                        "           }\n" +
+                        "       }";
+            }
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost post = new HttpPost(url);
             StringEntity postingString = new StringEntity(json,"utf-8");// json传递

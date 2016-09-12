@@ -28,6 +28,15 @@ public class DepartureInfo {
     String tag_no_content;
     String driving_name;
     String car_brand;
+    String openid;
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
 
     public String getDate() {
         return date;

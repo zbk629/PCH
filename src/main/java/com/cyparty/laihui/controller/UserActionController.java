@@ -2,9 +2,7 @@ package com.cyparty.laihui.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
-import com.cyparty.laihui.domain.ErrorCodeMessage;
-import com.cyparty.laihui.domain.PassengerOrder;
-import com.cyparty.laihui.domain.UserRoleAction;
+import com.cyparty.laihui.domain.*;
 import com.cyparty.laihui.utilities.ReturnJsonUtil;
 import com.cyparty.laihui.utilities.Utils;
 import com.cyparty.laihui.utilities.WXUtils;
@@ -263,6 +261,7 @@ public class UserActionController {
                         e.printStackTrace();
                     }
                     if(user_id>0){
+                        int driver_id=Integer.parseInt(request.getParameter("driver_id"));
                         String boarding_point=request.getParameter("boarding_point");
                         String breakout_point=request.getParameter("breakout_point");
                         String description=request.getParameter("description");
@@ -276,7 +275,7 @@ public class UserActionController {
                         order.setBoarding_point(boarding_point);
                         order.setBreakout_ponit(breakout_point);
                         order.setDescription(description);
-                        String where_now=" where user_id="+user_id+" and order_id="+order_id;
+                        String where_now=" where user_id="+user_id+" and order_id="+order_id+" and order_source=0";
                         List<PassengerOrder> passengerOrderList=laiHuiDB.getPassengerOrder(where_now);
                         if(passengerOrderList.size()>0){
                             json = ReturnJsonUtil.returnFailJsonString(result, "您已预定过该订单，请不要重复操作！");
@@ -287,6 +286,18 @@ public class UserActionController {
                             //通知司机
                             String now_where=" where user_id="+user_id;
                             String p_mobile=laiHuiDB.getWxUser(now_where).get(0).getUser_mobile();
+                            //微信模版通知
+                            String driver_where=" where user_id ="+driver_id;
+                            User user=laiHuiDB.getWxUser(driver_where).get(0);
+                            DepartureInfo departureInfo=new DepartureInfo();
+                            departureInfo.setDriving_name(laiHuiDB.getWxUser(now_where).get(0).getUser_nickname());//乘客姓名
+                            departureInfo.setInit_seats(seats);
+                            departureInfo.setMobile(p_mobile);
+                            departureInfo.setPoints(boarding_point);
+                            departureInfo.setOpenid(user.getOpenid());
+                            departureInfo.setR_id(order_id);
+
+                            WXUtils.pinCheNotify(request,departureInfo,2);
                             //发送通知短信
                             Utils.sendNotifyMessage(d_mobile,p_mobile,date);
                             json = ReturnJsonUtil.returnSuccessJsonString(result, "订单创建成功！");
