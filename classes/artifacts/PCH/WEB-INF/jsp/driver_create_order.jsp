@@ -373,15 +373,16 @@
     }
 
     .main_route{
-      border:0;
-      background-color:transparent;
+      border: 0;
+      background-color: transparent;
       color: #666464;
       height: auto;
       padding-left: inherit;
       margin-left: 2rem;
-      overflow-y:visible;
+      overflow-y: visible;
       resize: none;
       padding-top: .6rem;
+      min-height: 4rem;
     }
     .main_route:focus{
 
@@ -749,15 +750,26 @@
 
     //按键请求城市信息
     function sendKeepDownInput(obj) {
-      if($(obj).val() ==""){
-        $(obj).parent().children('.publish_route_ul').empty()
+      if($('#demo_place').val()==""){
+        showFloatStyle("请先选择起止城市")
+        $(obj).val("");
       }else{
-        $('.publish_route_ul').hide();
-        $(obj).parent().children('.publish_route_ul').show();
-        var key = $(obj).val().trim();
-        var city = "全国";
-        sendMessage(key, city);
+        if($(obj).val() ==""){
+          $(obj).parent().children('.publish_route_ul').empty()
+        }else{
+          $('.publish_route_ul').hide();
+          $(obj).parent().children('.publish_route_ul').show();
+          var key = $(obj).val().trim();
+          var a = $('#demo_place').val().split('——');
+          if($(obj).attr('index')==0){
+            var city = a[0];
+          }else{
+            var city = a[1];
+          }
+          sendMessage(key, city);
+        }
       }
+
 //      isFirstInput();
     }
 //    //检测输入框是否是第一个
