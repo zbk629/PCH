@@ -379,18 +379,22 @@ public class ReturnJsonUtil {
         if (now_order_id != 0) {
             where = where + " and _id=" + now_order_id;
         }
+        int count=laiHuiDB.getCount("pc_wx_passenger_orders",where);
         int offset = page * size;
+        where=where+"  ORDER BY create_time DESC ";
         where = where + " limit " + offset + "," + size;
         List<PassengerOrder> passengerOrderList = laiHuiDB.getPassengerOrder(where);
         for (PassengerOrder passengerOrder : passengerOrderList) {
             JSONObject jsonObject = new JSONObject();
+            JSONObject orderObject = new JSONObject();
             int order_id = passengerOrder.getDriver_order_id();
-            jsonObject.put("order_id", passengerOrder.get_id());
-            jsonObject.put("booking_seats", passengerOrder.getSeats());
-            jsonObject.put("boarding_point", passengerOrder.getBoarding_point());
-            jsonObject.put("breakout_point", passengerOrder.getBreakout_ponit());
-            jsonObject.put("description", passengerOrder.getDescription());
-            jsonObject.put("create_time", passengerOrder.getCreate_time());
+            orderObject.put("order_id", passengerOrder.get_id());
+            orderObject.put("booking_seats", passengerOrder.getSeats());
+            orderObject.put("boarding_point", passengerOrder.getBoarding_point());
+            orderObject.put("breakout_point", passengerOrder.getBreakout_ponit());
+            orderObject.put("description", passengerOrder.getDescription());
+            orderObject.put("create_time", passengerOrder.getCreate_time());
+            jsonObject.put("order",orderObject);
             where = "where is_enable=1 and _id=" + order_id;
             List<DepartureInfo> departureInfoList = laiHuiDB.getPCHDepartureInfo(where);
             for (DepartureInfo departure : departureInfoList) {
@@ -418,6 +422,9 @@ public class ReturnJsonUtil {
             dataArray.add(jsonObject);
         }
         result.put("data", dataArray);
+        result.put("total", count);
+        result.put("page", page);
+        result.put("size", size);
         return result;
     }
 

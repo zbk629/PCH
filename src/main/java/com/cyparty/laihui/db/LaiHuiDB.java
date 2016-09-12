@@ -218,7 +218,7 @@ public class LaiHuiDB {
         return passengerOrders;
     }
     public List<PassengerOrder> getPassengerOrder(String where) {
-        String SQL = "SELECT * FROM pc_wx_passenger_orders " + where + " ORDER BY create_time DESC ";
+        String SQL = "SELECT * FROM pc_wx_passenger_orders " + where ;
         List<PassengerOrder> passengerOrders = jdbcTemplateObject.query(SQL, new PassengerOrdersMapper());
         return passengerOrders;
     }
