@@ -18,6 +18,7 @@ public class PCHDepartureInfoMapper implements RowMapper<DepartureInfo> {
 
         departure.setR_id(resultSet.getInt("_id"));
         departure.setStart_time(Utils.checkTime(resultSet.getString("start_time")));
+        departure.setUser_id(resultSet.getInt("user_id"));
         departure.setEnd_time(Utils.checkTime(resultSet.getString("end_time")));
         departure.setDeparture_city(resultSet.getString("departure_city"));
         departure.setDestination_city(resultSet.getString("destination_city"));

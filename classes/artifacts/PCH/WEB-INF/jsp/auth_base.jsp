@@ -249,6 +249,10 @@
         <span>我的订座信息</span>
         <div class="right_icon">></div>
       </li>
+      <li class="message_mid_li last_li" onclick="toMyMadeList()">
+        <span>我的预约信息</span>
+        <div class="right_icon">></div>
+      </li>
     </ul>
   </div>
 </div>

@@ -235,7 +235,7 @@ public class PCXXHController {
 
                             laiHuiDB.createUserAction(userRoleAction);
                             //发送通知
-                            WXUtils.pinCheNotify(request,departure);
+                            WXUtils.pinCheNotify(request,departure,1);
                             result.put("id",id);
                             json = ReturnJsonUtil.returnSuccessJsonString(result, "创建成功！");
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);

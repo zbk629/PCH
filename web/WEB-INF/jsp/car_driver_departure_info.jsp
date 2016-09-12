@@ -426,6 +426,7 @@
         var send_array = [];
         var global_start_time;
         var global_mobile;
+        var global_driver_id;
         var user_id=86;
         //判断列表底部样式
         function checkList(){
@@ -491,6 +492,7 @@
                     var car_brand = global_data.result.data[i].car_brand;//车辆品牌
                     var id = global_data.result.data[i].id;//id
                     var create_time = global_data.result.data[i].create_time;//id
+                    global_driver_id = global_data.result.data[i].driver_id;//id
                     global_start_time = start_time;
                     global_mobile = mobile;
                     if (info_status == 1) {
@@ -727,6 +729,7 @@
             data_obj.user_id=user_id;
             data_obj.booking_seats=booking_seats;
             data_obj.order_id=item_id;
+            data_obj.driver_id=global_driver_id;
             validate.validate_submit4('/api/db/passenger/departure', data_obj, success);
         }
         function success(){
