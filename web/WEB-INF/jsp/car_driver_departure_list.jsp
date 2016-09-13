@@ -37,7 +37,7 @@
 
         .departure_container_top {
             width: 100%;
-            height: 4.2rem;
+            /*height: 4.2rem;*/
             background-color: #fff;
             position: relative;
             border-bottom: 1px solid #f5ad4e;
@@ -302,13 +302,18 @@
             position: relative;
             top: .4rem;
         }
-        .departure_top_box_span{
+        /*.departure_top_box_span{*/
+            /*line-height: 2rem;*/
+            /*position: absolute;*/
+            /*top: 1.2rem;*/
+            /*right: .4rem;*/
+            /*font-size: 1.4rem;*/
+        /*}*/
+        .departure_top_box_span {
             line-height: 2rem;
-            font-size: 1.6rem;
-            position: absolute;
-            top: 1.2rem;
-            right: .4rem;
             font-size: 1.4rem;
+            display: block;
+            padding-left: 1rem;
         }
         .begin_city ,.end_city{
             font-size: 1.2rem;
@@ -982,7 +987,7 @@
             <%--<span class="departure_top_find_person">找人</span>--%>
                 <img src="/resource/images/pch_logo_findCar.png" class="departure_top_box_img" alt="来回拼车">
                 <%--<span style="color: #52514f;font-size: 1.4rem;position: relative;display: inline-block;top: -.6rem;left: -1rem;">—找车</span>--%>
-            <%--<span class="departure_top_box_span">河南点融工坊信息技术有限公司</span>--%>
+            <span class="departure_top_box_span">河南点融工坊信息技术有限公司</span>
         </div>
     </div>
     <form method="get" id="upload_form" accept-charset="utf-8" onsubmit="return false"

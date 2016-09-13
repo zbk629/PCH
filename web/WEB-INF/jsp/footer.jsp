@@ -10,7 +10,7 @@
   <img src="/resource/images/pch_icon_bottom.png">
 
   <div class="footer_box">
-    <p>© 2016 <span href="/" style="color: #F5ad4e"> 河南点融工坊 </span>
+    <p>© 2016 <span href="/" style="color: #F5ad4e"> 河南点融工坊信息技术有限公司 </span>
       <a onclick="hrefToBeiAn()">豫ICP备16013336号-2</a>
     </p>
   </div>

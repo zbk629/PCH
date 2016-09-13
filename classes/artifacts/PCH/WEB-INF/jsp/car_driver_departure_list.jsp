@@ -37,7 +37,7 @@
 
         .departure_container_top {
             width: 100%;
-            height: 4.2rem;
+            /*height: 4.2rem;*/
             background-color: #fff;
             position: relative;
             border-bottom: 1px solid #f5ad4e;
@@ -302,13 +302,18 @@
             position: relative;
             top: .4rem;
         }
-        .departure_top_box_span{
+        /*.departure_top_box_span{*/
+            /*line-height: 2rem;*/
+            /*position: absolute;*/
+            /*top: 1.2rem;*/
+            /*right: .4rem;*/
+            /*font-size: 1.4rem;*/
+        /*}*/
+        .departure_top_box_span {
             line-height: 2rem;
-            font-size: 1.6rem;
-            position: absolute;
-            top: 1.2rem;
-            right: .4rem;
             font-size: 1.4rem;
+            display: block;
+            padding-left: 1rem;
         }
         .begin_city ,.end_city{
             font-size: 1.2rem;
