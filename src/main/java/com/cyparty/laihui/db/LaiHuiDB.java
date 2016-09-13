@@ -251,9 +251,6 @@ public class LaiHuiDB {
     }
     public int getMaxID(String parameter,String table) {
         String sql = "SELECT Max("+parameter+")id FROM  "+table ;
-        //int count=jdbcTemplateObject.queryForInt(sql);
-        /*Map<String, Object> now = jdbcTemplateObject.queryForMap(sql);
-        int id = Integer.parseInt(String.valueOf((long) now.get("id")));*/
         Integer id=jdbcTemplateObject.queryForObject(sql, Integer.class);
         return id.intValue();
     }

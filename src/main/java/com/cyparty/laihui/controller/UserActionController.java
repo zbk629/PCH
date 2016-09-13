@@ -32,7 +32,6 @@ public class UserActionController {
     @RequestMapping("/laihui/driver/order_list")
     public String car_departure(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-        //is_logined=true;
         if(is_logined){
 
             return "driver_order_list";
@@ -43,12 +42,12 @@ public class UserActionController {
     public String create_order(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
 //        is_logined=true;
-        //is_has_openid=Utils.isHasMapOpenid(request);
+        is_has_openid=Utils.isHasMapOpenid(request);
         if(is_logined){
-            //if(is_has_openid){
+            if(is_has_openid){
                 return "driver_create_order";
-            //}
-            //return "redirect:/wx/map/login";
+            }
+            return "redirect:/wx/map/login";
         }
         return "redirect:/";
     }
@@ -130,14 +129,14 @@ public class UserActionController {
             int user_id=86;
             int order_id=0;
             //todo:user_id改为从session中获取
-            /*if(request.getSession().getAttribute("user_id")!=null){
+            if(request.getSession().getAttribute("user_id")!=null){
                 try {
                     user_id=(Integer)request.getSession().getAttribute("user_id");
                 } catch (Exception e) {
                     user_id=0;
                     e.printStackTrace();
                 }
-            }*/
+            }
             switch (action) {
                 case "add":
                     try {
@@ -193,7 +192,7 @@ public class UserActionController {
                             int id=laiHuiDB.getMaxID("_id", "pch_passenger_publish_info");
 
                             UserRoleAction userRoleAction=new UserRoleAction();
-                            userRoleAction.setDriver_order_id(id);
+                            userRoleAction.setPassenger_order_id(id);
                             userRoleAction.setOrder_type(2);
                             userRoleAction.setOrder_source(0);
                             userRoleAction.setUser_mobile(mobile);
@@ -251,7 +250,7 @@ public class UserActionController {
                     try {
                         seats=Integer.parseInt(request.getParameter("booking_seats"));
                         //todo:user_id改为从session中获取
-                        user_id=Integer.parseInt(request.getParameter("user_id"));
+                        //user_id=Integer.parseInt(request.getParameter("user_id"));
                         order_id=Integer.parseInt(request.getParameter("order_id"));
                     } catch (NumberFormatException e) {
                         seats=0;
