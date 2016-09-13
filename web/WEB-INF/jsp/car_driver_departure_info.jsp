@@ -959,7 +959,9 @@
             编辑信息
         </div>
     </a>
-    <jsp:include page="footer.jsp" flush="true"></jsp:include>
+    <div class="footer">
+        <img src="/resource/images/pch_icon_bottom.png">
+    </div>
 </div>
 <div class="clear"></div>
 

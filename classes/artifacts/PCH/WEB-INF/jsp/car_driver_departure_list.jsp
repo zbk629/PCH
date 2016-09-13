@@ -302,19 +302,19 @@
             position: relative;
             top: .4rem;
         }
-        /*.departure_top_box_span{*/
-            /*line-height: 2rem;*/
-            /*position: absolute;*/
-            /*top: 1.2rem;*/
-            /*right: .4rem;*/
-            /*font-size: 1.4rem;*/
-        /*}*/
-        .departure_top_box_span {
+        .departure_top_box_span{
             line-height: 2rem;
+            position: absolute;
+            top: 1.2rem;
+            right: .4rem;
             font-size: 1.4rem;
-            display: block;
-            padding-left: 1rem;
         }
+        /*.departure_top_box_span {*/
+            /*line-height: 2rem;*/
+            /*font-size: 1.4rem;*/
+            /*display: block;*/
+            /*padding-left: 1rem;*/
+        /*}*/
         .begin_city ,.end_city{
             font-size: 1.2rem;
         }
@@ -394,8 +394,11 @@
                 $('body,html').animate({scrollTop:0},400);
                 return false;
             });
-
-            //分页操作
+            if($(window).width()>1100){
+                $('.bottom_menu').click();
+            }
+            //分页操
+            // 作
             $(window).scroll(function () {
                         var Scroll = $(document).scrollTop();
                         var height = $(window).height();

@@ -11,7 +11,7 @@
 
   <div class="footer_box">
     <p>© 2016 <a href="/" style="color: #F5ad4e"> 河南点融工坊信息技术有限公司 </a>
-      <a onclick="hrefToBeiAn()">豫ICP备16013336号-2</a>
+      <a href="http://www.miitbeian.gov.cn" target="_blank">豫ICP备16013336号-2</a>
     </p>
   </div>
 </div>

@@ -27,8 +27,12 @@
     .not_message{
         margin-top: 40%;
     }
+
 }
 @media screen and (max-width: 1080px) {
+    .departure_top_box_span{
+        display: none;
+    }
     .backtop{
         right: 1.1rem;
     }
