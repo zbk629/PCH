@@ -230,8 +230,8 @@ public class LaiHuiDB {
     public boolean createUserAction(UserRoleAction user) {
         boolean is_success = true;
 
-        String SQL = "insert into pc_user_role_action(driver_order_id,passenger_order_id,order_type,user_mobile,create_time,order_source) VALUES (?,?,?,?,?,?)";
-        int count = jdbcTemplateObject.update(SQL, new Object[]{user.getDriver_order_id(), user.getPassenger_order_id(), user.getOrder_type(), user.getUser_mobile(), Utils.getCurrentTime(), user.getOrder_source()});
+        String SQL = "insert into pc_user_role_action(driver_order_id,passenger_order_id,order_type,user_mobile,create_time,order_source,booking_order_id) VALUES (?,?,?,?,?,?,?)";
+        int count = jdbcTemplateObject.update(SQL, new Object[]{user.getDriver_order_id(), user.getPassenger_order_id(), user.getOrder_type(), user.getUser_mobile(), Utils.getCurrentTime(), user.getOrder_source(),user.getBooking_order_id()});
         if(count<1){
             is_success=false;
         }
@@ -248,6 +248,14 @@ public class LaiHuiDB {
             }
         }
         return is_success;
+    }
+    public int getMaxID(String parameter,String table) {
+        String sql = "SELECT Max("+parameter+")id FROM  "+table ;
+        //int count=jdbcTemplateObject.queryForInt(sql);
+        /*Map<String, Object> now = jdbcTemplateObject.queryForMap(sql);
+        int id = Integer.parseInt(String.valueOf((long) now.get("id")));*/
+        Integer id=jdbcTemplateObject.queryForObject(sql, Integer.class);
+        return id.intValue();
     }
 }
 

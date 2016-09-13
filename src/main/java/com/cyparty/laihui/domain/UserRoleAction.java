@@ -7,10 +7,19 @@ public class UserRoleAction {
     private int _id;
     private int driver_order_id;
     private int passenger_order_id;
+    private int booking_order_id;
     private int order_type;
     private int order_source;
     private String user_mobile;
     private String create_time;
+
+    public int getBooking_order_id() {
+        return booking_order_id;
+    }
+
+    public void setBooking_order_id(int booking_order_id) {
+        this.booking_order_id = booking_order_id;
+    }
 
     public int get_id() {
         return _id;

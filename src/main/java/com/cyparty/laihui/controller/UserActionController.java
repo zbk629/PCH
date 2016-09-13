@@ -93,7 +93,6 @@ public class UserActionController {
     } @RequestMapping("/laihui/passenger/my_booking_list")
       public String passenger_booking_list( HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-        is_logined=true;
         if(is_logined){
             return "passenger_my_booking_list";
         }
@@ -286,6 +285,16 @@ public class UserActionController {
                             //通知司机
                             String now_where=" where user_id="+user_id;
                             String p_mobile=laiHuiDB.getWxUser(now_where).get(0).getUser_mobile();
+
+                            //保存用户操作
+                            int id=laiHuiDB.getMaxID("_id","pc_wx_passenger_orders");
+                            UserRoleAction userRoleAction = new UserRoleAction();
+                            userRoleAction.setBooking_order_id(id);
+                            userRoleAction.setOrder_type(3);
+                            userRoleAction.setOrder_source(0);
+                            userRoleAction.setUser_mobile(p_mobile);
+
+                            laiHuiDB.createUserAction(userRoleAction);
                             //微信模版通知
                             String driver_where=" where user_id ="+driver_id;
                             User user=laiHuiDB.getWxUser(driver_where).get(0);
