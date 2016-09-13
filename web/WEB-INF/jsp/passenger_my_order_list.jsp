@@ -420,6 +420,17 @@
                 }
               }
       );
+
+      if($(window).width()>1100){
+        $('.bottom_menu ').hide();
+        $('.footer_box').hide();
+        $('.message_bottom_footer').show();
+        $('.message_bottom').css({'bottom': '58px'});
+        $('.message_bottom_type ').css({'background': '#fff','width':'33.333%','line-height': '11.4rem','height': '7rem'});
+      }else{
+        $('.message_bottom_footer').remove();
+      }
+
     });
 
     //加载城市数组
@@ -1059,6 +1070,11 @@
       <img src="/resource/images/pch_icon_menu_me.png" class="icon_style icon_mine">
     </div>
     <span>我的</span>
+  </div>
+  <div class="message_bottom_footer">
+    <p>© 2016 <a href="/" style="color: #F5ad4e"> 河南点融工坊信息技术有限公司 </a>
+      <a href="http://www.miitbeian.gov.cn" target="_blank">豫ICP备16013336号-2</a>
+    </p>
   </div>
 </div>
 

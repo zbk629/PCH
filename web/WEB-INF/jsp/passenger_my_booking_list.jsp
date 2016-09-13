@@ -375,6 +375,7 @@
         var mobile = global_data.result.data[i].mobile;//id
         var boarding_point = global_data.result.data[i].order.boarding_point;//id
         var breakout_point = global_data.result.data[i].order.breakout_point;//id
+        var driving_name = global_data.result.data[i].driving_name;//id
         is_editor=true;
         var info_status = is_editor;
         if(info_status==true){
@@ -394,16 +395,19 @@
         var begin_end_time = end_time.substring(11, 16);
 
         if (is_editor == true) {
-          addDisplay(description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+          addDisplay(driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                   inits_seats, id,boarding_point,breakout_point,mobile);
         } else {
-          addHistoryDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+          addHistoryDisplay(driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                   inits_seats, id,boarding_point,breakout_point,mobile);
         }
 
         if (departure == "") {
 
           $($('.begin_city')[(page_list * size) + i]).hide();
+        }
+        if (driving_name == "") {
+          $($('.departure_li_name')[(page_list * size) + i]).hide();
         }
         if (destination == "") {
           $($('.end_city')[(page_list * size) + i]).hide();
@@ -421,7 +425,7 @@
       }
     }
 
-    function addDisplay(description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+    function addDisplay(driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                         inits_seats, id,boarding_point,breakout_point,mobile) {
       $('.first_clear').before('<li class="mine_first_list" index=' + id + '>' +
               '<div class="mine_first_top">' +
@@ -451,16 +455,12 @@
               '<span>出行时间</span>' +
               '<span class="departure_time_mouth">' + insert_time + '</span>' +
               '<span style="color: #999794">' + begin_start_time + '-' + begin_end_time + '</span>' +
-              '</div>' +
-              '<div class="departure_li_style departure_li_time">' +
-              '<span>发布时间</span>' +
-              '<span class="departure_time_mouth">' + create_time + '</span>' +
-              '<span style="color: #999794">' + begin_create_time + '</span>' +
               '<span class="departure_time_seat">订座' + inits_seats + '&nbsp;个</span>' +
               '</div>' +
-              '<div class="departure_li_style departure_li_time">' +
+              '<div class="departure_li_style departure_li_name">' +
               '<span>车主姓名</span>' +
-              '<span class="departure_time_mouth">' + insert_time + '</span>' +
+              '<span class="departure_time_mouth">' + driving_name + '</span>' +
+
               '</div>' +
               '<a href="tel:'+mobile+'" class="departure_li_style departure_mobile">' +
               '<span>车主电话</span>' +
@@ -483,7 +483,7 @@
               '</li> ')
     }
 
-    function addHistoryDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+    function addHistoryDisplay(driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                                inits_seats, id,boarding_point,breakout_point,mobile) {
       $('.history_clear').before('<li class="mine_list" index=' + id + '>' +
               '<div class="mine_first_top">' +
@@ -599,7 +599,7 @@
       </div>
       <div class="clear first_clear"></div>
     </ul>
-    <ul class="mine_mid">
+    <ul class="mine_mid" style="display:none">
       <div class="mine_list_title">
         <img src="/resource/images/pch_icon_history.png">
         <span>历史预约信息</span>
