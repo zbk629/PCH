@@ -315,12 +315,6 @@ public class UserActionController {
                     json = ReturnJsonUtil.returnFailJsonString(result, "参数有误！");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show_myself":
-                    try {
-                        user_id=Integer.parseInt(request.getParameter("user_id"));
-                    } catch (NumberFormatException e) {
-                        user_id=0;
-                        e.printStackTrace();
-                    }
                     if(user_id>0){
                         //返回该用户预定的发车单列表
                         int now_order_id=0;
