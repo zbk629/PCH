@@ -635,7 +635,7 @@
       编辑信息
     </div>
   </a>
-  <jsp:include page="footer.jsp" flush="true"></jsp:include>
+  <%--<jsp:include page="footer.jsp" flush="true"></jsp:include>--%>
 </div>
 <div class="clear"></div>
 <script>
