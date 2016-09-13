@@ -273,7 +273,7 @@
         }
         .booking_error{
             position: absolute;
-            top: 3.8rem;
+            top: 4rem;
             font-size: 1.3rem;
             color: #e74c3c;
             left: 2rem;
@@ -727,7 +727,7 @@
             data_obj.booking_seats=booking_seats;
             data_obj.order_id=item_id;
             data_obj.driver_id=global_driver_id;
-            validate.validate_submit4('/api/db/passenger/departure', data_obj, success);
+            validate.validate_submit2('/api/db/passenger/departure', data_obj, success);
         }
         function success(){
             $('.float_container').empty().append('<div class="booking_box">' +

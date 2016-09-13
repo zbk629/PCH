@@ -394,9 +394,9 @@
                 $('body,html').animate({scrollTop:0},400);
                 return false;
             });
-            if($(window).width()>1100){
-                $('.bottom_menu').click();
-            }
+//            if($(window).width()>1100){
+//                $('.bottom_menu').click();
+//            }
             //分页操
             // 作
             $(window).scroll(function () {

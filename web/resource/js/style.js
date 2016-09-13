@@ -255,7 +255,9 @@ $("input").bind("touchstart click", function (e) {
 //展示浮动层，自动消失
 function showFloatStyle(errorTips) {
     $('.hover').fadeIn(200);
-    $('.float_container').fadeIn(200);
+    $('.float_container').empty().append('<div class="float_box">'+
+        '<span class="float_box_span"></span>'+
+        '</div>').fadeIn(200);
     $('.float_box_span').text(errorTips);
     setTimeout(function () {
         $('.hover').fadeOut(200);
