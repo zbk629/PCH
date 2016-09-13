@@ -277,6 +277,7 @@ public class UserActionController {
                         String where_now=" where user_id="+user_id+" and order_id="+order_id+" and order_source=0";
                         List<PassengerOrder> passengerOrderList=laiHuiDB.getPassengerOrder(where_now);
                         if(passengerOrderList.size()>0){
+                            result.put("errcode",401);
                             json = ReturnJsonUtil.returnFailJsonString(result, "您已预定过该订单，请不要重复操作！");
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                         }
@@ -313,7 +314,8 @@ public class UserActionController {
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                         }
                     }
-                    json = ReturnJsonUtil.returnFailJsonString(result, "参数有误！");
+                    result.put("errcode",403);
+                    json = ReturnJsonUtil.returnFailJsonString(result, "请登陆！");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show_myself":
                     if(user_id>0){
