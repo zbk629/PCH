@@ -490,7 +490,7 @@ input:focus{
 }
 .footer_box{
     background-color: #000;
-    line-height: 3rem;
+    padding: 1rem 0;
     font-size: 12px;
     text-align: center;
 }
