@@ -127,7 +127,7 @@ public class UserActionController {
             }
             boolean is_success = true;
             int seats=0;
-            int user_id=86;
+            int user_id=0;
             int order_id=0;
             //todo:user_id改为从session中获取
             if(request.getSession().getAttribute("user_id")!=null){
@@ -329,6 +329,20 @@ public class UserActionController {
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }
                     json = ReturnJsonUtil.returnFailJsonString(result, "订单信息获取失败！");
+                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                case "delete_my_order":
+                    if(user_id>0){
+                        order_id=Integer.parseInt(request.getParameter("order_id"));
+                        where =" where _id="+order_id;
+                        is_success = laiHuiDB.delete("pc_wx_passenger_orders ", where);
+                        where=" where booking_order_id="+order_id+" and user_mobile like '%"+laiHuiDB.getWxUser(" where user_id="+user_id).get(0).getUser_mobile()+"%'";
+                        is_success = laiHuiDB.delete("pc_user_role_action ", where);
+                        if(is_success){
+                            json = ReturnJsonUtil.returnSuccessJsonString(result, "删除成功！");
+                            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                        }
+                    }
+                    json = ReturnJsonUtil.returnFailJsonString(result, "删除失败！");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
             }
             json = ReturnJsonUtil.returnFailJsonString(result, "获取参数错误");
