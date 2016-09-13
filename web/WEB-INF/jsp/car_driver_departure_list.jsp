@@ -895,9 +895,14 @@
             if (str == "今天") {
                 time = new Date();
                 changeDataStyle(time)
-            } else {
+            } else if(str == "明天") {
                 var today = new Date();
                 var t = today.getTime() + 1000 * 60 * 60 * 24;
+                time = new Date(t);
+                changeDataStyle(time)
+            }else{
+                var today = new Date();
+                var t = today.getTime() + (1000 * 60 * 60 * 24)*2;
                 time = new Date(t);
                 changeDataStyle(time)
             }
@@ -930,8 +935,10 @@
             for (var j = 0; j < array_date.length; j++) {
                 if (j == 0) {
                     $($('.publish_slide_li_date')[j]).text("今天(" + array_date[j].year + "-" + array_date[j].month + "-" + array_date[j].date + ")")
-                } else {
+                } else if(j==1) {
                     $($('.publish_slide_li_date')[j]).text("明天(" + array_date[j].year + "-" + array_date[j].month + "-" + array_date[j].date + ")")
+                }else{
+                    $($('.publish_slide_li_date')[j]).text("后天(" + array_date[j].year + "-" + array_date[j].month + "-" + array_date[j].date + ")")
                 }
 
             }
@@ -993,6 +1000,9 @@
                         </li>
                         <li class="publish_slide_li publish_slide_li_date" index="-1" onclick="selectTagsLi(this)">
                             明天
+                        </li>
+                        <li class="publish_slide_li publish_slide_li_date" index="1" onclick="selectTagsLi(this)">
+                            后天
                         </li>
                     </ul>
                     <div class="down1"></div>

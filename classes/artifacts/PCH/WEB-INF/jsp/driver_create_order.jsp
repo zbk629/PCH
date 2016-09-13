@@ -573,9 +573,11 @@
 
         if(date == time_change[2]){
             insert_time = "今天("+time_change[1] + '-' + time_change[2]+")";
-          }else{
+          }else if(parseInt(date)+1 == parseInt(time_change[2])){
             insert_time = "明天("+time_change[1] + '-' + time_change[2]+")";
-          }
+          }else{
+          insert_time = "后天("+time_change[1] + '-' + time_change[2]+")";
+        }
 
           no_array=[];
           yes_array=[];
@@ -862,9 +864,14 @@
       if(str=="今天"){
         time=new Date();
         changeDataStyle(time)
-      }else{
+      }else if(str=="明天"){
         var today=new Date();
         var t=today.getTime()+1000*60*60*24;
+        time=new Date(t);
+        changeDataStyle(time)
+      }else{
+        var today=new Date();
+        var t=today.getTime()+(1000*60*60*24)*2;
         time=new Date(t);
         changeDataStyle(time)
       }
@@ -1124,7 +1131,7 @@
     function setShowData(){
 
       var str_time1=new Date();
-      for(var i=0;i<2;i++){
+      for(var i=0;i<3;i++){
         var obj={};
         var str_time2=str_time1.getTime()+(1000*60*60*24)*i;
         var time2 = new Date(str_time2);
@@ -1165,12 +1172,14 @@
         array_date.push(obj);
       }
 
-      for(var j=0;j<2;j++){
+      for(var j=0;j<array_date.length;j++){
         if(j==0){
-          day.push("今天("+array_date[j].month+"-"+array_date[j].date+")")
+          day.push("今天("+array_date[j].month+"-"+array_date[j].date+")");
           $('#demo_time').val("今天("+array_date[j].month+"-"+array_date[j].date+")")
-        }else{
+        }else if(j==1){
           day.push("明天("+array_date[j].month+"-"+array_date[j].date+")")
+        }else{
+          day.push("后天("+array_date[j].month+"-"+array_date[j].date+")")
         }
 //        $('#demo_hour').val()
       }

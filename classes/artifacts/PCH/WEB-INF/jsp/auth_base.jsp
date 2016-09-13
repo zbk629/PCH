@@ -204,6 +204,9 @@
     function toAuthList(){
       window.location.href = "/laihui/passenger/my_order_list";
     }
+    function toMyBookingList(){
+      window.location.href = "/laihui/passenger/my_booking_list";
+    }
 
   </script>
 </head>
@@ -249,7 +252,7 @@
         <span>我的订座信息</span>
         <div class="right_icon">></div>
       </li>
-      <li class="message_mid_li last_li" onclick="toMyMadeList()">
+      <li class="message_mid_li last_li" onclick="toMyBookingList()">
         <span>我的预约信息</span>
         <div class="right_icon">></div>
       </li>

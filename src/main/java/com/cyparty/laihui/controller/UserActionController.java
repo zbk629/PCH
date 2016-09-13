@@ -42,7 +42,7 @@ public class UserActionController {
     @RequestMapping("/laihui/driver/create_order")
     public String create_order(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-        is_logined=true;
+//        is_logined=true;
         //is_has_openid=Utils.isHasMapOpenid(request);
         if(is_logined){
             //if(is_has_openid){
@@ -56,7 +56,7 @@ public class UserActionController {
     @RequestMapping("/laihui/passenger/create_order")
     public String passenger_create_list(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-//        is_logined=true;
+        is_logined=true;
         if(is_logined){
             return "passenger_create_order";
         }
@@ -130,14 +130,14 @@ public class UserActionController {
             int user_id=86;
             int order_id=0;
             //todo:user_id改为从session中获取
-            if(request.getSession().getAttribute("user_id")!=null){
+            /*if(request.getSession().getAttribute("user_id")!=null){
                 try {
                     user_id=(Integer)request.getSession().getAttribute("user_id");
                 } catch (Exception e) {
                     user_id=0;
                     e.printStackTrace();
                 }
-            }
+            }*/
             switch (action) {
                 case "add":
                     try {
@@ -190,7 +190,7 @@ public class UserActionController {
                             laiHuiDB.update("pc_wx_user",update_sql);
 
                             //保存用户操作记录
-                            int id=laiHuiDB.getMaxPassengerPublishInfo();
+                            int id=laiHuiDB.getMaxID("_id", "pch_passenger_publish_info");
 
                             UserRoleAction userRoleAction=new UserRoleAction();
                             userRoleAction.setDriver_order_id(id);

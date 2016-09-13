@@ -512,8 +512,10 @@
 
         if(date == time_change[2]){
           insert_time = "今天("+time_change[1] + '-' + time_change[2]+")";
-        }else{
+        }else if(parseInt(date)+1 == parseInt(time_change[2])){
           insert_time = "明天("+time_change[1] + '-' + time_change[2]+")";
+        }else{
+          insert_time = "后天("+time_change[1] + '-' + time_change[2]+")";
         }
 
         $('#demo_place').val(demo_place_val);
@@ -544,10 +546,6 @@
       function addCarStart() {
         var data1 = global_data.result;
         var contact = new Object();
-        contact.id = -1;
-        contact.name = "全部";
-        contact.child = [{id:-11,name:""}];
-        placeData.push(contact);
         for (var i = 0; i < data1.data.length; i++) {
           var departure1 = data1.data[i].name;
           var departure_id = data1.data[i].id;
@@ -656,9 +654,14 @@
       if(str=="今天"){
         time=new Date();
         changeDataStyle(time)
-      }else{
+      }else if(str=="明天"){
         var today=new Date();
         var t=today.getTime()+1000*60*60*24;
+        time=new Date(t);
+        changeDataStyle(time)
+      }else{
+        var today=new Date();
+        var t=today.getTime()+(1000*60*60*24)*2;
         time=new Date(t);
         changeDataStyle(time)
       }
@@ -732,7 +735,7 @@
     }
 
     function success(){
-      window.location.href="/laihui/passenger/order_list";
+//      window.location.href="/laihui/passenger/order_list";
     }
 
 
@@ -748,7 +751,7 @@
     function setShowData(){
 
       var str_time1=new Date();
-      for(var i=0;i<2;i++){
+      for(var i=0;i<3;i++){
         var obj={};
         var str_time2=str_time1.getTime()+(1000*60*60*24)*i;
         var time2 = new Date(str_time2);
@@ -789,12 +792,14 @@
         array_date.push(obj);
       }
 
-      for(var j=0;j<2;j++){
+      for(var j=0;j<array_date.length;j++){
         if(j==0){
-          day.push("今天("+array_date[j].month+"-"+array_date[j].date+")")
-          $('#demo_time').val("今天("+array_date[j].month+"-"+array_date[j].date+")")
+          day.push("今天("+array_date[j].month+"-"+array_date[j].date+")");
+          $('#demo_time').val("今天("+array_date[j].month+"-"+array_date[j].date+")");
+        }else if(j==1){
+          day.push("明天("+array_date[j].month+"-"+array_date[j].date+")");
         }else{
-          day.push("明天("+array_date[j].month+"-"+array_date[j].date+")")
+          day.push("后天("+array_date[j].month+"-"+array_date[j].date+")");
         }
       }
     }
@@ -888,7 +893,7 @@
           <span>预定座位</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="tel" id="demo_set" placeholder="预定座位" readonly="readonly" class="input_disabled"/>
+          <input type="tel" id="demo_set" placeholder="预定座位" readonly="readonly" class="input_disabled" value="1"/>
         </div>
       </li>
       <li class="publish_mid_li">

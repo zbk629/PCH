@@ -729,7 +729,7 @@
             data_obj.user_id=user_id;
             data_obj.booking_seats=booking_seats;
             data_obj.order_id=item_id;
-            data_obj.driver_id=driver_id;
+            data_obj.driver_id=global_driver_id;
             validate.validate_submit4('/api/db/passenger/departure', data_obj, success);
         }
         function success(){
