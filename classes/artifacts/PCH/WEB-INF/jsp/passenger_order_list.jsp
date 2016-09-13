@@ -682,6 +682,7 @@
         <span class="not_message">暂无发布信息</span>
     </div>
     <%--底部--%>
+
     <div class="bottom_menu " onclick="changeMenu(this)">
         <img src="/resource/images/pch_icon_toright.png" class="menu_style_icon menu_style_active">
     </div>
@@ -706,6 +707,7 @@
         </div>
     </div>
 </div>
+
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;

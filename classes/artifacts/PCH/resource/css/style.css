@@ -483,3 +483,14 @@ input:focus{
     right: -.2rem;
 }
 /*底部操作结束*/
+/*footer*/
+.footer img{
+    width: 100%;
+    padding-bottom: 0.4rem;
+}
+.footer_box{
+    background-color: #000;
+    line-height: 3rem;
+    font-size: 12px;
+    text-align: center;
+}

@@ -188,12 +188,9 @@
         .begin_city, .end_city {
             font-size: 1.2rem;
         }
-        .footer{
-            margin-bottom: 3rem;
-        }
+
         .footer img{
             width: 100%;
-
         }
         .float_message_title{
             line-height: 3.2rem;
@@ -962,11 +959,10 @@
             编辑信息
         </div>
     </a>
-    <div class="footer">
-        <img src="/resource/images/pch_icon_bottom.png">
-    </div>
+    <jsp:include page="footer.jsp" flush="true"></jsp:include>
 </div>
 <div class="clear"></div>
+
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;

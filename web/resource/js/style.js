@@ -325,3 +325,6 @@ function toList() {
 function toPassengerList() {
     window.location.href = "/laihui/passenger/my_order_list";
 }
+function hrefToBeiAn() {
+    window.location.href = "www.miitbeian.gov.cn";
+}

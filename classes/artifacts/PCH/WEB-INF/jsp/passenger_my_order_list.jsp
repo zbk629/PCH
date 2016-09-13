@@ -310,10 +310,7 @@
     .begin_city ,.end_city{
       font-size: 1.2rem;
     }
-    .footer img{
-      width: 100%;
-      padding-bottom: 2.4rem;
-    }
+
     /*城市下拉框*/
     .publish_list_box2{
       display: none;
@@ -443,9 +440,9 @@
       var height_top3 = $('.departure_container_list').height();
       var height_bottom = $('.footer').height();
       if((body_heigth - height_top1-height_top2 -height_top3 -height_bottom)>0){
-        $('.footer').css({'position': 'fixed','bottom':'-1rem'})
+        $('.footer').css({'position': 'absolute','bottom':'0rem'})
       }else{
-        $('.footer').css({'position': 'relative','bottom':'-1rem'})
+        $('.footer').css({'position': 'relative','bottom':'0rem'})
       }
       console.log((body_heigth - height_top1-height_top2 -height_top3 -height_bottom))
     }
@@ -1018,11 +1015,9 @@
       <span class="not_message">暂无发布信息</span>
     </ul>
   </div>
-  <div class="footer">
-    <img src="/resource/images/pch_icon_bottom.png">
-  </div>
 </div>
 <%--底部--%>
+<jsp:include page="footer.jsp" flush="true"></jsp:include>
 <div class="bottom_menu " onclick="changeMenu(this)">
   <img src="/resource/images/pch_icon_right_to.png" class="menu_style_icon menu_style_active">
 </div>
