@@ -559,7 +559,7 @@
     //删除车单
     function mine_delete() {
       var obj = {};
-      obj.action = 'delete';
+      obj.action = 'delete_my_order';
       obj.order_id = index_id;
       obj.user_id = user_id;
       validate.validate_submit("/api/db/passenger/departure", obj, loadMessage);
