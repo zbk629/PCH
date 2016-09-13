@@ -727,13 +727,42 @@
             data_obj.booking_seats=booking_seats;
             data_obj.order_id=item_id;
             data_obj.driver_id=global_driver_id;
-            validate.validate_submit2('/api/db/passenger/departure', data_obj, success);
+
+            $.ajax({
+                type: "POST",
+                url: '/api/db/passenger/departure',
+                data: data_obj,
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == true) {
+                        global_data = data.result;
+                        console.log("交互成功");
+                        success();
+                    } else {
+                        var code=data.result.errcode;
+                        if(code==401){
+                            //
+                            showFloatStyle(data.message);
+                        }else if(code==403){
+                            showFloatStyle(data.message);
+                            setTimeout(function () {
+                                window.location.href="/auth/base"
+                            }, 1000);
+                        }
+
+                    }
+                },
+                error: function () {
+                    displayErrorMsg(data.message);
+                }
+            })
         }
         function success(){
             $('.float_container').empty().append('<div class="booking_box">' +
                     '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
                     '<div class="success_tip">预约成功</div>' +
-                    '<a href="#" class="success_href">查看我的预约</a>' +
+                    '<a href="/laihui/passenger/my_booking_list" class="success_href">查看我的预约</a>' +
                     '</div>');
         }
 
@@ -951,7 +980,7 @@
     </div>
     <a href="javascript:(0)" class="call_driver_bottom not_driver" style="display:none;" onclick="showBooking()">
         <div class="publish_bottom">
-            预定车主
+            预定座位
         </div>
     </a>
     <a href="javascript:(0)" class="change_driver" onclick="showFloat()" >
