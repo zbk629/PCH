@@ -227,6 +227,10 @@
             color: #fff;
             border-radius: 5px;
             padding: 0 2rem;
+            cursor: pointer;
+        }
+        .booking_span:hover{
+            background-color: #FF8F0c;
         }
         .close_booking{
             position: absolute;
@@ -234,10 +238,11 @@
             top: 0;
             font-size: 24px;
             color: #999;
+            cursor: pointer;
         }
         .booking_top{
             text-align: center;
-            margin-top: 1rem;
+            margin-top: 1.2rem;
             margin-bottom: 1.6rem;
             position: relative;
         }
@@ -273,7 +278,7 @@
         }
         .booking_error{
             position: absolute;
-            top: 4rem;
+            top: 4.4rem;
             font-size: 1.3rem;
             color: #e74c3c;
             left: 2rem;
@@ -310,6 +315,28 @@
             padding: .2rem .4rem;
             height: 2.6rem;
             line-height: 1.4rem;
+        }
+        .departure_mobile{
+            padding: 0 2rem;
+            margin-top: 1rem;
+            display: block;
+            line-height: 2.2rem;
+            text-align: center;
+        }
+        .departure_time_mouth{
+            color: #f5ad4e;
+            display: inline-block;
+            margin-left: 1rem;
+        }
+        .mobile_style{
+            width: 2rem;
+            right: 2rem;
+            position: relative;
+            top: .4rem;
+            left: 2rem;
+        }
+        .success_href:hover{
+            background-color: #fff;
         }
 
     </style>
@@ -412,6 +439,9 @@
                     $(".publish_route_ul").fadeOut(100);
                 }
             });
+
+            changePCStyle();
+
         });
         var url = window.location.href;
         /*var role=${role};*/
@@ -428,9 +458,9 @@
         //判断列表底部样式
         function checkList(){
             if(($(window).height()-$('.publish_container').height()-$('.publish_bottom').height())>0){
-                $('.footer').css({'position': 'fixed','bottom':'0rem'})
+                $('.footer').css({'position': 'fixed','bottom':'1rem'})
             }else{
-                $('.footer').css({'position': 'relative','bottom':'0rem'})
+                $('.footer').css({'position': 'relative','bottom':'1rem'})
             }
         }
         //判断是否是修改信息
@@ -667,30 +697,66 @@
             }
         }
         function showBooking(){
-            $('.hover').fadeIn(200);
-            $('.float_container').fadeIn(200);
-            $('.float_container').empty().append('<div class="booking_box">' +
-                    '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
-                    '<p class="booking_top">填写出行信息，方便车主与您取得联系</p>' +
-                    '<span class="booking_error"></span>'+
-                    '<div class="booking_container">' +
-                    '<div class="booking_li">' +
-                    '<input placeholder="请输入上车地点" type="text" index="0" class="input_style booking_start" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
-                    '<ul class="publish_route_ul"></ul>'+
-                    '</div>' +
-                    '<div class="booking_li">' +
-                    '<input placeholder="请输入下车地点" type="text" index="1" class="input_style booking_end" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
-                    '<ul class="publish_route_ul"></ul>'+
-                    '</div>' +
-                    '<div class="booking_li">' +
-                    '<input placeholder="请输入座位数" type="tel" class="input_style booking_seat" value="1" onchange="removeErrorTips()">' +
-                    '</div>' +
-                    '<div class="booking_li">' +
-                    '<input placeholder="备注信息(例如不抽烟，有小件)" type="text" class="input_style booking_description" onchange="removeErrorTips()">' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="booking_bottom" onclick="checkInput()">提交预约</div>' +
-                    '</div>');
+
+            if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+                var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+                if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                    //在微信中打开
+                    $('.hover').fadeIn(200);
+                    $('.float_container').fadeIn(200);
+                    $('.float_container').empty().append('<div class="booking_box">' +
+                            '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
+                            '<p class="booking_top">填写出行信息，方便车主与您取得联系</p>' +
+                            '<span class="booking_error"></span>'+
+                            '<div class="booking_container">' +
+                            '<div class="booking_li">' +
+                            '<input placeholder="请输入上车地点" type="text" index="0" class="input_style booking_start" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
+                            '<ul class="publish_route_ul"></ul>'+
+                            '</div>' +
+                            '<div class="booking_li">' +
+                            '<input placeholder="请输入下车地点" type="text" index="1" class="input_style booking_end" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
+                            '<ul class="publish_route_ul"></ul>'+
+                            '</div>' +
+                            '<div class="booking_li">' +
+                            '<input placeholder="请输入座位数" type="tel" class="input_style booking_seat" value="1" onchange="removeErrorTips()">' +
+                            '</div>' +
+                            '<div class="booking_li">' +
+                            '<input placeholder="备注信息(例如有小件等)" type="text" class="input_style booking_description" onchange="removeErrorTips()">' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="booking_bottom" onclick="checkInput()">提交预约</div>' +
+                            '</div>');
+                }else{
+                    showFloatStyle("请扫描关注二维码，在微信中完成预定！");
+                }
+            } else {
+                //在pc
+                $('.hover').fadeIn(200);
+                $('.float_container').fadeIn(200);
+                $('.float_container').empty().append('<div class="booking_box">' +
+                        '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
+                        '<p class="booking_top">填写出行信息，方便车主与您取得联系</p>' +
+                        '<span class="booking_error"></span>'+
+                        '<div class="booking_container">' +
+                        '<div class="booking_li">' +
+                        '<input placeholder="请输入上车地点" type="text" index="0" class="input_style booking_start" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
+                        '<ul class="publish_route_ul"></ul>'+
+                        '</div>' +
+                        '<div class="booking_li">' +
+                        '<input placeholder="请输入下车地点" type="text" index="1" class="input_style booking_end" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
+                        '<ul class="publish_route_ul"></ul>'+
+                        '</div>' +
+                        '<div class="booking_li">' +
+                        '<input placeholder="请输入座位数" type="tel" class="input_style booking_seat" value="1" onchange="removeErrorTips()">' +
+                        '</div>' +
+                        '<div class="booking_li">' +
+                        '<input placeholder="备注信息(例如有小件等)" type="text" class="input_style booking_description" onchange="removeErrorTips()">' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="booking_bottom" onclick="checkInput()">提交预约</div>' +
+                        '</div>');
+            }
+
         }
         function checkInput(){
             if($('.booking_start').val()==""){
@@ -727,15 +793,55 @@
             data_obj.booking_seats=booking_seats;
             data_obj.order_id=item_id;
             data_obj.driver_id=global_driver_id;
-            validate.validate_submit2('/api/db/passenger/departure', data_obj, success);
+
+            $.ajax({
+                type: "POST",
+                url: '/api/db/passenger/departure',
+                data: data_obj,
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == true) {
+                        global_data = data.result;
+                        console.log("交互成功");
+                        success();
+                    } else {
+                        var code=data.result.errcode;
+                        if(code==401){
+                            //
+                            showFloatStyle(data.message);
+                        }else if(code==403){
+                            showFloatStyle(data.message);
+                            setTimeout(function () {
+                                window.location.href="/wx/login"
+                            }, 1000);
+                        }
+
+                    }
+                },
+                error: function () {
+                    displayErrorMsg(data.message);
+                }
+            })
+        }
+        function toMineList(){
+            window.location.href="/laihui/passenger/my_booking_list"
         }
         function success(){
+            $('.hover').fadeIn(200);
+            $('.float_container').fadeIn(200);
             $('.float_container').empty().append('<div class="booking_box">' +
                     '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
                     '<div class="success_tip">预约成功</div>' +
-                    '<a href="#" class="success_href">查看我的预约</a>' +
+                    '<div class="success_href" onclick="toMineList()">查看我的预约</div>' +
+                    '<a href="tel:'+global_mobile+'" class="departure_li_style departure_mobile">' +
+                    '<span>车主电话</span>' +
+                    '<span class="departure_time_mouth">' + global_mobile + '</span>' +
+                    '<img src="/resource/images/pc_icon_mobile.png" class="mobile_style">'+
+                    '</div>'+
                     '</div>');
         }
+
 
         //按键请求城市信息
         function sendKeepDownInput(obj) {
@@ -951,7 +1057,7 @@
     </div>
     <a href="javascript:(0)" class="call_driver_bottom not_driver" style="display:none;" onclick="showBooking()">
         <div class="publish_bottom">
-            预定车主
+            预定座位
         </div>
     </a>
     <a href="javascript:(0)" class="change_driver" onclick="showFloat()" >

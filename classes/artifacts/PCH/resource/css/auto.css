@@ -3,9 +3,15 @@
  *@media (max-width: 400px; m:480px; m:600px; .... m:920px; m: )
  *
  */
+
+/*宽度*/
+
+
 @media screen and (max-width: 2000px) {
     body{
         max-width: 1080px;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
     }
     .not_message{
         margin-top: 30%;
@@ -26,6 +32,11 @@
     }
     .not_message{
         margin-top: 40%;
+    }
+    body{
+        max-width: 1080px;
+        transform: none;
+        -webkit-transform: none;
     }
 
 }

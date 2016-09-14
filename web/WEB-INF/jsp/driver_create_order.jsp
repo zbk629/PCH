@@ -388,6 +388,10 @@
 
       outline: none;
     }
+    body{
+      transform: none;
+      -webkit-transform: none;
+    }
 
   </style>
   <script>
@@ -1358,6 +1362,7 @@
         <div class="publish_mid_li_textarea" onclick="">
           <textarea type="text" placeholder="选择YES标签和NO标签" readonly="readonly" class="tags_container" onclick="showFloatStyle2()"/></textarea>
         </div>
+        <div class="clear"></div>
       </li>
       <div class="clear"></div>
     </ul>

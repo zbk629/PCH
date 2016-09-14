@@ -661,7 +661,7 @@
         <div class="return_perv">
             <img class="return_perv_img" alt="" src="/resource/images/pc_icon_white_return.png" onclick="returnCheck()">
         </div>
-        <span>我的订单</span>
+        <span>乘客发布历史</span>
     </div>
     <div class="mine_message">
         <ul class="mine_mid_first">

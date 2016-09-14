@@ -245,15 +245,15 @@
   <div class="message_mid">
     <ul class="message_mid_ul">
       <li class="message_mid_li" onclick="toMyList()">
-        <span>我的发车信息</span>
+        <span>车主发布历史</span>
         <div class="right_icon">></div>
       </li>
       <li class="message_mid_li" onclick="toMyMadeList()">
-        <span>我的订座信息</span>
+        <span>乘客发布历史</span>
         <div class="right_icon">></div>
       </li>
       <li class="message_mid_li last_li" onclick="toMyBookingList()">
-        <span>我的预约信息</span>
+        <span>预约订座信息</span>
         <div class="right_icon">></div>
       </li>
     </ul>

@@ -384,6 +384,7 @@
                 $('.publish_slide_ul').hide();
             });
             IsPC(inPc,inMobile);
+
             setShowData();
             movetop();
             checkId();
@@ -426,7 +427,7 @@
                 $('.footer_box').hide();
                 $('.message_bottom_footer').show();
                 $('.message_bottom').css({'bottom': '58px'});
-                $('.message_bottom_type ').css({'background': '#fff','width':'33.333%','line-height': '11.4rem','height': '7rem'});
+                $('.message_bottom_type ').css({'background': '#fff','width':'33.333%','line-height': '10.4rem','height': '7rem'});
             }else{
                 $('.message_bottom_footer').remove();
             }

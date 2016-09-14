@@ -516,3 +516,15 @@ input:focus{
     color: #999;
     cursor: pointer;
 }
+.mine_first_top{
+    cursor: pointer;
+}
+.mine_first_mid{
+    cursor: pointer;
+}
+.mine_type {
+    cursor: pointer;
+}
+.return_perv_img{
+    cursor: pointer;
+}

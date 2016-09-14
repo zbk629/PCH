@@ -290,31 +290,28 @@ function changeMenu(obj) {
 //菜单的跳转
 function toMine() {
     loading();
-    //if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
-    //    alert("移动")
-    //    window.location.href="/wx/login";
-    //    var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
-    //    if (ua.match(/MicroMessenger/i) == "micromessenger") {
-    //        //在微信中打开
-    //    }
-    //    if (ua.match(/WeiBo/i) == "weibo") {
-    //        //在新浪微博客户端打开
-    //    }
-    //    if (ua.match(/QQ/i) == "qq") {
-    //        //在QQ空间打开
-    //    }
-    //    if (browser.versions.ios) {
-    //        //是否在IOS浏览器打开
-    //    }
-    //    if(browser.versions.android){
-    //        //是否在安卓浏览器打开
-    //    }
-    //} else {
-    //    alert("电脑")
-    //    //否则就是PC浏览器打开
-    //    window.location.href="/auth/base"
-    //}
-    window.location.href = "/wx/login";
+    if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+        window.location.href="/wx/login";
+        var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            //在微信中打开
+        }
+        if (ua.match(/WeiBo/i) == "weibo") {
+            //在新浪微博客户端打开
+        }
+        if (ua.match(/QQ/i) == "qq") {
+            //在QQ空间打开
+        }
+        if (browser.versions.ios) {
+            //是否在IOS浏览器打开
+        }
+        if(browser.versions.android){
+            //是否在安卓浏览器打开
+        }
+    } else {
+        //否则就是PC浏览器打开
+        window.location.href="/wx/pc/login"
+    }
 }
 //暂未开放
 function notOpend() {
@@ -328,3 +325,13 @@ function toPassengerList() {
     window.location.href = "/laihui/passenger/my_order_list";
 }
 
+function changePCStyle(){
+    if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+        $('.float_container').css('width','80%');
+    } else {
+        //否则就是PC浏览器打开
+        $('.float_container').css('width','60%');
+        $('.publish_mid').css({'margin-bottom':'0'})
+    }
+};
+changePCStyle();
