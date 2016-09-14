@@ -127,7 +127,7 @@ public class LoginController {
     @RequestMapping("/wx/pc/login")
     public String pc(HttpServletRequest request, Model model) {
 
-        return "https://open.weixin.qq.com/connect/qrconnect?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2#wechat_redirect";
+        return "redirect:https://open.weixin.qq.com/connect/qrconnect?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2#wechat_redirect";
     }
     @RequestMapping("/wx/map/login")
     public String weixin_map(HttpServletRequest request, Model model) {
