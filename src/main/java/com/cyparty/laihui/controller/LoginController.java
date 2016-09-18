@@ -62,6 +62,7 @@ public class LoginController {
                     request.getSession().setAttribute("user_mobile",userList.get(0).getUser_mobile());
                     return "redirect:/auth/base";
                 } else {
+                    request.getSession().setAttribute("user_id", now_user.getUser_id());
                     return "redirect:/reg";
                     //return "redirect:/reg?id=" + now_user.getUser_id();
                 }
@@ -90,10 +91,6 @@ public class LoginController {
                 }
                 return "redirect:/auth/base";
             }
-            /*model.addAttribute("code",code);
-            model.addAttribute("user",user);
-            return "wx_map";*/
-
         }
         return "redirect:/";
     }
