@@ -361,6 +361,15 @@
         var id = global_data.result.data[i].id;//id
         var is_editor = global_data.result.data[i].is_editor;//id
         var create_time = global_data.result.data[i].create_time;//id
+        var boarding_point = global_data.result.data[i].boarding_point;//上车地点
+        var breakout_point = global_data.result.data[i].breakout_point;//下车地点
+//
+//                if(departure==""){
+//                    departure = boarding_point;
+//                }
+//                if(destination==""){
+//                    destination = breakout_point;
+//                }
         points = points.replace(/丶/g, " 、");
         if (info_status == 1) {
           info_status = "有空位"
@@ -383,7 +392,7 @@
         var begin_end_time = end_time.substring(11, 16);
 
         if (is_editor == true) {
-          addDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+          addDisplay(breakout_point,boarding_point,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                   inits_seats, car_brand, id, points);
         } else {
           addHistoryDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
@@ -409,8 +418,13 @@
         }
         if (points == "") {
           $($('.departure_li_route')[(page_list * size) + i]).hide();
-        }
-        ;
+        };
+        if (boarding_point == "") {
+          $($('.departure_boarding_point')[(page_list * size) + i]).hide();
+        };
+        if (breakout_point == "") {
+          $($('.departure_breakout_point')[(page_list * size) + i]).hide();
+        };
 
       }
       if ($('.mine_list').length == 0) {
@@ -421,7 +435,7 @@
       }
     }
 
-    function addDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
+    function addDisplay(breakout_point,boarding_point,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
                         departure_city, destination_city, departure, destination, inits_seats, car_brand, id, points) {
       $('.first_clear').before('<li class="mine_first_list" index=' + id + '>' +
               '<div class="mine_first_top" onclick="toDetaile(this)">' +
@@ -440,13 +454,22 @@
               '<div class="departure_li_style departure_li_time departure_li_route">' +
               '<span class="departure_route_left">途径路线</span>' +
               '<span class="departure_route">' + points + '</span>' +
+              '<div class="clear"></div>'+
               '</div>' +
               '<div class="departure_li_style departure_li_time">' +
               '<span>出行时间</span>' +
               '<span class="departure_time_mouth">' + insert_time + '</span>' +
               '<span style="color: #999794">' + begin_start_time + '-' + begin_end_time + '</span>' +
               '</div>' +
-              '<div class="departure_li_style departure_li_time">' +
+              '<div class="departure_li_style departure_boarding_point">' +
+              '<span>上车地点</span>' +
+              '<span class="departure_time_mouth">' + boarding_point + '</span>' +
+              '</div>' +
+              '<div class="departure_li_style departure_breakout_point">' +
+              '<span>下车地点</span>' +
+              '<span class="departure_time_mouth">' + breakout_point + '</span>' +
+              '</div>' +
+              '<div class="departure_li_style departure_breakout_point">' +
               '<span>发布时间</span>' +
               '<span class="departure_time_mouth">' + create_time + '</span>' +
               '<span style="color: #999794">' + begin_create_time + '</span>' +
@@ -526,6 +549,15 @@
       var inits_seats = global_data.result.data[index].inits_seats;//可用座位
       var car_brand = global_data.result.data[index].car_brand;//车辆品牌
       var id = global_data.result.data[index].id;//id
+      var boarding_point = global_data.result.data[i].boarding_point;//上车地点
+      var breakout_point = global_data.result.data[i].breakout_point;//下车地点
+
+      if (departure == "") {
+        departure = boarding_point;
+      }
+      if (destination == "") {
+        destination = breakout_point;
+      }
       points = points.replace(/丶/g, " 、");
       tag_yes_content = tag_yes_content.replace(/丶/g, " 、");
       tag_no_content = tag_no_content.replace(/丶/g, " 、");

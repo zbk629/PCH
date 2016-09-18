@@ -63,8 +63,6 @@
             padding: 1rem 0 0rem 1.4rem;
         }
 
-
-
         .publish_message_driver_title {
             font-size: 1.4rem;
         }
@@ -182,37 +180,45 @@
         .call_driver_bottom {
             color: #fff;
         }
+
         .change_driver {
             color: #fff;
         }
+
         .begin_city, .end_city {
             font-size: 1.2rem;
         }
 
-        .footer img{
+        .footer img {
             width: 100%;
         }
-        .float_message_title{
+
+        .float_message_title {
             line-height: 3.2rem;
         }
-        .float_message_mid{
+
+        .float_message_mid {
             line-height: 4rem;
             text-align: center;
         }
-        .set_have,.set_full,.set_remove{
+
+        .set_have, .set_full, .set_remove {
             display: inline-block;
             padding: 0 1rem;
             margin-left: 1rem;
             cursor: pointer;
 
         }
-        .set_have{
+
+        .set_have {
             margin-left: 0rem;
         }
-        .set_active{
+
+        .set_active {
             color: #F5AD4E;
         }
-        .float_message_mid2{
+
+        .float_message_mid2 {
             display: none;
             padding: 1rem;
             color: #f5ad4e;
@@ -220,8 +226,9 @@
             line-height: 2rem;
 
         }
+
         /*预约操作*/
-        .booking_span{
+        .booking_span {
             display: inline-block;
             background-color: #f5ad4e;
             color: #fff;
@@ -229,10 +236,12 @@
             padding: 0 2rem;
             cursor: pointer;
         }
-        .booking_span:hover{
+
+        .booking_span:hover {
             background-color: #FF8F0c;
         }
-        .close_booking{
+
+        .close_booking {
             position: absolute;
             right: 1rem;
             top: 0;
@@ -240,25 +249,29 @@
             color: #999;
             cursor: pointer;
         }
-        .booking_top{
+
+        .booking_top {
             text-align: center;
             margin-top: 1.2rem;
             margin-bottom: 1.6rem;
             position: relative;
         }
-        .booking_container{
+
+        .booking_container {
             margin: 1rem 0;
             position: relative;
             overflow: hidden;
         }
-        .input_style{
+
+        .input_style {
             padding: 0 .6rem;
             border-bottom: 1px solid #f5ad4e;
             width: 100%;
             font-size: 1.5rem;
             line-height: 3.2rem;
         }
-        .booking_bottom{
+
+        .booking_bottom {
             text-align: center;
             color: #fff;
             background-color: #f5ad4e;
@@ -266,30 +279,36 @@
             line-height: 3.2rem;
             cursor: pointer;
         }
-        .booking_bottom:hover{
+
+        .booking_bottom:hover {
             background-color: #FF8F0c;
         }
-        .booking_li{
+
+        .booking_li {
             margin-bottom: .8rem;
             position: relative;
         }
-        .booking_box{
+
+        .booking_box {
             font-size: 1.5rem;
         }
-        .booking_error{
+
+        .booking_error {
             position: absolute;
             top: 4.4rem;
             font-size: 1.3rem;
             color: #e74c3c;
             left: 2rem;
         }
-        .success_tip{
+
+        .success_tip {
             color: #27ae60;
             font-size: 1.6rem;
             text-align: center;
             margin-top: 1rem;
         }
-        .success_href{
+
+        .success_href {
             margin-top: 2rem;
             display: block;
             text-align: center;
@@ -316,26 +335,30 @@
             height: 2.6rem;
             line-height: 1.4rem;
         }
-        .departure_mobile{
+
+        .departure_mobile {
             padding: 0 2rem;
             margin-top: 1rem;
             display: block;
             line-height: 2.2rem;
             text-align: center;
         }
-        .departure_time_mouth{
+
+        .departure_time_mouth {
             color: #f5ad4e;
             display: inline-block;
             margin-left: 1rem;
         }
-        .mobile_style{
+
+        .mobile_style {
             width: 2rem;
             right: 2rem;
             position: relative;
             top: .4rem;
             left: 2rem;
         }
-        .success_href:hover{
+
+        .success_href:hover {
             background-color: #fff;
         }
 
@@ -431,11 +454,11 @@
         $(document).ready(function () {
             changeFontSize();
             checkId();
-            $(document).click(function(e){
+            $(document).click(function (e) {
                 e = window.event || e;
                 var obj = e.srcElement || e.target;
-                if($(obj).is(".publish_route_ul")) {
-                }else{
+                if ($(obj).is(".publish_route_ul")) {
+                } else {
                     $(".publish_route_ul").fadeOut(100);
                 }
             });
@@ -445,31 +468,31 @@
         });
         var url = window.location.href;
         /*var role=${role};*/
-        var role=<%=request.getSession().getAttribute("role")%>;
+        var role =<%=request.getSession().getAttribute("role")%>;
         var item_id = url.split("?id=")[1];
         item_id = item_id.split("&")[0];
         var click_type;
-        var city_array=[];
+        var city_array = [];
         var send_array = [];
         var global_start_time;
         var global_mobile;
         var global_driver_id;
-        var user_id=86;
+        var user_id = 86;
         //判断列表底部样式
-        function checkList(){
-            if(($(window).height()-$('.publish_container').height()-$('.publish_bottom').height())>0){
-                $('.footer').css({'position': 'fixed','bottom':'1rem'})
-            }else{
-                $('.footer').css({'position': 'relative','bottom':'1rem'})
+        function checkList() {
+            if (($(window).height() - $('.publish_container').height() - $('.publish_bottom').height()) > 0) {
+                $('.footer').css({'position': 'fixed', 'bottom': '1rem'})
+            } else {
+                $('.footer').css({'position': 'relative', 'bottom': '1rem'})
             }
         }
         //判断是否是修改信息
         function checkId() {
-            if(role==1){
+            if (role == 1) {
                 $('.not_driver').hide();
                 $('.change_driver').show();
                 updateMessage(item_id)
-            }else{
+            } else {
                 $('.not_driver').show();
                 $('.change_driver').hide();
                 if (url.indexOf("=") == -1) {
@@ -497,10 +520,9 @@
         }
         //添加用户数据
         function insertMessage() {
-            if(global_data.result.total == 0){
-                window.location.href="/404"
-            }else
-            {
+            if (global_data.result.total == 0) {
+                window.location.href = "/404"
+            } else {
                 for (var i = 0; i < global_data.result.data.length; i++) {
                     var driving_name = global_data.result.data[i].driving_name;//车主姓名
                     var info_status = global_data.result.data[i].info_status;//状态信息1：有空位；2：已满；-1：已取消
@@ -509,8 +531,7 @@
                     var mobile = global_data.result.data[i].mobile;//手机号
                     var departure_city = global_data.result.data[i].departure_city;//出发城市
                     var destination_city = global_data.result.data[i].destination_city;//目的城市
-                    var departure = global_data.result.data[i].departure;//出发小城
-                    var destination = global_data.result.data[i].destination;//目的小城市
+
                     var description = global_data.result.data[i].description;//描述信息
                     var tag_yes_content = global_data.result.data[i].tag_yes_content;//yes标签
                     var tag_no_content = global_data.result.data[i].tag_no_content;//no标签
@@ -519,21 +540,34 @@
                     var car_brand = global_data.result.data[i].car_brand;//车辆品牌
                     var id = global_data.result.data[i].id;//id
                     var create_time = global_data.result.data[i].create_time;//id
+                    var departure = global_data.result.data[i].departure;//出发小城
+                    var destination = global_data.result.data[i].destination;//目的小城市
+                    var boarding_point = global_data.result.data[i].boarding_point;//上车地点
+                    var breakout_point = global_data.result.data[i].breakout_point;//下车地点
+
+                    if (departure == "") {
+                        departure = boarding_point;
+                    }
+                    if (destination == "") {
+                        destination = breakout_point;
+                    }
+
+
                     global_driver_id = global_data.result.data[i].driver_id;//id
                     global_start_time = start_time;
                     global_mobile = mobile;
                     if (info_status == 1) {
-                        $($('.item_seat_status')[i]).css('color','#2ecc71');
+                        $($('.item_seat_status')[i]).css('color', '#2ecc71');
                         info_status = "有空位";
-                        click_type=0;
+                        click_type = 0;
                     } else if (info_status == 2) {
-                        $($('.item_seat_status')[i]).css('color','#e74c3c');
+                        $($('.item_seat_status')[i]).css('color', '#e74c3c');
                         info_status = "已满";
-                        click_type=1;
+                        click_type = 1;
                     } else {
-                        $($('.item_seat_status')[i]).css('color','##95a5a6');
+                        $($('.item_seat_status')[i]).css('color', '##95a5a6');
                         info_status = "已取消";
-                        click_type=2;
+                        click_type = 2;
                     }
                     //开始时间设置
                     var insert_time = start_time.substring(0, 10);
@@ -554,10 +588,10 @@
                     //添加标题信息
                     $(document).attr("title", title_city);
                     pageTitle = $(document).attr('title');
-                    points= points.replace(/丶/g, " - ");
-                    tag_yes_content= tag_yes_content.replace(/丶/g, "、");
-                    tag_no_content= tag_no_content.replace(/丶/g, "、");
-                    var mobile_array=[];
+                    points = points.replace(/丶/g, " - ");
+                    tag_yes_content = tag_yes_content.replace(/丶/g, "、");
+                    tag_no_content = tag_no_content.replace(/丶/g, "、");
+                    var mobile_array = [];
                     mobile_array = mobile.split(',');
 //                    for(var i=0;i<mobile_array.length;i++){
 //                            $('.mobile_clear').append('<a href="tel:'+mobile_array[i]+'" class="call_driver">' +
@@ -600,7 +634,7 @@
                     if (tag_no_content == "") {
                         $('.item_no_tips').remove()
                     }
-                    if(description=="" && tag_yes_content=="" && tag_no_content==""){
+                    if (description == "" && tag_yes_content == "" && tag_no_content == "") {
                         $('.item_tips_li').remove()
                     }
                     if (car_brand == "") {
@@ -644,29 +678,29 @@
             }
         }
         //传送修改数据
-        function sendFloatMessage(){
+        function sendFloatMessage() {
             sendMessage(click_type);
             $('.hover').fadeOut(200);
             $('.float_container').fadeOut(200);
         }
-        function removeFloatMessage(){
-            if($('.float_message_mid2').css('display')=='block'){
+        function removeFloatMessage() {
+            if ($('.float_message_mid2').css('display') == 'block') {
                 $('.float_message_mid2').hide();
                 $('.float_message_mid').show();
-            }else{
+            } else {
                 $('.hover').fadeOut(200);
                 $('.float_container').fadeOut(200);
             }
 
         }
-        function showFloat(){
-            if($('.item_seat_status').text().trim() == "有空位"){
+        function showFloat() {
+            if ($('.item_seat_status').text().trim() == "有空位") {
                 $('.float_message_mid').children('div').removeClass('set_active');
                 $('.set_have').addClass('set_active');
-            }else if($('.item_seat_status').text().trim() == "已满"){
+            } else if ($('.item_seat_status').text().trim() == "已满") {
                 $('.float_message_mid').children('div').removeClass('set_active');
                 $('.set_full').addClass('set_active');
-            }else{
+            } else {
                 $('.float_message_mid').children('div').removeClass('set_active');
                 $('.set_remove').addClass('set_active');
             }
@@ -675,28 +709,28 @@
             $('.float_message_mid2').hide();
             $('.float_message_mid').show();
         }
-        function showFullTips(obj){
-            if($(obj).attr('index')==1){
+        function showFullTips(obj) {
+            if ($(obj).attr('index') == 1) {
                 $('.float_message_mid').children('div').removeClass('set_active');
                 $('.set_full').addClass('set_active');
-                $('.float_sure').css('color','#e74c3c');
+                $('.float_sure').css('color', '#e74c3c');
                 $('.float_message_mid').hide();
                 $('.float_message_mid2').show().children('span').text("确定修改状态为已满？修改过后将不再有乘客预约此次行程！");
-            }else if($(obj).attr('index')==2){
+            } else if ($(obj).attr('index') == 2) {
                 $('.float_message_mid').children('div').removeClass('set_active');
                 $('.set_remove').addClass('set_active');
-                $('.float_sure').css('color','#e74c3c');
+                $('.float_sure').css('color', '#e74c3c');
                 $('.float_message_mid').hide();
                 $('.float_message_mid2').show().children('span').text("确定修改状态为取消发布？修改过后将不再出现在发车信息列表中！");
-            }else{
+            } else {
                 $('.float_message_mid').children('div').removeClass('set_active');
                 $('.set_have').addClass('set_active');
-                $('.float_sure').css('color','#2ecc71');
+                $('.float_sure').css('color', '#2ecc71');
                 $('.float_message_mid2').hide();
                 $('.float_message_mid').show();
             }
         }
-        function showBooking(){
+        function showBooking() {
 
             if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
                 var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
@@ -707,15 +741,15 @@
                     $('.float_container').empty().append('<div class="booking_box">' +
                             '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
                             '<p class="booking_top">填写出行信息，方便车主与您取得联系</p>' +
-                            '<span class="booking_error"></span>'+
+                            '<span class="booking_error"></span>' +
                             '<div class="booking_container">' +
                             '<div class="booking_li">' +
                             '<input placeholder="请输入上车地点" type="text" index="0" class="input_style booking_start" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
-                            '<ul class="publish_route_ul"></ul>'+
+                            '<ul class="publish_route_ul"></ul>' +
                             '</div>' +
                             '<div class="booking_li">' +
                             '<input placeholder="请输入下车地点" type="text" index="1" class="input_style booking_end" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
-                            '<ul class="publish_route_ul"></ul>'+
+                            '<ul class="publish_route_ul"></ul>' +
                             '</div>' +
                             '<div class="booking_li">' +
                             '<input placeholder="请输入座位数" type="tel" class="input_style booking_seat" value="1" onchange="removeErrorTips()">' +
@@ -726,7 +760,7 @@
                             '</div>' +
                             '<div class="booking_bottom" onclick="checkInput()">提交预约</div>' +
                             '</div>');
-                }else{
+                } else {
                     showFloatStyle("请扫描关注二维码，在微信中完成预定！");
                 }
             } else {
@@ -736,15 +770,15 @@
                 $('.float_container').empty().append('<div class="booking_box">' +
                         '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
                         '<p class="booking_top">填写出行信息，方便车主与您取得联系</p>' +
-                        '<span class="booking_error"></span>'+
+                        '<span class="booking_error"></span>' +
                         '<div class="booking_container">' +
                         '<div class="booking_li">' +
                         '<input placeholder="请输入上车地点" type="text" index="0" class="input_style booking_start" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
-                        '<ul class="publish_route_ul"></ul>'+
+                        '<ul class="publish_route_ul"></ul>' +
                         '</div>' +
                         '<div class="booking_li">' +
                         '<input placeholder="请输入下车地点" type="text" index="1" class="input_style booking_end" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
-                        '<ul class="publish_route_ul"></ul>'+
+                        '<ul class="publish_route_ul"></ul>' +
                         '</div>' +
                         '<div class="booking_li">' +
                         '<input placeholder="请输入座位数" type="tel" class="input_style booking_seat" value="1" onchange="removeErrorTips()">' +
@@ -758,41 +792,41 @@
             }
 
         }
-        function checkInput(){
-            if($('.booking_start').val()==""){
+        function checkInput() {
+            if ($('.booking_start').val() == "") {
                 showErrorTips("上车地点不能为空");
-            }else if($('.booking_end').val()==""){
+            } else if ($('.booking_end').val() == "") {
                 showErrorTips("下车地点不能为空");
-            }else if($('.booking_seat').val()==""){
+            } else if ($('.booking_seat').val() == "") {
                 showErrorTips("座位数不能为空");
-            }else{
+            } else {
                 removeErrorTips();
                 sendMobileMessage()
             }
         }
 
-        function showErrorTips(error_message){
+        function showErrorTips(error_message) {
             $('.booking_error').text(error_message).show();
         }
-        function removeErrorTips(){
+        function removeErrorTips() {
             $('.booking_error').hide();
         }
-        function sendMobileMessage(){
+        function sendMobileMessage() {
             var description = $('.booking_description').val();
-            var data_obj={};
+            var data_obj = {};
             var boarding_point = $('.booking_start').val();
             var breakout_point = $('.booking_end').val();
             var booking_seats = $('.booking_seat').val();
-            data_obj.action="booking";
-            data_obj.description=description;
-            data_obj.boarding_point=boarding_point;
-            data_obj.breakout_point=breakout_point;
-            data_obj.start_time=global_start_time;
-            data_obj.mobile=global_mobile;
-            data_obj.user_id=user_id;
-            data_obj.booking_seats=booking_seats;
-            data_obj.order_id=item_id;
-            data_obj.driver_id=global_driver_id;
+            data_obj.action = "booking";
+            data_obj.description = description;
+            data_obj.boarding_point = boarding_point;
+            data_obj.breakout_point = breakout_point;
+            data_obj.start_time = global_start_time;
+            data_obj.mobile = global_mobile;
+            data_obj.user_id = user_id;
+            data_obj.booking_seats = booking_seats;
+            data_obj.order_id = item_id;
+            data_obj.driver_id = global_driver_id;
 
             $.ajax({
                 type: "POST",
@@ -806,14 +840,14 @@
                         console.log("交互成功");
                         success();
                     } else {
-                        var code=data.result.errcode;
-                        if(code==401){
+                        var code = data.result.errcode;
+                        if (code == 401) {
                             //
                             showFloatStyle(data.message);
-                        }else if(code==403){
+                        } else if (code == 403) {
                             showFloatStyle(data.message);
                             setTimeout(function () {
-                                window.location.href="/wx/login"
+                                window.location.href = "/wx/login"
                             }, 1000);
                         }
 
@@ -824,40 +858,40 @@
                 }
             })
         }
-        function toMineList(){
-            window.location.href="/laihui/passenger/my_booking_list"
+        function toMineList() {
+            window.location.href = "/laihui/passenger/my_booking_list"
         }
-        function success(){
+        function success() {
             $('.hover').fadeIn(200);
             $('.float_container').fadeIn(200);
             $('.float_container').empty().append('<div class="booking_box">' +
                     '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
                     '<div class="success_tip">预约成功</div>' +
                     '<div class="success_href" onclick="toMineList()">查看我的预约</div>' +
-                    '<a href="tel:'+global_mobile+'" class="departure_li_style departure_mobile">' +
+                    '<a href="tel:' + global_mobile + '" class="departure_li_style departure_mobile">' +
                     '<span>车主电话</span>' +
                     '<span class="departure_time_mouth">' + global_mobile + '</span>' +
-                    '<img src="/resource/images/pc_icon_mobile.png" class="mobile_style">'+
-                    '</div>'+
+                    '<img src="/resource/images/pc_icon_mobile.png" class="mobile_style">' +
+                    '</div>' +
                     '</div>');
         }
 
 
         //按键请求城市信息
         function sendKeepDownInput(obj) {
-                if($(obj).val() ==""){
-                    $(obj).parent().children('.publish_route_ul').empty()
-                }else{
-                    $('.publish_route_ul').hide();
-                    $(obj).parent().children('.publish_route_ul').show();
-                    var key = $(obj).val().trim();
-                    if($(obj).attr('index')==0){
-                        var city = $('.departure_city').text();
-                    }else{
-                        var city = $('.destination_city').text();
-                    }
-                    sendMessage(key, city);
+            if ($(obj).val() == "") {
+                $(obj).parent().children('.publish_route_ul').empty()
+            } else {
+                $('.publish_route_ul').hide();
+                $(obj).parent().children('.publish_route_ul').show();
+                var key = $(obj).val().trim();
+                if ($(obj).attr('index') == 0) {
+                    var city = $('.departure_city').text();
+                } else {
+                    var city = $('.destination_city').text();
                 }
+                sendMessage(key, city);
+            }
         }
         //发送ajax获取城市信息
         function sendMessage(key, city) {
@@ -889,8 +923,8 @@
         //添加城市下拉列表样式
         function addCitySlideStyle(name, city, district, index) {
             $('.publish_route_ul').append('<li class="publish_route_li" index=' + index + ' onclick="selectCity(this)">' +
-                    '<span class="key">'+name+'</span>' +
-                    '<span class="city" style="color: #999794">'+city+district+'</span>' +
+                    '<span class="key">' + name + '</span>' +
+                    '<span class="city" style="color: #999794">' + city + district + '</span>' +
                     '</li>')
         }
         //选择城市
@@ -899,9 +933,9 @@
             var name = $(obj).children('.key').text();
             var city = $(obj).children('.city').text();
             var number = $(obj).parent().parent().children('.place_city').attr('index');
-            $(obj).parent().parent().children('input').val(name+" "+city);
+            $(obj).parent().parent().children('input').val(name + " " + city);
             $(obj).parent().hide();
-            send_array.splice(number,1,city_array[$(obj).attr('index')]);
+            send_array.splice(number, 1, city_array[$(obj).attr('index')]);
         }
         //显示途径和下滑菜单
         function slideCity() {
@@ -916,6 +950,7 @@
     <img class="loading" src="/resource/images/loading.gif" alt="请等待">
 </div>
 <img src="/resource/images/pch_logo.png" style="display: none">
+
 <div class="hover"></div>
 <div class="float_container">
     <div class="float_box">
@@ -1060,11 +1095,12 @@
             预定座位
         </div>
     </a>
-    <a href="javascript:(0)" class="change_driver" onclick="showFloat()" >
+    <a href="javascript:(0)" class="change_driver" onclick="showFloat()">
         <div class="publish_bottom">
             编辑信息
         </div>
     </a>
+
     <div class="footer">
         <img src="/resource/images/pch_icon_bottom.png">
     </div>

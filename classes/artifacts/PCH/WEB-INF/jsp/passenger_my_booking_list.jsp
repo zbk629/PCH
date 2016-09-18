@@ -375,6 +375,7 @@
         var boarding_point = global_data.result.data[i].order.boarding_point;//id
         var breakout_point = global_data.result.data[i].order.breakout_point;//id
         var driving_name = global_data.result.data[i].driving_name;//id
+
         is_editor=true;
         var info_status = is_editor;
         if(info_status==true){

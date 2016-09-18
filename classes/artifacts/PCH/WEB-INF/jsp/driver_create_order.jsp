@@ -538,6 +538,15 @@
           var car_brand = global_data.result.data[i].car_brand;//车辆品牌
           var id = global_data.result.data[i].id;//id
           var create_time = global_data.result.data[i].create_time;//id
+          var boarding_point = global_data.result.data[i].order.boarding_point;//id
+          var breakout_point = global_data.result.data[i].order.breakout_point;//id
+
+          if(boarding_point==undefined){
+            boarding_point=""
+          }
+          if(breakout_point==undefined){
+            breakout_point=""
+          }
 
           //开始时间设置
           var insert_time = start_time.substring(0, 10);
@@ -563,11 +572,6 @@
           var time=new Date();
           var date  = time.getDate();
 
-//          if( ){
-//          date = "0"+date;
-//          }else{
-//          date = parseInt(date);
-//          }
 
         if(date.toString().length==1){
           date = "0"+date;
@@ -615,6 +619,8 @@
           $('.publish_name').val(driving_name);
           $('.publish_type').val(car_brand);
           $('.item_points').text(points);
+          $('.place_start_place ').text(boarding_point);
+          $('.place_end_place ').text(breakout_point);
           addTabManagerStyle();
 //          if(route_array[0]==""){
 //            $('.publish_li_route').hide()
@@ -844,22 +850,23 @@
     }
     //检测输入信息是否完整
     function checkDriverMessage(){
-      if($('#demo_place').val()==""){
-        showFloatStyle("起止路线不能为空");
-      }else if($('#demo_time').val()==""){
-        showFloatStyle("出发时间不能为空");
-      }else if($('.place_start_time ').val()==""){
-        showFloatStyle("最早时间不能为空");
-      }else if($('.place_end_time').val()==""){
-        showFloatStyle("最晚时间不能为空");
-      }else if($('#demo_set').val()==""){
-        showFloatStyle("可用座位不能为空");
-      }else if($('.publish_mobile').val()==""){
-        showFloatStyle("联系方式不能为空");
-      }else{
-        setSendData();
-        sendFinalMessage();
-      }
+      setSendData();
+      now_time();
+//      if($('#demo_place').val()==""){
+//        showFloatStyle("起止路线不能为空");
+//      }else if($('#demo_time').val()==""){
+//        showFloatStyle("出发时间不能为空");
+//      }else if($('.place_start_time ').val()==""){
+//        showFloatStyle("最早时间不能为空");
+//      }else if($('.place_end_time').val()==""){
+//        showFloatStyle("最晚时间不能为空");
+//      }else if($('#demo_set').val()==""){
+//        showFloatStyle("可用座位不能为空");
+//      }else if($('.publish_mobile').val()==""){
+//        showFloatStyle("联系方式不能为空");
+//      }else{
+//
+//      }
     }
     //发送时间的数据
     function setSendData(){
@@ -880,6 +887,19 @@
         changeDataStyle(time)
       }
 
+    }
+    function now_time(){
+    // 获取当前时间戳(以s为单位)
+      var timestamp = Date.parse(new Date());
+      timestamp = timestamp / 1000;
+      var timestamp2 = Date.parse(new Date(send_time));
+      timestamp2 = timestamp2 / 1000;
+      if(timestamp2>timestamp){
+        sendFinalMessage();
+        showFloatStyle('日期格式正确')
+      }else{
+        showFloatStyle('发布出行日期不能比当前时间早')
+      }
     }
     //转换日期格式
     function changeDataStyle(time){

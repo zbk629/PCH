@@ -676,6 +676,16 @@
                 var car_brand = global_data.result.data[i].car_brand;//车辆品牌
                 var id = global_data.result.data[i].id;//id
                 var create_time = global_data.result.data[i].create_time;//id
+//                var boarding_point = global_data.result.data[i].boarding_point;//上车地点
+//                var breakout_point = global_data.result.data[i].breakout_point;//下车地点
+//
+//                if(departure==""){
+//                    departure = boarding_point;
+//                }
+//                if(destination==""){
+//                    destination = breakout_point;
+//                }
+
                 if (info_status == 1) {
                     info_status = "有空位"
                 } else if (info_status == 2) {
