@@ -850,23 +850,34 @@
     }
     //检测输入信息是否完整
     function checkDriverMessage(){
-      setSendData();
-      now_time();
-//      if($('#demo_place').val()==""){
-//        showFloatStyle("起止路线不能为空");
-//      }else if($('#demo_time').val()==""){
-//        showFloatStyle("出发时间不能为空");
-//      }else if($('.place_start_time ').val()==""){
-//        showFloatStyle("最早时间不能为空");
-//      }else if($('.place_end_time').val()==""){
-//        showFloatStyle("最晚时间不能为空");
-//      }else if($('#demo_set').val()==""){
-//        showFloatStyle("可用座位不能为空");
-//      }else if($('.publish_mobile').val()==""){
-//        showFloatStyle("联系方式不能为空");
-//      }else{
-//
-//      }
+      if($('#demo_place').val()==""){
+        showFloatStyle("起止路线不能为空");
+      }else if($('#demo_time').val()==""){
+        showFloatStyle("出发时间不能为空");
+      }else if($('.place_start_time ').val()==""){
+        showFloatStyle("最早时间不能为空");
+      }else if($('.place_end_time').val()==""){
+        showFloatStyle("最晚时间不能为空");
+      }else if($('#demo_set').val()==""){
+        showFloatStyle("可用座位不能为空");
+      }else if($('.publish_mobile').val()==""){
+        showFloatStyle("联系方式不能为空");
+      }else{
+        setSendData();
+        now_time();
+      }
+    }
+    function now_time(){
+      // 获取当前时间戳(以s为单位)
+      var timestamp = Date.parse(new Date());
+      timestamp = timestamp / 1000;
+      var timestamp2 = Date.parse(new Date(send_time));
+      timestamp2 = timestamp2 / 1000;
+      if(timestamp2>timestamp){
+        sendFinalMessage();
+      }else{
+        showFloatStyle('发布出行日期不能比当前时间早')
+      }
     }
     //发送时间的数据
     function setSendData(){
@@ -888,18 +899,7 @@
       }
 
     }
-    function now_time(){
-    // 获取当前时间戳(以s为单位)
-      var timestamp = Date.parse(new Date());
-      timestamp = timestamp / 1000;
-      var timestamp2 = Date.parse(new Date(send_time));
-      timestamp2 = timestamp2 / 1000;
-      if(timestamp2>timestamp){
-        sendFinalMessage();
-      }else{
-        showFloatStyle('发布出行日期不能比当前时间早')
-      }
-    }
+
     //转换日期格式
     function changeDataStyle(time){
       var year  = time.getFullYear();
