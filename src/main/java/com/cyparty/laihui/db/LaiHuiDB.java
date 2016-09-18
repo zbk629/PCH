@@ -188,8 +188,8 @@ public class LaiHuiDB {
     //创建乘客订单
     public boolean createPassengerOrder(PassengerOrder passengerOrder) {
         boolean is_success = true;
-        String SQL = "insert into pc_wx_passenger_orders(user_id,order_id,booking_seats,boarding_point,breakout_point,description,status,create_time,order_source) VALUES (?,?,?,?,?,?,?,?,?)";
-        int count = jdbcTemplateObject.update(SQL, new Object[]{passengerOrder.getUser_id(), passengerOrder.getDriver_order_id(),passengerOrder.getSeats(), passengerOrder.getBoarding_point(), passengerOrder.getBreakout_ponit(),passengerOrder.getDescription(),1,Utils.getCurrentTime(),0});
+        String SQL = "insert into pc_wx_passenger_orders(user_id,order_id,booking_seats,boarding_point,breakout_point,description,status,create_time,order_source,departure_city,destination_city,departure_time,user_mobile) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        int count = jdbcTemplateObject.update(SQL, new Object[]{passengerOrder.getUser_id(), passengerOrder.getDriver_order_id(),passengerOrder.getSeats(), passengerOrder.getBoarding_point(), passengerOrder.getBreakout_ponit(),passengerOrder.getDescription(),1,Utils.getCurrentTime(),0,passengerOrder.getDeparture_city(),passengerOrder.getDestination_city(),passengerOrder.getDeparture_time(),passengerOrder.getMobile()});
         if (count < 1) {
             is_success = false;
         }
@@ -201,6 +201,11 @@ public class LaiHuiDB {
         Map<String, Object> now = jdbcTemplateObject.queryForMap(sql);
         int id = Integer.parseInt(String.valueOf((long) now.get("id")));
         return id;
+    }
+    public List<RoutePoint> getRoutePoint(String where) {
+        String SQL = "SELECT * FROM pc_route_points " + where;
+        List<RoutePoint> routeInfoList = jdbcTemplateObject.query(SQL, new RoutePointMapper());
+        return routeInfoList;
     }
     //创建乘客发车单
     public boolean createPassengerPublishInfo(PassengerOrder passengerOrder) {

@@ -231,11 +231,10 @@ public class UserActionController {
                         }
 
                     } catch (NumberFormatException e) {
-                        user_id=0;
                         order_id=0;
                         e.printStackTrace();
                     }
-                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, user_id, page, size, order_id, null, null, null), "出发市信息获取成功");
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, user_id, page, size, order_id, null, null, null), "出行信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "delete":
                     order_id=Integer.parseInt(request.getParameter("order_id"));
@@ -274,45 +273,66 @@ public class UserActionController {
                         order.setBoarding_point(boarding_point);
                         order.setBreakout_ponit(breakout_point);
                         order.setDescription(description);
-                        String where_now=" where user_id="+user_id+" and order_id="+order_id+" and order_source=0";
-                        List<PassengerOrder> passengerOrderList=laiHuiDB.getPassengerOrder(where_now);
-                        if(passengerOrderList.size()>0){
-                            result.put("errcode",401);
-                            json = ReturnJsonUtil.returnFailJsonString(result, "您已预定过该订单，请不要重复操作！");
-                            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
-                        }
-                        is_success=laiHuiDB.createPassengerOrder(order);
-                        if(is_success){
-                            //通知司机
+                        String driver_order_where =" where _id="+order_id;
+                        List<DepartureInfo> departureInfoList=laiHuiDB.getPCHDepartureInfo(driver_order_where);
+                        if(departureInfoList.size()>0){
                             String now_where=" where user_id="+user_id;
                             String p_mobile=laiHuiDB.getWxUser(now_where).get(0).getUser_mobile();
 
-                            //保存用户操作
-                            int id=laiHuiDB.getMaxID("_id","pc_wx_passenger_orders");
-                            UserRoleAction userRoleAction = new UserRoleAction();
-                            userRoleAction.setBooking_order_id(id);
-                            userRoleAction.setOrder_type(3);
-                            userRoleAction.setOrder_source(0);
-                            userRoleAction.setUser_mobile(p_mobile);
+                            DepartureInfo departureInfo=departureInfoList.get(0);
+                            String driver_departure_city=departureInfo.getDeparture_city();
+                            String driver_destination_city=departureInfo.getDestination_city();
+                            order.setDeparture_city(driver_departure_city);
+                            order.setDestination_city(driver_destination_city);
+                            order.setDeparture_time(start_time);
+                            order.setMobile(p_mobile);
 
-                            laiHuiDB.createUserAction(userRoleAction);
-                            //微信模版通知
-                            String driver_where=" where user_id ="+driver_id;
-                            User user=laiHuiDB.getWxUser(driver_where).get(0);
-                            DepartureInfo departureInfo=new DepartureInfo();
-                            departureInfo.setDriving_name(laiHuiDB.getWxUser(now_where).get(0).getUser_nickname());//乘客姓名
-                            departureInfo.setInit_seats(seats);
-                            departureInfo.setMobile(p_mobile);
-                            departureInfo.setPoints(boarding_point);
-                            departureInfo.setOpenid(user.getOpenid());
-                            departureInfo.setR_id(order_id);
 
-                            WXUtils.pinCheNotify(request,departureInfo,2);
-                            //发送通知短信
-                            Utils.sendNotifyMessage(d_mobile,p_mobile,date);
-                            json = ReturnJsonUtil.returnSuccessJsonString(result, "订单创建成功！");
-                            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                            String departure_time=departureInfo.getStart_time().split(" ")[0];
+                            String order_where =" where user_mobile like '%"+p_mobile+"%' and departure_city='"+driver_departure_city+"' and destination_city='"+driver_destination_city+"' and departure_time between '"+departure_time+" 00:00:00' and '"+departure_time+" 24:00:00'";
+
+                            //String where_now=" where user_id="+user_id+" and order_id="+order_id+" and order_source=0";
+                            List<PassengerOrder> passengerOrderList=laiHuiDB.getPassengerOrder(order_where);
+                            if(passengerOrderList.size()>0){
+                                result.put("errcode",401);
+                                json = ReturnJsonUtil.returnFailJsonString(result, "您已预定过该行程单或类似行程单，请不要重复操作！");
+                                return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                            }
+                            is_success=laiHuiDB.createPassengerOrder(order);
+                            if(is_success){
+                                //通知司机
+                                /*String now_where=" where user_id="+user_id;
+                                String p_mobile=laiHuiDB.getWxUser(now_where).get(0).getUser_mobile();*/
+
+                                //保存用户操作
+                                int id=laiHuiDB.getMaxID("_id","pc_wx_passenger_orders");
+                                UserRoleAction userRoleAction = new UserRoleAction();
+                                userRoleAction.setBooking_order_id(id);
+                                userRoleAction.setOrder_type(3);
+                                userRoleAction.setOrder_source(0);
+                                userRoleAction.setUser_mobile(p_mobile);
+
+                                laiHuiDB.createUserAction(userRoleAction);
+                                //微信模版通知
+                                String driver_where=" where user_id ="+driver_id;
+                                User user=laiHuiDB.getWxUser(driver_where).get(0);
+                                /*DepartureInfo departureInfo=new DepartureInfo();*/
+                                departureInfo.setDriving_name(laiHuiDB.getWxUser(now_where).get(0).getUser_nickname());//乘客姓名
+                                departureInfo.setInit_seats(seats);
+                                departureInfo.setMobile(p_mobile);
+                                departureInfo.setPoints(boarding_point);
+                                departureInfo.setOpenid(user.getOpenid());
+                                departureInfo.setR_id(order_id);
+
+                                WXUtils.pinCheNotify(request,departureInfo,2);
+                                //发送通知短信
+                                Utils.sendNotifyMessage(d_mobile,p_mobile,date);
+                                json = ReturnJsonUtil.returnSuccessJsonString(result, "订单创建成功！");
+                                return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                         }
+                        }
+                        json = ReturnJsonUtil.returnFailJsonString(result, "司机车单不存在！");
+                        return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }
 
                     result.put("errcode",403);

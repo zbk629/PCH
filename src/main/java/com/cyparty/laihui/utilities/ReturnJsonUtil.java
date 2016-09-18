@@ -232,6 +232,15 @@ public class ReturnJsonUtil {
             jsonObject.put("info_status", departure.getStatus());//-1,1,2
             jsonObject.put("create_time", departure.getCreate_time());
 
+            where=" where route_id="+departure.getR_id();
+            List<RoutePoint> points=laiHuiDB.getRoutePoint(where);
+            if(points.size()>0){
+                jsonObject.put("boarding_point", points.get(0).getPoint_name());
+                jsonObject.put("breakout_point", points.get(1).getPoint_name());
+            }else {
+                jsonObject.put("boarding_point", "");
+                jsonObject.put("breakout_point", "");
+            }
             dataArray.add(jsonObject);
         }
         result_json.put("data", dataArray);
@@ -248,7 +257,9 @@ public class ReturnJsonUtil {
         String where = " where is_enable=1 and info_status!=-1";
         if (id == 0) {
             if (user_id != 0) {
-                where = " where is_enable=1 and user_id=" + user_id;
+                String now_where = " where user_id=" + user_id;
+                String user_mobile=laiHuiDB.getWxUser(now_where).get(0).getUser_mobile();
+                where = " where is_enable=1 and mobile like '%"+user_mobile+"%'";
 
                 if (departure_city != null && !departure_city.trim().equals("")) {
                     where = where + " and departure_city='" + departure_city + "'";
@@ -377,6 +388,8 @@ public class ReturnJsonUtil {
         JSONObject result = new JSONObject();
         JSONArray dataArray = new JSONArray();
         String where = " where user_id=" + user_id;
+        String user_mobile=laiHuiDB.getWxUser(where).get(0).getUser_mobile();
+        where=" where user_mobile like '%"+user_mobile+"%'";
         if (now_order_id != 0) {
             where = where + " and _id=" + now_order_id;
         }
@@ -419,6 +432,16 @@ public class ReturnJsonUtil {
                 jsonObject.put("info_status", departure.getStatus());//-1,1,2
                 jsonObject.put("create_time", departure.getCreate_time());
 
+                where=" where route_id="+departure.getR_id();
+                List<RoutePoint> points=laiHuiDB.getRoutePoint(where);
+                if(points.size()>0){
+                    jsonObject.put("boarding_point", points.get(0).getPoint_name());
+                    jsonObject.put("breakout_point", points.get(1).getPoint_name());
+                }else {
+                    jsonObject.put("boarding_point", "");
+                    jsonObject.put("breakout_point", "");
+                }
+
             }
             dataArray.add(jsonObject);
         }
@@ -434,7 +457,9 @@ public class ReturnJsonUtil {
         JSONArray dataArray = new JSONArray();
         String where = " where user_id > 0";
         if (user_id != 0) {
-            where = " where user_id = " + user_id;
+            String now_where = " where user_id=" + user_id;
+            String user_mobile=laiHuiDB.getWxUser(now_where).get(0).getUser_mobile();
+            where = " where user_mobile like '%" + user_mobile+"%'";
         } else {
             if (date != null && !date.trim().equals("")) {
                 where = where + " and start_time >'" + date + " 00:00:00' and start_time < '" + date + " 24:00:00'";

@@ -15,9 +15,18 @@ public class PassengerOrder {
     private String description;
     private String name;
     private String create_time;
+    private String departure_time;
     private String start_time;
     private String end_time;
     private String mobile;
+
+    public String getDeparture_time() {
+        return departure_time;
+    }
+
+    public void setDeparture_time(String departure_time) {
+        this.departure_time = departure_time;
+    }
 
     public String getMobile() {
         return mobile;
