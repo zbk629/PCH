@@ -235,8 +235,14 @@ public class ReturnJsonUtil {
             where=" where route_id="+departure.getR_id();
             List<RoutePoint> points=laiHuiDB.getRoutePoint(where);
             if(points.size()>0){
-                jsonObject.put("boarding_point", points.get(0).getPoint_name());
-                jsonObject.put("breakout_point", points.get(1).getPoint_name());
+                if(points.size()>=2){
+
+                    jsonObject.put("boarding_point", points.get(0).getPoint_name());
+                    jsonObject.put("breakout_point", points.get(1).getPoint_name());
+                }else {
+                    jsonObject.put("boarding_point", points.get(0).getPoint_name());
+                    jsonObject.put("breakout_point", "");
+                }
             }else {
                 jsonObject.put("boarding_point", "");
                 jsonObject.put("breakout_point", "");

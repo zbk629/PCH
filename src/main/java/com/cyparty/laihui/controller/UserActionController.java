@@ -358,10 +358,12 @@ public class UserActionController {
                 case "delete_my_order":
                     if(user_id>0){
                         order_id=Integer.parseInt(request.getParameter("order_id"));
-                        where =" where _id="+order_id;
+                        String mobile=laiHuiDB.getWxUser(" where user_id="+user_id).get(0).getUser_mobile();
+                        /*where =" where _id="+order_id;
                         is_success = laiHuiDB.delete("pc_wx_passenger_orders ", where);
                         where=" where booking_order_id="+order_id+" and user_mobile like '%"+laiHuiDB.getWxUser(" where user_id="+user_id).get(0).getUser_mobile()+"%'";
-                        is_success = laiHuiDB.delete("pc_user_role_action ", where);
+                        is_success = laiHuiDB.delete("pc_user_role_action ", where);*/
+                        laiHuiDB.deleteUserAction(order_id,mobile,1);
                         if(is_success){
                             json = ReturnJsonUtil.returnSuccessJsonString(result, "删除成功！");
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
