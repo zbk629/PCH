@@ -862,6 +862,10 @@
         showFloatStyle("可用座位不能为空");
       }else if($('.publish_mobile').val()==""){
         showFloatStyle("联系方式不能为空");
+      }else if($('.place_start_place').val()==""){
+        showFloatStyle("上车点不能为空");
+      }else if($('.place_end_place').val()==""){
+        showFloatStyle("下车点不能为空");
       }else{
         setSendData();
         now_time();
