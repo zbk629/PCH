@@ -542,15 +542,15 @@
                     var create_time = global_data.result.data[i].create_time;//id
                     var departure = global_data.result.data[i].departure;//出发小城
                     var destination = global_data.result.data[i].destination;//目的小城市
-//                    var boarding_point = global_data.result.data[i].boarding_point;//上车地点
-//                    var breakout_point = global_data.result.data[i].breakout_point;//下车地点
-//
-//                    if (departure == "") {
-//                        departure = boarding_point;
-//                    }
-//                    if (destination == "") {
-//                        destination = breakout_point;
-//                    }
+                    var boarding_point = global_data.result.data[i].boarding_point;//上车地点
+                    var breakout_point = global_data.result.data[i].breakout_point;//下车地点
+
+                    if (departure == "") {
+                        departure = boarding_point;
+                    }
+                    if (destination == "") {
+                        destination = breakout_point;
+                    }
 
 
                     global_driver_id = global_data.result.data[i].driver_id;//id
