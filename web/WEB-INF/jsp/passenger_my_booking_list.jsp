@@ -368,7 +368,7 @@
         var destination = global_data.result.data[i].destination;//目的小城市
         var description = global_data.result.data[i].description;//描述信息
         var inits_seats = global_data.result.data[i].order.booking_seats;//可用座位
-        var id = global_data.result.data[i].order.order_id;//id
+        var id = global_data.result.data[i].driver_order_id;//id
         var is_editor = global_data.result.data[i].is_editor;//id
         var create_time = global_data.result.data[i].create_time;//id
         var mobile = global_data.result.data[i].mobile;//id

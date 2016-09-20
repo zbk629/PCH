@@ -747,7 +747,7 @@
     }
 
     function success(){
-//      window.location.href="/laihui/passenger/order_list";
+      window.location.href="/laihui/passenger/order_list";
     }
 
 
