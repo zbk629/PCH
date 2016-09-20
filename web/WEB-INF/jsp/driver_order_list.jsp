@@ -419,10 +419,10 @@
         if (points == "") {
           $($('.departure_li_route')[(page_list * size) + i]).hide();
         };
-        if (boarding_point == "") {
+        if (boarding_point == "" || boarding_point==undefined) {
           $($('.departure_boarding_point')[(page_list * size) + i]).hide();
         };
-        if (breakout_point == "") {
+        if (breakout_point == ""|| breakout_point==undefined) {
           $($('.departure_breakout_point')[(page_list * size) + i]).hide();
         };
 
@@ -600,7 +600,6 @@
       $('.find_route_span').text(points);
       $('.find_seat_span').text(inits_seats);
       $('.find_type_span').text(car_brand);
-//            $('.find_tell_span').text(mobile);
       $('.find_discript_span').append(text_tags);
       $('.find_href_span').text("http://pinchenet.com/laihui/car/detail?id=" + id);
 

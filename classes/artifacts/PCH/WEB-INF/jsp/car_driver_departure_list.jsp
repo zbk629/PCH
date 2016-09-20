@@ -474,6 +474,7 @@
                 destination_city="";
             }
             var obj = {};
+            alert(begin_time);
             obj.action = 'show';
             obj.page = page_list;
             obj.size = size;
@@ -829,6 +830,7 @@
         }
         //查找信息
         function findMessage() {
+            $('.not_more').remove();
             var obj = {};
             var start_time_status = $('.publish_status').attr('index');
             var start_time;
@@ -860,7 +862,7 @@
 
                 title_city="来回拼车-拼车信息汇";
             }
-
+            begin_time = start_time;
             obj.action = 'show';
             obj.start_time = start_time;
             obj.departure_city = departure_city;

@@ -510,7 +510,7 @@
       obj.action = 'show_myself';
       obj.departure_city = departure_city;
       obj.destination_city = destination_city;
-      obj.size = 1000;
+      obj.size = 20;
       obj.user_id = user_id;
       validate.validate_submit('/api/db/departure', obj, insertMessage);
     }
@@ -538,8 +538,8 @@
           var car_brand = global_data.result.data[i].car_brand;//车辆品牌
           var id = global_data.result.data[i].id;//id
           var create_time = global_data.result.data[i].create_time;//id
-          var boarding_point = global_data.result.data[i].order.boarding_point;//id
-          var breakout_point = global_data.result.data[i].order.breakout_point;//id
+          var boarding_point = global_data.result.data[i].boarding_point;//id
+          var breakout_point = global_data.result.data[i].breakout_point;//id
 
           if(boarding_point==undefined){
             boarding_point=""
@@ -619,8 +619,8 @@
           $('.publish_name').val(driving_name);
           $('.publish_type').val(car_brand);
           $('.item_points').text(points);
-          $('.place_start_place ').text(boarding_point);
-          $('.place_end_place ').text(breakout_point);
+          $('.place_start_place ').val(boarding_point);
+          $('.place_end_place ').val(breakout_point);
           addTabManagerStyle();
 //          if(route_array[0]==""){
 //            $('.publish_li_route').hide()

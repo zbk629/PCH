@@ -801,6 +801,7 @@
     }
     //查找信息
     function findMessage() {
+      $('.not_more').remove();
       var obj = {};
       var start_time_status = $('.publish_status').attr('index');
       var start_time;
