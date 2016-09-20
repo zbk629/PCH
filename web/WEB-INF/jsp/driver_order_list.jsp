@@ -549,8 +549,8 @@
       var inits_seats = global_data.result.data[index].inits_seats;//可用座位
       var car_brand = global_data.result.data[index].car_brand;//车辆品牌
       var id = global_data.result.data[index].id;//id
-      var boarding_point = global_data.result.data[i].boarding_point;//上车地点
-      var breakout_point = global_data.result.data[i].breakout_point;//下车地点
+      var boarding_point = global_data.result.data[index].boarding_point;//上车地点
+      var breakout_point = global_data.result.data[index].breakout_point;//下车地点
 
       if (departure == "") {
         departure = boarding_point;
