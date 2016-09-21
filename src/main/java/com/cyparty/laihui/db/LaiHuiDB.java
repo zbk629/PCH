@@ -187,7 +187,7 @@ public class LaiHuiDB {
     }
     public void deleteUserAction(int order_id,  String mobile,int now_status) {
         String SQL = "call delete_user_role_action";
-        String where = "("+order_id+",'"+mobile+"'"+now_status+")";
+        String where = "("+order_id+",'"+mobile+"',"+now_status+")";
         SQL = SQL + where;
         jdbcTemplateObject.execute(SQL);
     }

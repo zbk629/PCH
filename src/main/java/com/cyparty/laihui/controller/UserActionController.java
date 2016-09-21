@@ -256,7 +256,6 @@ public class UserActionController {
                         order_id=Integer.parseInt(request.getParameter("order_id"));
                     } catch (NumberFormatException e) {
                         seats=0;
-                        user_id=0;
                         order_id=0;
                         e.printStackTrace();
                     }
@@ -291,7 +290,7 @@ public class UserActionController {
 
 
                             String departure_time=departureInfo.getStart_time().split(" ")[0];
-                            String order_where =" where user_mobile like '%"+p_mobile+"%' and departure_city='"+driver_departure_city+"' and destination_city='"+driver_destination_city+"' and departure_time between '"+departure_time+" 00:00:00' and '"+departure_time+" 24:00:00'";
+                            String order_where =" where mobile like '%"+p_mobile+"%' and departure_city='"+driver_departure_city+"' and destination_city='"+driver_destination_city+"' and departure_time >= '"+departure_time+" 00:00:00' and departure_time <='"+departure_time+" 24:00:00'";
 
                             //String where_now=" where user_id="+user_id+" and order_id="+order_id+" and order_source=0";
                             List<PassengerOrder> passengerOrderList=laiHuiDB.getPassengerOrder(order_where);
@@ -300,7 +299,11 @@ public class UserActionController {
                                 json = ReturnJsonUtil.returnFailJsonString(result, "您已预定过该行程单或类似行程单，请不要重复操作！");
                                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                             }
-                            is_success=laiHuiDB.createPassengerOrder(order);
+                            if(boarding_point!=null&&breakout_point!=null){
+                                is_success=laiHuiDB.createPassengerOrder(order);
+                            }else {
+                                is_success=false;
+                            }
                             if(is_success){
                                 //通知司机
                                 /*String now_where=" where user_id="+user_id;
@@ -331,7 +334,9 @@ public class UserActionController {
                                 Utils.sendNotifyMessage(d_mobile,p_mobile,date);
                                 json = ReturnJsonUtil.returnSuccessJsonString(result, "订单创建成功！");
                                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
-                        }
+                            }
+                            json = ReturnJsonUtil.returnSuccessJsonString(result, "可以预定该订单！");
+                            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                         }
                         json = ReturnJsonUtil.returnFailJsonString(result, "司机车单不存在！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
@@ -358,16 +363,16 @@ public class UserActionController {
                 case "delete_my_order":
                     if(user_id>0){
                         order_id=Integer.parseInt(request.getParameter("order_id"));
-                        String mobile=laiHuiDB.getWxUser(" where user_id="+user_id).get(0).getUser_mobile();
+                        String user_where=" where user_id="+user_id;
+                        String mobile=laiHuiDB.getWxUser(user_where).get(0).getUser_mobile();
                         /*where =" where _id="+order_id;
                         is_success = laiHuiDB.delete("pc_wx_passenger_orders ", where);
                         where=" where booking_order_id="+order_id+" and user_mobile like '%"+laiHuiDB.getWxUser(" where user_id="+user_id).get(0).getUser_mobile()+"%'";
                         is_success = laiHuiDB.delete("pc_user_role_action ", where);*/
                         laiHuiDB.deleteUserAction(order_id,mobile,1);
-                        if(is_success){
-                            json = ReturnJsonUtil.returnSuccessJsonString(result, "删除成功！");
-                            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
-                        }
+
+                        json = ReturnJsonUtil.returnSuccessJsonString(result, "删除成功！");
+                        return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }
                     json = ReturnJsonUtil.returnFailJsonString(result, "删除失败！");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
