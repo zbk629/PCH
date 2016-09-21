@@ -329,6 +329,7 @@
     var size = 20;
     var total;
     var index_id;
+    var order_id;
     function returnCheck() {
       window.location.href = '/auth/base';
     }
@@ -375,6 +376,7 @@
         var boarding_point = global_data.result.data[i].order.boarding_point;//id
         var breakout_point = global_data.result.data[i].order.breakout_point;//id
         var driving_name = global_data.result.data[i].driving_name;//id
+        var order_id = global_data.result.data[i].order.order_id;//id
 
         is_editor=true;
         var info_status = is_editor;
@@ -395,10 +397,10 @@
         var begin_end_time = end_time.substring(11, 16);
 
         if (is_editor == true) {
-          addDisplay(driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+          addDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                   inits_seats, id,boarding_point,breakout_point,mobile);
         } else {
-          addHistoryDisplay(driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+          addHistoryDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                   inits_seats, id,boarding_point,breakout_point,mobile);
         }
 
@@ -425,9 +427,9 @@
       }
     }
 
-    function addDisplay(driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+    function addDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                         inits_seats, id,boarding_point,breakout_point,mobile) {
-      $('.first_clear').before('<li class="mine_first_list" index=' + id + '>' +
+      $('.first_clear').before('<li class="mine_first_list" index=' + id + ' order_id='+order_id+'>' +
               '<div class="mine_first_top">' +
               '<div class="mine_first_top_left">' +
               '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
@@ -483,7 +485,7 @@
               '</li> ')
     }
 
-    function addHistoryDisplay(driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+    function addHistoryDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                                inits_seats, id,boarding_point,breakout_point,mobile) {
       $('.history_clear').before('<li class="mine_list" index=' + id + '>' +
               '<div class="mine_first_top">' +
@@ -522,6 +524,7 @@
     }
     //展示浮动层可编辑
     function showDeleteFloatStyle(obj) {
+      order_id = $(obj).parent().parent().attr('order_id');
       $('.hover').fadeIn(100);
       $('.float_container2').empty().fadeIn(100).css({'width': '62%', 'font-size': '1.4rem'});
       $('.float_container2').append('<div class="float_box2">' +
@@ -539,7 +542,7 @@
               '<span class="float_remove" onclick="removeFloatMessage()">取消</span>' +
               '<span class="float_sure" onclick="mine_delete()">确定</span>' +
               '</div>');
-      index_id = $(obj).parent().parent().attr('index');
+
     }
     function notOpend() {
 //      window.location.href="/laihui/driver/create_order"
@@ -560,7 +563,7 @@
     function mine_delete() {
       var obj = {};
       obj.action = 'delete_my_order';
-      obj.order_id = index_id;
+      obj.order_id = order_id;
       obj.user_id = user_id;
       validate.validate_submit("/api/db/passenger/departure", obj, loadMessage);
       removeFloatMessage();

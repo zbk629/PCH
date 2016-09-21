@@ -979,8 +979,8 @@
        }
       }
       var description=$('.publish_remark').val();
-      var departure_county=$('.place_start_city').val();
-      var destination=$('.place_end_city ').val();
+      var boarding_point=$('.place_start_place').val();
+      var breakout_point=$('.place_end_place ').val();
       var driving_name=$('.publish_name').val();
       var demo_set=$('#demo_set').val();
       var car_brand=$('.publish_type').val();
@@ -999,8 +999,8 @@
       data_obj.init_seats = demo_set;
       data_obj.points = route;
       data_obj.description = description;
-      data_obj.departure_county = departure_county;
-      data_obj.destination = destination;
+      data_obj.boarding_point = boarding_point;
+      data_obj.breakout_point = breakout_point;
       data_obj.tag_yes_content = tag_yes_content;
       data_obj.tag_no_content = tag_no_content;
       data_obj.driving_name = driving_name;
@@ -1271,11 +1271,11 @@
         <div class="publish_left_span">
           <span>县级城市</span>
         </div>
-        <div class="publish_mid_li_click" onclick="">
-          <input type="text"  placeholder="出发县城"  class="place_city place_start_city input_disabled" oninput="sendKeepDownInput(this)"/>
-          <img src="/resource/images/pch_icon_to.png" class="to_city">
-          <input type="text"  placeholder="目的县城"  class="place_city place_end_city input_disabled" oninput="sendKeepDownInput(this)"/>
-        </div>
+        <%--<div class="publish_mid_li_click" onclick="">--%>
+          <%--<input type="text"  placeholder="出发县城"  class="place_city place_start_city input_disabled" oninput="sendKeepDownInput(this)"/>--%>
+          <%--<img src="/resource/images/pch_icon_to.png" class="to_city">--%>
+          <%--<input type="text"  placeholder="目的县城"  class="place_city place_end_city input_disabled" oninput="sendKeepDownInput(this)"/>--%>
+        <%--</div>--%>
       </li>
       <li class="publish_mid_li">
         <div class="publish_left_span">

@@ -474,7 +474,6 @@
                 destination_city="";
             }
             var obj = {};
-            alert(begin_time);
             obj.action = 'show';
             obj.page = page_list;
             obj.size = size;

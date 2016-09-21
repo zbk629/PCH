@@ -833,7 +833,7 @@
 
         title_city="来回拼车-拼车信息汇";
       }
-
+      begin_time = start_time;
       obj.action = 'show';
       obj.date = start_time;
       obj.departure_city = departure_city;
