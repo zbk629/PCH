@@ -362,6 +362,11 @@ public class Utils {
         boolean send_isSuccess= SendSMSUtil.sendSMS(d_mobile, 19361, typ_val);
         return send_isSuccess;
     }
+    public static boolean sendCancleNotifyMessage(String d_mobile,String p_mobile){
+        String typ_val="#mobile#="+p_mobile;
+        boolean send_isSuccess= SendSMSUtil.sendSMS(d_mobile, 8193, typ_val);
+        return send_isSuccess;
+    }
     public static boolean isLogined(HttpServletRequest request){
         boolean is_logined=false;
         if(request.getSession().getAttribute("user_id")!=null){

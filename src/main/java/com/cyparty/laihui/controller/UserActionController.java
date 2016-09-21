@@ -320,7 +320,11 @@ public class UserActionController {
                                 laiHuiDB.createUserAction(userRoleAction);
                                 //微信模版通知
                                 String driver_where=" where user_id ="+driver_id;
-                                User user=laiHuiDB.getWxUser(driver_where).get(0);
+                                User user=new User();
+                                if(laiHuiDB.getWxUser(driver_where).size()>0){
+                                    user=laiHuiDB.getWxUser(driver_where).get(0);
+                                }
+
                                 /*DepartureInfo departureInfo=new DepartureInfo();*/
                                 departureInfo.setDriving_name(laiHuiDB.getWxUser(now_where).get(0).getUser_nickname());//乘客姓名
                                 departureInfo.setInit_seats(seats);
@@ -364,13 +368,15 @@ public class UserActionController {
                     if(user_id>0){
                         order_id=Integer.parseInt(request.getParameter("order_id"));
                         String user_where=" where user_id="+user_id;
-                        String mobile=laiHuiDB.getWxUser(user_where).get(0).getUser_mobile();
-                        /*where =" where _id="+order_id;
-                        is_success = laiHuiDB.delete("pc_wx_passenger_orders ", where);
-                        where=" where booking_order_id="+order_id+" and user_mobile like '%"+laiHuiDB.getWxUser(" where user_id="+user_id).get(0).getUser_mobile()+"%'";
-                        is_success = laiHuiDB.delete("pc_user_role_action ", where);*/
-                        laiHuiDB.deleteUserAction(order_id,mobile,1);
+                        String p_mobile=laiHuiDB.getWxUser(user_where).get(0).getUser_mobile();
+                        String driver_mobile=request.getParameter("mobile");
+                        String status=request.getParameter("status");
 
+                        laiHuiDB.deleteUserAction(order_id,p_mobile,1);
+                        if(status!=null&&status.equals("-1")){
+                            //短信通知车主
+                            Utils.sendCancleNotifyMessage(driver_mobile,p_mobile);
+                        }
                         json = ReturnJsonUtil.returnSuccessJsonString(result, "删除成功！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }

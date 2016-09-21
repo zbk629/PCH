@@ -429,41 +429,46 @@ public class ReturnJsonUtil {
             jsonObject.put("order",orderObject);
             where = "where is_enable=1 and _id=" + order_id;
             List<DepartureInfo> departureInfoList = laiHuiDB.getPCHDepartureInfo(where);
-            for (DepartureInfo departure : departureInfoList) {
+            if(departureInfoList.size()>0){
+                for (DepartureInfo departure : departureInfoList) {
 
-                jsonObject.put("driver_order_id", departure.getR_id());
-                jsonObject.put("start_time", departure.getStart_time());
-                jsonObject.put("end_time", departure.getEnd_time());
+                    jsonObject.put("driver_order_id", departure.getR_id());
+                    jsonObject.put("start_time", departure.getStart_time());
+                    jsonObject.put("end_time", departure.getEnd_time());
 
-                jsonObject.put("departure_city", departure.getDeparture_city());
-                jsonObject.put("destination_city", departure.getDestination_city());
-                jsonObject.put("inits_seats", departure.getInit_seats());
-                jsonObject.put("mobile", departure.getMobile());
-                jsonObject.put("points", departure.getPoints());
-                jsonObject.put("description", departure.getDescription());
-                jsonObject.put("car_brand", departure.getCar_brand());
-                jsonObject.put("departure", departure.getDeparture_county());
-                jsonObject.put("destination", departure.getDestination());
-                jsonObject.put("driving_name", departure.getDriving_name());
-                jsonObject.put("tag_yes_content", departure.getTag_yes_content());
-                jsonObject.put("tag_no_content", departure.getTag_no_content());
-                jsonObject.put("info_status", departure.getStatus());//-1,1,2
-                jsonObject.put("create_time", departure.getCreate_time());
+                    jsonObject.put("departure_city", departure.getDeparture_city());
+                    jsonObject.put("destination_city", departure.getDestination_city());
+                    jsonObject.put("inits_seats", departure.getInit_seats());
+                    jsonObject.put("mobile", departure.getMobile());
+                    jsonObject.put("points", departure.getPoints());
+                    jsonObject.put("description", departure.getDescription());
+                    jsonObject.put("car_brand", departure.getCar_brand());
+                    jsonObject.put("departure", departure.getDeparture_county());
+                    jsonObject.put("destination", departure.getDestination());
+                    jsonObject.put("driving_name", departure.getDriving_name());
+                    jsonObject.put("tag_yes_content", departure.getTag_yes_content());
+                    jsonObject.put("tag_no_content", departure.getTag_no_content());
+                    jsonObject.put("info_status", departure.getStatus());//-1,1,2
+                    jsonObject.put("create_time", departure.getCreate_time());
 
-                where=" where route_id="+departure.getR_id();
-                List<RoutePoint> points=laiHuiDB.getRoutePoint(where);
-                if(points.size()>0){
-                    if(points.size()>=2){
+                    where=" where route_id="+departure.getR_id();
+                    List<RoutePoint> points=laiHuiDB.getRoutePoint(where);
+                    if(points.size()>0){
+                        if(points.size()>=2){
 
-                        jsonObject.put("boarding_point", points.get(0).getPoint_name());
-                        jsonObject.put("breakout_point", points.get(1).getPoint_name());
+                            jsonObject.put("boarding_point", points.get(0).getPoint_name());
+                            jsonObject.put("breakout_point", points.get(1).getPoint_name());
+                        }
+                    }else {
+                        jsonObject.put("boarding_point", "");
+                        jsonObject.put("breakout_point", "");
                     }
-                }else {
-                    jsonObject.put("boarding_point", "");
-                    jsonObject.put("breakout_point", "");
-                }
 
+                }
+            }else {
+                jsonObject.put("driver_order_id", 0);
             }
+
             dataArray.add(jsonObject);
         }
         result.put("data", dataArray);

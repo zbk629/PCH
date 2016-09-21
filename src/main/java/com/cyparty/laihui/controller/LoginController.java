@@ -174,7 +174,6 @@ public class LoginController {
                             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                         }
                         if (code != null) {
-                            result.put("code", code);
                             //保存记录
                             laiHuiDB.createSMS(mobile, code);
                             json = ReturnJsonUtil.returnSuccessJsonString(result, "验证码发送成功！");
