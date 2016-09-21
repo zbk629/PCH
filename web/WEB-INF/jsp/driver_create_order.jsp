@@ -541,12 +541,6 @@
           var boarding_point = global_data.result.data[i].boarding_point;//id
           var breakout_point = global_data.result.data[i].breakout_point;//id
 
-          if(boarding_point==undefined){
-            boarding_point=""
-          }
-          if(breakout_point==undefined){
-            breakout_point=""
-          }
 
           //开始时间设置
           var insert_time = start_time.substring(0, 10);

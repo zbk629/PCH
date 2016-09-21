@@ -118,28 +118,6 @@ var validate = (function () {
             }
         })
     };
-    //var baidu_api = function(url,callback){
-    //    $.ajax({
-    //        type: "POST",
-    //        url: url,
-    //        dataType: "json",
-    //        //dataType: 'jsonp',
-    //        crossDomain: true,
-    //        success: function (data) {
-    //            global_data=data;
-    //            if(global_data.status==0){
-    //                console.log("交互成功");
-    //                callback();
-    //            }else{
-    //                validate.showTips("身份证格式不正确");
-    //            }
-    //        },
-    //        error: function () {
-    //            global_data=city_obj;
-    //            console.log("交互失败");
-    //        }
-    //    })
-    //};
 
     var baidu_api = function(url,array,callback){
         $.ajax({

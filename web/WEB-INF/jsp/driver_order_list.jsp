@@ -350,8 +350,8 @@
         var mobile = global_data.result.data[i].mobile;//手机号
         var departure_city = global_data.result.data[i].departure_city;//出发城市
         var destination_city = global_data.result.data[i].destination_city;//目的城市
-        var departure = global_data.result.data[i].departure;//出发小城
-        var destination = global_data.result.data[i].destination;//目的小城市
+        var departure = "";//出发小城
+        var destination = "";//目的小城市
         var description = global_data.result.data[i].description;//描述信息
         var tag_yes_content = global_data.result.data[i].tag_yes_content;//yes标签
         var tag_no_content = global_data.result.data[i].tag_no_content;//no标签
@@ -363,13 +363,6 @@
         var create_time = global_data.result.data[i].create_time;//id
         var boarding_point = global_data.result.data[i].boarding_point;//上车地点
         var breakout_point = global_data.result.data[i].breakout_point;//下车地点
-//
-//                if(departure==""){
-//                    departure = boarding_point;
-//                }
-//                if(destination==""){
-//                    destination = breakout_point;
-//                }
         points = points.replace(/丶/g, " 、");
         if (info_status == 1) {
           info_status = "有空位"

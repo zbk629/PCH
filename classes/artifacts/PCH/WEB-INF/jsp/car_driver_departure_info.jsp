@@ -654,12 +654,13 @@
                     if (car_brand == "") {
                         $($('.departure_li_car_type')[i]).remove();
                     }
-                    if (departure == "") {
+
+                    if (departure == ""|| departure=="null") {
                         $('.start_city_type').remove();
                     } else {
                         $('.begin_city').text(departure);
                     }
-                    if (destination == "") {
+                    if (destination == ""|| departure=="null") {
                         $('.end_city_type').remove();
                     } else {
                         $('.end_city').text(destination);
@@ -832,7 +833,6 @@
                 type: "POST",
                 url: '/api/db/passenger/departure',
                 data: data_obj,
-                async: false,
                 dataType: "json",
                 beforeSend: loading,//执行ajax前执行loading函数.直到success
                 success: function (data) {

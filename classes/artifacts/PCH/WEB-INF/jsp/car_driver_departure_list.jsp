@@ -718,11 +718,11 @@
                 if (car_brand == "") {
                     $($('.departure_li_car_type')[(page_list*size)+i]).hide();
                 }
-                if (departure == "") {
+                if (departure == "" || departure=="null") {
 
                     $($('.begin_city')[(page_list*size)+i]).hide();
                 }
-                if (destination == "") {
+                if (destination == "" || departure=="null") {
                     $($('.end_city')[(page_list*size)+i]).hide();
                 }
 

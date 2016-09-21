@@ -689,10 +689,11 @@
         addDisplay(description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                 inits_seats, id);
 
-        if (departure == "") {
+        if (departure == "" || departure=="null") {
+
           $($('.begin_city')[(page_list*size)+i]).hide();
         }
-        if (destination == "") {
+        if (destination == "" || departure=="null") {
           $($('.end_city')[(page_list*size)+i]).hide();
         }
         if (description == "") {

@@ -654,12 +654,13 @@
                     if (car_brand == "") {
                         $($('.departure_li_car_type')[i]).remove();
                     }
-                    if (departure == "") {
+
+                    if (departure == ""|| departure=="null") {
                         $('.start_city_type').remove();
                     } else {
                         $('.begin_city').text(departure);
                     }
-                    if (destination == "") {
+                    if (destination == ""|| departure=="null") {
                         $('.end_city_type').remove();
                     } else {
                         $('.end_city').text(destination);
@@ -730,8 +731,42 @@
                 $('.float_message_mid').show();
             }
         }
-        function showBooking() {
+        function checkUser(){
+            var data_obj = {};
+            data_obj.action = "booking";
+            data_obj.order_id = item_id;
+            data_obj.start_time = global_start_time;
+            $.ajax({
+                type: "POST",
+                url: '/api/db/passenger/departure',
+                data: data_obj,
+                dataType: "json",
+                beforeSend: loading,//执行ajax前执行loading函数.直到success
+                success: function (data) {
+                    closeLoading();
+                    if (data.status == true) {
+                        global_data = data.result;
+                        showBooking()
+                    } else {
+                        var code = data.result.errcode;
+                        if (code == 401) {
+                            //
+                            showFloatStyle(data.message);
+                        } else if (code == 403) {
+                            showFloatStyle(data.message);
+                            setTimeout(function () {
+                                window.location.href = "/wx/login"
+                            }, 1000);
+                        }
 
+                    }
+                },
+                error: function () {
+                    displayErrorMsg(data.message);
+                }
+            })
+        }
+        function showBooking() {
             if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
                 var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
                 if (ua.match(/MicroMessenger/i) == "micromessenger") {
@@ -821,18 +856,17 @@
             data_obj.description = description;
             data_obj.boarding_point = boarding_point;
             data_obj.breakout_point = breakout_point;
+            data_obj.order_id = item_id;
             data_obj.start_time = global_start_time;
             data_obj.mobile = global_mobile;
             data_obj.user_id = user_id;
             data_obj.booking_seats = booking_seats;
-            data_obj.order_id = item_id;
             data_obj.driver_id = global_driver_id;
 
             $.ajax({
                 type: "POST",
                 url: '/api/db/passenger/departure',
                 data: data_obj,
-                async: false,
                 dataType: "json",
                 beforeSend: loading,//执行ajax前执行loading函数.直到success
                 success: function (data) {
@@ -1026,7 +1060,7 @@
                 <div class="clear"></div>
             </li>
 
-            <li class="publish_message_li" onclick="showBooking()">
+            <li class="publish_message_li" onclick="checkUser()">
                 <div class="publish_message_li_left">
                     <span>是否预定</span>
                 </div>
@@ -1092,7 +1126,7 @@
             </li>
         </ul>
     </div>
-    <a href="javascript:(0)" class="call_driver_bottom not_driver" style="display:none;" onclick="showBooking()">
+    <a href="javascript:(0)" class="call_driver_bottom not_driver" style="display:none;" onclick="checkUser()">
         <div class="publish_bottom">
             预定座位
         </div>

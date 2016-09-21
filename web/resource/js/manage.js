@@ -180,7 +180,7 @@ var operation= (function(){
 
     return {
         operation_ajax : operation_ajax,
-        operation_ajax2:operation_ajax2,
+        operation_ajax2:operation_ajax2
     }
 
 })();
