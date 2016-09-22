@@ -283,7 +283,7 @@
       width: 100%;
     }
     .place_city{
-      width: 7rem;
+      width: 100%;
       display: inline-block;
     }
     .float_sure{
@@ -341,12 +341,9 @@
       overflow: auto;
     }
     .to_city{
-      width: 1.5rem;
-      position: relative;
-      top: -0.2rem;
-    }
-    .place_end_city{
-      margin-left: 1rem;
+      width: 1.9rem;
+      left: 0rem;
+      transform: rotate(90deg);
     }
     @media screen and (max-width: 2000px) {
       body{
@@ -367,6 +364,11 @@
     .hover_all{
       background-color: #000;
     }
+    .publish_place_box{
+      display:block;
+      position: relative;
+    }
+
 
   </style>
   <script>
@@ -651,7 +653,8 @@
       // 获取当前时间戳(以s为单位)
       var timestamp = Date.parse(new Date());
       timestamp = timestamp / 1000;
-      var timestamp2 = Date.parse(new Date(send_time));
+      var chexk_time = send_time.replace(/-/g, '/');
+      var timestamp2 = Date.parse(new Date(chexk_time));
       timestamp2 = timestamp2 / 1000;
       if(timestamp2>timestamp){
         sendFinalMessage();
@@ -879,10 +882,15 @@
           <span>出发地点</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text"  placeholder="上车地点" class="place_city place_start_city input_disabled"/>
+          <div class="publish_place_box">
+            <input type="text"  placeholder="上车地点" class="place_city place_start_city input_disabled"/>
+          </div>
           <img src="/resource/images/pch_icon_to.png" class="to_city">
-          <input type="text"  placeholder="下车地点" class="place_city place_end_city input_disabled"/>
+          <div class="publish_place_box">
+            <input type="text"  placeholder="下车地点" class="place_city place_end_city input_disabled"/>
+          </div>
         </div>
+        <div class="clear"></div>
       </li>
 
       <li class="publish_mid_li">

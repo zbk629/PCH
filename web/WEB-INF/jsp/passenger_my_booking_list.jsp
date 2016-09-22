@@ -386,7 +386,7 @@
           var create_time = global_data.result.data[i].create_time;//id
           var mobile = global_data.result.data[i].mobile;//id
           var driving_name = global_data.result.data[i].driving_name;//id
-
+          var is_cannel = global_data.result.data[i].is_editor;//id
           var inits_seats = global_data.result.data[i].order.booking_seats;//可用座位
           var boarding_point = global_data.result.data[i].order.boarding_point;//id
           var breakout_point = global_data.result.data[i].order.breakout_point;//id
@@ -438,6 +438,9 @@
         }
         if (destination == "") {
           $($('.end_city')[(page_list * size) + i]).hide();
+        }
+        if (is_cannel == false) {
+          $($('.mine_cancel')[(page_list * size) + i]).hide();
         }
         if (description == "") {
           $($('.departure_li_car_type')[(page_list*size)+i]).hide();
@@ -541,6 +544,7 @@
               '</div>' +
               '<div class="mine_first_bottom">' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
+              '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
               '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
 
               '<div class="clear"></div>' +
@@ -657,14 +661,12 @@
     //取消车单
     function mine_cancel() {
       var obj = {};
-      console.log('1')
       obj.action = 'delete_my_order';
       obj.order_id = order_id;
       obj.status = "-1";
       obj.mobile = mobile1;
       console.log(obj);
       validate.validate_submit("/api/db/passenger/departure", obj, loadMessage);
-      console.log('3');
       removeFloatMessage();
     }
     function toAuthList(){
