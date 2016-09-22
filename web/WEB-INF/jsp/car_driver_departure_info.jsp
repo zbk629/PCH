@@ -732,6 +732,7 @@
             }
         }
         function checkUser(){
+            alert(1)
             var data_obj = {};
             data_obj.action = "booking";
             data_obj.order_id = item_id;

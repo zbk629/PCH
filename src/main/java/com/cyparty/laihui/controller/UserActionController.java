@@ -250,17 +250,22 @@ public class UserActionController {
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "booking":
                     try {
-                        seats=Integer.parseInt(request.getParameter("booking_seats"));
+                        if(request.getParameter("booking_seats")!=null){
+
+                            seats=Integer.parseInt(request.getParameter("booking_seats"));
+                        }
                         //todo:user_id改为从session中获取
                         //user_id=Integer.parseInt(request.getParameter("user_id"));
                         order_id=Integer.parseInt(request.getParameter("order_id"));
                     } catch (NumberFormatException e) {
                         seats=0;
-                        order_id=0;
                         e.printStackTrace();
                     }
                     if(user_id>0){
-                        int driver_id=Integer.parseInt(request.getParameter("driver_id"));
+                        int driver_id=0;
+                        if(request.getParameter("driver_id")!=null){
+                            driver_id=Integer.parseInt(request.getParameter("driver_id"));
+                        }
                         String boarding_point=request.getParameter("boarding_point");
                         String breakout_point=request.getParameter("breakout_point");
                         String description=request.getParameter("description");
@@ -375,7 +380,7 @@ public class UserActionController {
                         laiHuiDB.deleteUserAction(order_id,p_mobile,1);
                         if(status!=null&&status.equals("-1")){
                             //短信通知车主
-                            Utils.sendCancleNotifyMessage(driver_mobile,p_mobile);
+                            Utils.sendCancleNotifyMessage(driver_mobile, p_mobile);
                         }
                         json = ReturnJsonUtil.returnSuccessJsonString(result, "删除成功！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);

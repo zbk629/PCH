@@ -118,17 +118,26 @@ public class LoginController {
     }
     @RequestMapping("/wx/login")
     public String weixin(HttpServletRequest request, Model model) {
+        is_logined=Utils.isLogined(request);
+        if(is_logined){
+            return "redirect:/auth/base";
+        }else {
 
-        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+            return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+        }
     }
     @RequestMapping("/wx/pc/login")
     public String pc(HttpServletRequest request, Model model) {
+        is_logined=Utils.isLogined(request);
+        if(is_logined){
+            return "redirect:/auth/base";
+        }else {
 
-        return "redirect:https://open.weixin.qq.com/connect/qrconnect?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2#wechat_redirect";
+            return "redirect:https://open.weixin.qq.com/connect/qrconnect?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2#wechat_redirect";
+        }
     }
     @RequestMapping("/wx/map/login")
     public String weixin_map(HttpServletRequest request, Model model) {
-
         return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2Fhuodong.pinchenet.com%2Ftransfer?mode=wx_map&response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
     }
     @ResponseBody

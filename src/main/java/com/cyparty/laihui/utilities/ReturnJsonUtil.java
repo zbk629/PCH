@@ -433,9 +433,15 @@ public class ReturnJsonUtil {
                 for (DepartureInfo departure : departureInfoList) {
 
                     jsonObject.put("driver_order_id", departure.getR_id());
+                    boolean is_editor=false;
                     jsonObject.put("start_time", departure.getStart_time());
                     jsonObject.put("end_time", departure.getEnd_time());
-
+                    long current = Utils.getCurrenTimeStamp();
+                    long end_date = Utils.date2TimeStamp(departure.getEnd_time());
+                    if (end_date > current) {
+                        is_editor = true;
+                    }
+                    jsonObject.put("is_editor", is_editor);
                     jsonObject.put("departure_city", departure.getDeparture_city());
                     jsonObject.put("destination_city", departure.getDestination_city());
                     jsonObject.put("inits_seats", departure.getInit_seats());
@@ -482,17 +488,17 @@ public class ReturnJsonUtil {
         JSONObject result = new JSONObject();
         JSONArray dataArray = new JSONArray();
         String where = " where user_id > 0";
-        if (user_id != 0) {
+        /*if (user_id != 0) {
             String now_where = " where user_id=" + user_id;
             String user_mobile=laiHuiDB.getWxUser(now_where).get(0).getUser_mobile();
             where = " where user_mobile like '%" + user_mobile+"%'";
-        } else {
+        } else {*/
             if (date != null && !date.trim().equals("")) {
                 where = where + " and start_time >'" + date + " 00:00:00' and start_time < '" + date + " 24:00:00'";
             } else {
                 where = where + " and end_time >'" + Utils.getCurrentTime() + "'";
             }
-        }
+       /* }*/
         if (departure_city != null && !departure_city.trim().equals("")) {
             where = where + " and departure_city ='" + departure_city + "'";
         }
