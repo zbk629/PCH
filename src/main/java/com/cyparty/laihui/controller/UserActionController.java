@@ -236,7 +236,7 @@ public class UserActionController {
                         order_id=0;
                         e.printStackTrace();
                     }
-                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, user_id, page, size, order_id, null, null, null), "出行信息获取成功");
+                    json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getMinePassengerPublishInfo(laiHuiDB, user_id, page, size, order_id, null, null, null), "出行信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "delete":
                     order_id=Integer.parseInt(request.getParameter("order_id"));

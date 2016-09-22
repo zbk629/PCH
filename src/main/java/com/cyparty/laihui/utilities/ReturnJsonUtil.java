@@ -545,7 +545,67 @@ public class ReturnJsonUtil {
 
         return result;
     }
+    public static JSONObject getMinePassengerPublishInfo(LaiHuiDB laiHuiDB, int user_id, int page, int size, int now_order_id, String date, String departure_city, String destination_city) {
+        JSONObject result = new JSONObject();
+        JSONArray dataArray = new JSONArray();
+        String where = " where user_id > 0";
+        if (user_id != 0) {
+            String now_where = " where user_id=" + user_id;
+            String user_mobile=laiHuiDB.getWxUser(now_where).get(0).getUser_mobile();
+            where = " where user_mobile like '%" + user_mobile+"%'";
+        } else {
+            if (date != null && !date.trim().equals("")) {
+                where = where + " and start_time >'" + date + " 00:00:00' and start_time < '" + date + " 24:00:00'";
+            } else {
+                where = where + " and end_time >'" + Utils.getCurrentTime() + "'";
+            }
+        }
+        if (departure_city != null && !departure_city.trim().equals("")) {
+            where = where + " and departure_city ='" + departure_city + "'";
+        }
+        if (destination_city != null && !destination_city.trim().equals("")) {
+            where = where + " and destination_city ='" + destination_city + "'";
+        }
+        if (now_order_id != 0) {
+            where = where + " and _id=" + now_order_id;
+        }
+        where = where + " order by end_time ASC";
+        int offset = page * size;
+        int count = laiHuiDB.getCount("pch_passenger_publish_info", where);
+        where = where + " limit " + offset + "," + size;
 
+        List<PassengerOrder> passengerOrderList = laiHuiDB.getPassengerPublishInfo(where);
+        for (PassengerOrder passengerOrder : passengerOrderList) {
+            JSONObject jsonObject = new JSONObject();
+            boolean is_editor = false;
+            jsonObject.put("order_id", passengerOrder.get_id());
+            jsonObject.put("start_time", passengerOrder.getStart_time());
+            jsonObject.put("end_time", passengerOrder.getEnd_time());
+            long current = Utils.getCurrenTimeStamp();
+            long end_date = Utils.date2TimeStamp(passengerOrder.getEnd_time());
+            if (end_date > current) {
+                is_editor = true;
+            }
+            jsonObject.put("is_editor", is_editor);
+            jsonObject.put("departure_city", passengerOrder.getDeparture_city());
+            jsonObject.put("destination_city", passengerOrder.getDestination_city());
+            jsonObject.put("booking_seats", passengerOrder.getSeats());
+            jsonObject.put("boarding_point", passengerOrder.getBoarding_point());
+            jsonObject.put("breakout_point", passengerOrder.getBreakout_ponit());
+            jsonObject.put("mobile", passengerOrder.getMobile());
+            jsonObject.put("name", passengerOrder.getName());
+            jsonObject.put("description", passengerOrder.getDescription());
+            jsonObject.put("create_time", passengerOrder.getCreate_time());
+
+            dataArray.add(jsonObject);
+        }
+        result.put("count", count);
+        result.put("page", page);
+        result.put("size", size);
+        result.put("data", dataArray);
+
+        return result;
+    }
     public static JSONObject getTags(LaiHuiDB laiHuiDB, int type) {
         JSONObject result_json = new JSONObject();
         JSONArray dataArray = new JSONArray();
