@@ -328,6 +328,7 @@
             overflow-y: auto;
             max-height: 24rem;
             width: 100%;
+            display: none;
         }
 
         .publish_route_li {
@@ -544,7 +545,9 @@
                     var destination = global_data.result.data[i].destination;//目的小城市
                     var boarding_point = global_data.result.data[i].boarding_point;//上车地点
                     var breakout_point = global_data.result.data[i].breakout_point;//下车地点
-
+                    if(destination_city == ""){
+                        destination_city = "郑州"
+                    }
                     if (departure == "") {
                         departure = boarding_point;
                     }

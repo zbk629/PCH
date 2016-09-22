@@ -685,7 +685,9 @@
 
         var begin_start_time = start_time.substring(11, 16);
         var begin_end_time = end_time.substring(11, 16);
-
+        if(destination_city == ""){
+          destination_city = "郑州"
+        }
         addDisplay(description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                 inits_seats, id);
 

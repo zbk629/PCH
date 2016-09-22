@@ -676,6 +676,9 @@
                 var car_brand = global_data.result.data[i].car_brand;//车辆品牌
                 var id = global_data.result.data[i].id;//id
                 var create_time = global_data.result.data[i].create_time;//id
+                if(destination_city == ""){
+                    destination_city = "郑州"
+                }
 //                var boarding_point = global_data.result.data[i].boarding_point;//上车地点
 //                var breakout_point = global_data.result.data[i].breakout_point;//下车地点
 //
@@ -725,6 +728,7 @@
                 if (destination == "" || departure=="null") {
                     $($('.end_city')[(page_list*size)+i]).hide();
                 }
+
 
             }
         }

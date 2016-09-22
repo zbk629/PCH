@@ -210,6 +210,7 @@
 
     .mine_first_bottom {
       padding-bottom: .4rem;
+      padding-top: .4rem;
     }
 
     .mine_delete {
@@ -383,29 +384,35 @@
           var boarding_point = global_data.result.data[i].order.boarding_point;//id
           var breakout_point = global_data.result.data[i].order.breakout_point;//id
           var order_id = global_data.result.data[i].order.order_id;//id
+          var insert_time = start_time.substring(0, 10);
+          var time_change = insert_time.split('-');
+          insert_time = time_change[1] + '月' + time_change[2] + '日';
+
+          var begin_create_time = create_time.substring(11, 16);
+          create_time = create_time.substring(0, 10);
+          var time_create = create_time.split('-');
+          create_time = time_create[1] + '月' + time_create[2] + '日';
+
+
+          var begin_start_time = start_time.substring(11, 16);
+          var begin_end_time = end_time.substring(11, 16);
+
+          if(destination_city == ""){
+            destination_city = "郑州"
+          }
         }
         var is_editor=true;
         var info_status = id ;
 
-        var insert_time = start_time.substring(0, 10);
-        var time_change = insert_time.split('-');
-        insert_time = time_change[1] + '月' + time_change[2] + '日';
 
-        var begin_create_time = create_time.substring(11, 16);
-        create_time = create_time.substring(0, 10);
-        var time_create = create_time.split('-');
-        create_time = time_create[1] + '月' + time_create[2] + '日';
-
-
-        var begin_start_time = start_time.substring(11, 16);
-        var begin_end_time = end_time.substring(11, 16);
 
         if (is_editor == true) {
           if(info_status==0){
-            info_status="已失效"
+
+            info_status="已失效";
             addDisplayLose(id,inits_seats,boarding_point,breakout_point,order_id,info_status );
           }else{
-            info_status=""
+            info_status="";
             addDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                     inits_seats, id,boarding_point,breakout_point,mobile);
           }
@@ -430,7 +437,8 @@
         }
         if (id == 0) {
           $($('.mine_looking')[(page_list*size)+i]).hide();
-          $($('.mine_delete')[(page_list*size)+i]).css('margin-right','1.4rem');
+          $($('.mine_delete')[(page_list*size)+i]).css('margin-right','0');
+          $($('.departure_time_seat')[(page_list*size)+i]).css('float','inherit');
         }
       }
       if ($('.mine_list').length == 0) {
@@ -521,8 +529,8 @@
               '<div class="departure_li_style departure_li_time">' +
               '<span class="departure_time_seat">订座' + inits_seats + '&nbsp;个</span>' +
               '</div>' +
+              '</div>' +
               '<div class="mine_first_bottom">' +
-
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
               '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
               '<div class="clear"></div>' +

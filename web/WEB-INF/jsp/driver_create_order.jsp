@@ -844,6 +844,7 @@
     }
     //检测输入信息是否完整
     function checkDriverMessage(){
+      var a = $('#demo_place').val().split('——');
       if($('#demo_place').val()==""){
         showFloatStyle("起止路线不能为空");
       }else if($('#demo_time').val()==""){
@@ -860,6 +861,10 @@
         showFloatStyle("上车点不能为空");
       }else if($('.place_end_place').val()==""){
         showFloatStyle("下车点不能为空");
+      }else if(a[0]==""){
+        showFloatStyle("请重新选择起点城市");
+      }else if(a[1]==""){
+        showFloatStyle("请重新选择终点城市");
       }else{
         setSendData();
         now_time();
