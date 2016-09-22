@@ -219,6 +219,12 @@
       color: #fff;
       border: none;
     }
+    .mine_cancel {
+      margin-right: 1.4rem;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+    }
 
     .mine_list_title {
       position: relative;
@@ -332,6 +338,7 @@
     var total;
     var index_id;
     var order_id;
+    var mobile1;
     function returnCheck() {
       window.location.href = '/auth/base';
     }
@@ -500,7 +507,9 @@
               '<div class="mine_first_bottom">' +
 //                    '<span class="mine_type mine_change" onclick="mine_change(this)">修改订单</span>' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
+              '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
               '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
+
 //              '<span class="mine_type mine_made" onclick="mine_made(this)" index=' + i + '>生成文字信息</span>' +
               '<div class="clear"></div>' +
               '</div>' +
@@ -533,7 +542,7 @@
               '<div class="mine_first_bottom">' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
               '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
-              '<span class="mine_type mine_delete" onclick="showCancelFloatStyle(this)">取消预定</span>' +
+
               '<div class="clear"></div>' +
               '</div>' +
               '</li> ')
@@ -601,7 +610,7 @@
     //展示浮动层可编辑
     function showCancelFloatStyle(obj) {
       order_id = $(obj).parent().parent().attr('order_id');
-      var mobile = $(obj).parent().parent().find('.departure_li_mobile');
+      mobile1 = $(obj).parent().parent().find('.departure_li_mobile').text();
       $('.hover').fadeIn(100);
       $('.float_container2').empty().fadeIn(100).css({'width': '62%', 'font-size': '1.4rem'});
       $('.float_container2').append('<div class="float_box2">' +
@@ -609,15 +618,15 @@
               '<div class="float_message_title2">' +
               '<span>确认取消预定？</span>' +
               '</div>' +
-//              '<div class="float_message_tips">' +
-//              '<span>取消后车主将不再与你预约</span>' +
-//              '</div>' +
+              '<div class="float_message_tips">' +
+              '<span>取消后车主将不再与你预约</span>' +
+              '</div>' +
               '<div class="clear"></div>' +
               '</div>' +
               '</div>' +
               '<div class="float_button">' +
               '<span class="float_remove" onclick="removeFloatMessage()">取消</span>' +
-              '<span class="float_sure" onclick="mine_cancel(mobile)">确定</span>' +
+              '<span class="float_sure" onclick="mine_cancel()">确定</span>' +
               '</div>');
 
     }
@@ -646,13 +655,16 @@
       removeFloatMessage();
     }
     //取消车单
-    function mine_cancel(mobile) {
+    function mine_cancel() {
       var obj = {};
+      console.log('1')
       obj.action = 'delete_my_order';
       obj.order_id = order_id;
-      obj.status = -1;
-      obj.mobile = mobile;
+      obj.status = "-1";
+      obj.mobile = mobile1;
+      console.log(obj);
       validate.validate_submit("/api/db/passenger/departure", obj, loadMessage);
+      console.log('3');
       removeFloatMessage();
     }
     function toAuthList(){
