@@ -444,7 +444,7 @@ public class ReturnJsonUtil {
                     jsonObject.put("is_editor", is_editor);
                     jsonObject.put("departure_city", departure.getDeparture_city());
                     jsonObject.put("destination_city", departure.getDestination_city());
-                    jsonObject.put("inits_seats", departure.getInit_seats());
+                    jsonObject.put("init_seats", departure.getInit_seats());
                     jsonObject.put("mobile", departure.getMobile());
                     jsonObject.put("points", departure.getPoints());
                     jsonObject.put("description", departure.getDescription());
