@@ -382,7 +382,9 @@
           var create_time = global_data.result.data[i].create_time;
           var mobile = global_data.result.data[i].mobile;
           var info_status = is_editor;
-
+          if(destination_city == ""){
+            destination_city = "郑州"
+          }
           if (info_status == true) {
             $($('.item_seat_status')[i]).css('color','#2ecc71');
             info_status = "接受预定";

@@ -392,6 +392,15 @@
       transform: none;
       -webkit-transform: none;
     }
+    .publish_message{
+      position: absolute;
+      top: 4.2rem;
+      bottom: 4.2rem;
+      /* 使之可以滚动 */
+      overflow-y: scroll;
+      /* 增加该属性，可以增加弹性，是滑动更加顺畅 */
+      -webkit-overflow-scrolling: touch;
+    }
 
   </style>
   <script>
@@ -874,7 +883,8 @@
       // 获取当前时间戳(以s为单位)
       var timestamp = Date.parse(new Date());
       timestamp = timestamp / 1000;
-      var timestamp2 = Date.parse(new Date(send_time));
+      var chexk_time = send_time.replace(/-/g, '/');
+      var timestamp2 = Date.parse(new Date(chexk_time));
       timestamp2 = timestamp2 / 1000;
       if(timestamp2>timestamp){
         sendFinalMessage();
@@ -1284,7 +1294,6 @@
           <div class="publish_place_box">
             <input type="text"  placeholder="上车地点" index="0" class="place_city place_start_place input_disabled" oninput="sendKeepDownInput(this)"/>
             <ul class="publish_route_ul">
-
             </ul>
           </div>
 
@@ -1292,10 +1301,8 @@
           <div class="publish_place_box">
             <input type="text"  placeholder="下车地点" index="1" class="place_city place_end_place input_disabled" oninput="sendKeepDownInput(this)"/>
             <ul class="publish_route_ul">
-
             </ul>
           </div>
-
         </div>
         <div class="clear"></div>
       </li>

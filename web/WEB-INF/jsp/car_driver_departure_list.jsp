@@ -591,11 +591,18 @@
                 loadList();
             } else {
 
-                begin_time=url.split('time=')[1].split('&departure_city')[0];
-                departure_city=url.split('&departure_city=')[1].split('&destination_city')[0];
-                destination_city=url.split('&destination_city=')[1].split('&end')[0];
-                departure_city=decodeURI(departure_city);
-                destination_city=decodeURI(destination_city);
+                if(url.indexOf("time") == -1){
+                    begin_time = "";
+                    departure_city = "";
+                    destination_city ="";
+                }else{
+                    begin_time=url.split('time=')[1].split('&departure_city')[0];
+                    departure_city=url.split('&departure_city=')[1].split('&destination_city')[0];
+                    destination_city=url.split('&destination_city=')[1].split('&end')[0];
+                    departure_city=decodeURI(departure_city);
+                    destination_city=decodeURI(destination_city);
+                }
+
                 city_array.push(departure_city);
                 city_array.push(destination_city);
                 if(mobile==0){

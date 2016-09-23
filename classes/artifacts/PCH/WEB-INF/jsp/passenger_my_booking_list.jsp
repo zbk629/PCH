@@ -219,6 +219,12 @@
       color: #fff;
       border: none;
     }
+    .mine_cancel {
+      margin-right: 1.4rem;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+    }
 
     .mine_list_title {
       position: relative;
@@ -332,6 +338,7 @@
     var total;
     var index_id;
     var order_id;
+    var mobile1;
     function returnCheck() {
       window.location.href = '/auth/base';
     }
@@ -379,7 +386,7 @@
           var create_time = global_data.result.data[i].create_time;//id
           var mobile = global_data.result.data[i].mobile;//id
           var driving_name = global_data.result.data[i].driving_name;//id
-
+          var is_cannel = global_data.result.data[i].is_editor;//id
           var inits_seats = global_data.result.data[i].order.booking_seats;//可用座位
           var boarding_point = global_data.result.data[i].order.boarding_point;//id
           var breakout_point = global_data.result.data[i].order.breakout_point;//id
@@ -431,6 +438,9 @@
         }
         if (destination == "") {
           $($('.end_city')[(page_list * size) + i]).hide();
+        }
+        if (is_cannel == false) {
+          $($('.mine_cancel')[(page_list * size) + i]).hide();
         }
         if (description == "") {
           $($('.departure_li_car_type')[(page_list*size)+i]).hide();
@@ -488,7 +498,7 @@
               '</div>' +
               '<a href="tel:'+mobile+'" class="departure_li_style departure_mobile">' +
               '<span>车主电话</span>' +
-              '<span class="departure_time_mouth">' + mobile + '</span>' +
+              '<span class="departure_time_mouth departure_li_mobile">' + mobile + '</span>' +
               '<img src="/resource/images/pc_icon_mobile.png" class="mobile_style">'+
               '</a>'+
               '<div class="departure_li_style departure_li_car_type">' +
@@ -500,7 +510,9 @@
               '<div class="mine_first_bottom">' +
 //                    '<span class="mine_type mine_change" onclick="mine_change(this)">修改订单</span>' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
+              '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
               '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
+
 //              '<span class="mine_type mine_made" onclick="mine_made(this)" index=' + i + '>生成文字信息</span>' +
               '<div class="clear"></div>' +
               '</div>' +
@@ -532,7 +544,9 @@
               '</div>' +
               '<div class="mine_first_bottom">' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
+              '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
               '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
+
               '<div class="clear"></div>' +
               '</div>' +
               '</li> ')
@@ -597,6 +611,29 @@
               '</div>');
 
     }
+    //展示浮动层可编辑
+    function showCancelFloatStyle(obj) {
+      order_id = $(obj).parent().parent().attr('order_id');
+      mobile1 = $(obj).parent().parent().find('.departure_li_mobile').text();
+      $('.hover').fadeIn(100);
+      $('.float_container2').empty().fadeIn(100).css({'width': '62%', 'font-size': '1.4rem'});
+      $('.float_container2').append('<div class="float_box2">' +
+              '<div class="float_message_box2">' +
+              '<div class="float_message_title2">' +
+              '<span>确认取消预定？</span>' +
+              '</div>' +
+              '<div class="float_message_tips">' +
+              '<span>取消后车主将不再与你预约</span>' +
+              '</div>' +
+              '<div class="clear"></div>' +
+              '</div>' +
+              '</div>' +
+              '<div class="float_button">' +
+              '<span class="float_remove" onclick="removeFloatMessage()">取消</span>' +
+              '<span class="float_sure" onclick="mine_cancel()">确定</span>' +
+              '</div>');
+
+    }
     function notOpend() {
 //      window.location.href="/laihui/driver/create_order"
       showFloatStyle("即将开通，敬请期待");
@@ -618,6 +655,17 @@
       obj.action = 'delete_my_order';
       obj.order_id = order_id;
       obj.user_id = user_id;
+      validate.validate_submit("/api/db/passenger/departure", obj, loadMessage);
+      removeFloatMessage();
+    }
+    //取消车单
+    function mine_cancel() {
+      var obj = {};
+      obj.action = 'delete_my_order';
+      obj.order_id = order_id;
+      obj.status = "-1";
+      obj.mobile = mobile1;
+      console.log(obj);
       validate.validate_submit("/api/db/passenger/departure", obj, loadMessage);
       removeFloatMessage();
     }
