@@ -105,6 +105,7 @@
       position: relative;
       cursor: pointer;
       border-right: 1px solid #e8e8e8;
+      -webkit-tap-highlight-color:transparent;
     }
 
     .publish_slide ul {
@@ -371,6 +372,9 @@
       text-align: center;
       display: inline-block;
     }
+    .float_ul{
+      line-height: 3.2rem;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
@@ -516,6 +520,7 @@
       //地点选择器
       $('.publish_li_click').show();
       $('.publish_list_box2').hide();
+      $('.down1').hide();
 //            var driverPlace = new DriverPlace2();
 //            driverPlace.init({
 //                'trigger': '#demo_place',//触发选择控件的文本框，同时选择完毕后name属性输出到该位置
@@ -801,7 +806,11 @@
 
     //显示下拉
     function showTagsUl(obj) {
-      $(obj).children('.publish_slide_ul').toggle();
+      if(mobile==0){
+        showFloat();
+      }else{
+        $(obj).children('.publish_slide_ul').toggle();
+      }
     }
     function selectTagsLi(obj) {
       $(obj).parent().parent().children('.publish_slide_text').text($(obj).text()).attr('index', $(obj).attr('index'));
@@ -826,7 +835,11 @@
           start_time = $('.publish_status').text();
         }
       } else {
-        start_time = $('.publish_status').text().substring(3, 13);
+        if( $('.publish_status').text().substring(0, 2) == "20"){
+          start_time = $('.publish_status').text().substring(0, 11);
+        }else{
+          start_time = $('.publish_status').text().substring(3, 13);
+        }
       }
       if (city_array.length >0 ) {
         departure_city = city_array[0];
@@ -897,32 +910,11 @@
     function changeUrl(url) {
       window.history.pushState("", "", url);
     }
-    //发送时间的数据
-    function setSendData() {
-      var time;
-      var str = $('.publish_slide_text').text().substring(0, 2);
-
-      if (str == "今天") {
-        time = new Date();
-        changeDataStyle(time)
-      } else if(str == "明天") {
-        var today = new Date();
-        var t = today.getTime() + 1000 * 60 * 60 * 24;
-        time = new Date(t);
-        changeDataStyle(time)
-      }else{
-        var today = new Date();
-        var t = today.getTime() + (1000 * 60 * 60 * 24)*2;
-        time = new Date(t);
-        changeDataStyle(time)
-      }
-
-    }
     //显示今天和明天信息
     function setShowData() {
 
       var str_time1 = new Date();
-      for (var i = 0; i < $('.publish_slide_li_date').length; i++) {
+      for (var i = 0; i < 7; i++) {
         var obj = {};
         var str_time2 = str_time1.getTime() + (1000 * 60 * 60 * 24) * i;
         var time2 = new Date(str_time2);
@@ -942,17 +934,37 @@
         array_date.push(obj);
       }
 
-      for (var j = 0; j < array_date.length; j++) {
-        if (j == 0) {
-          $($('.publish_slide_li_date')[j]).text("今天(" + array_date[j].year + "-" + array_date[j].month + "-" + array_date[j].date + ")")
-        } else if(j==1) {
-          $($('.publish_slide_li_date')[j]).text("明天(" + array_date[j].year + "-" + array_date[j].month + "-" + array_date[j].date + ")")
-        }else{
-          $($('.publish_slide_li_date')[j]).text("后天(" + array_date[j].year + "-" + array_date[j].month + "-" + array_date[j].date + ")")
+      $('publish_slide_li_date').remove();
+      if(mobile==0){
+        for(var j=0;j<array_date.length;j++){
+          $('.float_li_all_clear').before('<li class="float_li" onclick="selectFloatLi(this)" index="0"></li>');
+          if(j==0){
+            $($('.float_li')[j]).text("今天("+array_date[j].year+"-"+array_date[j].month+"-"+array_date[j].date+")")
+          }else if(j==1){
+            $($('.float_li')[j]).text("明天("+array_date[j].year+"-"+array_date[j].month+"-"+array_date[j].date+")")
+          }else if(j == 2){
+            $($('.float_li')[j]).text("后天("+array_date[j].year+"-"+array_date[j].month+"-"+array_date[j].date+")")
+          }else{
+            $($('.float_li')[j]).text(array_date[j].year+"-"+array_date[j].month+"-"+array_date[j].date)
+          }
+
+        }
+      }else{
+        for(var j=0;j<array_date.length;j++){
+          $('.publish_date_all').before('<li class="publish_slide_li publish_slide_li_date" index="0" onclick="selectTagsLi(this)"></li>');
+          if(j==0){
+            $($('.publish_slide_li_date')[j]).text("今天("+array_date[j].year+"-"+array_date[j].month+"-"+array_date[j].date+")")
+          }else if(j==1){
+            $($('.publish_slide_li_date')[j]).text("明天("+array_date[j].year+"-"+array_date[j].month+"-"+array_date[j].date+")")
+          }else if(j == 2){
+            $($('.publish_slide_li_date')[j]).text("后天("+array_date[j].year+"-"+array_date[j].month+"-"+array_date[j].date+")")
+          }else{
+            $($('.publish_slide_li_date')[j]).text(array_date[j].year+"-"+array_date[j].month+"-"+array_date[j].date)
+          }
+
         }
 
       }
-
 
     }
     //转换日期格式
@@ -966,7 +978,17 @@
     function toAuthList(){
       window.location.href = "/laihui/passenger/my_order_list";
     }
-
+    //展示浮层
+    function showFloat() {
+      $('.hover').fadeIn(200);
+      $('.float_container2').fadeIn(200);
+      $('.float_message_mid').show();
+    }
+    function selectFloatLi(obj){
+      $('.publish_status').text($(obj).text()).attr('index', $(obj).attr('index'));
+      removeFloatMessage();
+      findMessage();
+    }
   </script>
 </head>
 <body id="backtop">
@@ -974,10 +996,19 @@
 <div class="loading_box">
   <img class="loading" src="/resource/images/loading.gif" alt="请等待">
 </div>
+<img src="/resource/images/pch_logo.png" style="display: none">
 <div class="hover"></div>
-<div class="float_container">
+<div class="float_container2">
   <div class="float_box">
-    <span class="float_box_span"></span>
+    <div class="float_message_box">
+      <div class="float_message_mid">
+        <ul class="float_ul">
+          <li class="float_li_all" onclick="selectFloatLi(this)" index="">全部</li>
+
+          <div class="clear float_li_all_clear"></div>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 <img src="/resource/images/pch_logo.png" style="display: none">
@@ -1005,15 +1036,8 @@
             <li class="publish_slide_li publish_slide_li_date_all" index="" onclick="selectTagsLi(this)">
               全部
             </li>
-            <li class="publish_slide_li publish_slide_li_date" index="0" onclick="selectTagsLi(this)">
-              今天
-            </li>
-            <li class="publish_slide_li publish_slide_li_date" index="-1" onclick="selectTagsLi(this)">
-              明天
-            </li>
-            <li class="publish_slide_li publish_slide_li_date" index="1" onclick="selectTagsLi(this)">
-              后天
-            </li>
+
+            <div class="clear publish_date_all"></div>
           </ul>
           <div class="down1"></div>
         </div>

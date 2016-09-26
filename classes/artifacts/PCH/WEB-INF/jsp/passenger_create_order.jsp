@@ -666,6 +666,9 @@
     function setSendData(){
       var time;
       var str =$('#demo_time').val().substring(0,2);
+      var time_str = $('#demo_time').val();
+      var time2 = new Date();
+      var year2  = time2.getFullYear();
       if(str=="今天"){
         time=new Date();
         changeDataStyle(time)
@@ -674,13 +677,28 @@
         var t=today.getTime()+1000*60*60*24;
         time=new Date(t);
         changeDataStyle(time)
-      }else{
+      }else if(str=="后天"){
         var today=new Date();
         var t=today.getTime()+(1000*60*60*24)*2;
         time=new Date(t);
         changeDataStyle(time)
-      }
+      }else{
+        var st2 =$('.place_start_time').val().split("点")[0].trim();
+        var st3 =$('.place_end_time').val().split("点")[0].trim();
+        var st4 =$('.place_start_time').val().split("点")[1].split("分")[0].trim();
+        var st5 =$('.place_end_time') .val().split("点")[1].split("分")[0].trim();
+        if(st2.length == 1){
+          send_time =year2+"-"+time_str+" "+"0"+st2+":"+st4+":00";
+        }else{
+          send_time =year2+"-"+time_str+" "+st2+":"+st4+":00";
+        }
 
+        if(st3.length == 1){
+          send_time2 =year2+"-"+time_str+" "+"0"+st3+":"+st5+":00";
+        }else{
+          send_time2 =year2+"-"+time_str+" "+st3+":"+st5+":00";
+        }
+      }
     }
     //转换日期格式
     function changeDataStyle(time){
@@ -766,7 +784,7 @@
     function setShowData(){
 
       var str_time1=new Date();
-      for(var i=0;i<3;i++){
+      for(var i=0;i<7;i++){
         var obj={};
         var str_time2=str_time1.getTime()+(1000*60*60*24)*i;
         var time2 = new Date(str_time2);
@@ -813,14 +831,13 @@
           $('#demo_time').val("今天("+array_date[j].month+"-"+array_date[j].date+")");
         }else if(j==1){
           day.push("明天("+array_date[j].month+"-"+array_date[j].date+")");
-        }else{
+        }else if(j == 2){
           day.push("后天("+array_date[j].month+"-"+array_date[j].date+")");
+        }else{
+          day.push(array_date[j].month+"-"+array_date[j].date);
         }
       }
     }
-//    function text(){
-//      alert('11')
-//    }
   </script>
 </head>
 <body scroll="no">

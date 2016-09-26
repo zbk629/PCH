@@ -349,7 +349,7 @@
     //更新信息
     function updateMessage() {
       var obj = {};
-      obj.action = 'show_mine';
+      obj.action = 'show';
       obj.order_id = item_id;
       validate.validate_submit('/api/db/passenger/departure', obj, insertMessage);
     }
