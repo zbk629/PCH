@@ -8,6 +8,7 @@ public class DepartureInfo {
     private int user_id;
     private int is_enable;
     private int status;
+    private double price;
     private String start_time;
     private String end_time;
     private String departure_province;
@@ -29,6 +30,14 @@ public class DepartureInfo {
     String driving_name;
     String car_brand;
     String openid;
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
     public String getOpenid() {
         return openid;

@@ -157,7 +157,7 @@ public class LaiHuiDB {
 
             public PreparedStatement createPreparedStatement(Connection con)
                     throws SQLException {
-                String sql = "insert into pch_publish_info(mobile,start_time,end_time,departure_city,destination_city,init_seats,create_time,is_enable,points,description,departure,destination,tag_yes_content,driving_name,car_brand,info_status,tag_no_content,user_id,info_source) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                String sql = "insert into pch_publish_info(mobile,start_time,end_time,departure_city,destination_city,init_seats,create_time,is_enable,points,description,departure,destination,tag_yes_content,driving_name,car_brand,info_status,tag_no_content,user_id,info_source,current_seats) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                 PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
                 ps.setString(1, departureInfo.getMobile());
                 ps.setString(2, departureInfo.getStart_time());
@@ -178,6 +178,7 @@ public class LaiHuiDB {
                 ps.setString(17, departureInfo.getTag_no_content());
                 ps.setInt(18,departureInfo.getUser_id());
                 ps.setInt(19,0);
+                ps.setInt(20,departureInfo.getInit_seats());
                 return ps;
             }
         }, keyHolder);

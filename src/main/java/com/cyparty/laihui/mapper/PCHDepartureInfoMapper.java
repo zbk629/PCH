@@ -34,6 +34,7 @@ public class PCHDepartureInfoMapper implements RowMapper<DepartureInfo> {
         departure.setTag_no_content(Utils.checkNull(resultSet.getString("tag_no_content")));
         departure.setStatus(resultSet.getInt("info_status"));
         departure.setCreate_time(Utils.checkTime(resultSet.getString("create_time")));
+        departure.setPrice(resultSet.getDouble("price"));
         departure.setIs_enable(resultSet.getInt("is_enable"));
 
         return departure;

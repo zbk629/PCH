@@ -231,6 +231,7 @@ public class ReturnJsonUtil {
             jsonObject.put("tag_no_content", departure.getTag_no_content());
             jsonObject.put("info_status", departure.getStatus());//-1,1,2
             jsonObject.put("create_time", departure.getCreate_time());
+            jsonObject.put("price", departure.getPrice());
 
             where=" where route_id="+departure.getR_id();
             List<RoutePoint> points=laiHuiDB.getRoutePoint(where);
@@ -362,6 +363,7 @@ public class ReturnJsonUtil {
             jsonObject.put("tag_no_content", departure.getTag_no_content());
             jsonObject.put("info_status", departure.getStatus());//-1,1,2
             jsonObject.put("create_time", departure.getCreate_time());
+            jsonObject.put("price", departure.getPrice());
 
             where=" where route_id="+departure.getR_id();
             List<RoutePoint> points=laiHuiDB.getRoutePoint(where);
