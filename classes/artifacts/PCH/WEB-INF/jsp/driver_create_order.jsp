@@ -394,6 +394,7 @@
     }
     .publish_message{
       position: absolute;
+      width: 100%;
       top: 4.2rem;
       bottom: 4.2rem;
       /* 使之可以滚动 */

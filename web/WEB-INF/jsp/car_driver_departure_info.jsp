@@ -545,6 +545,7 @@
                     var destination = global_data.result.data[i].destination;//目的小城市
                     var boarding_point = global_data.result.data[i].boarding_point;//上车地点
                     var breakout_point = global_data.result.data[i].breakout_point;//下车地点
+                    var price = global_data.result.data[i].price;//下车地点
                     if(destination_city == ""){
                         destination_city = "郑州"
                     }
@@ -619,6 +620,7 @@
                     $('.item_name').text(driving_name);
                     $('.item_points').text(points);
                     $('.item_type').text(car_brand);
+                    $('.item_price').text(price+"元");
 //                    $('.call_driver_bottom').attr('href', 'tel:' + mobile_array[0]);
 
                     if (driving_name == "") {
@@ -1063,7 +1065,15 @@
                 </div>
                 <div class="clear"></div>
             </li>
-
+            <li class="publish_message_li">
+                <div class="publish_message_li_left">
+                    <span>价格</span>
+                </div>
+                <div class="publish_message_li_right">
+                    <span class="item_price"></span>
+                </div>
+                <div class="clear"></div>
+            </li>
             <li class="publish_message_li" onclick="checkUser()">
                 <div class="publish_message_li_left">
                     <span>是否预定</span>

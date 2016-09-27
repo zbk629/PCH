@@ -379,6 +379,9 @@
         .float_ul{
             line-height: 3.2rem;
         }
+        .float_li{
+            border-top:1px dashed #e8e8e8;
+        }
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
     <script>
