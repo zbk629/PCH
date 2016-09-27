@@ -545,7 +545,7 @@
                     var destination = global_data.result.data[i].destination;//目的小城市
                     var boarding_point = global_data.result.data[i].boarding_point;//上车地点
                     var breakout_point = global_data.result.data[i].breakout_point;//下车地点
-                    var price = global_data.result.data[i].price;//下车地点
+                    var price = global_data.result.data[i].price;
                     if(destination_city == ""){
                         destination_city = "郑州"
                     }
@@ -597,17 +597,6 @@
                     tag_no_content = tag_no_content.replace(/丶/g, "、");
                     var mobile_array = [];
                     mobile_array = mobile.split(',');
-//                    for(var i=0;i<mobile_array.length;i++){
-//                            $('.mobile_clear').append('<a href="tel:'+mobile_array[i]+'" class="call_driver">' +
-//                                    '<div class="publish_message_li_moblie">'+
-//                                    '<span class="item_mobile">'+mobile_array[i]+'</span>'+
-//                                    '<img src="/resource/images/pc_icon_mobile.png" class="mobile">'+
-//                                    '</div>'+
-//                                    '<div class="clear"></div>'+
-//                                    '</a>'
-//                            )
-//                    }
-
                     $('.departure_city').text(departure_city);
                     $('.destination_city').text(destination_city);
                     $('.item_tips_span').text(description);
@@ -621,8 +610,6 @@
                     $('.item_points').text(points);
                     $('.item_type').text(car_brand);
                     $('.item_price').text(price+"元");
-//                    $('.call_driver_bottom').attr('href', 'tel:' + mobile_array[0]);
-
                     if (driving_name == "") {
                         $('.item_name_li').remove()
                     }
@@ -645,16 +632,6 @@
                     if (car_brand == "") {
                         $('.item_type_li').remove()
                     }
-//                var array_points = points.split("丶");
-//                for (var j = 0; j < array_points.length; j++) {
-//                    $('.publish_message_li_route').append('<li class="publish_route_box_li">' +
-//                            '<span class="publish_route_box_li_span">' + array_points[j] + '</span>' +
-//                            '<div class="line_container">' +
-//                            '<div class="line_slide"></div>' +
-//                            '<div class="line_circle"></div>' +
-//                            '</div>' +
-//                            '</li>')
-//                }
 
                     if (car_brand == "") {
                         $($('.departure_li_car_type')[i]).remove();
@@ -669,6 +646,10 @@
                         $('.end_city_type').remove();
                     } else {
                         $('.end_city').text(destination);
+                    }
+
+                    if (price == "" || price==0) {
+                        $('.publish_message_price').hide();
                     }
                 }
                 checkList();
@@ -1065,7 +1046,7 @@
                 </div>
                 <div class="clear"></div>
             </li>
-            <li class="publish_message_li">
+            <li class="publish_message_li publish_message_price">
                 <div class="publish_message_li_left">
                     <span>价格</span>
                 </div>

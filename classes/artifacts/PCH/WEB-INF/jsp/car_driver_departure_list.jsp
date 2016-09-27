@@ -382,6 +382,11 @@
         .float_li{
             border-top:1px dashed #e8e8e8;
         }
+        .price_img{
+            width: 1.6rem;
+            position: relative;
+            top: .26rem;
+        }
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
     <script>
@@ -698,6 +703,7 @@
                 var car_brand = global_data.result.data[i].car_brand;//车辆品牌
                 var id = global_data.result.data[i].id;//id
                 var create_time = global_data.result.data[i].create_time;//id
+                var price = global_data.result.data[i].price;//id
                 if(destination_city == ""){
                     destination_city = "郑州"
                 }
@@ -731,7 +737,7 @@
                 var begin_start_time = start_time.substring(11, 16);
                 var begin_end_time = end_time.substring(11, 16);
 
-                addDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+                addDisplay(price,create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                         inits_seats, car_brand, id);
                 if (info_status == "有空位") {
                     $($('.departure_li_status')[(page_list*size)+i]).css('background-color','#2ecc71');
@@ -750,12 +756,14 @@
                 if (destination == "" || departure=="null") {
                     $($('.end_city')[(page_list*size)+i]).hide();
                 }
-
+                if (price == "" || price==0) {
+                    $($('.departure_li_price')[(page_list*size)+i]).hide();
+                }
 
             }
         }
 
-        function addDisplay(create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+        function addDisplay(price,create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                             inits_seats, car_brand, id) {
             $('.departure_ul').append('<li class="departure_li" id=' + id + ' onclick="toDetail(this)">' +
                     '<span class="departure_li_status">' + info_status + '</span>' +
@@ -764,11 +772,14 @@
                     '<span>——</span>' +
                     '<span>' + destination_city + '</span><span class="end_city" style="color:#999794"><i class="circle"></i>' + destination + '</span>' +
                     '</div>' +
+                    '<div class="departure_li_style departure_li_price">' +
+                    '<img src="/resource/images/pch_money.png" class="price_img"/>' +
+                    '<span class="departure_time_mouth">' + price + '元</span>' +
+                    '</div>' +
                     '<div class="departure_li_style departure_li_time">' +
                     '<span>出行时间</span>' +
                     '<span class="departure_time_mouth">' + insert_time + '</span>' +
                     '<span style="color: #999794">' + begin_start_time + '-' + begin_end_time + '</span>' +
-
                     '</div>' +
                     '<div class="departure_li_style departure_li_time">' +
                     '<span>发布时间</span>' +
