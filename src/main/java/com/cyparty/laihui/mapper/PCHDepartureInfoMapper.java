@@ -23,16 +23,17 @@ public class PCHDepartureInfoMapper implements RowMapper<DepartureInfo> {
         departure.setDeparture_city(resultSet.getString("departure_city"));
         departure.setDestination_city(resultSet.getString("destination_city"));
         departure.setInit_seats(resultSet.getInt("init_seats"));
+        departure.setCurrent_seats(resultSet.getInt("current_seats"));
         departure.setMobile(Utils.checkNull(resultSet.getString("mobile")));
         departure.setPoints(Utils.checkNull(resultSet.getString("points")));
         departure.setDescription(Utils.checkNull(resultSet.getString("description")));
-        departure.setCar_brand(Utils.checkNull(resultSet.getString("car_brand")));
         departure.setDeparture_county(Utils.checkNull(resultSet.getString("departure")));
         departure.setDestination(Utils.checkNull(resultSet.getString("destination")));
         departure.setDriving_name(Utils.checkNull(resultSet.getString("driving_name")));
         departure.setTag_yes_content(Utils.checkNull(resultSet.getString("tag_yes_content")));
         departure.setTag_no_content(Utils.checkNull(resultSet.getString("tag_no_content")));
         departure.setStatus(resultSet.getInt("info_status"));
+        departure.setCar_brand(Utils.checkNull(resultSet.getString("car_brand")));
         departure.setCreate_time(Utils.checkTime(resultSet.getString("create_time")));
         departure.setPrice(resultSet.getDouble("price"));
         departure.setIs_enable(resultSet.getInt("is_enable"));

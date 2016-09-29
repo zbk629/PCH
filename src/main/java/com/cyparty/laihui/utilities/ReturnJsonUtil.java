@@ -495,11 +495,16 @@ public class ReturnJsonUtil {
             String user_mobile=laiHuiDB.getWxUser(now_where).get(0).getUser_mobile();
             where = " where user_mobile like '%" + user_mobile+"%'";
         } else {*/
+        if (now_order_id != 0) {
+            where = where + " and _id=" + now_order_id;
+        }else {
+
             if (date != null && !date.trim().equals("")) {
                 where = where + " and start_time >'" + date + " 00:00:00' and start_time < '" + date + " 24:00:00'";
             } else {
                 where = where + " and end_time >'" + Utils.getCurrentTime() + "'";
             }
+        }
        /* }*/
         if (departure_city != null && !departure_city.trim().equals("")) {
             where = where + " and departure_city ='" + departure_city + "'";
@@ -507,9 +512,7 @@ public class ReturnJsonUtil {
         if (destination_city != null && !destination_city.trim().equals("")) {
             where = where + " and destination_city ='" + destination_city + "'";
         }
-        if (now_order_id != 0) {
-            where = where + " and _id=" + now_order_id;
-        }
+
         where = where + " order by end_time ASC";
         int offset = page * size;
         int count = laiHuiDB.getCount("pch_passenger_publish_info", where);

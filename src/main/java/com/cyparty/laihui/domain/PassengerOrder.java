@@ -19,6 +19,15 @@ public class PassengerOrder {
     private String start_time;
     private String end_time;
     private String mobile;
+    private int  pay_status;
+
+    public int getPay_status() {
+        return pay_status;
+    }
+
+    public void setPay_status(int pay_status) {
+        this.pay_status = pay_status;
+    }
 
     public String getDeparture_time() {
         return departure_time;

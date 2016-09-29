@@ -299,6 +299,11 @@ public class UserActionController {
 
                             //String where_now=" where user_id="+user_id+" and order_id="+order_id+" and order_source=0";
                             List<PassengerOrder> passengerOrderList=laiHuiDB.getPassengerOrder(order_where);
+                            if(departureInfo.getCurrent_seats()<seats){
+                                result.put("errcode",300);
+                                json = ReturnJsonUtil.returnFailJsonString(result, "座位已满！");
+                                return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                            }
                             if(passengerOrderList.size()>0){
                                 result.put("errcode",401);
                                 json = ReturnJsonUtil.returnFailJsonString(result, "您已预定过该行程单或类似行程单，请不要重复操作！");
@@ -306,6 +311,9 @@ public class UserActionController {
                             }
                             if(boarding_point!=null&&breakout_point!=null){
                                 is_success=laiHuiDB.createPassengerOrder(order);
+                                //更新车单座位个数
+                                String update_sql=" set current_seats=current_seats-"+seats+" where _id="+departureInfo.getR_id();
+                                laiHuiDB.update("pch_publish_info",update_sql);
                             }else {
                                 is_success=false;
                             }
@@ -376,10 +384,16 @@ public class UserActionController {
                         String p_mobile=laiHuiDB.getWxUser(user_where).get(0).getUser_mobile();
                         String driver_mobile=request.getParameter("mobile");
                         String status=request.getParameter("status");
-
-                        laiHuiDB.deleteUserAction(order_id,p_mobile,1);
+                        String order_where=" where _id="+order_id;
+                        PassengerOrder passengerOrder=new PassengerOrder();
+                        if(laiHuiDB.getPassengerOrder(order_where).size()>0){
+                            passengerOrder=laiHuiDB.getPassengerOrder(order_where).get(0);
+                        }
                         if(status!=null&&status.equals("-1")){
                             //短信通知车主
+                            laiHuiDB.deleteUserAction(order_id,p_mobile,1);
+                            String update_sql=" set current_seats=current_seats+"+passengerOrder.getSeats();
+                            laiHuiDB.update("pch_publish_info",update_sql);
                             Utils.sendCancleNotifyMessage(driver_mobile, p_mobile);
                         }
                         json = ReturnJsonUtil.returnSuccessJsonString(result, "删除成功！");

@@ -23,7 +23,7 @@ public class PassengerOrdersMapper implements RowMapper<PassengerOrder> {
         order.setBreakout_ponit(resultSet.getString("breakout_point"));
         order.setDescription(resultSet.getString("description"));
         order.setCreate_time(resultSet.getString("create_time"));
-
+        //order.setPay_status(resultSet.getInt("pay_status"));
 
         return order;
     }
