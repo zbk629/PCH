@@ -447,7 +447,7 @@
         }
         if (id == 0) {
           $($('.mine_looking')[(page_list*size)+i]).hide();
-          $($('.mine_delete')[(page_list*size)+i]).css('margin-right','0');
+//          $($('.mine_delete')[(page_list*size)+i]).css('margin-right','0');
           $($('.departure_time_seat')[(page_list*size)+i]).css('float','inherit');
         }
       }
@@ -511,7 +511,7 @@
 //                    '<span class="mine_type mine_change" onclick="mine_change(this)">修改订单</span>' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
               '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
-              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
+//              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
 
 //              '<span class="mine_type mine_made" onclick="mine_made(this)" index=' + i + '>生成文字信息</span>' +
               '<div class="clear"></div>' +
@@ -545,7 +545,7 @@
               '<div class="mine_first_bottom">' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
               '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
-              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
+//              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
 
               '<div class="clear"></div>' +
               '</div>' +
@@ -583,7 +583,7 @@
               '</div>' +
               '<div class="mine_first_bottom">' +
 //              '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
-              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
+//              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
 //                    '<span class="mine_type mine_made" onclick="mine_made(this)" index=' + i + '>生成文字信息</span>' +
               '<div class="clear"></div>' +
               '</div>' +
@@ -665,7 +665,6 @@
       obj.order_id = order_id;
       obj.status = "-1";
       obj.mobile = mobile1;
-      console.log(obj);
       validate.validate_submit("/api/db/passenger/departure", obj, loadMessage);
       removeFloatMessage();
     }
@@ -711,7 +710,7 @@
 
       <div class="clear history_clear"></div>
     </ul>
-    <span class="not_message">暂无发布信息</span>
+    <span class="not_message">暂无预定信息</span>
   </div>
   <%--底部--%>
   <div class="bottom_menu " onclick="changeMenu(this)">

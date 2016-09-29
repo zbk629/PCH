@@ -362,6 +362,9 @@
         .success_href:hover {
             background-color: #fff;
         }
+        .item_price{
+            color: #f5ad4e;
+        }
 
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
@@ -743,6 +746,8 @@
                             setTimeout(function () {
                                 window.location.href = "/wx/login"
                             }, 1000);
+                        }else{
+                            showFloatStyle(data.message);
                         }
 
                     }

@@ -168,6 +168,7 @@
             font-size: 1.4rem;
             line-height: 3rem;
             position: relative;
+            padding-right: 5.4rem;
         }
 
         .departure_li_style {
@@ -774,7 +775,7 @@
                     '</div>' +
                     '<div class="departure_li_style departure_li_price">' +
                     '<img src="/resource/images/pch_money.png" class="price_img"/>' +
-                    '<span class="departure_time_mouth">' + price + '元</span>' +
+                    '<span class="departure_time_mouth" style="color: #f5ad4e;">' + price + '元</span>' +
                     '</div>' +
                     '<div class="departure_li_style departure_li_time">' +
                     '<span>出行时间</span>' +
