@@ -825,7 +825,9 @@
                 showErrorTips("下车地点不能为空");
             } else if ($('.booking_seat').val() == "") {
                 showErrorTips("座位数不能为空");
-            } else {
+            }  else if($('.booking_seat').val()>parseInt($('.item_seat').text())){
+                showErrorTips("座位数不能大于预定个数");
+            }else {
                 removeErrorTips();
                 sendMobileMessage()
             }

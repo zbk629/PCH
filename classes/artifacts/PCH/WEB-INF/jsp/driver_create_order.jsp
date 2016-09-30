@@ -538,8 +538,7 @@
           var mobile = global_data.result.data[i].mobile;//手机号
           var departure_city = global_data.result.data[i].departure_city;//出发城市
           var destination_city = global_data.result.data[i].destination_city;//目的城市
-          var departure = global_data.result.data[i].departure;//出发小城
-          var destination = global_data.result.data[i].destination;//目的小城市
+
           var description = global_data.result.data[i].description;//描述信息
           var tag_yes_content = global_data.result.data[i].tag_yes_content;//yes标签
           var tag_no_content = global_data.result.data[i].tag_no_content;//no标签
