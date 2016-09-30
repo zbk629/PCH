@@ -348,7 +348,7 @@ public class UserActionController {
 
                                 WXUtils.pinCheNotify(request,departureInfo,2);
                                 //发送通知短信
-                                Utils.sendNotifyMessage(d_mobile,p_mobile,date);
+                                Utils.sendNotifyMessage(d_mobile,p_mobile);
                                 json = ReturnJsonUtil.returnSuccessJsonString(result, "订单创建成功！");
                                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                             }

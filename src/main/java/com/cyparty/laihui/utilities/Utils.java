@@ -357,9 +357,14 @@ public class Utils {
         }
         return typ_val;
     }
-    public static boolean sendNotifyMessage(String d_mobile,String p_mobile,String date){
+    public static boolean sendNotifyMessage(String d_mobile,String p_mobile){
         String typ_val="#mobile#="+p_mobile;
         boolean send_isSuccess= SendSMSUtil.sendSMS(d_mobile, 19361, typ_val);
+        return send_isSuccess;
+    }
+    public static boolean sendPublishNotifyMessage(String d_mobile){
+        String typ_val="#mobile#="+d_mobile;
+        boolean send_isSuccess= SendSMSUtil.sendSMS(d_mobile, 19139, typ_val);
         return send_isSuccess;
     }
     public static boolean sendCancleNotifyMessage(String d_mobile,String p_mobile){
