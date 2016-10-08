@@ -100,6 +100,7 @@ public class ReturnJsonUtil {
             for (RouteInfo route : routeList) {
                 JSONObject now_jsonObject = new JSONObject();
                 now_jsonObject.put("id", j);
+                now_jsonObject.put("price", route.getCost());
                 now_jsonObject.put("name", route.getDestination());
 
                 j++;

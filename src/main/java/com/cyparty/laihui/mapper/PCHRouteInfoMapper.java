@@ -21,6 +21,7 @@ public class PCHRouteInfoMapper implements RowMapper<RouteInfo> {
         routeInfo.setDestination(resultSet.getString("destination_city"));
 
         routeInfo.setDriving_length(resultSet.getFloat("driving_length"));
+        routeInfo.setCost(resultSet.getDouble("route_price"));
         routeInfo.setIs_enable(resultSet.getInt("is_enable"));
         routeInfo.setCreate_time(Utils.checkTime(resultSet.getString("create_time")));
 
