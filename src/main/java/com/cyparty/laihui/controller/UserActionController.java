@@ -129,7 +129,7 @@ public class UserActionController {
             }
             boolean is_success = true;
             int seats=0;
-            int user_id=0;
+            int user_id=377;
             int order_id=0;
             //todo:user_id改为从session中获取
             if(request.getSession().getAttribute("user_id")!=null){
@@ -312,8 +312,11 @@ public class UserActionController {
                             if(boarding_point!=null&&breakout_point!=null){
                                 is_success=laiHuiDB.createPassengerOrder(order);
                                 //更新车单座位个数
-                                String update_sql=" set current_seats=current_seats-"+seats+" where _id="+departureInfo.getR_id();
-                                laiHuiDB.update("pch_publish_info",update_sql);
+                                boolean is_stop=false;
+                                while (!is_stop){
+                                    String update_sql=" set current_seats=current_seats-"+seats+" where _id="+departureInfo.getR_id();
+                                    is_stop=laiHuiDB.update("pch_publish_info",update_sql);
+                                }
                             }else {
                                 is_success=false;
                             }
@@ -348,6 +351,7 @@ public class UserActionController {
 
                                 WXUtils.pinCheNotify(request,departureInfo,2);
                                 //发送通知短信
+
                                 Utils.sendNotifyMessage(d_mobile,p_mobile);
                                 json = ReturnJsonUtil.returnSuccessJsonString(result, "订单创建成功！");
                                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
@@ -358,7 +362,6 @@ public class UserActionController {
                         json = ReturnJsonUtil.returnFailJsonString(result, "司机车单不存在！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }
-
                     result.put("errcode",403);
                     json = ReturnJsonUtil.returnFailJsonString(result, "请登陆！");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
@@ -388,18 +391,36 @@ public class UserActionController {
                         PassengerOrder passengerOrder=new PassengerOrder();
                         if(laiHuiDB.getPassengerOrder(order_where).size()>0){
                             passengerOrder=laiHuiDB.getPassengerOrder(order_where).get(0);
-                        }
-                        if(status!=null&&status.equals("-1")){
-                            //短信通知车主
-                            laiHuiDB.deleteUserAction(order_id,p_mobile,1);
-                            String update_sql=" set current_seats=current_seats+"+passengerOrder.getSeats();
-                            laiHuiDB.update("pch_publish_info",update_sql);
-                            Utils.sendCancleNotifyMessage(driver_mobile, p_mobile);
+                            if(status!=null&&status.equals("-1")){
+                                //短信通知车主
+                                laiHuiDB.deleteUserAction(order_id,p_mobile,1);
+                                is_success=false;
+
+                                while (!is_success){
+                                    String update_sql=" set current_seats=current_seats+"+passengerOrder.getSeats()+" where _id="+passengerOrder.getDriver_order_id();
+                                    laiHuiDB.update("pch_publish_info",update_sql);
+                                }
+
+                                if(p_mobile!=null&&!p_mobile.trim().equals("")&&p_mobile.length()==11){
+                                    Utils.sendCancleNotifyMessage(driver_mobile, p_mobile);
+                                }
+                            }
                         }
                         json = ReturnJsonUtil.returnSuccessJsonString(result, "删除成功！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }
-                    json = ReturnJsonUtil.returnFailJsonString(result, "删除失败！");
+                    json = ReturnJsonUtil.returnFailJsonString(result, "请先登陆！");
+                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                case "show_my_passenger_orders":
+                    if(user_id>0){
+
+                        String user_where=" where user_id="+user_id;
+                        String p_mobile=laiHuiDB.getWxUser(user_where).get(0).getUser_mobile();
+
+                        json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getMyPassengerOrders(laiHuiDB,page,size,p_mobile), "订单数据获取成功！");
+                        return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                    }
+                    json = ReturnJsonUtil.returnFailJsonString(result, "请先登陆！");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
             }
             json = ReturnJsonUtil.returnFailJsonString(result, "获取参数错误");

@@ -214,7 +214,7 @@ public class WXUtils {
                 json="{\n" +
                         "           \"touser\":\""+user.getOpenid()+"\",\n" +
                         "           \"template_id\":\"wKsNLWJCpYrbsBqTRKG_JeeqxrlFxSAhRzC8cwL9CDM\",\n" +
-                        "           \"url\":\"http://wx.pinchenet.com//laihui/car/detail?id="+departureInfo.getR_id()+"\",            \n" +
+                        "           \"url\":\"http://wx.pinchenet.com/laihui/driver/create_order?id="+departureInfo.getR_id()+"\",            \n" +
                         "           \"data\":{\n" +
                         "                   \"first\": {\n" +
                         "                       \"value\":\"从"+departureInfo.getDeparture_city()+"到"+departureInfo.getDestination_city()+"的拼车发布成功！\",\n" +

@@ -2,6 +2,7 @@ package com.cyparty.laihui.mapper;
 
 import com.cyparty.laihui.domain.Code;
 import com.cyparty.laihui.domain.PassengerOrder;
+import com.cyparty.laihui.utilities.Utils;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -22,7 +23,8 @@ public class PassengerOrdersMapper implements RowMapper<PassengerOrder> {
         order.setBoarding_point(resultSet.getString("boarding_point"));
         order.setBreakout_ponit(resultSet.getString("breakout_point"));
         order.setDescription(resultSet.getString("description"));
-        order.setCreate_time(resultSet.getString("create_time"));
+        order.setCreate_time(resultSet.getString("create_time").split("\\.")[0]);
+        order.setMobile(Utils.checkNull(resultSet.getString("mobile")));
         //order.setPay_status(resultSet.getInt("pay_status"));
 
         return order;

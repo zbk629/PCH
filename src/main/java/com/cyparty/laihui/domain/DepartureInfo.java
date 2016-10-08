@@ -23,6 +23,8 @@ public class DepartureInfo {
     private String description;
     private String mobile;
     private String date;
+
+    private double origin_price;
     String departure_county;
     String destination;
     String tag_yes_content;
@@ -30,6 +32,14 @@ public class DepartureInfo {
     String driving_name;
     String car_brand;
     String openid;
+
+    public double getOrigin_price() {
+        return origin_price;
+    }
+
+    public void setOrigin_price(double origin_price) {
+        this.origin_price = origin_price;
+    }
 
     public double getPrice() {
         return price;

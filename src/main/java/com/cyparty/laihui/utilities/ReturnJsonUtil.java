@@ -219,7 +219,7 @@ public class ReturnJsonUtil {
             jsonObject.put("is_editor", is_editor);
             jsonObject.put("departure_city", departure.getDeparture_city());
             jsonObject.put("destination_city", departure.getDestination_city());
-            jsonObject.put("inits_seats", departure.getInit_seats());
+            jsonObject.put("inits_seats", departure.getCurrent_seats());
             jsonObject.put("mobile", departure.getMobile());
             jsonObject.put("points", departure.getPoints());
             jsonObject.put("description", departure.getDescription());
@@ -625,6 +625,92 @@ public class ReturnJsonUtil {
             dataArray.add(jsonObject);
         }
         result_json.put("data", dataArray);
+        return result_json;
+    }
+
+    public static JSONObject getMyPassengerOrders(LaiHuiDB laiHuiDB,int page,int size, String mobile ) {
+        JSONObject result_json = new JSONObject();
+        JSONArray dataArray = new JSONArray();
+        String where = " where is_enable=1 and mobile like '%" +mobile+ "%' order by end_time DESC";
+
+        //int count = laiHuiDB.getPCHDepartureInfo(where).size();
+        int count =0;
+        int offset = page * size;
+        where = where + " limit " + offset + "," + size;
+        List<DepartureInfo> departureInfoList = laiHuiDB.getPCHDepartureInfo(where);
+        for (DepartureInfo departure : departureInfoList) {
+            JSONObject jsonObject = new JSONObject();
+            boolean is_editor = false;
+            jsonObject.put("id", departure.getR_id());
+            jsonObject.put("driver_id", departure.getUser_id());
+            jsonObject.put("start_time", departure.getStart_time());
+            jsonObject.put("end_time", departure.getEnd_time());
+            long current = Utils.getCurrenTimeStamp();
+            long end_date = Utils.date2TimeStamp(departure.getEnd_time());
+            if (end_date > current) {
+                is_editor = true;
+            }
+            jsonObject.put("is_editor", is_editor);
+            jsonObject.put("departure_city", departure.getDeparture_city());
+            jsonObject.put("destination_city", departure.getDestination_city());
+            jsonObject.put("inits_seats", departure.getCurrent_seats());
+            jsonObject.put("mobile", departure.getMobile());
+            jsonObject.put("points", departure.getPoints());
+            jsonObject.put("description", departure.getDescription());
+            jsonObject.put("car_brand", departure.getCar_brand());
+            jsonObject.put("departure", departure.getDeparture_county());
+            jsonObject.put("destination", departure.getDestination());
+            jsonObject.put("driving_name", departure.getDriving_name());
+            jsonObject.put("tag_yes_content", departure.getTag_yes_content());
+            jsonObject.put("tag_no_content", departure.getTag_no_content());
+            jsonObject.put("info_status", departure.getStatus());//-1,1,2
+            jsonObject.put("create_time", departure.getCreate_time());
+            jsonObject.put("price", departure.getPrice());
+
+            where=" where route_id="+departure.getR_id();
+            List<RoutePoint> points=laiHuiDB.getRoutePoint(where);
+            if(points.size()>0){
+                if(points.size()>=2){
+
+                    jsonObject.put("boarding_point", points.get(0).getPoint_name());
+                    jsonObject.put("breakout_point", points.get(1).getPoint_name());
+                }else {
+                    jsonObject.put("boarding_point", points.get(0).getPoint_name());
+                    jsonObject.put("breakout_point", "");
+                }
+            }else {
+                jsonObject.put("boarding_point", "");
+                jsonObject.put("breakout_point", "");
+            }
+
+            String order_where=" where order_id="+departure.getR_id();
+            List<PassengerOrder> passengerOrderList = laiHuiDB.getPassengerOrder(order_where);
+            if(passengerOrderList.size()>0){
+                JSONArray orderArray=new JSONArray();
+                for (PassengerOrder passengerOrder : passengerOrderList) {
+                    JSONObject orderObject = new JSONObject();
+
+                    orderObject.put("order_id", passengerOrder.get_id());
+                    orderObject.put("booking_seats", passengerOrder.getSeats());
+                    orderObject.put("boarding_point", passengerOrder.getBoarding_point());
+                    orderObject.put("breakout_point", passengerOrder.getBreakout_ponit());
+                    orderObject.put("description", passengerOrder.getDescription());
+                    orderObject.put("mobile", passengerOrder.getMobile());
+                    orderObject.put("create_time", passengerOrder.getCreate_time());
+
+                    orderArray.add(orderObject);
+
+                }
+                jsonObject.put("orders",orderArray);
+                dataArray.add(jsonObject);
+                count++;
+            }
+        }
+        result_json.put("data", dataArray);
+        result_json.put("total", count);
+        result_json.put("page", page);
+        result_json.put("size", size);
+
         return result_json;
     }
 }

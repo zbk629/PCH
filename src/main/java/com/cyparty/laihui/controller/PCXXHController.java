@@ -161,6 +161,24 @@ public class PCXXHController {
                         String driving_name=request.getParameter("driving_name");
                         String car_brand=request.getParameter("car_brand");
 
+                        double price=0;
+                        double origin_price=0;
+                        if(request.getParameter("price")!=null){
+                            try {
+                                price=Double.parseDouble(request.getParameter("price"));
+                            } catch (NumberFormatException e) {
+                                price=0;
+                                e.printStackTrace();
+                            }
+                        }
+                        if(request.getParameter("origin_price")!=null){
+                            try {
+                                origin_price=Double.parseDouble(request.getParameter("origin_price"));
+                            } catch (NumberFormatException e) {
+                                origin_price=0;
+                                e.printStackTrace();
+                            }
+                        }
                         String date=start_time.split(" ")[0].split("-")[0]+"年"+start_time.split(" ")[0].split("-")[1]+"月"+start_time.split(" ")[0].split("-")[2]+"日";
                         departure.setUser_id(user_id);
                         departure.setMobile(mobile);
@@ -178,33 +196,36 @@ public class PCXXHController {
                         departure.setDriving_name(driving_name);
                         departure.setCar_brand(car_brand);
                         departure.setDate(date);
+                        departure.setPrice(price);
+                        departure.setOrigin_price(origin_price);
+
                         //创建出车信息
                         if(id>0){
                             //更新
-                            where=" set start_time='"+start_time+"', end_time='"+end_time+"',departure_city='"+departure_city+"',destination_city='"+destination_city+"',init_seats="+init_seats+",mobile='"+mobile+"',points='"+points+"',description='"+description+"',car_brand='"+car_brand+"',departure='"+departure_county+"',destination='"+destination+"',driving_name='"+driving_name+"',tag_yes_content='"+tag_yes_content+"',tag_no_content='"+tag_no_content+"' where _id="+id;
+                            where=" set start_time='"+start_time+"', end_time='"+end_time+"',departure_city='"+departure_city+"',destination_city='"+destination_city+"',init_seats="+init_seats+",mobile='"+mobile+"',points='"+points+"',description='"+description+"',car_brand='"+car_brand+"',departure='"+departure_county+"',destination='"+destination+"',driving_name='"+driving_name+"',tag_yes_content='"+tag_yes_content+"',tag_no_content='"+tag_no_content+"',price="+price+" where _id="+id;
                             is_success=laiHuiDB.update("pch_publish_info",where);
-                            String delete_where=" where route_id="+id;
-                            laiHuiDB.delete("pc_route_points",delete_where);
-                            //添加出发地，目的地坐标
-                            String route_json = request.getParameter("route_json");
-                            JSONObject data_json = JSONObject.parseObject(route_json);
-                            JSONArray data_array = data_json.getJSONArray("result");
-                            List<RoutePoint> routePointList = new ArrayList<>();
-                            for (int i = 0; i < data_array.size(); i++) {
-                                JSONObject jsonObject = data_array.getJSONObject(i);
-                                RoutePoint point = new RoutePoint();
-                                point.setPoint_seq(i + 1);
-                                point.setRoute_id(id);
-                                point.setPoint_name(jsonObject.getString("name"));
-                                point.setPoint_lat(jsonObject.getJSONObject("location").getString("lat"));
-                                point.setPoint_lng(jsonObject.getJSONObject("location").getString("lng"));
-                                point.setPoint_uid(jsonObject.getString("uid"));
-                                point.setPoint_city(jsonObject.getString("city"));
-                                point.setPoint_district(jsonObject.getString("district"));
-
-                                routePointList.add(point);
-                            }
-                            is_success = laiHuiDB.createRoutePoint(routePointList);
+//                            String delete_where=" where route_id="+id;
+//                            laiHuiDB.delete("pc_route_points",delete_where);
+//                            //添加出发地，目的地坐标
+//                            String route_json = request.getParameter("route_json");
+//                            JSONObject data_json = JSONObject.parseObject(route_json);
+//                            JSONArray data_array = data_json.getJSONArray("result");
+//                            List<RoutePoint> routePointList = new ArrayList<>();
+//                            for (int i = 0; i < data_array.size(); i++) {
+//                                JSONObject jsonObject = data_array.getJSONObject(i);
+//                                RoutePoint point = new RoutePoint();
+//                                point.setPoint_seq(i + 1);
+//                                point.setRoute_id(id);
+//                                point.setPoint_name(jsonObject.getString("name"));
+//                                point.setPoint_lat(jsonObject.getJSONObject("location").getString("lat"));
+//                                point.setPoint_lng(jsonObject.getJSONObject("location").getString("lng"));
+//                                point.setPoint_uid(jsonObject.getString("uid"));
+//                                point.setPoint_city(jsonObject.getString("city"));
+//                                point.setPoint_district(jsonObject.getString("district"));
+//
+//                                routePointList.add(point);
+//                            }
+//                            is_success = laiHuiDB.createRoutePoint(routePointList);
                             if(is_success){
                                 json = ReturnJsonUtil.returnSuccessJsonString(result, "修改成功！");
                                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
@@ -235,7 +256,6 @@ public class PCXXHController {
                                 point.setPoint_uid(jsonObject.getString("uid"));
                                 point.setPoint_city(jsonObject.getString("city"));
                                 point.setPoint_district(jsonObject.getString("district"));
-
                                 routePointList.add(point);
                             }
                             is_success = laiHuiDB.createRoutePoint(routePointList);
