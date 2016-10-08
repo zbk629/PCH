@@ -233,6 +233,7 @@ public class ReturnJsonUtil {
             jsonObject.put("info_status", departure.getStatus());//-1,1,2
             jsonObject.put("create_time", departure.getCreate_time());
             jsonObject.put("price", departure.getPrice());
+            jsonObject.put("origin_price", departure.getOrigin_price());
 
             where=" where route_id="+departure.getR_id();
             List<RoutePoint> points=laiHuiDB.getRoutePoint(where);
@@ -353,6 +354,7 @@ public class ReturnJsonUtil {
             jsonObject.put("departure_city", departure.getDeparture_city());
             jsonObject.put("destination_city", departure.getDestination_city());
             jsonObject.put("inits_seats", departure.getInit_seats());
+            jsonObject.put("current_seats", departure.getCurrent_seats());
             jsonObject.put("mobile", departure.getMobile());
             jsonObject.put("points", departure.getPoints());
             jsonObject.put("description", departure.getDescription());
@@ -684,7 +686,7 @@ public class ReturnJsonUtil {
                 jsonObject.put("breakout_point", "");
             }
 
-            String order_where=" where order_id="+departure.getR_id();
+            String order_where=" where order_id="+departure.getR_id()+" order by create_time DESC";
             List<PassengerOrder> passengerOrderList = laiHuiDB.getPassengerOrder(order_where);
             if(passengerOrderList.size()>0){
                 JSONArray orderArray=new JSONArray();

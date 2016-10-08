@@ -36,6 +36,7 @@ public class PCHDepartureInfoMapper implements RowMapper<DepartureInfo> {
         departure.setCar_brand(Utils.checkNull(resultSet.getString("car_brand")));
         departure.setCreate_time(Utils.checkTime(resultSet.getString("create_time")));
         departure.setPrice(resultSet.getDouble("price"));
+        departure.setOrigin_price(resultSet.getDouble("origin_price"));
         departure.setIs_enable(resultSet.getInt("is_enable"));
 
         return departure;
