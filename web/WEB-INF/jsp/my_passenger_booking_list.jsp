@@ -393,15 +393,14 @@
           addHistoryDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                   inits_seats, car_brand, id, points);
         }
-        for(var i=0;i<global_data.result.data[i].orders.length;i++){
+        for(var j=0;j<global_data.result.data[i].orders.length;i++){
           //乘客信息
-          var boarding_point = global_data.result.data[i].boarding_point;//上车地点
-          var breakout_point = global_data.result.data[i].breakout_point;//下车地点
-          var boarding_point = global_data.result.data[i].boarding_point;//上车地点
-          var breakout_point = global_data.result.data[i].breakout_point;//下车地点
-          var boarding_point = global_data.result.data[i].boarding_point;//上车地点
-          var breakout_point = global_data.result.data[i].breakout_point;//下车地点
-          addPassengerDisplay(p_order_id,p_info_status,p_boarding_point,p_breakout_point,p_inits_seats,p_mobile);
+          var p_order_id = global_data.result.data[i].orders[j].order_id;//id
+          var p_boarding_point = global_data.result.data[i].orders[j].boarding_point;//上车地点
+          var p_breakout_point = global_data.result.data[i].orders[j].breakout_point;//下车地点
+          var p_inits_seats = global_data.result.data[i].orders[j].booking_seats;//座位
+          var p_mobile = global_data.result.data[i].orders[j].mobile;//电话
+          addPassengerDisplay(p_order_id,p_boarding_point,p_breakout_point,p_inits_seats,p_mobile);
         }
 
         if (info_status == "有空位") {
@@ -537,14 +536,8 @@
               '</li> ')
     }
     //添加乘客样式
-    function addPassengerDisplay(p_order_id,p_info_status,p_boarding_point,p_breakout_point,p_inits_seats,p_mobile){
+    function addPassengerDisplay(p_order_id,p_boarding_point,p_breakout_point,p_inits_seats,p_mobile){
       $('.').append('<div class="mine_first_list" order_id='+p_order_id+'>' +
-              '<div class="mine_first_top">' +
-              '<div class="mine_first_top_right">' +
-              '<span class="departure_li_status">' + p_info_status + '</span>' +
-              '</div>' +
-              '<div class="clear"></div>' +
-              '</div>' +
               '<div class="mine_first_mid">' +
               '<div class="departure_li_style departure_li_time">' +
               '<span>上车地点</span>' +
@@ -556,14 +549,14 @@
               '<span class="departure_time_mouth">' + p_breakout_point + '</span>' +
 
               '</div>' +
+              '<div class="departure_li_style departure_li_time">' +
+              '<span class="departure_time_seat">订座' + p_inits_seats + '&nbsp;个</span>' +
+              '</div>' +
               '<a href="tel:'+p_mobile+'" class="departure_li_style departure_mobile">' +
               '<span>联系乘客</span>' +
               '<span class="departure_time_mouth departure_li_mobile">' + p_mobile + '</span>' +
               '<img src="/resource/images/pc_icon_mobile.png" class="mobile_style">'+
               '</a>'+
-              '<div class="departure_li_style departure_li_time">' +
-              '<span class="departure_time_seat">订座' + p_inits_seats + '&nbsp;个</span>' +
-              '</div>' +
               '</div>' +
               '</div>' +
               '</div> ')

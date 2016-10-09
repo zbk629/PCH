@@ -462,7 +462,7 @@
               '<span>下车地点</span>' +
               '<span class="departure_time_mouth">' + breakout_point + '</span>' +
               '</div>' +
-              '<div class="departure_li_style departure_breakout_point">' +
+              '<div class="departure_li_style departure_time">' +
               '<span>发布时间</span>' +
               '<span class="departure_time_mouth">' + create_time + '</span>' +
               '<span style="color: #999794">' + begin_create_time + '</span>' +

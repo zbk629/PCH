@@ -506,14 +506,9 @@
               '<span class="departure_li_type">'+description+'</span>' +
               '</div>' +
               '</div>' +
-
               '<div class="mine_first_bottom">' +
-//                    '<span class="mine_type mine_change" onclick="mine_change(this)">修改订单</span>' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
               '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
-//              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
-
-//              '<span class="mine_type mine_made" onclick="mine_made(this)" index=' + i + '>生成文字信息</span>' +
               '<div class="clear"></div>' +
               '</div>' +
               '</li> ')
@@ -531,12 +526,10 @@
               '<div class="departure_li_style departure_li_time">' +
               '<span>上车地点</span>' +
               '<span class="departure_time_mouth">' + boarding_point + '</span>' +
-
               '</div>' +
               '<div class="departure_li_style departure_li_time">' +
               '<span>下车地点</span>' +
               '<span class="departure_time_mouth">' + breakout_point + '</span>' +
-
               '</div>' +
               '<div class="departure_li_style departure_li_time">' +
               '<span class="departure_time_seat">订座' + inits_seats + '&nbsp;个</span>' +
@@ -545,8 +538,6 @@
               '<div class="mine_first_bottom">' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
               '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
-//              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
-
               '<div class="clear"></div>' +
               '</div>' +
               '</li> ')

@@ -3,7 +3,7 @@
   User: zhu
   Date: 2016/7/25
   Time: 15:06
-  describtion:移动端--乘客预约车主信息
+  describtion:移动端--车主发布出行信息历史车单
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,7 +15,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>来回拼车-乘客出行订单-微信</title>
+  <title>来回拼车-车主发车订单-微信</title>
   <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
   <script src="/resource/js/style.js" type="text/javascript"></script>
   <link href="/resource/css/style.css" rel="stylesheet" type="text/css">
@@ -153,7 +153,6 @@
     .departure_li_status {
       padding: .2rem .4rem;
       border-radius: 3px;
-      color: #999;
     }
 
     .mine_top_icon {
@@ -210,18 +209,11 @@
 
     .mine_first_bottom {
       padding-bottom: .4rem;
-      padding-top: .4rem;
     }
 
     .mine_delete {
       margin-right: 1.4rem;
       background-color: #e74c3c;
-      color: #fff;
-      border: none;
-    }
-    .mine_cancel {
-      margin-right: 1.4rem;
-      background-color: #3498db;
       color: #fff;
       border: none;
     }
@@ -301,25 +293,8 @@
       font-size: 1rem;
       margin-top: .6rem;
     }
-    .departure_li_type{
-      color: #999;
-      font-size: 1.2rem;
-    }
-    .begin_city , .end_city{
-      font-size: 1.2rem;
-    }
     .find_href_span{
       word-wrap: break-word;
-    }
-    .departure_mobile{
-      display: block;
-      position: relative;
-    }
-    .mobile_style{
-      width: 2rem;
-      float: right;
-      position: absolute;
-      right: 2rem
     }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
@@ -327,6 +302,7 @@
     $(document).ready(function () {
       changeFontSize();
       loadMessage();
+
       $('.hover').click(function(){
         removeFloatMessage();
       })
@@ -337,8 +313,6 @@
     var size = 20;
     var total;
     var index_id;
-    var order_id;
-    var mobile1;
     function returnCheck() {
       window.location.href = '/auth/base';
     }
@@ -346,11 +320,11 @@
       $('.mine_first_list').remove();
       $('.mine_list').remove();
       var obj = {};
-      obj.action = 'show_my_passenger_orders';
+      obj.action = 'show_myself';
       obj.page = page_list;
       obj.size = size;
       obj.user_id = user_id;
-      validate.validate_submit("/api/db/passenger/departure", obj, sendPageMessage);
+      validate.validate_submit("show_my_passenger_orders", obj, sendPageMessage);
     }
 
     function sendPageMessage() {
@@ -369,87 +343,93 @@
     //添加用户数据
     function insertMessage() {
       for (var i = 0; i < global_data.result.data.length; i++) {
-        var id = global_data.result.data[i].driver_order_id;//id
-        if(id==0){
-          var inits_seats = global_data.result.data[i].order.booking_seats;//可用座位
-          var boarding_point = global_data.result.data[i].order.boarding_point;//id
-          var breakout_point = global_data.result.data[i].order.breakout_point;//id
-          var order_id = global_data.result.data[i].order.order_id;//id
-        }else{
-          var start_time = global_data.result.data[i].start_time;//开始时间
-          var end_time = global_data.result.data[i].end_time;//结束时间
-          var departure_city = global_data.result.data[i].departure_city;//出发城市
-          var destination_city = global_data.result.data[i].destination_city;//目的城市
-          var departure = global_data.result.data[i].departure;//出发小城
-          var destination = global_data.result.data[i].destination;//目的小城市
-          var description = global_data.result.data[i].description;//描述信息
-          var create_time = global_data.result.data[i].create_time;//id
-          var mobile = global_data.result.data[i].mobile;//id
-          var driving_name = global_data.result.data[i].driving_name;//id
-          var is_cannel = global_data.result.data[i].is_editor;//id
-          var inits_seats = global_data.result.data[i].order.booking_seats;//可用座位
-          var boarding_point = global_data.result.data[i].order.boarding_point;//id
-          var breakout_point = global_data.result.data[i].order.breakout_point;//id
-          var order_id = global_data.result.data[i].order.order_id;//id
-          var insert_time = start_time.substring(0, 10);
-          var time_change = insert_time.split('-');
-          insert_time = time_change[1] + '月' + time_change[2] + '日';
-
-          var begin_create_time = create_time.substring(11, 16);
-          create_time = create_time.substring(0, 10);
-          var time_create = create_time.split('-');
-          create_time = time_create[1] + '月' + time_create[2] + '日';
+        var driving_name = global_data.result.data[i].driving_name;//车主姓名
+        var info_status = global_data.result.data[i].info_status;//状态信息1：有空位；2：已满；-1：已取消
+        var start_time = global_data.result.data[i].start_time;//开始时间
+        var end_time = global_data.result.data[i].end_time;//结束时间
+        var mobile = global_data.result.data[i].mobile;//手机号
+        var departure_city = global_data.result.data[i].departure_city;//出发城市
+        var destination_city = global_data.result.data[i].destination_city;//目的城市
+        var departure = "";//出发小城
+        var destination = "";//目的小城市
+        var description = global_data.result.data[i].description;//描述信息
+        var tag_yes_content = global_data.result.data[i].tag_yes_content;//yes标签
+        var tag_no_content = global_data.result.data[i].tag_no_content;//no标签
+        var points = global_data.result.data[i].points;//地点
+        var inits_seats = global_data.result.data[i].inits_seats;//可用座位
+        var car_brand = global_data.result.data[i].car_brand;//车辆品牌
+        var id = global_data.result.data[i].id;//id
+        var is_editor = global_data.result.data[i].is_editor;//id
+        var create_time = global_data.result.data[i].create_time;//id
+        var boarding_point = global_data.result.data[i].boarding_point;//上车地点
+        var breakout_point = global_data.result.data[i].breakout_point;//下车地点
 
 
-          var begin_start_time = start_time.substring(11, 16);
-          var begin_end_time = end_time.substring(11, 16);
-
-          if(destination_city == ""){
-            destination_city = "郑州"
-          }
+        points = points.replace(/丶/g, " 、");
+        if (info_status == 1) {
+          info_status = "有空位"
+        } else if (info_status == 2) {
+          info_status = "已满"
+        } else {
+          info_status = "已取消"
         }
-        var is_editor=true;
-        var info_status = id ;
+        var insert_time = start_time.substring(0, 10);
+        var time_change = insert_time.split('-');
+        insert_time = time_change[1] + '月' + time_change[2] + '日';
+
+        var begin_create_time = create_time.substring(11, 16);
+        create_time = create_time.substring(0, 10);
+        var time_create = create_time.split('-');
+        create_time = time_create[1] + '月' + time_create[2] + '日';
 
 
+        var begin_start_time = start_time.substring(11, 16);
+        var begin_end_time = end_time.substring(11, 16);
 
         if (is_editor == true) {
-          if(info_status==0){
-
-            info_status="已失效";
-            addDisplayLose(id,inits_seats,boarding_point,breakout_point,order_id,info_status );
-          }else{
-            info_status="";
-            addDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
-                    inits_seats, id,boarding_point,breakout_point,mobile);
-          }
-
+          addDisplay(breakout_point,boarding_point,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+                  inits_seats, car_brand, id, points);
         } else {
-          addHistoryDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
-                  inits_seats, id,boarding_point,breakout_point,mobile);
+          addHistoryDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
+                  inits_seats, car_brand, id, points);
+        }
+        for(var j=0;j<global_data.result.data[i].orders.length;i++){
+          //乘客信息
+          var p_order_id = global_data.result.data[i].orders[j].order_id;//id
+          var p_boarding_point = global_data.result.data[i].orders[j].boarding_point;//上车地点
+          var p_breakout_point = global_data.result.data[i].orders[j].breakout_point;//下车地点
+          var p_inits_seats = global_data.result.data[i].orders[j].booking_seats;//座位
+          var p_mobile = global_data.result.data[i].orders[j].mobile;//电话
+          addPassengerDisplay(p_order_id,p_boarding_point,p_breakout_point,p_inits_seats,p_mobile);
         }
 
+        if (info_status == "有空位") {
+          $($('.departure_li_status')[(page_list * size) + i]).css('color', '#2ecc71');
+        } else if (info_status == "已满") {
+          $($('.departure_li_status')[(page_list * size) + i]).css('color', '#e74c3c');
+        } else {
+          $($('.departure_li_status')[(page_list * size) + i]).css('color', '#ecf0f1');
+        }
+        if (car_brand == "") {
+          $($('.departure_li_car_type')[(page_list * size) + i]).hide();
+        }
         if (departure == "") {
 
           $($('.begin_city')[(page_list * size) + i]).hide();
         }
-        if (driving_name == "") {
-          $($('.departure_li_name')[(page_list * size) + i]).hide();
-        }
         if (destination == "") {
           $($('.end_city')[(page_list * size) + i]).hide();
         }
-        if (is_cannel == false) {
-          $($('.mine_cancel')[(page_list * size) + i]).hide();
-        }
-        if (description == "") {
-          $($('.departure_li_car_type')[(page_list*size)+i]).hide();
-        }
-        if (id == 0) {
-          $($('.mine_looking')[(page_list*size)+i]).hide();
-//          $($('.mine_delete')[(page_list*size)+i]).css('margin-right','0');
-          $($('.departure_time_seat')[(page_list*size)+i]).css('float','inherit');
-        }
+        if (points == "") {
+          $($('.departure_li_route')[(page_list * size) + i]).hide();
+        };
+        if (boarding_point == "" || boarding_point==undefined) {
+          $($('.departure_boarding_point')[(page_list * size) + i]).hide();
+        };
+        if (breakout_point == ""|| breakout_point==undefined) {
+          $($('.departure_breakout_point')[(page_list * size) + i]).hide();
+        };
+
       }
       if ($('.mine_list').length == 0) {
         $('.mine_mid').hide();
@@ -459,10 +439,10 @@
       }
     }
 
-    function addDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
-                        inits_seats, id,boarding_point,breakout_point,mobile) {
-      $('.first_clear').before('<li class="mine_first_list" index=' + id + ' order_id='+order_id+'>' +
-              '<div class="mine_first_top">' +
+    function addDisplay(breakout_point,boarding_point,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
+                        departure_city, destination_city, departure, destination, inits_seats, car_brand, id, points) {
+      $('.first_clear').before('<li class="mine_first_list" index=' + id + '>' +
+              '<div class="mine_first_top" onclick="toDetaile(this)">' +
               '<div class="mine_first_top_left">' +
               '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
               '<span>' + departure_city + '</span><span class="begin_city" style="color:#999794"><i class="circle"></i>' + departure + '</span>' +
@@ -474,84 +454,52 @@
               '</div>' +
               '<div class="clear"></div>' +
               '</div>' +
-              '<div class="mine_first_mid">' +
-              '<div class="departure_li_style departure_li_time">' +
-              '<span>上车地点</span>' +
-              '<span class="departure_time_mouth">' + boarding_point + '</span>' +
-
-              '</div>' +
-              '<div class="departure_li_style departure_li_time">' +
-              '<span>下车地点</span>' +
-              '<span class="departure_time_mouth">' + breakout_point + '</span>' +
-
+              '<div class="mine_first_mid"  onclick="toDetaile(this)">' +
+              '<div class="departure_li_style departure_li_time departure_li_route">' +
+              '<span class="departure_route_left">途径路线</span>' +
+              '<span class="departure_route">' + points + '</span>' +
+              '<div class="clear"></div>'+
               '</div>' +
               '<div class="departure_li_style departure_li_time">' +
               '<span>出行时间</span>' +
               '<span class="departure_time_mouth">' + insert_time + '</span>' +
               '<span style="color: #999794">' + begin_start_time + '-' + begin_end_time + '</span>' +
-              '<span class="departure_time_seat">订座' + inits_seats + '&nbsp;个</span>' +
               '</div>' +
-              '<div class="departure_li_style departure_li_name">' +
-              '<span>车主姓名</span>' +
-              '<span class="departure_time_mouth">' + driving_name + '</span>' +
-
-              '</div>' +
-              '<a href="tel:'+mobile+'" class="departure_li_style departure_mobile">' +
-              '<span>车主电话</span>' +
-              '<span class="departure_time_mouth departure_li_mobile">' + mobile + '</span>' +
-              '<img src="/resource/images/pc_icon_mobile.png" class="mobile_style">'+
-              '</a>'+
-              '<div class="departure_li_style departure_li_car_type">' +
-              '<img src="/resource/images/pc_icon_beihzu.png" class="departure_li_style_img">' +
-              '<span class="departure_li_type">'+description+'</span>' +
-              '</div>' +
-              '</div>' +
-
-              '<div class="mine_first_bottom">' +
-              '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
-              '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
-              '<div class="clear"></div>' +
-              '</div>' +
-              '</li> ')
-    }
-    //已失效
-    function addDisplayLose(id,inits_seats,boarding_point,breakout_point,order_id,info_status) {
-      $('.first_clear').before('<li class="mine_first_list" index=' + id + ' order_id='+order_id+'>' +
-              '<div class="mine_first_top">' +
-              '<div class="mine_first_top_right">' +
-              '<span class="departure_li_status">' + info_status + '</span>' +
-              '</div>' +
-              '<div class="clear"></div>' +
-              '</div>' +
-              '<div class="mine_first_mid">' +
-              '<div class="departure_li_style departure_li_time">' +
+              '<div class="departure_li_style departure_boarding_point">' +
               '<span>上车地点</span>' +
               '<span class="departure_time_mouth">' + boarding_point + '</span>' +
-
               '</div>' +
-              '<div class="departure_li_style departure_li_time">' +
+              '<div class="departure_li_style departure_breakout_point">' +
               '<span>下车地点</span>' +
               '<span class="departure_time_mouth">' + breakout_point + '</span>' +
-
               '</div>' +
-              '<div class="departure_li_style departure_li_time">' +
-              '<span class="departure_time_seat">订座' + inits_seats + '&nbsp;个</span>' +
+              '<div class="departure_li_style departure_time">' +
+              '<span>发布时间</span>' +
+              '<span class="departure_time_mouth">' + create_time + '</span>' +
+              '<span style="color: #999794">' + begin_create_time + '</span>' +
+              '<span class="departure_time_seat">' + inits_seats + '&nbsp;个座位</span>' +
+              '</div>' +
+              '<div class="departure_li_style departure_li_car_type">' +
+              '<img src="/resource/images/pc_icon_car.png" class="departure_li_style_img">' +
+              '<span class="departure_li_type">' + car_brand + '</span>' +
               '</div>' +
               '</div>' +
               '<div class="mine_first_bottom">' +
-              '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
-              '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
-//              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
 
+              '<span class="mine_type mine_change" onclick="mine_change(this)">修改车单</span>' +
+              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除车单</span>' +
               '<div class="clear"></div>' +
+              '<div class="passenger_container">' +
+              '</div>' +
+
               '</div>' +
               '</li> ')
     }
-    //历史
-    function addHistoryDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
-                               inits_seats, id,boarding_point,breakout_point,mobile) {
+
+    function addHistoryDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
+                               departure_city, destination_city, departure, destination, inits_seats, car_brand, id, points) {
       $('.history_clear').before('<li class="mine_list" index=' + id + '>' +
-              '<div class="mine_first_top">' +
+              '<div class="mine_first_top"  onclick="toDetaile(this)">' +
               '<div class="mine_first_top_left">' +
               '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
               '<span>' + departure_city + '</span><span class="begin_city" style="color:#999794"><i class="circle"></i>' + departure + '</span>' +
@@ -563,8 +511,7 @@
               '</div>' +
               '<div class="clear"></div>' +
               '</div>' +
-//              '<div class="mine_first_mid" onclick="toDetaile(this)">' +
-              '<div class="mine_first_mid">' +
+              '<div class="mine_first_mid" onclick="toDetaile(this)">' +
               '<div class="departure_li_style departure_li_time">' +
               '<span>出行时间</span>' +
               '<span class="departure_time_mouth">' + insert_time + '</span>' +
@@ -574,20 +521,48 @@
               '<span>发布时间</span>' +
               '<span class="departure_time_mouth">' + create_time + '</span>' +
               '<span style="color: #999794">' + begin_create_time + '</span>' +
-              '<span class="departure_time_seat">订座' + inits_seats + '&nbsp;个</span>' +
+              '<span class="departure_time_seat">' + inits_seats + '&nbsp;个座位</span>' +
+              '</div>' +
+              '<div class="departure_li_style departure_li_car_type">' +
+              '<img src="/resource/images/pc_icon_car.png" class="departure_li_style_img">' +
+              '<span class="departure_li_type">' + car_brand + '</span>' +
               '</div>' +
               '</div>' +
               '<div class="mine_first_bottom">' +
-//              '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
-//              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
-//                    '<span class="mine_type mine_made" onclick="mine_made(this)" index=' + i + '>生成文字信息</span>' +
+              '<span class="mine_type mine_looking" onclick="looking_change(this)">查看车单</span>' +
+              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除车单</span>' +
               '<div class="clear"></div>' +
               '</div>' +
               '</li> ')
     }
+    //添加乘客样式
+    function addPassengerDisplay(p_order_id,p_boarding_point,p_breakout_point,p_inits_seats,p_mobile){
+      $('.').append('<div class="mine_first_list" order_id='+p_order_id+'>' +
+              '<div class="mine_first_mid">' +
+              '<div class="departure_li_style departure_li_time">' +
+              '<span>上车地点</span>' +
+              '<span class="departure_time_mouth">' + p_boarding_point + '</span>' +
+
+              '</div>' +
+              '<div class="departure_li_style departure_li_time">' +
+              '<span>下车地点</span>' +
+              '<span class="departure_time_mouth">' + p_breakout_point + '</span>' +
+
+              '</div>' +
+              '<div class="departure_li_style departure_li_time">' +
+              '<span class="departure_time_seat">订座' + p_inits_seats + '&nbsp;个</span>' +
+              '</div>' +
+              '<a href="tel:'+p_mobile+'" class="departure_li_style departure_mobile">' +
+              '<span>联系乘客</span>' +
+              '<span class="departure_time_mouth departure_li_mobile">' + p_mobile + '</span>' +
+              '<img src="/resource/images/pc_icon_mobile.png" class="mobile_style">'+
+              '</a>'+
+              '</div>' +
+              '</div>' +
+              '</div> ')
+    }
     //展示浮动层可编辑
     function showDeleteFloatStyle(obj) {
-      order_id = $(obj).parent().parent().attr('order_id');
       $('.hover').fadeIn(100);
       $('.float_container2').empty().fadeIn(100).css({'width': '62%', 'font-size': '1.4rem'});
       $('.float_container2').append('<div class="float_box2">' +
@@ -605,38 +580,12 @@
               '<span class="float_remove" onclick="removeFloatMessage()">取消</span>' +
               '<span class="float_sure" onclick="mine_delete()">确定</span>' +
               '</div>');
+      index_id = $(obj).parent().parent().attr('index');
+    }
 
-    }
-    //展示浮动层可编辑
-    function showCancelFloatStyle(obj) {
-      order_id = $(obj).parent().parent().attr('order_id');
-      mobile1 = $(obj).parent().parent().find('.departure_li_mobile').text();
-      $('.hover').fadeIn(100);
-      $('.float_container2').empty().fadeIn(100).css({'width': '62%', 'font-size': '1.4rem'});
-      $('.float_container2').append('<div class="float_box2">' +
-              '<div class="float_message_box2">' +
-              '<div class="float_message_title2">' +
-              '<span>确认取消预定？</span>' +
-              '</div>' +
-              '<div class="float_message_tips">' +
-              '<span>取消后车主将不再与你预约</span>' +
-              '</div>' +
-              '<div class="clear"></div>' +
-              '</div>' +
-              '</div>' +
-              '<div class="float_button">' +
-              '<span class="float_remove" onclick="removeFloatMessage()">取消</span>' +
-              '<span class="float_sure" onclick="mine_cancel()">确定</span>' +
-              '</div>');
-
-    }
-    function notOpend() {
-//      window.location.href="/laihui/driver/create_order"
-      showFloatStyle("即将开通，敬请期待");
-    }
     //修改车单
     function mine_change(obj) {
-      window.location.href = "/laihui/passenger/create_order?id=" + $(obj).parent().parent().attr('index');
+      window.location.href = "/laihui/driver/create_order?id=" + $(obj).parent().parent().attr('index');
     }
     //查看车单
     function looking_change(obj) {
@@ -648,21 +597,11 @@
     //删除车单
     function mine_delete() {
       var obj = {};
-      obj.action = 'delete_my_order';
-      obj.order_id = order_id;
+      obj.action = 'delete';
+      obj.id = index_id;
       obj.user_id = user_id;
-      validate.validate_submit("/api/db/passenger/departure", obj, loadMessage);
+      validate.validate_submit("/api/db/departure", obj, loadMessage);
       removeFloatMessage();
-    }
-    //取消车单
-    function mine_cancel() {
-      removeFloatMessage();
-      var obj = {};
-      obj.action = 'delete_my_order';
-      obj.order_id = order_id;
-      obj.status = "-1";
-      obj.mobile = mobile1;
-      validate.validate_submit("/api/db/passenger/departure", obj, loadMessage);
     }
     function toAuthList(){
       window.location.href = "/laihui/passenger/my_order_list";
@@ -688,25 +627,25 @@
     <div class="return_perv">
       <img class="return_perv_img" alt="" src="/resource/images/pc_icon_white_return.png" onclick="returnCheck()">
     </div>
-    <span>我的订座信息</span>
+    <span>我的乘客信息</span>
   </div>
   <div class="mine_message">
     <ul class="mine_mid_first">
       <div class="mine_list_title">
         <img src="/resource/images/pc_icon_time.png">
-        <span>预约信息</span>
+        <span>进行中</span>
       </div>
       <div class="clear first_clear"></div>
     </ul>
-    <ul class="mine_mid" style="display:none">
+    <ul class="mine_mid">
       <div class="mine_list_title">
         <img src="/resource/images/pch_icon_history.png">
-        <span>历史预约信息</span>
+        <span>历史信息</span>
       </div>
 
       <div class="clear history_clear"></div>
     </ul>
-    <span class="not_message">暂无预定信息</span>
+    <span class="not_message">暂无乘客信息</span>
   </div>
   <%--底部--%>
   <div class="bottom_menu " onclick="changeMenu(this)">
