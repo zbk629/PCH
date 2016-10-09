@@ -259,7 +259,7 @@
         <span>我的订座信息</span>
         <div class="right_icon">></div>
       </li>
-      <li class="message_mid_li last_li" onclick="toMyBookingList()">
+      <li class="message_mid_li last_li" onclick="toMySelfBookingList()">
         <span>我的乘客信息</span>
         <div class="right_icon">></div>
       </li>
