@@ -491,10 +491,15 @@
         }
         //判断是否是修改信息
         function checkId() {
-            if (role == 1) {
-                $('.not_driver').hide();
-                $('.change_driver').show();
-                updateMessage(item_id)
+            if (role == 1 || url.split("&open=").length == 2) {
+                updateMessage(item_id);
+                if(global_data.result.data[0].is_editor){
+                    $('.not_driver').hide();
+                    $('.change_driver').show();
+                }else{
+                    $('.not_driver').show();
+                    $('.change_driver').hide();
+                }
             } else {
                 $('.not_driver').show();
                 $('.change_driver').hide();
@@ -511,7 +516,7 @@
             var obj = {};
             obj.action = 'show';
             obj.id = item_id;
-            validate.validate_submit('/api/db/departure', obj, insertMessage);
+            validate.validate_submit3('/api/db/departure', obj, insertMessage);
         }
         //更新信息
         function sendMessage(status) {
@@ -574,6 +579,12 @@
                         $($('.item_seat_status')[i]).css('color', '##95a5a6');
                         info_status = "已取消";
                         click_type = 2;
+                    }
+
+                    if(inits_seats ==0){
+                        info_status = "已满"
+                    }else{
+                        info_status = "有空位"
                     }
                     //开始时间设置
                     var insert_time = start_time.substring(0, 10);
@@ -921,38 +932,41 @@
                 sendMessage(key, city);
             }
         }
+
         //发送ajax获取城市信息
         function sendMessage(key, city) {
             var obj = {};
             obj.key = key;
             obj.city = city;
-            var url = "/place_suggestion";
+            var url = "/gd/place_suggestion";
             validate.baidu_api(url, obj, pushToArray);
         }
         //将信息存入数组
         function pushToArray() {
             city_array = [];
-            for (var i = 0; i < global_data.result.length; i++) {
-                city_array.push(global_data.result[i]);
+            for (var i = 0; i < global_data.tips.length; i++) {
+                city_array.push(global_data.tips[i]);
             }
             addCitySlide(city_array);
         }
+
+
+
         //添加城市下拉列表样式
         function addCitySlide(city_array) {
             $('.publish_route_li').remove();
             for (var i = 0; i < city_array.length; i++) {
                 var name = city_array[i].name;
-                var city = city_array[i].city;
                 var district = city_array[i].district;
                 var index = i;
-                addCitySlideStyle(name, city, district, index);
+                addCitySlideStyle(name, district, index);
             }
         }
         //添加城市下拉列表样式
-        function addCitySlideStyle(name, city, district, index) {
+        function addCitySlideStyle(name, district, index) {
             $('.publish_route_ul').append('<li class="publish_route_li" index=' + index + ' onclick="selectCity(this)">' +
-                    '<span class="key">' + name + '</span>' +
-                    '<span class="city" style="color: #999794">' + city + district + '</span>' +
+                    '<span class="key">'+name+'</span>' +
+                    '<span class="city" style="color: #999794">'+district+'</span>' +
                     '</li>')
         }
         //选择城市
@@ -961,10 +975,17 @@
             var name = $(obj).children('.key').text();
             var city = $(obj).children('.city').text();
             var number = $(obj).parent().parent().children('.place_city').attr('index');
-            $(obj).parent().parent().children('input').val(name + " " + city);
+            $(obj).parent().parent().children('input').val(name+" "+city);
             $(obj).parent().hide();
-            send_array.splice(number, 1, city_array[$(obj).attr('index')]);
+
+            if(city_array[$(obj).attr('index')].hasOwnProperty('location')){
+                send_array.splice(number,1,city_array[$(obj).attr('index')]);
+            }else{
+                $(obj).parent().parent().children('input').val("");
+                showFloatStyle("请输入详细的地址")
+            }
         }
+
         //显示途径和下滑菜单
         function slideCity() {
 

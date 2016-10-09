@@ -410,12 +410,8 @@
         }
         var is_editor=true;
         var info_status = id ;
-
-
-
         if (is_editor == true) {
           if(info_status==0){
-
             info_status="已失效";
             addDisplayLose(id,inits_seats,boarding_point,breakout_point,order_id,info_status );
           }else{
@@ -423,40 +419,45 @@
             addDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                     inits_seats, id,boarding_point,breakout_point,mobile);
           }
-
         } else {
           addHistoryDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                   inits_seats, id,boarding_point,breakout_point,mobile);
         }
 
         if (departure == "") {
-
           $($('.begin_city')[(page_list * size) + i]).hide();
-        }
-        if (driving_name == "") {
-          $($('.departure_li_name')[(page_list * size) + i]).hide();
         }
         if (destination == "") {
           $($('.end_city')[(page_list * size) + i]).hide();
         }
-        if (is_cannel == false) {
-          $($('.mine_cancel')[(page_list * size) + i]).hide();
-        }
         if (description == "") {
           $($('.departure_li_car_type')[(page_list*size)+i]).hide();
         }
+
+        if (driving_name == "") {
+          $($('.departure_li_name')[(page_list * size) + i]).hide();
+        }
+        if (is_cannel == false) {
+          $($('.mine_cancel')[(page_list * size) + i]).hide();
+        }
+
         if (id == 0) {
           $($('.mine_looking')[(page_list*size)+i]).hide();
-//          $($('.mine_delete')[(page_list*size)+i]).css('margin-right','0');
+          $($('.mine_first_list')[(page_list*size)+i]).hide();
           $($('.departure_time_seat')[(page_list*size)+i]).css('float','inherit');
         }
+
+
       }
+
+
       if ($('.mine_list').length == 0) {
         $('.mine_mid').hide();
       }
       if ($('.mine_first_list').length == 0) {
         $('.mine_mid_first').hide();
       }
+
     }
 
     function addDisplay(order_id,driving_name,description,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,

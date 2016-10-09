@@ -186,11 +186,11 @@
     }
     //跳转
     function toPublish(){
-      window.location.href="/laihui/driver/create_order?id"
+      window.location.href="/laihui/driver/create_order"
     }
     //跳转
     function toPassengerPublish(){
-      window.location.href="/laihui/passenger/create_order?id"
+      window.location.href="/laihui/passenger/create_order"
     }
 
 

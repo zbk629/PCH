@@ -725,6 +725,12 @@
                 } else {
                     info_status = "已取消"
                 }
+
+                if(inits_seats ==0){
+                    info_status = "已满"
+                }else{
+                    info_status = "有空位"
+                }
                 var insert_time = start_time.substring(0, 10);
                 var time_change = insert_time.split('-');
                 insert_time = time_change[1] + '月' + time_change[2] + '日';

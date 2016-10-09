@@ -127,7 +127,7 @@ var validate = (function () {
             dataType: "json",
             success: function (data) {
                 global_data=data;
-                if(global_data.status==0){
+                if(global_data.status==1){
                     console.log("交互成功");
                     callback();
                 }else{

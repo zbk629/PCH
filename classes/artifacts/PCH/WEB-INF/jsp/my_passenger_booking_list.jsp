@@ -43,7 +43,6 @@
       font-size: 1.4rem;
       background-color: #fff;
       line-height: 2.4rem;
-      padding: .4rem 1.4rem;
       display: none;
       margin-bottom: 1.2rem;
     }
@@ -189,7 +188,7 @@
 
     .departure_route {
       float: left;
-      width: 79%;
+      width: 78%;
       display: block;
       color: #999794;
       margin-left: .4rem;
@@ -393,13 +392,13 @@
 
 
         points = points.replace(/丶/g, " 、");
-        if (info_status == 1) {
-          info_status = "有空位"
-        } else if (info_status == 2) {
+
+        if(inits_seats ==0){
           info_status = "已满"
-        } else {
-          info_status = "已取消"
+        }else{
+          info_status = "有空位"
         }
+
         var insert_time = start_time.substring(0, 10);
         var time_change = insert_time.split('-');
         insert_time = time_change[1] + '月' + time_change[2] + '日';
@@ -458,7 +457,7 @@
         };
 
       }
-      if ($('.mine_list').length == 0) {
+      if ($('.mine_history').length == 0) {
         $('.mine_mid').hide();
       }
       if ($('.mine_first_list').length == 0) {
@@ -514,7 +513,6 @@
               '<div class="mine_first_bottom">' +
 
               '<span class="mine_type mine_change" onclick="mine_change(this)">修改车单</span>' +
-              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除车单</span>' +
               '<div class="clear"></div>' +
               '</div>' +
               '<div class="passenger_container">' +
@@ -524,7 +522,7 @@
 
     function addHistoryDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
                                departure_city, destination_city, departure, destination, inits_seats, car_brand, id, points) {
-      $('.history_clear').before('<li class="mine_list li_style" index=' + id + '>' +
+      $('.history_clear').before('<li class="mine_history mine_list li_style" index=' + id + '>' +
               '<div class="mine_first_top"  onclick="toDetaile(this)">' +
               '<div class="mine_first_top_left">' +
               '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
@@ -556,7 +554,6 @@
               '</div>' +
               '<div class="mine_first_bottom">' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看车单</span>' +
-              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除车单</span>' +
               '<div class="clear"></div>' +
               '</div>' +
               '<div class="passenger_container">' +

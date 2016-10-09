@@ -405,6 +405,7 @@
 
   </style>
   <script>
+
     $(document).ready(function () {
 
       changeFontSize();
@@ -516,6 +517,7 @@
       obj.id = item_id;
       obj.user_id = user_id;
       validate.validate_submit('/api/db/departure', obj, insertMessage);
+
     }
     //如果用户曾经发过信息则自动补充原始数据
     function checkUserMessage(departure_city,destination_city){
@@ -530,6 +532,7 @@
     }
     //添加用户数据
     function insertMessage() {
+
       if(global_data.result.total == 0){
 
       }else
@@ -553,6 +556,7 @@
           var create_time = global_data.result.data[i].create_time;//id
           var boarding_point = global_data.result.data[i].boarding_point;//id
           var breakout_point = global_data.result.data[i].breakout_point;//id
+          var price = global_data.result.data[i].price;//价格
 
 
           //开始时间设置
@@ -618,6 +622,7 @@
           $('.publish_remark').val(description);
         if(is_insert==0){
           $('#demo_time').val(insert_time);
+          $('#demo_price').val(price);
         }
           $('#demo_hour').val(begin_start_time);
           $('#demo_min').val(begin_end_time);
@@ -625,18 +630,11 @@
           $('.tags_container').val(text_tags);
           $('.publish_name').val(driving_name);
           $('.publish_type').val(car_brand);
+
           $('.item_points').text(points);
           $('.place_start_place ').val(boarding_point);
           $('.place_end_place ').val(breakout_point);
           addTabManagerStyle();
-//          if(route_array[0]==""){
-//            $('.publish_li_route').hide()
-//          }else{
-//            $('.publish_li_route').show();
-////            addRouteStyle();
-//            $('.publish_route_box_span').show();
-//          }
-
       }
 
     }
@@ -654,10 +652,7 @@
       function addCarStart() {
         var data1 = global_data.result;
         var contact = new Object();
-//        contact.id = -1;
-//        contact.name = "全部";
-//        contact.child = [{id:-11,name:""}];
-//        placeData.push(contact);
+
         for (var i = 0; i < data1.data.length; i++) {
           var departure1 = data1.data[i].name;
           var departure_id = data1.data[i].id;
@@ -756,33 +751,6 @@
     }
 
 
-    //移除输入框
-//    function removeInput(obj) {
-//      $(obj).parent().parent().remove();
-//      var city = $(obj).children('.city').text();
-//      var number = $(obj).parent().children('.input_style').attr('index');
-//      send_array.splice(number,1);
-//      isFirstInput();
-//      setIndex();
-//    }
-//    //添加输入
-//    function addInput() {
-//      $('.publish_route_box_span').before('<div class="publish_route_container">' +
-//              '<div class="publish_route_box_input">' +
-//              '<div class="line_container">' +
-//              '<div class="line_slide"></div>' +
-//              '<div class="line_circle"></div>' +
-//              '</div>' +
-//              '<input type="text" placeholder="添加行程的主要途径点" index="" class="main_route input_style" oninput="sendKeepDownInput(this)">' +
-//              '<span class="publish_route_box_remove" onclick="removeInput(this)">X</span>' +
-//              '<ul class="publish_route_ul">' +
-//
-//              '</ul>' +
-//              '</div>' +
-//              '</div>');
-//      isFirstInput();
-//      setIndex();
-//    }
     function setIndex(){
       for(var i=0;i<$('.input_style').length;i++){
         $($('.input_style')[i]).attr('index',i);
@@ -811,36 +779,21 @@
         }
       }
 
-//      isFirstInput();
     }
-//    //检测输入框是否是第一个
-//    function isFirstInput() {
-//      var l_input = $('.publish_route_container').length;
-//      if (l_input == 1) {
-//        $('.publish_route_box_remove').hide();
-//        if ($('.input_style').val() == "") {
-//          $('.publish_route_box_span').hide();
-//        } else {
-//          $('.publish_route_box_span').show();
-//        }
-//      } else {
-//        $('.publish_route_box_remove').show();
-//        $('.publish_route_box_span').show();
-//      }
-//    }
+
     //发送ajax获取城市信息
     function sendMessage(key, city) {
       var obj = {};
       obj.key = key;
       obj.city = city;
-      var url = "/place_suggestion";
+      var url = "/gd/place_suggestion";
       validate.baidu_api(url, obj, pushToArray);
     }
     //将信息存入数组
     function pushToArray() {
       city_array = [];
-      for (var i = 0; i < global_data.result.length; i++) {
-        city_array.push(global_data.result[i]);
+      for (var i = 0; i < global_data.tips.length; i++) {
+        city_array.push(global_data.tips[i]);
       }
       addCitySlide(city_array);
     }
@@ -849,17 +802,16 @@
       $('.publish_route_li').remove();
       for (var i = 0; i < city_array.length; i++) {
         var name = city_array[i].name;
-        var city = city_array[i].city;
         var district = city_array[i].district;
         var index = i;
-        addCitySlideStyle(name, city, district, index);
+        addCitySlideStyle(name, district, index);
       }
     }
     //添加城市下拉列表样式
-    function addCitySlideStyle(name, city, district, index) {
+    function addCitySlideStyle(name, district, index) {
       $('.publish_route_ul').append('<li class="publish_route_li" index=' + index + ' onclick="selectCity(this)">' +
               '<span class="key">'+name+'</span>' +
-              '<span class="city" style="color: #999794">'+city+district+'</span>' +
+              '<span class="city" style="color: #999794">'+district+'</span>' +
               '</li>')
     }
     //选择城市
@@ -870,7 +822,13 @@
       var number = $(obj).parent().parent().children('.place_city').attr('index');
       $(obj).parent().parent().children('input').val(name+" "+city);
       $(obj).parent().hide();
-      send_array.splice(number,1,city_array[$(obj).attr('index')]);
+
+      if(city_array[$(obj).attr('index')].hasOwnProperty('location')){
+        send_array.splice(number,1,city_array[$(obj).attr('index')]);
+      }else{
+        $(obj).parent().parent().children('input').val("");
+        showFloatStyle("请输入详细的地址")
+      }
     }
     //显示途径和下滑菜单
     function slideCity() {
@@ -1066,7 +1024,7 @@
     }
 
     function success(){
-//      window.location.href="/laihui/driver/order_list";
+      window.location.href="/laihui/driver/order_list";
     }
 
     //添加YES/NO标签

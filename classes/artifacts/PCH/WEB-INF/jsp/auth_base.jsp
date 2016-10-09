@@ -186,11 +186,11 @@
     }
     //跳转
     function toPublish(){
-      window.location.href="/laihui/driver/create_order?id"
+      window.location.href="/laihui/driver/create_order"
     }
     //跳转
     function toPassengerPublish(){
-      window.location.href="/laihui/passenger/create_order?id"
+      window.location.href="/laihui/passenger/create_order"
     }
 
 
@@ -255,11 +255,11 @@
         <span>乘客发布历史</span>
         <div class="right_icon">></div>
       </li>
-      <li class="message_mid_li last_li" onclick="toMyBookingList()">
+      <li class="message_mid_li" onclick="toMyBookingList()">
         <span>我的订座信息</span>
         <div class="right_icon">></div>
       </li>
-      <li class="message_mid_li last_li" onclick="toMyBookingList()">
+      <li class="message_mid_li last_li" onclick="toMySelfBookingList()">
         <span>我的乘客信息</span>
         <div class="right_icon">></div>
       </li>

@@ -371,6 +371,12 @@
         } else {
           info_status = "已取消"
         }
+
+        if(inits_seats ==0){
+          info_status = "已满"
+        }else{
+          info_status = "有空位"
+        }
         var insert_time = start_time.substring(0, 10);
         var time_change = insert_time.split('-');
         insert_time = time_change[1] + '月' + time_change[2] + '日';
@@ -545,10 +551,10 @@
       var boarding_point = global_data.result.data[index].boarding_point;//上车地点
       var breakout_point = global_data.result.data[index].breakout_point;//下车地点
 
-      if (departure == "") {
+      if (departure == "" ||departure=="null") {
         departure = boarding_point;
       }
-      if (destination == "") {
+      if (destination == "" || destination=="null") {
         destination = breakout_point;
       }
       points = points.replace(/丶/g, " 、");

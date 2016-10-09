@@ -424,6 +424,7 @@
     var array = [];
     var array_seat = [];
     var array_date = [];
+    var price_style = 0;
     var user_id = 86;
     var city_array=[];
     var send_array = [];
