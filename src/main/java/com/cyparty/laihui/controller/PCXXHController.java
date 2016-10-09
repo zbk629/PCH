@@ -241,7 +241,7 @@ public class PCXXHController {
                             String update_sql=" set is_driver=1 where user_id="+user_id ;
                             laiHuiDB.update("pc_wx_user",update_sql);
                             //添加出发地，目的地坐标
-                            String route_json = request.getParameter("route_json");
+                           /* String route_json = request.getParameter("route_json");
                             JSONObject data_json = JSONObject.parseObject(route_json);
                             JSONArray data_array = data_json.getJSONArray("tips");
                             List<RoutePoint> routePointList = new ArrayList<>();
@@ -258,7 +258,7 @@ public class PCXXHController {
 
                                 routePointList.add(point);
                             }
-                            is_success = laiHuiDB.createRoutePoint(routePointList);
+                            is_success = laiHuiDB.createRoutePoint(routePointList);*/
                             //保存用户操作记录
                             UserRoleAction userRoleAction=new UserRoleAction();
                             userRoleAction.setDriver_order_id(id);
@@ -340,6 +340,31 @@ public class PCXXHController {
             key = URLEncoder.encode(key, "utf-8");
             city = URLEncoder.encode(city, "utf-8");
             String json_url = "http://api.map.baidu.com/place/v2/suggestion?query=" + key + "&region=" + city + "&output=json&ak=154d93b0ed8e18c429725a9e8589bd6b";
+            file_url = new URL(json_url);
+            InputStream content = (InputStream) file_url.getContent();
+            BufferedReader in = new BufferedReader(new InputStreamReader(content, "utf-8"));
+            String line;
+            while ((line = in.readLine()) != null) {
+                result = result + line;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.OK)
+    @RequestMapping(value = "/gd/place_suggestion", produces = "application/json; charset=utf-8")
+    public String getPlace(HttpServletRequest request) {
+        String key = request.getParameter("key");
+        String city = request.getParameter("city");
+        String result = "";
+        URL file_url = null;
+
+        try {
+            key = URLEncoder.encode(key, "utf-8");
+            city = URLEncoder.encode(city, "utf-8");
+            String json_url = "http://restapi.amap.com/v3/assistant/inputtips?key=5f128c6b72fb65b81348ca1477f3c3ce&keywords="+key+"&city="+city+"&datatype=all";
             file_url = new URL(json_url);
             InputStream content = (InputStream) file_url.getContent();
             BufferedReader in = new BufferedReader(new InputStreamReader(content, "utf-8"));
