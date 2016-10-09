@@ -240,7 +240,7 @@ public class PCXXHController {
                             //更新用户角色
                             String update_sql=" set is_driver=1 where user_id="+user_id ;
                             laiHuiDB.update("pc_wx_user",update_sql);
-                            //添加出发地，目的地坐标
+                           /* //添加出发地，目的地坐标
                             String route_json = request.getParameter("route_json");
                             JSONObject data_json = JSONObject.parseObject(route_json);
                             JSONArray data_array = data_json.getJSONArray("result");
@@ -258,7 +258,7 @@ public class PCXXHController {
                                 point.setPoint_district(jsonObject.getString("district"));
                                 routePointList.add(point);
                             }
-                            is_success = laiHuiDB.createRoutePoint(routePointList);
+                            is_success = laiHuiDB.createRoutePoint(routePointList);*/
                             //保存用户操作记录
                             UserRoleAction userRoleAction=new UserRoleAction();
                             userRoleAction.setDriver_order_id(id);
