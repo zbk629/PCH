@@ -207,6 +207,9 @@
     function toMyBookingList(){
       window.location.href = "/laihui/passenger/my_booking_list";
     }
+    function toMySelfBookingList(){
+      window.location.href = "/laihui/my_passenger/booking_list";
+    }
 
   </script>
 </head>
@@ -253,7 +256,11 @@
         <div class="right_icon">></div>
       </li>
       <li class="message_mid_li last_li" onclick="toMyBookingList()">
-        <span>预约订座信息</span>
+        <span>我的订座信息</span>
+        <div class="right_icon">></div>
+      </li>
+      <li class="message_mid_li last_li" onclick="toMyBookingList()">
+        <span>我的乘客信息</span>
         <div class="right_icon">></div>
       </li>
     </ul>

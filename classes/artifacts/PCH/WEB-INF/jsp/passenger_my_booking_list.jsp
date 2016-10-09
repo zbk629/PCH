@@ -660,13 +660,13 @@
     }
     //取消车单
     function mine_cancel() {
+      removeFloatMessage();
       var obj = {};
       obj.action = 'delete_my_order';
       obj.order_id = order_id;
       obj.status = "-1";
       obj.mobile = mobile1;
       validate.validate_submit("/api/db/passenger/departure", obj, loadMessage);
-      removeFloatMessage();
     }
     function toAuthList(){
       window.location.href = "/laihui/passenger/my_order_list";
@@ -692,7 +692,7 @@
     <div class="return_perv">
       <img class="return_perv_img" alt="" src="/resource/images/pc_icon_white_return.png" onclick="returnCheck()">
     </div>
-    <span>预约订座信息</span>
+    <span>我的订座信息</span>
   </div>
   <div class="mine_message">
     <ul class="mine_mid_first">

@@ -346,7 +346,7 @@
       $('.mine_first_list').remove();
       $('.mine_list').remove();
       var obj = {};
-      obj.action = 'show_myself';
+      obj.action = 'show_my_passenger_orders';
       obj.page = page_list;
       obj.size = size;
       obj.user_id = user_id;
@@ -506,6 +506,7 @@
               '<span class="departure_li_type">'+description+'</span>' +
               '</div>' +
               '</div>' +
+
               '<div class="mine_first_bottom">' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
               '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
@@ -526,10 +527,12 @@
               '<div class="departure_li_style departure_li_time">' +
               '<span>上车地点</span>' +
               '<span class="departure_time_mouth">' + boarding_point + '</span>' +
+
               '</div>' +
               '<div class="departure_li_style departure_li_time">' +
               '<span>下车地点</span>' +
               '<span class="departure_time_mouth">' + breakout_point + '</span>' +
+
               '</div>' +
               '<div class="departure_li_style departure_li_time">' +
               '<span class="departure_time_seat">订座' + inits_seats + '&nbsp;个</span>' +
@@ -538,6 +541,8 @@
               '<div class="mine_first_bottom">' +
               '<span class="mine_type mine_looking" onclick="looking_change(this)">查看订单</span>' +
               '<span class="mine_type mine_cancel" onclick="showCancelFloatStyle(this)">取消预定</span>' +
+//              '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除订单</span>' +
+
               '<div class="clear"></div>' +
               '</div>' +
               '</li> ')

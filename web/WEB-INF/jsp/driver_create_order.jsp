@@ -452,6 +452,7 @@
         data:array_seat,
         level: 1
       });
+
       loadYes();
       loadNo();
       checkId();
@@ -466,6 +467,8 @@
     });
     var array = [];
     var array_seat = [];
+    var array_price = [];
+    var price_style = 1;
     var array_date = [];
     var user_id = 86;
     var city_array=[];
@@ -484,6 +487,7 @@
     var no_array=[];
     var yes_array=[];
     var route_array=[];
+    var origin_price;
     var url = window.location.href;
     var car_id;
     var mobile_insert=<%=(String)request.getSession().getAttribute("user_mobile")%>;//此处填写手机号
@@ -657,9 +661,11 @@
         for (var i = 0; i < data1.data.length; i++) {
           var departure1 = data1.data[i].name;
           var departure_id = data1.data[i].id;
+
           var contact = new Object();
           contact.id = departure_id;
           contact.name = departure1;
+
           var array_end = [];
           for (var j = 0; j < data1.data[i].child.length; j++) {
             var name = data1.data[i].child[j].name;
@@ -667,6 +673,8 @@
             var obj_array = new Object();
             obj_array.id = id;
             obj_array.name = name;
+            obj_array.price = data1.data[i].child[j].price;
+
             array_end.push(obj_array);
           }
           contact.child = array_end;
@@ -727,7 +735,25 @@
         array_seat.push(contact);
       }
     }
+    //添加座位
+    function addPrice(price){
+      for (var j=0;j<3;j++) {
+        var contact = new Object();
+        var day_time = [];
+        contact.child = day_time;
+        contact.id = j+1;
+        contact.name = price+(j*10);
+        array_price.push(contact);
+      }
+      //价格选择
+      var selectPrice = new MobileSelectArea();
+      selectPrice.init({
+        trigger:$('#demo_price'),
+        data:array_price,
+        level: 1
+      });
 
+    }
 
 
     //移除输入框
@@ -766,7 +792,7 @@
     //按键请求城市信息
     function sendKeepDownInput(obj) {
       if($('#demo_place').val()==""){
-        showFloatStyle("请先选择起止城市")
+        showFloatStyle("请先选择起止城市");
         $(obj).val("");
       }else{
         if($(obj).val() ==""){
@@ -1010,6 +1036,7 @@
       var breakout_point=$('.place_end_place ').val();
       var driving_name=$('.publish_name').val();
       var demo_set=$('#demo_set').val();
+      var demo_price=$('#demo_price').val();
       var car_brand=$('.publish_type').val();
       if (url.indexOf("=") == -1) {
 
@@ -1024,6 +1051,8 @@
       data_obj.departure_city = a[0];
       data_obj.destination_city = a[1];
       data_obj.init_seats = demo_set;
+      data_obj.price = demo_price;
+      data_obj.origin_price = origin_price;
       data_obj.points = route;
       data_obj.description = description;
       data_obj.boarding_point = boarding_point;
@@ -1037,7 +1066,7 @@
     }
 
     function success(){
-      window.location.href="/laihui/driver/order_list";
+//      window.location.href="/laihui/driver/order_list";
     }
 
     //添加YES/NO标签
@@ -1239,6 +1268,11 @@
         }
       }
     }
+
+//    //获取参考价格
+//    function getPrice(){
+//
+//    }
   </script>
 </head>
 <body scroll="no">
@@ -1307,18 +1341,11 @@
       </li>
       <li class="publish_mid_li">
         <div class="publish_left_span">
-          <span>出发位置</span>
+          <span>起始位置</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
           <div class="publish_place_box">
             <input type="text"  placeholder="上车地点" index="0" class="place_city place_start_place input_disabled" oninput="sendKeepDownInput(this)"/>
-            <ul class="publish_route_ul">
-            </ul>
-          </div>
-
-          <img src="/resource/images/pch_icon_to.png" class="to_city">
-          <div class="publish_place_box">
-            <input type="text"  placeholder="下车地点" index="1" class="place_city place_end_place input_disabled" oninput="sendKeepDownInput(this)"/>
             <ul class="publish_route_ul">
             </ul>
           </div>
@@ -1343,11 +1370,25 @@
             </div>
           </div>
           <%--<span class="publish_route_box_span" onclick="addInput()">+添加</span>--%>
-
           <div class="clear"></div>
         </div>
         <div class="clear"></div>
       </li>
+
+      <li class="publish_mid_li">
+        <div class="publish_left_span">
+          <span>目地位置</span>
+        </div>
+        <div class="publish_mid_li_click" onclick="">
+          <div class="publish_place_box">
+            <input type="text"  placeholder="下车地点" index="1" class="place_city place_end_place input_disabled" oninput="sendKeepDownInput(this)"/>
+            <ul class="publish_route_ul">
+            </ul>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </li>
+
       <li class="publish_mid_li">
         <div class="publish_left_span">
           <span>出行时间</span>
@@ -1369,6 +1410,14 @@
         </div>
         <div class="publish_mid_li_click" onclick="">
           <input type="tel" id="demo_set" placeholder="可用座位" readonly="readonly" class="input_disabled"/>
+        </div>
+      </li>
+      <li class="publish_mid_li">
+        <div class="publish_left_span">
+          <span>参考价格</span>
+        </div>
+        <div class="publish_mid_li_click" onclick="">
+          <input type="text" id="demo_price" placeholder="参考价格" readonly="readonly" class="input_disabled"/>
         </div>
       </li>
       <li class="publish_mid_li">

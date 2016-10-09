@@ -239,7 +239,25 @@
             if (this.trigger[0].nodeType == 1) {
                 //input
                 this.trigger.val(this.text.join(this.separator));
+                console.log(this.value[0]);
+                console.log(this.value[1]);
                 this.trigger.attr('data-value', this.value.join(','));
+                ////修改参考价格
+                if(price_style==1){
+                    array_price=[];
+                    var departure_city_id = this.value[0];
+                    var destination_city_id = this.value[1];
+                    for(var i=0;i<placeData[departure_city_id-1].child.length;i++){
+                        if(placeData[departure_city_id-1].child[i].id==destination_city_id){
+                            var price = placeData[departure_city_id-1].child[i].price;
+                            origin_price=price;
+                            $('#demo_price').val(price);
+                            addPrice(price)
+                        }
+                    }
+
+                }
+
             }
 
             this.trigger.next(':hidden').val(this.value.join(','));

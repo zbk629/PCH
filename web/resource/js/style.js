@@ -39,7 +39,7 @@ var validate = (function () {
                     callback();
                     closeLoading();
                 } else {
-                    validate.showTips("身份证格式不正确");
+                    validate.showTips(global_data.message);
                 }
             },
             error: function () {
@@ -86,7 +86,7 @@ var validate = (function () {
                     callback();
                     closeLoading();
                 } else {
-                    validate.showTips("身份证格式不正确");
+                    validate.showTips(global_data.message);
                 }
             },
             error: function () {

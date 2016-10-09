@@ -43,8 +43,9 @@ public class UserActionController {
         is_logined= Utils.isLogined(request);
 //
         is_has_openid=Utils.isHasMapOpenid(request);
-//        is_has_openid=true;
-//        is_logined=true;
+
+        is_has_openid=true;
+        is_logined=true;
         if(is_logined){
             if(is_has_openid){
                 return "driver_create_order";
@@ -97,6 +98,15 @@ public class UserActionController {
 //        is_logined=true;
         if(is_logined){
             return "passenger_my_booking_list";
+        }
+        return "redirect:/";
+    }
+    @RequestMapping("/laihui/my_passenger/booking_list")
+    public String my_passenger_booking_list( HttpServletRequest request) {
+        is_logined= Utils.isLogined(request);
+        is_logined=true;
+        if(is_logined){
+            return "my_passenger_booking_list";
         }
         return "redirect:/";
     }
