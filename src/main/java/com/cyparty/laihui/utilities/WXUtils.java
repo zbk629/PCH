@@ -214,7 +214,7 @@ public class WXUtils {
                 json="{\n" +
                         "           \"touser\":\""+user.getOpenid()+"\",\n" +
                         "           \"template_id\":\"wKsNLWJCpYrbsBqTRKG_JeeqxrlFxSAhRzC8cwL9CDM\",\n" +
-                        "           \"url\":\"http://wx.pinchenet.com/laihui/driver/create_order?id="+departureInfo.getR_id()+"\",            \n" +
+                        "           \"url\":\"http://wx.pinchenet.com/laihui/car/detail?id="+departureInfo.getR_id()+"&open="+user.getOpenid()+"\",            \n" +
                         "           \"data\":{\n" +
                         "                   \"first\": {\n" +
                         "                       \"value\":\"从"+departureInfo.getDeparture_city()+"到"+departureInfo.getDestination_city()+"的拼车发布成功！\",\n" +
@@ -246,7 +246,7 @@ public class WXUtils {
                 json="{\n" +
                         "           \"touser\":\""+departureInfo.getOpenid()+"\",\n" +
                         "           \"template_id\":\"w5Lz_lcVnHRcXAvkzqofCHIjgaFcjIL-ZOcpPDQtjPg\",\n" +
-                        "           \"url\":\"http://wx.pinchenet.com//laihui/car/detail?id="+departureInfo.getR_id()+"\",            \n" +
+                        "           \"url\":\"http://wx.pinchenet.com/laihui/my_passenger/booking_list?open="+user.getOpenid()+"\",            \n" +
                         "           \"data\":{\n" +
                         "                   \"first\": {\n" +
                         "                       \"value\":\"尊敬的 车主先生/女士：  有新的拼友预定了您的座位。\",\n" +

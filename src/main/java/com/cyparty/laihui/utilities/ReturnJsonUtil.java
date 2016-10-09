@@ -674,7 +674,6 @@ public class ReturnJsonUtil {
             List<RoutePoint> points=laiHuiDB.getRoutePoint(where);
             if(points.size()>0){
                 if(points.size()>=2){
-
                     jsonObject.put("boarding_point", points.get(0).getPoint_name());
                     jsonObject.put("breakout_point", points.get(1).getPoint_name());
                 }else {

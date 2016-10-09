@@ -104,6 +104,15 @@ public class UserActionController {
     @RequestMapping("/laihui/my_passenger/booking_list")
     public String my_passenger_booking_list( HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
+        String open=request.getParameter("open");
+        if(open!=null&&!open.trim().equals("")){
+            String where =" where user_map_openid='"+open+"'";
+            if(laiHuiDB.getWxUser(where).size()>0){
+                User now_user=laiHuiDB.getWxUser(where).get(0);
+                request.getSession().setAttribute("user",now_user);
+                request.getSession().setAttribute("user_id", now_user.getUser_id());
+            }
+        }
         is_logined=true;
         if(is_logined){
             return "my_passenger_booking_list";
