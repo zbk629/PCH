@@ -471,7 +471,6 @@
 
         });
         var url = window.location.href;
-        /*var role=${role};*/
         var role =<%=request.getSession().getAttribute("role")%>;
         var item_id = url.split("?id=")[1];
         item_id = item_id.split("&")[0];
@@ -552,10 +551,10 @@
                     if(destination_city == ""){
                         destination_city = "郑州"
                     }
-                    if (departure == "") {
+                    if (departure == "" || departure =="null") {
                         departure = boarding_point;
                     }
-                    if (destination == "") {
+                    if (destination == "" || destination =="null") {
                         destination = breakout_point;
                     }
 

@@ -53,7 +53,6 @@
       background-color: #fff;
       line-height: 2.4rem;
       margin-bottom: 5rem;
-      padding: .4rem 1.4rem;
       display: none;
     }
 
@@ -221,7 +220,7 @@
     .mine_list_title {
       position: relative;
       border-bottom: 1px solid #e8e8e8;
-      padding-bottom: .4rem;
+      padding: .4rem 1rem;
     }
 
     .mine_list_title img {
@@ -231,7 +230,6 @@
     }
 
     .mine_list, .mine_first_list {
-      border-top: 1px dashed #e8e8e8;
       padding: .8rem 0;
       margin-top: -1px;
     }
@@ -296,6 +294,35 @@
     .find_href_span{
       word-wrap: break-word;
     }
+    .departure_mobile{
+      display: block;
+      position: relative;
+    }
+    .mobile_style{
+      width: 2rem;
+      float: right;
+      position: absolute;
+      right: 6rem
+    }
+    .li_style{
+      box-shadow: 2px 3px 10px 2px #e8e8e8;
+      padding: .4rem 1rem;
+      margin-bottom: 2rem;
+    }
+    .passenger_up{
+      display: inline-block;
+      float: left;
+    }
+    .passenger_up_text{
+      width: 72%;
+    }
+    .passenger_container{
+
+      margin: .8rem 0;
+    }
+    .passenger_top{
+      border-top: 1px dashed #e8e8e8;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
@@ -320,11 +347,11 @@
       $('.mine_first_list').remove();
       $('.mine_list').remove();
       var obj = {};
-      obj.action = 'show_myself';
+      obj.action = 'show_my_passenger_orders';
       obj.page = page_list;
       obj.size = size;
       obj.user_id = user_id;
-      validate.validate_submit("show_my_passenger_orders", obj, sendPageMessage);
+      validate.validate_submit("/api/db/passenger/departure", obj, sendPageMessage);
     }
 
     function sendPageMessage() {
@@ -393,14 +420,14 @@
           addHistoryDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time, departure_city, destination_city, departure, destination,
                   inits_seats, car_brand, id, points);
         }
-        for(var j=0;j<global_data.result.data[i].orders.length;i++){
+        for(var j=0;j< global_data.result.data[i].orders.length;j++){
           //乘客信息
-          var p_order_id = global_data.result.data[i].orders[j].order_id;//id
-          var p_boarding_point = global_data.result.data[i].orders[j].boarding_point;//上车地点
-          var p_breakout_point = global_data.result.data[i].orders[j].breakout_point;//下车地点
-          var p_inits_seats = global_data.result.data[i].orders[j].booking_seats;//座位
-          var p_mobile = global_data.result.data[i].orders[j].mobile;//电话
-          addPassengerDisplay(p_order_id,p_boarding_point,p_breakout_point,p_inits_seats,p_mobile);
+          var p_order_id =  global_data.result.data[i].orders[j].order_id;//id
+          var p_boarding_point =  global_data.result.data[i].orders[j].boarding_point;//上车地点
+          var p_breakout_point =  global_data.result.data[i].orders[j].breakout_point;//下车地点
+          var p_inits_seats =  global_data.result.data[i].orders[j].booking_seats;//座位
+          var p_mobile =  global_data.result.data[i].orders[j].mobile;//电话
+          addPassengerDisplay(i,p_order_id,p_boarding_point,p_breakout_point,p_inits_seats,p_mobile);
         }
 
         if (info_status == "有空位") {
@@ -441,7 +468,7 @@
 
     function addDisplay(breakout_point,boarding_point,i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
                         departure_city, destination_city, departure, destination, inits_seats, car_brand, id, points) {
-      $('.first_clear').before('<li class="mine_first_list" index=' + id + '>' +
+      $('.first_clear').before('<li class="mine_first_list li_style" index=' + id + '>' +
               '<div class="mine_first_top" onclick="toDetaile(this)">' +
               '<div class="mine_first_top_left">' +
               '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
@@ -489,16 +516,15 @@
               '<span class="mine_type mine_change" onclick="mine_change(this)">修改车单</span>' +
               '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除车单</span>' +
               '<div class="clear"></div>' +
-              '<div class="passenger_container">' +
               '</div>' +
-
+              '<div class="passenger_container">' +
               '</div>' +
               '</li> ')
     }
 
     function addHistoryDisplay(i, create_time, begin_create_time, begin_end_time, begin_start_time, info_status, insert_time,
                                departure_city, destination_city, departure, destination, inits_seats, car_brand, id, points) {
-      $('.history_clear').before('<li class="mine_list" index=' + id + '>' +
+      $('.history_clear').before('<li class="mine_list li_style" index=' + id + '>' +
               '<div class="mine_first_top"  onclick="toDetaile(this)">' +
               '<div class="mine_first_top_left">' +
               '<img src="/resource/images/pc_icon_stratRoute.png" class="mine_top_icon">' +
@@ -533,20 +559,22 @@
               '<span class="mine_type mine_delete" onclick="showDeleteFloatStyle(this)">删除车单</span>' +
               '<div class="clear"></div>' +
               '</div>' +
+              '<div class="passenger_container">' +
+              '</div>' +
               '</li> ')
     }
     //添加乘客样式
-    function addPassengerDisplay(p_order_id,p_boarding_point,p_breakout_point,p_inits_seats,p_mobile){
-      $('.').append('<div class="mine_first_list" order_id='+p_order_id+'>' +
+    function addPassengerDisplay(i,p_order_id,p_boarding_point,p_breakout_point,p_inits_seats,p_mobile){
+      $($('.passenger_container')[i]).append('<div class="mine_list passenger_top" order_id='+p_order_id+'>' +
               '<div class="mine_first_mid">' +
               '<div class="departure_li_style departure_li_time">' +
-              '<span>上车地点</span>' +
-              '<span class="departure_time_mouth">' + p_boarding_point + '</span>' +
+              '<span class="passenger_up">上车地点</span>' +
+              '<span class="departure_time_mouth passenger_up_text">' + p_boarding_point + '</span>' +
 
               '</div>' +
               '<div class="departure_li_style departure_li_time">' +
-              '<span>下车地点</span>' +
-              '<span class="departure_time_mouth">' + p_breakout_point + '</span>' +
+              '<span class="passenger_up">下车地点</span>' +
+              '<span class="departure_time_mouth passenger_up_text">' + p_breakout_point + '</span>' +
 
               '</div>' +
               '<div class="departure_li_style departure_li_time">' +
