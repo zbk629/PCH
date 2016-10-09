@@ -243,7 +243,7 @@ public class PCXXHController {
                             //添加出发地，目的地坐标
                             String route_json = request.getParameter("route_json");
                             JSONObject data_json = JSONObject.parseObject(route_json);
-                            JSONArray data_array = data_json.getJSONArray("result");
+                            JSONArray data_array = data_json.getJSONArray("tips");
                             List<RoutePoint> routePointList = new ArrayList<>();
                             for (int i = 0; i < data_array.size(); i++) {
                                 JSONObject jsonObject = data_array.getJSONObject(i);
@@ -251,11 +251,11 @@ public class PCXXHController {
                                 point.setPoint_seq(i + 1);
                                 point.setRoute_id(id);
                                 point.setPoint_name(jsonObject.getString("name"));
-                                point.setPoint_lat(jsonObject.getJSONObject("location").getString("lat"));
-                                point.setPoint_lng(jsonObject.getJSONObject("location").getString("lng"));
-                                point.setPoint_uid(jsonObject.getString("uid"));
-                                point.setPoint_city(jsonObject.getString("city"));
+                                point.setPoint_location(jsonObject.getString("location"));
+                                point.setPoint_uid(jsonObject.getString("id"));
+                                point.setPoint_address(jsonObject.getString("address"));
                                 point.setPoint_district(jsonObject.getString("district"));
+
                                 routePointList.add(point);
                             }
                             is_success = laiHuiDB.createRoutePoint(routePointList);

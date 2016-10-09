@@ -7,10 +7,9 @@ public class RoutePoint {
     private int route_id;
     private int point_seq;
     private String point_name;
-    private String point_lat;
-    private String point_lng;
+    private String point_location;
     private String point_uid;
-    private String point_city;
+    private String point_address;
     private String point_district;
     private String point_create_time;
 
@@ -38,20 +37,12 @@ public class RoutePoint {
         this.point_name = point_name;
     }
 
-    public String getPoint_lat() {
-        return point_lat;
+    public String getPoint_location() {
+        return point_location;
     }
 
-    public void setPoint_lat(String point_lat) {
-        this.point_lat = point_lat;
-    }
-
-    public String getPoint_lng() {
-        return point_lng;
-    }
-
-    public void setPoint_lng(String point_lng) {
-        this.point_lng = point_lng;
+    public void setPoint_location(String point_location) {
+        this.point_location = point_location;
     }
 
     public String getPoint_uid() {
@@ -62,12 +53,12 @@ public class RoutePoint {
         this.point_uid = point_uid;
     }
 
-    public String getPoint_city() {
-        return point_city;
+    public String getPoint_address() {
+        return point_address;
     }
 
-    public void setPoint_city(String point_city) {
-        this.point_city = point_city;
+    public void setPoint_address(String point_address) {
+        this.point_address = point_address;
     }
 
     public String getPoint_district() {

@@ -255,8 +255,8 @@ public class LaiHuiDB {
     public boolean createRoutePoint(List<RoutePoint> pointList) {
         boolean is_success = true;
         for (RoutePoint point : pointList) {
-            String SQL = "insert into pc_route_points(route_id,point_name,point_lat,point_lng,point_uid,point_city,point_district,point_create_time,point_seq) VALUES (?,?,?,?,?,?,?,?,?)";
-            int count = jdbcTemplateObject.update(SQL, new Object[]{point.getRoute_id(), point.getPoint_name(), point.getPoint_lat(), point.getPoint_lng(), point.getPoint_uid(), point.getPoint_city(), point.getPoint_district(), Utils.getCurrentTime(), point.getPoint_seq()});
+            String SQL = "insert into pc_route_points(route_id,point_name,point_location,point_uid,point_address,point_district,point_create_time,point_seq) VALUES (?,?,?,?,?,?,?,?)";
+            int count = jdbcTemplateObject.update(SQL, new Object[]{point.getRoute_id(), point.getPoint_name(), point.getPoint_location(), point.getPoint_uid(), point.getPoint_address(), point.getPoint_district(), Utils.getCurrentTime(), point.getPoint_seq()});
             if (count < 1) {
                 is_success = false;
             }
