@@ -41,11 +41,11 @@ public class UserActionController {
     @RequestMapping("/laihui/driver/create_order")
     public String create_order(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);
-//
+
         is_has_openid=Utils.isHasMapOpenid(request);
 
-        is_has_openid=true;
-        is_logined=true;
+        //is_has_openid=true;
+        //is_logined=true;
         if(is_logined){
             if(is_has_openid){
                 return "driver_create_order";
@@ -113,7 +113,7 @@ public class UserActionController {
                 request.getSession().setAttribute("user_id", now_user.getUser_id());
             }
         }
-        is_logined=true;
+        //is_logined=true;
         if(is_logined){
             return "my_passenger_booking_list";
         }
@@ -148,7 +148,7 @@ public class UserActionController {
             }
             boolean is_success = true;
             int seats=0;
-            int user_id=377;
+            int user_id=0;
             int order_id=0;
             //todo:user_id改为从session中获取
             if(request.getSession().getAttribute("user_id")!=null){
@@ -417,7 +417,7 @@ public class UserActionController {
 
                                 while (!is_success){
                                     String update_sql=" set current_seats=current_seats+"+passengerOrder.getSeats()+" where _id="+passengerOrder.getDriver_order_id();
-                                    laiHuiDB.update("pch_publish_info",update_sql);
+                                    is_success=laiHuiDB.update("pch_publish_info",update_sql);
                                 }
 
                                 if(p_mobile!=null&&!p_mobile.trim().equals("")&&p_mobile.length()==11){

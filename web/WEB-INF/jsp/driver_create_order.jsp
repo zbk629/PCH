@@ -1066,7 +1066,7 @@
     }
 
     function success(){
-//      window.location.href="/laihui/driver/order_list";
+      window.location.href="/laihui/driver/order_list";
     }
 
     //添加YES/NO标签

@@ -246,7 +246,7 @@ public class WXUtils {
                 json="{\n" +
                         "           \"touser\":\""+departureInfo.getOpenid()+"\",\n" +
                         "           \"template_id\":\"w5Lz_lcVnHRcXAvkzqofCHIjgaFcjIL-ZOcpPDQtjPg\",\n" +
-                        "           \"url\":\"http://wx.pinchenet.com/laihui/my_passenger/booking_list?open="+user.getOpenid()+"\",            \n" +
+                        "           \"url\":\"http://wx.pinchenet.com/laihui/my_passenger/booking_list?open="+departureInfo.getOpenid()+"\",            \n" +
                         "           \"data\":{\n" +
                         "                   \"first\": {\n" +
                         "                       \"value\":\"尊敬的 车主先生/女士：  有新的拼友预定了您的座位。\",\n" +

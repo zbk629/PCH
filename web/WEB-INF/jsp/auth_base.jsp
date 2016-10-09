@@ -255,7 +255,7 @@
         <span>乘客发布历史</span>
         <div class="right_icon">></div>
       </li>
-      <li class="message_mid_li last_li" onclick="toMyBookingList()">
+      <li class="message_mid_li" onclick="toMyBookingList()">
         <span>我的订座信息</span>
         <div class="right_icon">></div>
       </li>
