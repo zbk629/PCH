@@ -379,6 +379,13 @@ public class Utils {
         }
         return is_logined;
     }
+    public static boolean isLogin(HttpServletRequest request){
+        boolean is_logined=false;
+        if(request.getSession().getAttribute("user")!=null){
+            is_logined=true;
+        }
+        return is_logined;
+    }
     public static boolean isHasMapOpenid(HttpServletRequest request){
         boolean is_has=false;
         if(request.getSession().getAttribute("user")!=null){

@@ -57,10 +57,16 @@ public class LoginController {
             } else {
                 User now_user = userList.get(0);
                 if (now_user.getUser_mobile() != null && now_user.getUser_mobile().length() == 11) {
-                    request.getSession().setAttribute("user_id", userList.get(0).getUser_id());
-                    request.getSession().setAttribute("user", userList.get(0));
-                    request.getSession().setAttribute("user_mobile",userList.get(0).getUser_mobile());
-                    return "redirect:/auth/base";
+                    request.getSession().setAttribute("user_id", now_user.getUser_id());
+                    request.getSession().setAttribute("user", now_user);
+                    request.getSession().setAttribute("user_mobile",now_user.getUser_mobile());
+                    String ref=request.getParameter("ref");
+                    if(ref!=null){
+                        return "redirect:/laihui/car/detail?id="+ref;
+                    }else {
+
+                        return "redirect:/auth/base";
+                    }
                 } else {
                     request.getSession().setAttribute("user_id", now_user.getUser_id());
                     return "redirect:/reg";
@@ -110,7 +116,6 @@ public class LoginController {
     @RequestMapping("/auth/base")
     public String self(HttpServletRequest request, Model model) {
         is_logined=Utils.isLogined(request);
-        //is_logined=true;
         if(is_logined){
             return "auth_base";
         }
@@ -122,8 +127,12 @@ public class LoginController {
         if(is_logined){
             return "redirect:/auth/base";
         }else {
-
-            return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+            String ref_id=request.getParameter("ref");
+            if(ref_id!=null){
+                return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&ref="+ref_id+"&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+            }else {
+                return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+            }
         }
     }
     @RequestMapping("/wx/pc/login")

@@ -135,7 +135,7 @@ public class PCXXHController {
             if(request.getParameter("id")!=null){
                 id=Integer.parseInt(request.getParameter("id"));
             }
-            int user_id=86;
+            int user_id=0;
 
             //todo:user_id改为从session中获取
             if (request.getSession().getAttribute("user_id") != null) {
@@ -220,7 +220,7 @@ public class PCXXHController {
                             String update_sql=" set is_driver=1 where user_id="+user_id ;
                             laiHuiDB.update("pc_wx_user",update_sql);
                             //添加出发地，目的地坐标
-                           /* String route_json = request.getParameter("route_json");
+                            String route_json = request.getParameter("route_json");
                             JSONObject data_json = JSONObject.parseObject(route_json);
                             JSONArray data_array = data_json.getJSONArray("tips");
                             List<RoutePoint> routePointList = new ArrayList<>();
@@ -237,7 +237,7 @@ public class PCXXHController {
 
                                 routePointList.add(point);
                             }
-                            is_success = laiHuiDB.createRoutePoint(routePointList);*/
+                            is_success = laiHuiDB.createRoutePoint(routePointList);
                             //保存用户操作记录
                             UserRoleAction userRoleAction=new UserRoleAction();
                             userRoleAction.setDriver_order_id(id);
@@ -247,7 +247,11 @@ public class PCXXHController {
 
                             laiHuiDB.createUserAction(userRoleAction);
                             //发送通知
-                            WXUtils.pinCheNotify(request,departure,1);
+                            User user=(User)request.getSession().getAttribute("user");
+                            if(user!=null){
+                                WXUtils.pinCheNotify(request,departure,1);
+
+                            }
                             //发送短信通知司机
                             Utils.sendPublishNotifyMessage(departure.getMobile());
                             result.put("id",id);
@@ -281,13 +285,13 @@ public class PCXXHController {
                     json = ReturnJsonUtil.returnSuccessJsonString(result, "全部出车信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show_myself":
-                    String key2=page+size+departure_city+destination_city+status+start_time+end_time+keyword+id+"show_myself";
+                   /* String key2=page+size+departure_city+destination_city+status+start_time+end_time+keyword+id+"show_myself";
                     result= Memcache.getMemcache(key2);
                     if(result.getString("cache_status")!=null){
                         //说明之前没有有缓存
                         result=ReturnJsonUtil.getPCHDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id);
                         Memcache.setMemcache(key2,result);
-                    }
+                    }*/
                     json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getMySelfDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id,user_id), "出车信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "update":
@@ -343,7 +347,7 @@ public class PCXXHController {
         try {
             key = URLEncoder.encode(key, "utf-8");
             city = URLEncoder.encode(city, "utf-8");
-            String json_url = "http://restapi.amap.com/v3/assistant/inputtips?key=5f128c6b72fb65b81348ca1477f3c3ce&keywords="+key+"&city="+city+"&datatype=all";
+            String json_url = "http://restapi.amap.com/v3/assistant/inputtips?key=5f128c6b72fb65b81348ca1477f3c3ce&keywords="+key+"&city="+city+"&datatype=poi";
             file_url = new URL(json_url);
             InputStream content = (InputStream) file_url.getContent();
             BufferedReader in = new BufferedReader(new InputStreamReader(content, "utf-8"));

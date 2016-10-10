@@ -66,14 +66,12 @@ public class WxUserBaseUtil {
             jsonUrl="https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx79fccf65feb81e80&secret=659703bcdaa78b9d1a7ec5954bf6a6ff&code="+code+"&grant_type=authorization_code";
         }
         String jsonResponse=sendGet(jsonUrl);
-
         //2.对json数据进行解析
         JSONObject jsonObject=JSONObject.parseObject(jsonResponse);
         String access_token=jsonObject.getString("access_token");
         String openid=jsonObject.getString("openid");
         String userJson="https://api.weixin.qq.com/sns/userinfo?access_token="+access_token+"&openid="+openid;
         String userResponse=sendGet(userJson);
-
         //对UserResponse解析
         JSONObject userJsonObject=JSONObject.parseObject(userResponse);
         //https://api.weixin.qq.com/sns/userinfo?access_token=OezXcEiiBSKSxW0eoylIeL3jZIQj6Cfx04JBB1CyyaP7OHDG5vOUo8KkhQoXUzbC0NXGka-oYx5mglmZNnQRS68HPaxlVxIwhboAJoYAyG_MVSejqbNRxIIL-7Pt6ztUbFRb8oCX1UFtixb2NNo-Qw&openid=oNCQdt2r8XgaWQNIUWY2iqRqoVNQ

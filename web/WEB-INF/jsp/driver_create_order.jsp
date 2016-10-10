@@ -951,7 +951,7 @@
       var route="";
       var mobile;
       var city = {};
-      city.result=send_array;
+      city.tips=send_array;
       var json = JSON.stringify(city);
       var route_array=[];
       for(var i=0;i<$('.main_route').length;i++){

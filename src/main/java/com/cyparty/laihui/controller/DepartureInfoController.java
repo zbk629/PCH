@@ -21,9 +21,9 @@ public class DepartureInfoController {
     LaiHuiDB laiHuiDB;
     @RequestMapping("/laihui/car/list")
     public String car_departure(Model model, HttpServletRequest request) {
-        //微信分享模块
+       /* //微信分享模块
         String title = "来回拼车，你值得拥有！";
-        WXUtils.wx_intro(request, model, title, "eat.gif");
+        WXUtils.wx_intro(request, model, title, "eat.gif");*/
         /*try {
             WXUtils.pinCheNotify(request);
         } catch (IOException e) {
@@ -37,8 +37,8 @@ public class DepartureInfoController {
         //微信分享模块
         String token = request.getParameter("token");
         String open = request.getParameter("open");
-        String title = "来回拼车，你值得拥有！";
-        WXUtils.wx_intro(request, model, title, "eat.gif");
+       /* String title = "来回拼车，你值得拥有！";
+        WXUtils.wx_intro(request, model, title, "eat.gif");*/
         if(open!=null&&!open.trim().equals("")){
             String where =" where user_map_openid='"+open+"'";
             if(laiHuiDB.getWxUser(where).size()>0){

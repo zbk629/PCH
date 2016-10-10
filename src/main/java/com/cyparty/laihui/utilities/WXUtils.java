@@ -73,8 +73,10 @@ public class WXUtils {
         String wx_app_secret="9ae79e7280fdf5b38a1d0106cbf496ef";
         String token_url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+wx_app_id+"&secret="+wx_app_secret;
         String json_string=loadJson(token_url);
-        JSONObject jsonObject=JSONObject.parseObject(json_string);
-        access_token=jsonObject.getString("access_token");
+        if(json_string!=null){
+            JSONObject jsonObject=JSONObject.parseObject(json_string);
+            access_token=jsonObject.getString("access_token");
+        }
         //System.out.println("Access_token:"+access_token);
         return access_token;
     }
@@ -237,7 +239,7 @@ public class WXUtils {
                         "                       \"color\":\"#173177\"\n" +
                         "                   },\n" +
                         "                   \"remark\":{\n" +
-                        "                       \"value\":\"感谢您的使用！\",\n" +
+                        "                       \"value\":\"【来回拼车】衷心感谢您的使用，祝您出行愉快！\",\n" +
                         "                       \"color\":\"#173177\"\n" +
                         "                   }\n" +
                         "           }\n" +
@@ -269,7 +271,7 @@ public class WXUtils {
                         "                       \"color\":\"#173177\"\n" +
                         "                   },\n" +
                         "                   \"remark\":{\n" +
-                        "                       \"value\":\"[来回]提示：主动电话联系他/她。 相聚是缘，多点理解，多点爱心，生活就很美好！\",\n" +
+                        "                       \"value\":\"【来回拼车】温馨提示：请主动电话联系乘客，他/她正在等您的电话呢！您的理解与支持，是我们前进的最大动力！\",\n" +
                         "                       \"color\":\"#173177\"\n" +
                         "                   }\n" +
                         "           }\n" +
