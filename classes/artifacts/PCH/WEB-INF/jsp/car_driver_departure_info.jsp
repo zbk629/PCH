@@ -749,12 +749,11 @@
                     } else {
                         var code = data.result.errcode;
                         if (code == 401) {
-                            //
                             showFloatStyle(data.message);
                         } else if (code == 403) {
                             showFloatStyle(data.message);
                             setTimeout(function () {
-                                window.location.href = "/wx/login"
+                                window.location.href = "/wx/login?ref="+item_id;
                             }, 1000);
                         }else{
                             showFloatStyle(data.message);
@@ -809,11 +808,11 @@
                         '<span class="booking_error"></span>' +
                         '<div class="booking_container">' +
                         '<div class="booking_li">' +
-                        '<input placeholder="请输入上车地点" type="text" index="0" class="input_style booking_start" onchange="removeErrorTips()" >' +
+                        '<input placeholder="请输入上车地点" type="text" index="0" class="input_style booking_start" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
                         '<ul class="publish_route_ul"></ul>' +
                         '</div>' +
                         '<div class="booking_li">' +
-                        '<input placeholder="请输入下车地点" type="text" index="1" class="input_style booking_end" onchange="removeErrorTips()" >' +
+                        '<input placeholder="请输入下车地点" type="text" index="1" class="input_style booking_end" onchange="removeErrorTips()" oninput="sendKeepDownInput(this)">' +
                         '<ul class="publish_route_ul"></ul>' +
                         '</div>' +
                         '<div class="booking_li">' +

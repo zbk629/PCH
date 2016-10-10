@@ -749,12 +749,11 @@
                     } else {
                         var code = data.result.errcode;
                         if (code == 401) {
-                            //
                             showFloatStyle(data.message);
                         } else if (code == 403) {
                             showFloatStyle(data.message);
                             setTimeout(function () {
-                                window.location.href = "/wx/login"
+                                window.location.href = "/wx/login?ref="+item_id;
                             }, 1000);
                         }else{
                             showFloatStyle(data.message);

@@ -6,7 +6,9 @@
  * Time: 09:49:11
  * Contact: 55342775@qq.com
  */
-;
+var price_style=0;
+var array_price_i=0;
+
 (function(root, factory) {
     //amd
     if (typeof define === 'function' && define.amd) {
@@ -102,6 +104,7 @@
                 }
                 $.confirm('<div class="ui-scroller-mask"><div id="' + _this.id + '" class="ui-scroller">' + dlgContent + '<p></p></div></div>', buttons, function(t, c) {
                     if (t == "yes") {
+
                         _this.submit()
                     }
                     if (t == 'no') {
@@ -243,15 +246,17 @@
                 console.log(this.value[1]);
                 this.trigger.attr('data-value', this.value.join(','));
                 ////修改参考价格
-                //showFloatStyle("计算参考价格");
+
                 if(price_style==1){
-                    array_price=[];
                     var departure_city_id = this.value[0];
                     var destination_city_id = this.value[1];
                     for(var i=0;i<placeData[departure_city_id-1].child.length;i++){
                         if(placeData[departure_city_id-1].child[i].id==destination_city_id){
                             var price = placeData[departure_city_id-1].child[i].price;
                             origin_price=price;
+                            array_price_i=0;
+                            $('.cut_price').hide();
+                            $('.increase_price').show();
                             $('#demo_price').val(price);
                             addPrice(price);
                         }

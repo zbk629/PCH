@@ -143,13 +143,16 @@
     }
 
     .publish_route_box_span {
-      line-height: 2rem;
       padding: 0 1rem;
-      position: absolute;
       right: 0;
       color: #F5AD4E;
       bottom: 0;
-      display: none;
+      display: inline-block;
+      font-size: 2rem;
+      font-weight: bold;
+      line-height: 3.2rem;
+      position: relative;
+      top: .4rem;
     }
 
     .publish_route_box_remove {
@@ -402,6 +405,14 @@
       /* 增加该属性，可以增加弹性，是滑动更加顺畅 */
       -webkit-overflow-scrolling: touch;
     }
+    #demo_price{
+      width: 20%;
+      display: inline-block;
+      text-align: center;
+    }
+    .cut_price{
+      display: none;
+    }
 
   </style>
   <script>
@@ -453,7 +464,6 @@
         data:array_seat,
         level: 1
       });
-
       loadYes();
       loadNo();
       checkId();
@@ -469,6 +479,7 @@
     var array = [];
     var array_seat = [];
     var array_price = [];
+    var array_price_i=0;
     var price_style = 1;
     var array_date = [];
     var user_id = 86;
@@ -493,6 +504,7 @@
     var car_id;
     var mobile_insert=<%=(String)request.getSession().getAttribute("user_mobile")%>;//此处填写手机号
     var is_insert=0;
+    var order_price;
     //判断是否是修改信息
     function checkId() {
 
@@ -557,7 +569,7 @@
           var boarding_point = global_data.result.data[i].boarding_point;//id
           var breakout_point = global_data.result.data[i].breakout_point;//id
           var price = global_data.result.data[i].price;//价格
-
+          order_price = global_data.result.data[i].origin_price;
 
           //开始时间设置
           var insert_time = start_time.substring(0, 10);
@@ -635,6 +647,8 @@
           $('.place_start_place ').val(boarding_point);
           $('.place_end_place ').val(breakout_point);
           addTabManagerStyle();
+          addPrice(order_price);
+          checkUpdate(price);
       }
 
     }
@@ -732,23 +746,17 @@
     }
     //添加座位
     function addPrice(price){
-      for (var j=0;j<3;j++) {
+      array_price = [];
+      for (var j=0;j<9;j++) {
         var contact = new Object();
         var day_time = [];
         contact.child = day_time;
         contact.id = j+1;
-        contact.name = price+(j*10);
+        contact.name = price+(j*5);
         array_price.push(contact);
       }
-      //价格选择
-      var selectPrice = new MobileSelectArea();
-      selectPrice.init({
-        trigger:$('#demo_price'),
-        data:array_price,
-        level: 1
-      });
-
     }
+
 
 
     function setIndex(){
@@ -1076,25 +1084,7 @@
         }
       }
     }
-//    //添加路线
-//    function addRouteStyle(){
-//      $('.publish_route_container').remove();
-//      for(var i=0;i<route_array.length;i++){
-//        $('.publish_route_box_span').before('<div class="publish_route_container">' +
-//                '<div class="publish_route_box_input">' +
-//                '<div class="line_container">' +
-//                '<div class="line_slide"></div>' +
-//                '<div class="line_circle"></div>' +
-//                '</div>' +
-//                '<input type="text" value="'+route_array[i]+'" index="" class="main_route input_style" oninput="sendKeepDownInput(this)">' +
-//                '<span class="publish_route_box_remove" onclick="removeInput(this)">X</span>' +
-//                '<ul class="publish_route_ul">' +
-//
-//                '</ul>' +
-//                '</div>' +
-//                '</div>');
-//      }
-//    }
+
     //添加标签列表
     function addYesTagsStyle(){
       for(var i=0;i<yes_tags.length;i++){
@@ -1231,6 +1221,62 @@
 //    function getPrice(){
 //
 //    }
+    function checkUpdate(price){
+      console.log("定义价格"+price);
+      for(var i =0;i<9;i++){
+        if(array_price[i].name==price){
+          var array_price_set = i;
+          console.log("定义价格位置"+array_price_i);
+          checkAddOrDes(array_price_set)
+        }
+      }
+    }
+
+    function checkAddOrDes(array_price_set){
+      if(array_price_set == 0){
+        array_price_i=0;
+        console.log("重置位置0");
+        $('.cut_price').hide();
+        $('.increase_price').show();
+      }else if(array_price_set == 5){
+        array_price_i=5;
+        console.log("重置位置5");
+        $('.cut_price').show();
+        $('.increase_price').show();
+      }else{
+        array_price_i=array_price_set-1;
+        console.log("重置位置");
+        $('.cut_price').show();
+        $('.increase_price').hide();
+      }
+    }
+
+    function increasePrice(){
+      if(array_price_i<5){
+        array_price_i++;
+        $('.increase_price').show();
+        $('.cut_price').show();
+        $('#demo_price').val(array_price[array_price_i].name);
+      }else{
+        $('#demo_price').val(array_price[array_price_i+1].name);
+        $('.cut_price').show();
+        $('.increase_price').hide();
+      }
+    }
+    function cutPrice(){
+      if(array_price_i<=0){
+        $('#demo_price').val(array_price[array_price_i].name);
+        $('.cut_price').hide();
+        $('.increase_price').show();
+      }else{
+        $('#demo_price').val(array_price[array_price_i].name);
+        $('.cut_price').show();
+        $('.increase_price').show();
+        array_price_i--;
+      }
+
+
+    }
   </script>
 </head>
 <body scroll="no">
@@ -1375,7 +1421,9 @@
           <span>参考价格</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text" id="demo_price" placeholder="参考价格" readonly="readonly" class="input_disabled"/>
+          <span class="publish_route_box_span cut_price" onclick="cutPrice()">-</span>
+          <input type="text" id="demo_price" placeholder="价格" readonly="readonly" class="input_disabled"/>
+          <span class="publish_route_box_span increase_price" onclick="increasePrice()">+</span>
         </div>
       </li>
       <li class="publish_mid_li">
@@ -1407,7 +1455,7 @@
           <span>备注信息</span>
         </div>
         <div class="publish_mid_li_click" onclick="">
-          <input type="text" placeholder="如顺路接送、费用等" class="publish_remark input_disabled"/>
+          <input type="text" placeholder="如顺路接送等" class="publish_remark input_disabled"/>
         </div>
       </li>
       <li class="publish_mid_li">
