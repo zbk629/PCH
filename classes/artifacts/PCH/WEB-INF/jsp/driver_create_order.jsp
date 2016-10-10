@@ -505,6 +505,8 @@
     var mobile_insert=<%=(String)request.getSession().getAttribute("user_mobile")%>;//此处填写手机号
     var is_insert=0;
     var order_price;
+    var global_price;
+    var global_price_length=11;
     //判断是否是修改信息
     function checkId() {
 
@@ -569,6 +571,11 @@
           var boarding_point = global_data.result.data[i].boarding_point;//id
           var breakout_point = global_data.result.data[i].breakout_point;//id
           var price = global_data.result.data[i].price;//价格
+
+        if (url.indexOf("=") == -1) {
+        } else {
+          global_price = price;
+        }
           order_price = global_data.result.data[i].origin_price;
 
           //开始时间设置
@@ -648,7 +655,7 @@
           $('.place_end_place ').val(breakout_point);
           addTabManagerStyle();
           addPrice(order_price);
-          checkUpdate(price);
+          checkUpdate();
       }
 
     }
@@ -744,10 +751,10 @@
         array_seat.push(contact);
       }
     }
-    //添加座位
+    //添加价格长度
     function addPrice(price){
       array_price = [];
-      for (var j=0;j<9;j++) {
+      for (var j=0;j<global_price_length;j++) {
         var contact = new Object();
         var day_time = [];
         contact.child = day_time;
@@ -1221,12 +1228,12 @@
 //    function getPrice(){
 //
 //    }
-    function checkUpdate(price){
-      console.log("定义价格"+price);
-      for(var i =0;i<9;i++){
-        if(array_price[i].name==price){
+    function checkUpdate(){
+      console.log("定义价格"+global_price);
+      for(var i =0;i<global_price_length;i++){
+        if(array_price[i].name==global_price){
           var array_price_set = i;
-          console.log("定义价格位置"+array_price_i);
+          console.log("定义价格位置"+array_price_set);
           checkAddOrDes(array_price_set)
         }
       }
@@ -1238,44 +1245,55 @@
         console.log("重置位置0");
         $('.cut_price').hide();
         $('.increase_price').show();
-      }else if(array_price_set == 5){
-        array_price_i=5;
+      }else if(array_price_set == (global_price_length-4)){
+        array_price_i=global_price_length-4;
         console.log("重置位置5");
         $('.cut_price').show();
-        $('.increase_price').show();
-      }else{
-        array_price_i=array_price_set-1;
-        console.log("重置位置");
-        $('.cut_price').show();
         $('.increase_price').hide();
+      }else{
+        array_price_i=array_price_set;
+        console.log("重置位置,array_price_i:"+array_price_i);
+        $('.cut_price').show();
+        $('.increase_price').show();
       }
     }
 
     function increasePrice(){
-      if(array_price_i<5){
-        array_price_i++;
-        $('.increase_price').show();
-        $('.cut_price').show();
-        $('#demo_price').val(array_price[array_price_i].name);
+      if($('#demo_price').val()==""){
+        showFloatStyle("请先选择起止城市")
       }else{
-        $('#demo_price').val(array_price[array_price_i+1].name);
-        $('.cut_price').show();
-        $('.increase_price').hide();
+        console.log("开始增加");
+        console.log("此时array_price_i="+array_price_i);
+        array_price_i++;
+        global_price +=5 ;
+        if(array_price_i<(global_price_length-3)){
+          $('.increase_price').show();
+          $('.cut_price').show();
+          $('#demo_price').val(global_price);
+
+        }else{
+          $('#demo_price').val(global_price);
+          $('.cut_price').show();
+          $('.increase_price').hide();
+          array_price_i=global_price_length-3;
+        }
       }
     }
     function cutPrice(){
+      console.log("开始减少");
+      console.log("此时array_price_i="+array_price_i);
+      global_price-=5;
+      array_price_i--;
       if(array_price_i<=0){
-        $('#demo_price').val(array_price[array_price_i].name);
+        $('#demo_price').val(global_price);
         $('.cut_price').hide();
         $('.increase_price').show();
+        array_price_i=0;
       }else{
-        $('#demo_price').val(array_price[array_price_i].name);
+        $('#demo_price').val(global_price);
         $('.cut_price').show();
         $('.increase_price').show();
-        array_price_i--;
       }
-
-
     }
   </script>
 </head>

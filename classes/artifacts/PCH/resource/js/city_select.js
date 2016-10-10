@@ -8,6 +8,7 @@
  */
 var price_style=0;
 var array_price_i=0;
+var global_price;
 
 (function(root, factory) {
     //amd
@@ -252,13 +253,14 @@ var array_price_i=0;
                     var destination_city_id = this.value[1];
                     for(var i=0;i<placeData[departure_city_id-1].child.length;i++){
                         if(placeData[departure_city_id-1].child[i].id==destination_city_id){
-                            var price = placeData[departure_city_id-1].child[i].price;
-                            origin_price=price;
+                            global_price = placeData[departure_city_id-1].child[i].price;
+                            origin_price=global_price;
+                            console.log("global_price"+global_price)
                             array_price_i=0;
                             $('.cut_price').hide();
                             $('.increase_price').show();
-                            $('#demo_price').val(price);
-                            addPrice(price);
+                            $('#demo_price').val(global_price);
+                            addPrice(global_price);
                         }
                     }
 
