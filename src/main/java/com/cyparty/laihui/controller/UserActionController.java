@@ -44,8 +44,8 @@ public class UserActionController {
 
         is_has_openid=Utils.isHasMapOpenid(request);
 
-        //is_has_openid=true;
-        //is_logined=true;
+       /* is_has_openid=true;
+        is_logined=true;*/
         if(is_logined){
             if(is_has_openid){
                 return "driver_create_order";
