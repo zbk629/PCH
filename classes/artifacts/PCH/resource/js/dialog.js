@@ -122,13 +122,13 @@
 						city_array=$('#demo_place').val().split("——");
 						if (url.indexOf("=") == -1) {
 							//alert("11");
-							if($('#demo_set').val()==""){
+							//if($('#demo_set').val()==""){
 								if(city_array!=""){
 									var departure_city = city_array[0];
 									var destination_city = city_array[1];
 									checkUserMessage(departure_city,destination_city);
 								}
-							}
+							//}
 
 						} else {
 

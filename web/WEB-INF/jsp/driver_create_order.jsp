@@ -507,6 +507,8 @@
     var order_price;
     var global_price;
     var global_price_length=11;
+    //判断点击状态
+    var check_select=0;
     //判断是否是修改信息
     function checkId() {
 
@@ -540,7 +542,7 @@
       obj.action = 'show_myself';
       obj.departure_city = departure_city;
       obj.destination_city = destination_city;
-      obj.size = 20;
+      obj.size = 1;
       obj.user_id = user_id;
       validate.validate_submit('/api/db/departure', obj, insertMessage);
     }
@@ -551,7 +553,7 @@
 
       }else
       {
-          var i=(global_data.result.total-1);
+          var i=0;
           var driving_name = global_data.result.data[i].driving_name;//车主姓名
           var info_status = global_data.result.data[i].info_status;//状态信息1：有空位；2：已满；-1：已取消
           var start_time = global_data.result.data[i].start_time;//开始时间
@@ -651,8 +653,8 @@
           $('.publish_type').val(car_brand);
 
           $('.item_points').text(points);
-          $('.place_start_place ').val(boarding_point);
-          $('.place_end_place ').val(breakout_point);
+          $('.place_start_place ').val("");
+          $('.place_end_place ').val("");
           addTabManagerStyle();
           addPrice(order_price);
           checkUpdate();
@@ -831,6 +833,7 @@
     }
     //选择城市
     function selectCity(obj) {
+
       //显示用的数据
       var name = $(obj).children('.key').text();
       var city = $(obj).children('.city').text();
@@ -838,11 +841,50 @@
       $(obj).parent().parent().children('input').val(name+" "+city);
       $(obj).parent().hide();
 
-      if(city_array[$(obj).attr('index')].hasOwnProperty('location')){
-        send_array.splice(number,1,city_array[$(obj).attr('index')]);
-      }else{
+      if(city_array[$(obj).attr('index')].location=="" || city_array[$(obj).attr('index')].location=="[]" ){
         $(obj).parent().parent().children('input').val("");
         showFloatStyle("请输入详细的地址")
+      }else{
+
+        send_array.splice(number,1,city_array[$(obj).attr('index')]);
+      }
+    }
+
+    //判断上车点，下车点数据是否完整
+    function checkSendPlace(){
+      switch(send_array.length){
+        case 0:
+            $('.place_start_place ').val("");
+            $('.place_end_place ').val("");
+            $('.publish_route_ul ').hide();
+            showFloatStyle("请选择系统推荐地址");
+          break;
+        case 1:
+            if(send_array[0]=="" || send_array[0]==undefined){
+              $('.place_start_place ').val("");
+              $('.publish_route_ul ').hide();
+              showFloatStyle("起始位置--请选择系统推荐地址");
+            }else if(send_array[1]=="" || send_array[1]==undefined){
+              $('.place_end_place ').val("");
+              $('.publish_route_ul ').hide();
+              showFloatStyle("目地位置--请选择系统推荐地址");
+            }else{
+              checkDriverMessage()
+            }
+          break;
+        case 2:
+          if(send_array[0]=="" || send_array[0]==undefined){
+            $('.place_start_place ').val("");
+            $('.publish_route_ul ').hide();
+            showFloatStyle("起始位置--请选择系统推荐地址");
+          }else if(send_array[1]=="" || send_array[1]==undefined){
+            $('.place_end_place ').val("");
+            $('.publish_route_ul ').hide();
+            showFloatStyle("目地位置--请选择系统推荐地址");
+          }else{
+            checkDriverMessage()
+          }
+          break;
       }
     }
     //显示途径和下滑菜单
@@ -1367,7 +1409,7 @@
         </div>
         <div class="publish_mid_li_click" onclick="">
           <div class="publish_place_box">
-            <input type="text"  placeholder="上车地点" index="0" class="place_city place_start_place input_disabled" oninput="sendKeepDownInput(this)"/>
+            <input type="text"  placeholder="上车地点" index="0" class="place_city place_start_place input_disabled" oninput="sendKeepDownInput(this)" />
             <ul class="publish_route_ul">
             </ul>
           </div>
@@ -1403,7 +1445,7 @@
         </div>
         <div class="publish_mid_li_click" onclick="">
           <div class="publish_place_box">
-            <input type="text"  placeholder="下车地点" index="1" class="place_city place_end_place input_disabled" oninput="sendKeepDownInput(this)"/>
+            <input type="text"  placeholder="下车地点" index="1" class="place_city place_end_place input_disabled" oninput="sendKeepDownInput(this)" />
             <ul class="publish_route_ul">
             </ul>
           </div>
@@ -1490,7 +1532,7 @@
   </div>
 
 
-  <div class="publish_bottom" onclick="checkDriverMessage()">
+  <div class="publish_bottom" onclick="checkSendPlace()">
     <span>确认发布</span>
   </div>
 </div>

@@ -990,6 +990,9 @@
 
             $('.publish_li_route').show();
         }
+        function toEditor(){
+            window.location.href = "/laihui/driver/create_order?id="+item_id;
+        }
     </script>
 </head>
 <body>
@@ -1152,7 +1155,7 @@
             预定座位
         </div>
     </a>
-    <a href="javascript:(0)" class="change_driver" onclick="showFloat()">
+    <a href="javascript:(0)" class="change_driver" onclick="toEditor()">
         <div class="publish_bottom">
             编辑信息
         </div>
