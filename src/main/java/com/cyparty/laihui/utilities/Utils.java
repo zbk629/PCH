@@ -283,7 +283,7 @@ public class Utils {
     }
     public static String checkNull(String input){
         String result="";
-        if(input==null||input.trim().equals("")){
+        if(input==null||input.trim().equals("")||input.trim().equals("null")){
             result="";
         }else {
             result=input;

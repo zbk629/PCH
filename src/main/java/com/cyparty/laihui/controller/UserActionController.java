@@ -274,7 +274,6 @@ public class UserActionController {
                             seats=Integer.parseInt(request.getParameter("booking_seats"));
                         }
                         //todo:user_id改为从session中获取
-                        //user_id=Integer.parseInt(request.getParameter("user_id"));
                         order_id=Integer.parseInt(request.getParameter("order_id"));
                     } catch (NumberFormatException e) {
                         seats=0;
@@ -323,9 +322,11 @@ public class UserActionController {
                                 json = ReturnJsonUtil.returnFailJsonString(result, "座位已满！");
                                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                             }
-                            if(passengerOrderList.size()>0){
+                            //控制订多少单
+                            if(passengerOrderList.size()>1){
                                 result.put("errcode",401);
-                                json = ReturnJsonUtil.returnFailJsonString(result, "您已预定过该行程单或类似行程单，请不要重复操作！");
+                                //您已预定过该行程单或类似行程单，请不要重复操作！
+                                json = ReturnJsonUtil.returnFailJsonString(result, "最多可同时预订两次车程，请在个人中心取消订单后再次预定！");
                                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                             }
                             if(boarding_point!=null&&breakout_point!=null){
@@ -401,6 +402,8 @@ public class UserActionController {
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "delete_my_order":
                     if(user_id>0){
+                        String update_sql=" set current_seats=init_seats where current_seats>init_seats ";
+                        laiHuiDB.update("pch_publish_info",update_sql);
                         order_id=Integer.parseInt(request.getParameter("order_id"));
                         String user_where=" where user_id="+user_id;
                         String p_mobile=laiHuiDB.getWxUser(user_where).get(0).getUser_mobile();
@@ -414,9 +417,8 @@ public class UserActionController {
                                 //短信通知车主
                                 laiHuiDB.deleteUserAction(order_id,p_mobile,1);
                                 is_success=false;
-
                                 while (!is_success){
-                                    String update_sql=" set current_seats=current_seats+"+passengerOrder.getSeats()+" where _id="+passengerOrder.getDriver_order_id();
+                                    update_sql=" set current_seats=current_seats+"+passengerOrder.getSeats()+" where _id="+passengerOrder.getDriver_order_id();
                                     is_success=laiHuiDB.update("pch_publish_info",update_sql);
                                 }
 

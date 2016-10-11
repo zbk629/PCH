@@ -230,6 +230,11 @@ public class PCXXHController {
                                 point.setPoint_seq(i + 1);
                                 point.setRoute_id(id);
                                 point.setPoint_name(jsonObject.getString("name"));
+                                if(i==0){
+                                    departure.setDeparture_county(jsonObject.getString("name"));
+                                }else if(i==1){
+                                    departure.setDestination(jsonObject.getString("name"));
+                                }
                                 point.setPoint_location(jsonObject.getString("location"));
                                 point.setPoint_uid(jsonObject.getString("id"));
                                 point.setPoint_address(jsonObject.getString("address"));

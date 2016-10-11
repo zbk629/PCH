@@ -64,13 +64,11 @@ public class LoginController {
                     if(ref!=null){
                         return "redirect:/laihui/car/detail?id="+ref;
                     }else {
-
                         return "redirect:/auth/base";
                     }
                 } else {
                     request.getSession().setAttribute("user_id", now_user.getUser_id());
                     return "redirect:/reg";
-                    //return "redirect:/reg?id=" + now_user.getUser_id();
                 }
             }
         }else if (mode != null && mode.equals("wx_map")) {
@@ -129,7 +127,7 @@ public class LoginController {
         }else {
             String ref_id=request.getParameter("ref");
             if(ref_id!=null){
-                return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&ref="+ref_id+"&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+                return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin%3fmode%3dwx%26ref%3d"+ref_id+"&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
             }else {
                 return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
             }

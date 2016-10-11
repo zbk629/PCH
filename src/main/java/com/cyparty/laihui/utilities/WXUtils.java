@@ -227,11 +227,11 @@ public class WXUtils {
                         "                       \"color\":\"#173177\"\n" +
                         "                   },\n" +
                         "                   \"keyword2\": {\n" +
-                        "                       \"value\":\""+departureInfo.getDeparture_city()+"\",\n" +
+                        "                       \"value\":\""+departureInfo.getDeparture_county()+"\",\n" +
                         "                       \"color\":\"#173177\"\n" +
                         "                   },\n" +
                         "                   \"keyword3\": {\n" +
-                        "                       \"value\":\""+departureInfo.getDestination_city()+"\",\n" +
+                        "                       \"value\":\""+departureInfo.getDestination()+"\",\n" +
                         "                       \"color\":\"#173177\"\n" +
                         "                   },\n" +
                         "                   \"keyword4\": {\n" +

@@ -192,7 +192,7 @@ public class ReturnJsonUtil {
                     where=where+" and end_time >'"+Utils.getCurrentTime()+"'";
                 }*/
             if (keyword != null && !keyword.trim().equals("")) {
-                where = where + " and (mobile like '%" + keyword + "%' or driving_name like '%" + keyword + "%') ";
+                where = where + " and (departure like '%" + keyword + "%' or destination like '%" + keyword + "%') ";
             }
             where = where + " order by start_time ASC";
 
