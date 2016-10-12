@@ -378,6 +378,43 @@
     .float_li{
       border-top:1px dashed #e8e8e8;
     }
+    /*输入框搜索*/
+    .search_container{
+      position: fixed;
+      background-color: #f5ad4e;
+      color: #fff;
+      top: 0;
+      width: 100%;
+      height: 4rem;
+      z-index: 10;
+      text-align: center;
+      box-shadow: 0px 3px 10px 2px #D6D6D6;
+      display: none;
+    }
+    .search_input{
+      position: relative;
+      background-color: #fff;
+      border: 1px solid #fff;
+      text-indent: .8rem;
+      width: 87%;
+      line-height: 2.4rem;
+      border-radius: 5px;
+    }
+    .search_input:focus{
+      border:1px solid #fff;
+    }
+    .search_input_box{
+      margin-top: 0.6rem;
+    }
+    .search_img{
+      position: absolute;
+      display: inline-block;
+      width: 1.8rem;
+      top: 0.6rem;
+      right: 2.4rem;
+      z-index: 1;
+      padding: .4rem;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
@@ -393,6 +430,13 @@
       setShowData();
       movetop();
       checkId();
+      // 绑定键盘按下事件
+      $(document).keypress(function (e) {
+        // 回车键事件
+        if (e.which == 13) {
+          jQuery('.search_img').click();
+        }
+      });
       $(window).scroll(function () {
         $(window).scrollTop() > 100 ? $(".backtop").animate({bottom:"100rem;"},300).show() : $(".backtop").hide().css({bottom:"9.3rem"})
       });
@@ -437,7 +481,7 @@
       }else{
         $('.message_bottom_footer').remove();
       }
-
+      bindEvent();
     });
 
     //加载城市数组
@@ -459,6 +503,55 @@
     var size=10;
     var page_list = 0;
     var load_start_time;
+    var small_city;
+
+    var startY = 0, endY = 0, moveY = 0;
+    function touchStart(evt){
+      try{
+        var touch = evt.touches[0], //获取第一个触点
+                y = Number(touch.pageY); //页面触点Y坐标
+        //记录触点初始位置
+        startY = y;
+      }catch(e){
+        console.log(e.message)
+      }
+    }
+
+    function touchMove(evt){
+      try{
+        var touch = evt.touches[0], //获取第一个触点
+                y = Number(touch.pageY); //页面触点Y坐标
+        //判断滑动方向
+        moveY = y;
+      }catch(e){
+        console.log(e.message)
+      }
+    }
+
+    function touchEnd(){
+      try{
+        //记录触点初始位置
+        endY = startY-moveY;
+        if (endY>0) {
+          $('.search_container').animate({top:"-30rem"},300);
+        }else{
+          $('.search_container').animate({top:"0"},300).show();
+        }
+      }catch(e){
+        console.log(e.message)
+      }
+    }
+
+    //绑定事件
+    function bindEvent(){
+      document.addEventListener('touchstart',touchStart,false);
+      document.addEventListener('touchmove',touchMove,false);
+      document.addEventListener('touchend',touchEnd,false);
+    }
+    function toTop(){
+      $('body,html').animate({scrollTop:0},0);
+      $('.search_container').css('top','0');
+    }
     //判断列表底部样式
     function checkList(){
       var body_heigth = $(window).height();
@@ -532,6 +625,7 @@
 //                'data': placeData,//数据源,
 //                'status': 0
 //            });
+      getStartPlace();
       var selectArea = new MobileSelectArea2();
       selectArea.init({
         trigger:$('#demo_place'),
@@ -540,7 +634,6 @@
         position:'bottom',
         level: 2
       });
-      getStartPlace();
     }
 
     //出发路线
@@ -630,7 +723,7 @@
           $('.publish_end_city').text(destination_city_text);
           loadEndRoute(departure_city_text);
         }
-        updateMessage(begin_time, departure_city, destination_city)
+        updateMessage(begin_time, departure_city, destination_city);
       }
     }
 
@@ -863,6 +956,7 @@
       obj.date = start_time;
       obj.departure_city = departure_city;
       obj.destination_city = destination_city;
+      obj.keyword = small_city;
       validate.validate_submit('/api/db/passenger/departure', obj, sendMessage);
       url = "my_order_list?date=" + start_time + "&departure_city=" + departure_city + "&destination_city=" + destination_city+"&end";
       changeUrl(url);
@@ -902,6 +996,7 @@
       obj.date = time;
       obj.departure_city = departure_city;
       obj.destination_city = destination_city;
+      obj.keyword = small_city;
       validate.validate_submit('/api/db/passenger/departure', obj, sendMessage);
       url = "my_order_list?date=" + time + "&departure_city=" + departure_city + "&destination_city=" + destination_city+"&end";
       changeUrl(url);
@@ -992,9 +1087,26 @@
       removeFloatMessage();
       findMessage();
     }
+    function checkUserMessage(departure_city,destination_city){}
+
+    //县级搜索条件
+    function searchInput(){
+      small_city = $('.search_input').val();
+      if(small_city==""){
+        showFloatStyle("请输入县级城市")
+      }else{
+        findMessage()
+      }
+    }
   </script>
 </head>
 <body id="backtop">
+<div class="search_container">
+  <div class="search_input_box">
+    <input placeholder="搜索县级城市" class="search_input" onfocus="toTop()">
+    <img src="/resource/images/pch_icon_search.png" class="search_img" onclick="searchInput()">
+  </div>
+</div>
 <div class="hover_all"></div>
 <div class="loading_box">
   <img class="loading" src="/resource/images/loading.gif" alt="请等待">
@@ -1022,8 +1134,6 @@
 <div class="departure_list_container">
   <div class="departure_container_top">
     <div class="departure_top_box">
-      <%--<span class="departure_top_find_car departure_top_button_active">找车</span>--%>
-      <%--<span class="departure_top_find_person">找人</span>--%>
       <img src="/resource/images/pch_logo_findPeople.png" class="departure_top_box_img" alt="来回拼车">
       <span class="departure_top_box_span">河南点融工坊信息技术有限公司</span>
     </div>

@@ -236,7 +236,7 @@ var global_price;
             _this.f(childData);
         },
         submit: function() {
-
+            $('.search_container').show().css('top','0');
             this.oldvalue = this.value.concat([]);
             this.oldtext = this.text.concat([]);
 
@@ -255,12 +255,12 @@ var global_price;
                         if(placeData[departure_city_id-1].child[i].id==destination_city_id){
                             global_price = placeData[departure_city_id-1].child[i].price;
                             origin_price=global_price;
-                            console.log("global_price"+global_price)
                             array_price_i=0;
                             $('.cut_price').hide();
                             $('.increase_price').show();
                             $('#demo_price').val(global_price);
                             addPrice(global_price);
+
                         }
                     }
 

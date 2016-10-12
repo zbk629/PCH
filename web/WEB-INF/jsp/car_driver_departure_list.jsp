@@ -22,13 +22,9 @@
     <script src="/resource/js/style.js" type="text/javascript"></script>
     <script src="/resource/js/jquery.cookie.js" type="text/javascript"></script>
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css">
-
-
     <link href="/resource/css/dialog.css" rel="stylesheet" type="text/css">
     <link href="/resource/css/mobile-select-area.css" rel="stylesheet" type="text/css">
     <script src="/resource/js/city_select.js" type="text/javascript"></script>
-
-
     <script src="/resource/js/dialog.js" type="text/javascript"></script>
     <script src="/resource/js/mobile-select-area.js" type="text/javascript"></script>
     <script src="/resource/js/zepto.js" type="text/javascript"></script>
@@ -388,6 +384,43 @@
             position: relative;
             top: .26rem;
         }
+        /*输入框搜索*/
+        .search_container{
+            position: fixed;
+            background-color: #f5ad4e;
+            color: #fff;
+            top: 0;
+            width: 100%;
+            height: 4rem;
+            z-index: 10;
+            text-align: center;
+            box-shadow: 0px 3px 10px 2px #D6D6D6;
+            display: none;
+        }
+        .search_input{
+            position: relative;
+            background-color: #fff;
+            border: 1px solid #fff;
+            text-indent: .8rem;
+            width: 87%;
+            line-height: 2.4rem;
+            border-radius: 5px;
+        }
+        .search_input:focus{
+            border:1px solid #fff;
+        }
+        .search_input_box{
+            margin-top: 0.6rem;
+        }
+        .search_img{
+            position: absolute;
+            display: inline-block;
+            width: 1.8rem;
+            top: 0.6rem;
+            right: 2.4rem;
+            z-index: 1;
+            padding: .4rem;
+        }
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
     <script>
@@ -401,9 +434,15 @@
             });
             $('.hover').click(function(){
                 removeFloatMessage();
-            })
+            });
             IsPC(inPc,inMobile);
-
+            // 绑定键盘按下事件
+            $(document).keypress(function (e) {
+                // 回车键事件
+                if (e.which == 13) {
+                    jQuery('.search_img').click();
+                }
+            });
             setShowData();
             movetop();
             checkId();
@@ -450,6 +489,7 @@
             }else{
                 $('.message_bottom_footer').remove();
             }
+            bindEvent();
         });
 
         //加载城市数组
@@ -471,6 +511,58 @@
         var size=10;
         var page_list = 0;
         var load_start_time;
+        var small_city
+
+
+        var startY = 0, endY = 0, moveY = 0;
+        function touchStart(evt){
+            try{
+                var touch = evt.touches[0], //获取第一个触点
+                        y = Number(touch.pageY); //页面触点Y坐标
+                //记录触点初始位置
+                startY = y;
+            }catch(e){
+                console.log(e.message)
+            }
+        }
+
+        function touchMove(evt){
+            try{
+                var touch = evt.touches[0], //获取第一个触点
+                        y = Number(touch.pageY); //页面触点Y坐标
+                //判断滑动方向
+                moveY = y;
+            }catch(e){
+                console.log(e.message)
+            }
+        }
+
+        function touchEnd(){
+                try{
+                    //记录触点初始位置
+                    endY = startY-moveY;
+                    if (endY>0) {
+                        $('.search_container').animate({top:"-30rem"},300);
+                    }else{
+                        $('.search_container').animate({top:"0"},300).show();
+                    }
+                }catch(e){
+                    console.log(e.message)
+                }
+        }
+
+        //绑定事件
+        function bindEvent(){
+            document.addEventListener('touchstart',touchStart,false);
+            document.addEventListener('touchmove',touchMove,false);
+            document.addEventListener('touchend',touchEnd,false);
+        }
+
+        function toTop(){
+            $('body,html').animate({scrollTop:0},0);
+            $('.search_container').css('top','0');
+        }
+
         //判断列表底部样式
         function checkList(){
             var body_heigth = $(window).height();
@@ -644,7 +736,7 @@
                     $('.publish_end_city').text(destination_city_text);
                     loadEndRoute(departure_city_text);
                 }
-                updateMessage(begin_time, departure_city, destination_city)
+                updateMessage(begin_time, departure_city, destination_city);
             }
         }
 
@@ -920,6 +1012,7 @@
             obj.start_time = start_time;
             obj.departure_city = departure_city;
             obj.destination_city = destination_city;
+            obj.keyword = small_city;
             validate.validate_submit('/api/db/departure', obj, sendMessage);
             url = "list?time=" + start_time + "&departure_city=" + departure_city + "&destination_city=" + destination_city+"&end";
             changeUrl(url);
@@ -959,6 +1052,7 @@
             obj.start_time = time;
             obj.departure_city = departure_city;
             obj.destination_city = destination_city;
+            obj.keyword = small_city;
             validate.validate_submit('/api/db/departure', obj, sendMessage);
             url = "list?time=" + time + "&departure_city=" + departure_city + "&destination_city=" + destination_city+"&end";
             changeUrl(url);
@@ -1051,6 +1145,16 @@
             removeFloatMessage();
             findMessage();
         }
+        function checkUserMessage(departure_city,destination_city){}
+        //县级搜索条件
+        function searchInput(){
+            small_city = $('.search_input').val();
+            if(small_city==""){
+                showFloatStyle("请输入县级城市")
+            }else{
+                findMessage()
+            }
+        }
     </script>
 </head>
 <body id="backtop">
@@ -1076,6 +1180,12 @@
 </div>
 <img src="/resource/images/pch_logo.png" style="display: none">
 <!--回到顶部-->
+<div class="search_container">
+    <div class="search_input_box">
+        <input placeholder="搜索县级城市" class="search_input" onfocus="toTop()">
+        <img src="/resource/images/pch_icon_search.png" class="search_img" onclick="searchInput()" >
+    </div>
+</div>
 <div class="backtop">
     <a href="#backtop"><img src="/resource/images/pc_top.png" height="43"></a>
 </div>
