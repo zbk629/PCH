@@ -1171,7 +1171,6 @@
             <div class="float_message_mid">
                <ul class="float_ul">
                    <li class="float_li_all" onclick="selectFloatLi(this)" index="">全部</li>
-
                    <div class="clear float_li_all_clear"></div>
                </ul>
             </div>
