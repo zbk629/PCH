@@ -489,7 +489,7 @@ public class ReturnJsonUtil {
         return result;
     }
 
-    public static JSONObject getPassengerPublishInfo(LaiHuiDB laiHuiDB, int user_id, int page, int size, int now_order_id, String date, String departure_city, String destination_city) {
+    public static JSONObject getPassengerPublishInfo(LaiHuiDB laiHuiDB, int user_id, int page, int size, int now_order_id, String date, String departure_city, String destination_city,String keywrod) {
         JSONObject result = new JSONObject();
         JSONArray dataArray = new JSONArray();
         String where = " where user_id > 0";
@@ -514,6 +514,9 @@ public class ReturnJsonUtil {
         }
         if (destination_city != null && !destination_city.trim().equals("")) {
             where = where + " and destination_city ='" + destination_city + "'";
+        }
+        if(keywrod!=null && !keywrod.trim().equals("")){
+            where=where+" and departure like '%"+keywrod+"%' and destination like '%"+keywrod+"%'";
         }
 
         where = where + " order by end_time ASC";

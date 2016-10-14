@@ -32,7 +32,7 @@ public class DepartureInfoController {
     }
 
     @RequestMapping("/laihui/share")
-    public String passenger_order_info(Model model, HttpServletRequest request) {
+    public String passenger_order_info() {
 
         return "laihui_share";
 

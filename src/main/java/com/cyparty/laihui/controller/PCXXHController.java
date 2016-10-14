@@ -202,7 +202,7 @@ public class PCXXHController {
                         //创建出车信息
                         if(id>0){
                             //更新
-                            where=" set start_time='"+start_time+"', end_time='"+end_time+"',departure_city='"+departure_city+"',destination_city='"+destination_city+"',init_seats="+init_seats+",mobile='"+mobile+"',points='"+points+"',description='"+description+"',car_brand='"+car_brand+"',departure='"+departure_county+"',destination='"+destination+"',driving_name='"+driving_name+"',tag_yes_content='"+tag_yes_content+"',tag_no_content='"+tag_no_content+"',price="+price+" where _id="+id;
+                            where=" set start_time='"+start_time+"', end_time='"+end_time+"',departure_city='"+departure_city+"',destination_city='"+destination_city+"',init_seats="+init_seats+",mobile='"+mobile+"',points='"+points+"',description='"+description+"',car_brand='"+car_brand+"',driving_name='"+driving_name+"',tag_yes_content='"+tag_yes_content+"',tag_no_content='"+tag_no_content+"',price="+price+" where _id="+id;
                             is_success=laiHuiDB.update("pch_publish_info",where);
 
                             if(is_success){

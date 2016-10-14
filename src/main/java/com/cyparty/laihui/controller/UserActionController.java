@@ -242,7 +242,8 @@ public class UserActionController {
                     String now_date=request.getParameter("date");
                     String departure_city=request.getParameter("departure_city");
                     String destination_city=request.getParameter("destination_city");
-                    result=ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, 0, page, size, order_id, now_date, departure_city, destination_city);
+                    String keyword=request.getParameter("keyword");
+                    result=ReturnJsonUtil.getPassengerPublishInfo(laiHuiDB, 0, page, size, order_id, now_date, departure_city, destination_city,keyword);
                     json = ReturnJsonUtil.returnSuccessJsonString(result, "出发市信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show_mine":
@@ -402,8 +403,7 @@ public class UserActionController {
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "delete_my_order":
                     if(user_id>0){
-                        String update_sql=" set current_seats=init_seats where current_seats>init_seats ";
-                        laiHuiDB.update("pch_publish_info",update_sql);
+
                         order_id=Integer.parseInt(request.getParameter("order_id"));
                         String user_where=" where user_id="+user_id;
                         String p_mobile=laiHuiDB.getWxUser(user_where).get(0).getUser_mobile();
@@ -418,15 +418,16 @@ public class UserActionController {
                                 laiHuiDB.deleteUserAction(order_id,p_mobile,1);
                                 is_success=false;
                                 while (!is_success){
-                                    update_sql=" set current_seats=current_seats+"+passengerOrder.getSeats()+" where _id="+passengerOrder.getDriver_order_id();
+                                    String update_sql=" set current_seats=current_seats+"+passengerOrder.getSeats()+" where _id="+passengerOrder.getDriver_order_id();
                                     is_success=laiHuiDB.update("pch_publish_info",update_sql);
                                 }
-
                                 if(p_mobile!=null&&!p_mobile.trim().equals("")&&p_mobile.length()==11){
                                     Utils.sendCancleNotifyMessage(driver_mobile, p_mobile);
                                 }
                             }
                         }
+                        String update_sql=" set current_seats=init_seats where current_seats>init_seats ";
+                        laiHuiDB.update("pch_publish_info",update_sql);
                         json = ReturnJsonUtil.returnSuccessJsonString(result, "删除成功！");
                         return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                     }
