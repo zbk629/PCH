@@ -421,6 +421,13 @@
             z-index: 1;
             padding: .4rem;
         }
+        /*/!*下载APP*!/*/
+        /*.app_load{*/
+            /*position: fixed;*/
+        /*}*/
+        /*.app_load_container{*/
+            /*position: relative;*/
+        /*}*/
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
     <script>
@@ -1255,7 +1262,16 @@
     </div>
 
 </div>
+<%--<div class="app_load">--%>
+    <%--<div class="app_load_container">--%>
+        <%--<img src="/resource/images/pc_logo.png">--%>
+        <%--<span class="close_app_load">x</span>--%>
+        <%--<a href="http://admin.pinchenet.com/app/download">下载APP</a>--%>
+    <%--</div>--%>
+
+<%--</div>--%>
 <%--底部--%>
+
 <jsp:include page="footer.jsp" flush="true"></jsp:include>
 <div class="bottom_menu " onclick="changeMenu(this)">
     <img src="/resource/images/pch_icon_right_to.png" class="menu_style_icon menu_style_active">
@@ -1285,7 +1301,6 @@
         </p>
     </div>
 </div>
-
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
         wx.config({

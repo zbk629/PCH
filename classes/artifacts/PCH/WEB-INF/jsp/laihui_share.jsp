@@ -213,6 +213,27 @@
     .ad_container img{
         width: 100%;
     }
+    .ad_container{
+      color: #888;
+    }
+    .android_container{
+      float: left;
+      width: 47%;
+      text-align: center;
+    }
+    .ios_container{
+      float: right;
+      width: 47%;
+      text-align: center;
+    }
+    .android_container_span{
+      display: inline-block;
+      line-height: 40px;
+    }
+    .ios_container_span{
+      display: inline-block;
+      height: 40px;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -306,7 +327,6 @@
       changeFontSize();
       checkId();
       changePCStyle();
-
     });
     var url = window.location.href;
     var item_id = url.split("?id=")[1];
@@ -511,11 +531,18 @@
       $('.float_container2').fadeIn(100).css({'width': '80%', 'font-size': '1.3rem'});
       $('.float_container2').empty().append('<div class="booking_box">' +
               '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
-              '<p class="ad_text">下载来回拼车APP<br>来一场说走就走的旅行</p>' +
+              '<p class="ad_text">下载来回拼车APP<br>牵起你生命中每一个来回</p>' +
               '<div class="ad_container">' +
               '<i class="circle_hide_top_left"></i>' +
               '<i class="circle_hide_top_right"></i>' +
-              '<img src="/resource/images/pc_ad.jpg">' +
+              '<div class="android_container">' +
+              '<span class="android_container_span">安卓下载</span>' +
+              '<img src="http://hbnewsoss.cyparty.com/apk/huabei_news.png">'+
+              '</div>' +
+              '<div class="ios_container">' +
+              '<span class="ios_container_span">IOS即将上线，关注公众号获取海量拼车信息</span>' +
+              '<img src="http://hbnewsoss.cyparty.com/apk/huabei_news.png">'+
+              '</div>' +
               '</div>'+
               '</div>')
 
@@ -543,7 +570,7 @@
       <img class="return_perv_img" alt="" src="/resource/images/pc_icon_home.png"
            onclick="returnCheck()">
     </div>
-    <span style="font-size: 1.6rem">来回拼车--车主信息</span>
+    <span style="font-size: 1.6rem">来回拼车--行程信息</span>
   </div>
   <div class="publish_message_driver">
     <div class="publish_message_driver_title">
