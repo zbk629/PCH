@@ -1198,10 +1198,7 @@
 <div class="departure_list_container">
     <div class="departure_container_top">
         <div class="departure_top_box">
-            <%--<span class="departure_top_find_car departure_top_button_active">找车</span>--%>
-            <%--<span class="departure_top_find_person">找人</span>--%>
-                <img src="/resource/images/pch_logo_findCar.png" class="departure_top_box_img" alt="来回拼车">
-                <%--<span style="color: #52514f;font-size: 1.4rem;position: relative;display: inline-block;top: -.6rem;left: -1rem;">—找车</span>--%>
+            <img src="/resource/images/pch_logo_findCar.png" class="departure_top_box_img" alt="来回拼车">
             <span class="departure_top_box_span">河南点融工坊信息技术有限公司</span>
         </div>
     </div>

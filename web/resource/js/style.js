@@ -173,7 +173,6 @@ var validate = (function () {
 
 })();
 //改变字体适应效果
-//改变字体适应效果
 function changeFontSize() {
     var w = $(document.body).width();
     if (w >= 1080) {
