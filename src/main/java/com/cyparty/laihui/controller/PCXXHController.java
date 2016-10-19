@@ -135,7 +135,7 @@ public class PCXXHController {
             if(request.getParameter("id")!=null){
                 id=Integer.parseInt(request.getParameter("id"));
             }
-            int user_id=0;
+            int user_id=377;
 
             //todo:user_id改为从session中获取
             if (request.getSession().getAttribute("user_id") != null) {
@@ -270,8 +270,11 @@ public class PCXXHController {
                     }
                 case "delete":
                     id = Integer.parseInt(request.getParameter("id"));
+
                     where = " set is_enable=0 where _id=" + id;
                     is_success = laiHuiDB.update("pch_publish_info ", where);
+                    String delete_sql=" where driver_order_id="+id;
+                    laiHuiDB.delete("pc_user_role_action",delete_sql);
                     if (is_success) {
                         json = ReturnJsonUtil.returnSuccessJsonString(result, "删除成功！");
                     } else {

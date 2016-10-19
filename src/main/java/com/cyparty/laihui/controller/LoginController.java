@@ -306,4 +306,11 @@ public class LoginController {
             return new ResponseEntity<String>(json, responseHeaders, HttpStatus.BAD_REQUEST);
         }
     }
+    @RequestMapping("/app/download")
+    public String download(Model model,HttpServletRequest request){
+
+
+        return "app_download";
+
+    }
 }

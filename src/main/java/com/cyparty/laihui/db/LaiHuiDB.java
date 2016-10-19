@@ -177,7 +177,7 @@ public class LaiHuiDB {
                 ps.setInt(16, 1);
                 ps.setString(17, departureInfo.getTag_no_content());
                 ps.setInt(18,departureInfo.getUser_id());
-                ps.setInt(19,0);
+                ps.setInt(19,1);//来源微信
                 ps.setInt(20,departureInfo.getInit_seats());
                 ps.setDouble(21,departureInfo.getPrice());
                 ps.setDouble(22,departureInfo.getOrigin_price());
