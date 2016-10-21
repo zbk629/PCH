@@ -29,6 +29,7 @@ body {
 a {
     text-decoration: none;
     color: #52514f;
+    -webkit-tap-highlight-color:transparent;
 }
 
 a:link {

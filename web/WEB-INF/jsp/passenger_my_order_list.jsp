@@ -415,6 +415,75 @@
       z-index: 1;
       padding: .4rem;
     }
+    /*下载APP*/
+    .app_load{
+      position: fixed;
+      bottom: 4.2rem;
+      height: 4.6rem;
+      width: 100%;
+      z-index: 100;
+      display: block;
+    }
+    .app_load_container{
+      position: relative;
+      height: 100%;
+      padding: 0 1.5rem;
+    }
+    .app_load_container a{
+      width: 80%;
+      height: 100%;
+      display:block;
+      position: relative;
+      z-index: 999;
+    }
+    .app_logo{
+      width: 3rem;
+      margin-top: .1rem;
+    }
+    .close_app_load{
+      position: absolute;
+      right: 1rem;
+      color: #FFF;
+      display: inline-block;
+      border-radius: 50%;
+      width: 4rem;
+      height: 4rem;
+      text-align: center;
+      font-size: 2.6rem;
+      line-height: 4rem;
+    }
+    .app_text{
+      line-height: 2rem;
+      color: #fff;
+      display: inline-block;
+      margin-top: .2rem;
+      margin-left: 1rem;
+    }
+    .app_load_hover{
+      background-color: #000;
+      opacity: 0.75;
+      width: 100%;
+      position: absolute;
+      height: 100%;
+    }
+    .app_box{
+      position: fixed;
+      bottom: 13.8rem;
+      right: 1rem;
+      width: 3.2rem;
+      background-color: #fff;
+      z-index: 101;
+      border-radius: 50%;
+      border: 1px solid #e8e8e8;
+      padding: .3rem .3rem .1rem .4rem;
+      display: none;
+    }
+    .app_show{
+      width: 100%;
+    }
+    .bottom_menu{
+      display: none;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
@@ -481,7 +550,20 @@
       }else{
         $('.message_bottom_footer').remove();
       }
-      bindEvent();
+//      bindEvent();
+      var p=0,t=0;
+      $(window).scroll(function(e){
+        p = $(this).scrollTop();
+        if(t<=p){//下滚
+          $('.search_container').stop(true,false).animate({top:"-30rem"},100);
+          hideApp();
+        }
+        else{//上滚
+          $('.search_container').stop(true,false).animate({top:"0"},100).show();
+          showApp();
+        }
+        setTimeout(function(){t = p;},0);
+      });
     });
 
     //加载城市数组
@@ -1098,9 +1180,37 @@
         findMessage()
       }
     }
+    function hideApp(){
+      $('.app_load').hide();
+      $('.app_box').show();
+      $('.bottom_menu ').show();
+    }
+    function showApp(){
+      $('.app_load').show();
+      $('.app_box').hide();
+      $('.bottom_menu ').hide();
+    }
   </script>
 </head>
 <body id="backtop">
+<a href="http://admin.pinchenet.com/app/download">
+  <div class="app_box">
+    <img src="/resource/images/pc_icon_app_downloade.png" class="app_show">
+  </div>
+</a>
+<div class="app_load">
+  <div class="app_load_hover"></div>
+  <div class="app_load_container">
+    <span class="close_app_load" onclick="hideApp()">x</span>
+    <a href="http://admin.pinchenet.com/app/download">
+      <img src="/resource/images/role_logo.png" class="app_logo">
+            <span class="app_text">
+                下载来回拼车APP</br>
+              <span style="font-size: 1.2rem">牵起你生命中的每一个来回</span>
+            </span>
+    </a>
+  </div>
+</div>
 <div class="search_container">
   <div class="search_input_box">
     <input placeholder="搜索县级城市" class="search_input" onfocus="toTop()">

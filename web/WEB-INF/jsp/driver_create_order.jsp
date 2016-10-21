@@ -430,8 +430,8 @@
       selectArea.init({
         trigger:$('#demo_place'),
         data:placeData,
-        level: 2
-//        default:0*
+        level: 2,
+
       });
       var selectDate = new MobileSelectArea();
       //今明选择
@@ -1390,7 +1390,7 @@
           <span>起止路线</span>
         </div>
         <div class="publish_mid_li_click" index="1" >
-          <input type="text" id="demo_place" placeholder="选择起止城市" readonly="readonly" class="place_start_to_end input_disabled" onchange="alert('1')" onclick="slideCity()"/>
+          <input type="text" id="demo_place" placeholder="选择起止城市" readonly="readonly" class="place_start_to_end input_disabled"  onclick="slideCity()"/>
         </div>
       </li>
       <li class="publish_mid_li" style="display: none">

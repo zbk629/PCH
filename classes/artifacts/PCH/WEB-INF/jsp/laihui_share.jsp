@@ -218,12 +218,12 @@
     }
     .android_container{
       float: left;
-      width: 47%;
+      width: 48%;
       text-align: center;
     }
     .ios_container{
       float: right;
-      width: 47%;
+      width: 48%;
       text-align: center;
     }
     .android_container_span{
@@ -537,11 +537,11 @@
               '<i class="circle_hide_top_right"></i>' +
               '<div class="android_container">' +
               '<span class="android_container_span">安卓下载</span>' +
-              '<img src="http://hbnewsoss.cyparty.com/apk/huabei_news.png">'+
+              '<img src="/resource/images/pc_app_logo.png">'+
               '</div>' +
               '<div class="ios_container">' +
               '<span class="ios_container_span">IOS即将上线，关注公众号获取海量拼车信息</span>' +
-              '<img src="http://hbnewsoss.cyparty.com/apk/huabei_news.png">'+
+              '<img src="/resource/images/pc_ios_logo.png">'+
               '</div>' +
               '</div>'+
               '</div>')

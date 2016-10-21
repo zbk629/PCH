@@ -421,13 +421,75 @@
             z-index: 1;
             padding: .4rem;
         }
-        /*/!*下载APP*!/*/
-        /*.app_load{*/
-            /*position: fixed;*/
-        /*}*/
-        /*.app_load_container{*/
-            /*position: relative;*/
-        /*}*/
+        /*下载APP*/
+        .app_load{
+            position: fixed;
+            bottom: 4.2rem;
+            height: 4.6rem;
+            width: 100%;
+            z-index: 100;
+            display: block;
+        }
+        .app_load_container{
+            position: relative;
+            height: 100%;
+            padding: 0 1.5rem;
+        }
+        .app_load_container a{
+            width: 80%;
+            height: 100%;
+            display:block;
+            position: relative;
+            z-index: 999;
+        }
+        .app_logo{
+            width: 3rem;
+            margin-top: .1rem;
+        }
+        .close_app_load{
+            position: absolute;
+            right: 1rem;
+            color: #FFF;
+            display: inline-block;
+            border-radius: 50%;
+            width: 4rem;
+            height: 4rem;
+            text-align: center;
+            font-size: 2.6rem;
+            line-height: 4rem;
+        }
+        .app_text{
+            line-height: 2rem;
+            color: #fff;
+            display: inline-block;
+            margin-top: .2rem;
+            margin-left: 1rem;
+        }
+        .app_load_hover{
+            background-color: #000;
+            opacity: 0.75;
+            width: 100%;
+            position: absolute;
+            height: 100%;
+        }
+        .app_box{
+            position: fixed;
+            bottom: 13.8rem;
+            right: 1rem;
+            width: 3.2rem;
+            background-color: #fff;
+            z-index: 101;
+            border-radius: 50%;
+            border: 1px solid #e8e8e8;
+            padding: .3rem .3rem .1rem .4rem;
+            display: none;
+        }
+        .app_show{
+            width: 100%;
+        }
+        .bottom_menu{
+            display: none;
+        }
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
     <script>
@@ -496,7 +558,21 @@
             }else{
                 $('.message_bottom_footer').remove();
             }
-            bindEvent();
+//            bindEvent();
+
+            var p=0,t=0;
+            $(window).scroll(function(e){
+                p = $(this).scrollTop();
+                if(t<=p){//下滚
+                    $('.search_container').stop(true,false).animate({top:"-30rem"},100);
+                    hideApp();
+                }
+                else{//上滚
+                    $('.search_container').stop(true,false).animate({top:"0"},100).show();
+                    showApp();
+                }
+                setTimeout(function(){t = p;},0);
+            });
         });
 
         //加载城市数组
@@ -518,7 +594,7 @@
         var size=10;
         var page_list = 0;
         var load_start_time;
-        var small_city
+        var small_city;
 
 
         var startY = 0, endY = 0, moveY = 0;
@@ -549,9 +625,12 @@
                     //记录触点初始位置
                     endY = startY-moveY;
                     if (endY>0) {
+
                         $('.search_container').animate({top:"-30rem"},300);
+                        hideApp();
                     }else{
                         $('.search_container').animate({top:"0"},300).show();
+                        showApp();
                     }
                 }catch(e){
                     console.log(e.message)
@@ -1162,6 +1241,16 @@
                 findMessage()
             }
         }
+        function hideApp(){
+            $('.app_load').hide();
+            $('.app_box').show();
+            $('.bottom_menu ').show();
+        }
+        function showApp(){
+            $('.app_load').show();
+            $('.app_box').hide();
+            $('.bottom_menu ').hide();
+        }
     </script>
 </head>
 <body id="backtop">
@@ -1184,6 +1273,20 @@
         </div>
     </div>
 </div>
+
+<div class="app_load">
+    <div class="app_load_hover"></div>
+    <div class="app_load_container">
+        <span class="close_app_load" onclick="hideApp()">x</span>
+        <a href="http://admin.pinchenet.com/app/download">
+            <img src="/resource/images/role_logo.png" class="app_logo">
+            <span class="app_text">
+                下载来回拼车APP</br>
+                <span style="font-size: 1.2rem">牵起你生命中的每一个来回</span>
+            </span>
+        </a>
+    </div>
+</div>
 <img src="/resource/images/pch_logo.png" style="display: none">
 <!--回到顶部-->
 <div class="search_container">
@@ -1198,10 +1301,7 @@
 <div class="departure_list_container">
     <div class="departure_container_top">
         <div class="departure_top_box">
-            <%--<span class="departure_top_find_car departure_top_button_active">找车</span>--%>
-            <%--<span class="departure_top_find_person">找人</span>--%>
-                <img src="/resource/images/pch_logo_findCar.png" class="departure_top_box_img" alt="来回拼车">
-                <%--<span style="color: #52514f;font-size: 1.4rem;position: relative;display: inline-block;top: -.6rem;left: -1rem;">—找车</span>--%>
+            <img src="/resource/images/pch_logo_findCar.png" class="departure_top_box_img" alt="来回拼车">
             <span class="departure_top_box_span">河南点融工坊信息技术有限公司</span>
         </div>
     </div>
@@ -1262,11 +1362,23 @@
     </div>
 
 </div>
+<a href="http://admin.pinchenet.com/app/download">
+<div class="app_box">
+    <img src="/resource/images/pc_icon_app_downloade.png" class="app_show">
+</div>
+</a>
+
 <%--<div class="app_load">--%>
+    <%--<div class="app_load_hover"></div>--%>
     <%--<div class="app_load_container">--%>
-        <%--<img src="/resource/images/pc_logo.png">--%>
-        <%--<span class="close_app_load">x</span>--%>
-        <%--<a href="http://admin.pinchenet.com/app/download">下载APP</a>--%>
+        <%--<span class="close_app_load" onclick="hideApp()">x</span>--%>
+        <%--<a href="http://admin.pinchenet.com/app/download">--%>
+            <%--<img src="/resource/images/pc_logo.png" class="app_logo">--%>
+            <%--<span class="app_text">--%>
+                <%--下载来回拼车APP</br>--%>
+                <%--<span style="font-size: 1.2rem">牵起你生命中的每一个来回</span>--%>
+            <%--</span>--%>
+        <%--</a>--%>
     <%--</div>--%>
 
 <%--</div>--%>

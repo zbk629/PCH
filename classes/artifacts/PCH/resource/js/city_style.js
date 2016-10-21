@@ -119,6 +119,8 @@
                             $('#demo_place').val("全部");
                         }
                         //修改信息
+                        if($('#demo_place').click())
+                        console.log('222');
                         city_array=$('#demo_place').val().split("——");
                         if (url.indexOf("=") == -1) {
                             var departure_city = city_array[0];
