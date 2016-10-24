@@ -484,6 +484,25 @@
     .bottom_menu{
       display: none;
     }
+    /*//下拉搜索*/
+    .show_search_icon{
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 1;
+      transition-duration: .4s;
+      -webkit-transition-duration: .4s;
+      -o-transition-duration: .4s;
+    }
+    .show_search_line{
+      height: 2rem;
+      width: 3px;
+      background-color: #f5ad4e;
+    }
+    .show_search_icon img{
+      position: relative;
+      left: -1.18rem;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
@@ -551,18 +570,22 @@
         $('.message_bottom_footer').remove();
       }
 //      bindEvent();
-      var p=0,t=0;
-      $(window).scroll(function(e){
+      var p = 0, t = 0;
+      $(window).scroll(function (e) {
         p = $(this).scrollTop();
-        if(t<=p){//下滚
-          $('.search_container').stop(true,false).animate({top:"-30rem"},100);
+        if (t <= p) {//下滚
+          $('.show_search_icon').stop(true, false).animate({top: "0"}, 100);
+          $('.search_container').stop(true, false).animate({top: "-30rem"}, 100);
           hideApp();
         }
-        else{//上滚
-          $('.search_container').stop(true,false).animate({top:"0"},100).show();
+        else {//上滚
+          $('.show_search_icon').stop(true, false).animate({top: "-3.6rem"}, 100);
+          $('.search_container').stop(true, false).animate({top: "0"}, 100).show();
           showApp();
         }
-        setTimeout(function(){t = p;},0);
+        setTimeout(function () {
+          t = p;
+        }, 0);
       });
     });
 
@@ -1190,6 +1213,11 @@
       $('.app_box').hide();
       $('.bottom_menu ').hide();
     }
+    //        展示搜索
+    function showSearch(){
+      $('.search_container').stop(true, false).animate({top: "0"}, 100).show();
+      $('.show_search_icon').stop(true, false).animate({top: "-4rem"}, 100);
+    }
   </script>
 </head>
 <body id="backtop">
@@ -1198,6 +1226,10 @@
     <img src="/resource/images/pc_icon_app_downloade.png" class="app_show">
   </div>
 </a>
+<div class="show_search_icon" onclick="showSearch()">
+  <div class="show_search_line"></div>
+  <img src="/resource/images/pch_show_search.png">
+</div>
 <div class="app_load">
   <div class="app_load_hover"></div>
   <div class="app_load_container">
