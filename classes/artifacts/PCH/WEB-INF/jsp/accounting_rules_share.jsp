@@ -245,16 +245,16 @@
       </span>
     </div>
   </div>
-    <div class="app_load">
-      <div class="app_load_container">
-        <img src="/resource/images/role_logo.png" class="app_logo">
-      <span class="app_text">
-                来回拼车</br>
-        <span style="font-size: 1.2rem;color: #999">省内最大的城际拼车信息服务平台</span>
-      </span>
-        <div class="open_APP">打开APP</div>
-      </div>
-    </div>
+    <%--<div class="app_load">--%>
+      <%--<div class="app_load_container">--%>
+        <%--<img src="/resource/images/role_logo.png" class="app_logo">--%>
+      <%--<span class="app_text">--%>
+                <%--来回拼车</br>--%>
+        <%--<span style="font-size: 1.2rem;color: #999">省内最大的城际拼车信息服务平台</span>--%>
+      <%--</span>--%>
+        <%--<div class="open_APP">打开APP</div>--%>
+      <%--</div>--%>
+    <%--</div>--%>
 </div>
 </body>
 </html>

@@ -217,8 +217,8 @@
       color: #888;
     }
     .android_container{
-      float: left;
-      width: 48%;
+      margin: 0 auto;
+      width: 94%;
       text-align: center;
     }
     .ios_container{
@@ -536,12 +536,8 @@
               '<i class="circle_hide_top_left"></i>' +
               '<i class="circle_hide_top_right"></i>' +
               '<div class="android_container">' +
-              '<span class="android_container_span">安卓下载</span>' +
+              '<span class="android_container_span">客户端下载</span>' +
               '<img src="/resource/images/pc_app_logo.png">'+
-              '</div>' +
-              '<div class="ios_container">' +
-              '<span class="ios_container_span">IOS即将上线，关注公众号获取海量拼车信息</span>' +
-              '<img src="/resource/images/pc_ios_logo.png">'+
               '</div>' +
               '</div>'+
               '</div>')

@@ -172,14 +172,15 @@ var validate = (function () {
     }
 
 })();
+
 //改变字体适应效果
-function changeFontSize() {
+function changeFontSize(){
     var w = $(document.body).width();
-    if (w >= 1080) {
+    if(w>1080) {
         w = 1080;
-        $('html').css('font-size', w / 78 + 'px');
-    } else {
-        $('html').css('font-size', w / 34 + 'px');
+        $('html').css('font-size',w/78+'px');
+    }else{
+        $('html').css('font-size',w/36+'px');
     }
 
 };

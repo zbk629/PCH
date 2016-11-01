@@ -217,8 +217,8 @@
       color: #888;
     }
     .android_container{
-      float: left;
-      width: 48%;
+      margin: 0 auto;
+      width: 56%;
       text-align: center;
     }
     .ios_container{
@@ -327,6 +327,8 @@
       changeFontSize();
       checkId();
       changePCStyle();
+
+
     });
     var url = window.location.href;
     var item_id = url.split("?id=")[1];
@@ -527,6 +529,18 @@
     }
 
     function checkUser(){
+      var img;
+      if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+        var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+
+        if(browser.versions.android){
+          //是否在安卓打开
+          img = "/resource/images/pc_app_logo.png";
+        }else{
+          //是否在ios打开
+          img = "";//添加ios二维码图片地址
+        }
+      }
       $('.hover').fadeIn(100);
       $('.float_container2').fadeIn(100).css({'width': '80%', 'font-size': '1.3rem'});
       $('.float_container2').empty().append('<div class="booking_box">' +
@@ -536,16 +550,11 @@
               '<i class="circle_hide_top_left"></i>' +
               '<i class="circle_hide_top_right"></i>' +
               '<div class="android_container">' +
-              '<span class="android_container_span">安卓下载</span>' +
-              '<img src="/resource/images/pc_app_logo.png">'+
-              '</div>' +
-              '<div class="ios_container">' +
-              '<span class="ios_container_span">IOS即将上线，关注公众号获取海量拼车信息</span>' +
-              '<img src="/resource/images/pc_ios_logo.png">'+
+              '<span class="android_container_span">客户端下载</span>' +
+              '<img src="'+img+'">'+
               '</div>' +
               '</div>'+
               '</div>')
-
     }
 
     function showErrorTips(error_message) {

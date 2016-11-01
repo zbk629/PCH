@@ -536,7 +536,7 @@
         }
         .show_search_icon img{
             position: relative;
-            left: -1.18rem;
+            left: -1.3rem;
         }
     </style>
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
