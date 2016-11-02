@@ -22,6 +22,8 @@
     body{
       background-color: #fff;
       font-size: 1.15rem;
+      height: auto;
+      min-width: 200px;
     }
     .container{
       max-width: 1080px;

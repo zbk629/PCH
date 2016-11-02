@@ -1,0 +1,148 @@
+
+body{
+    background-color: #fff;
+    font-size: 1.15rem;
+    height: auto;
+    min-width: 200px;
+}
+.container{
+    max-width: 1080px;
+    margin: 0 auto;
+    background: #f5f5f5;
+    height:100%;
+}
+.crile{
+    width: 6px;
+    height: 6px;
+    background-color: #f5ad4e;
+    display: inline-block;
+    border-radius: 50%;
+    position: relative;
+    top: -.15rem;
+    margin: 0 .2rem;
+}
+.role_ad{
+    width: 100%;
+}
+.role_container{
+    padding: 0 .8rem;
+    height: 100%;
+    margin-bottom: 20px;
+}
+.role_title{
+    border-left: 4px solid #F5AD4E;
+    padding-left: .5rem;
+    font-size: 1.4rem;
+    color: #f5ad4e;
+    margin: 1rem 0;
+}
+.role_context{
+    text-indent: 1rem;
+    display:block;
+    line-height: 2rem;
+}
+.role_context_main{
+    display: block;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    margin-bottom: .4rem;
+    color: #f5ad4e;
+    text-indent: 1rem;
+}
+.role_box{
+    margin: 1rem 0;
+    text-align: center;
+}
+.role_box img{
+    width: 70%;
+}
+.role_model{
+    width: 98%;
+}
+.role_box_span{
+    color: #fff;
+    /*text-indent: 1rem;*/
+    /*display: inline-block;*/
+}
+.role_box_div{
+    padding: .8rem 0;
+}
+.role_p{
+    color: #888;
+    margin-bottom: .4rem;
+}
+/*ÏÂÔØAPP*/
+.app_load{
+
+    height: 4.6rem;
+    width: 100%;
+    z-index: 100;
+    display: block;
+    background-color: #fff;
+}
+.app_load_container{
+    position: relative;
+    height: 100%;
+    padding: 0 1.5rem;
+}
+.app_load_container a{
+    width: 80%;
+    height: 100%;
+    display:block;
+    position: relative;
+    z-index: 999;
+}
+.app_logo{
+    width: 3rem;
+    margin-top: 1rem;
+}
+.close_app_load{
+    position: absolute;
+    right: 1rem;
+    color: #FFF;
+    display: inline-block;
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    text-align: center;
+    font-size: 2.6rem;
+    line-height: 4rem;
+}
+.app_text{
+    line-height: 2rem;
+    color: #f5ad4e;
+    display: inline-block;
+    margin-top: .2rem;
+    margin-left: .6rem;
+    font-size: 1.6rem;
+}
+.app_load_hover{
+    background-color: #000;
+    opacity: 0.75;
+    width: 100%;
+    position: absolute;
+    height: 100%;
+}
+.app_box{
+    position: fixed;
+    bottom: 13.8rem;
+    right: 1rem;
+    width: 3.2rem;
+    background-color: #fff;
+    z-index: 101;
+    border-radius: 50%;
+    border: 1px solid #e8e8e8;
+    padding: .3rem .3rem .1rem .4rem;
+    display: none;
+}
+.app_show{
+    width: 100%;
+}
+.open_APP{
+    float: right;
+    background: #f5ad4e;
+    color: #fff;
+    border-radius: 5px;
+    padding: .8rem 1rem;
+    margin-top: .8rem;
+}

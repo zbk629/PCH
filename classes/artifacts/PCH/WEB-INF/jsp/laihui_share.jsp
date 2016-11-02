@@ -218,7 +218,7 @@
     }
     .android_container{
       margin: 0 auto;
-      width: 94%;
+      width: 56%;
       text-align: center;
     }
     .ios_container{
@@ -327,6 +327,8 @@
       changeFontSize();
       checkId();
       changePCStyle();
+
+
     });
     var url = window.location.href;
     var item_id = url.split("?id=")[1];
@@ -527,6 +529,19 @@
     }
 
     function checkUser(){
+      var img;
+      if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+        var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+
+        if(browser.versions.android){
+          //是否在安卓打开
+          img = "/resource/images/pc_app_logo.png";
+        }else{
+          //todo:添加ios二维码图片地址
+          //是否在ios打开
+          img = "";//
+        }
+      }
       $('.hover').fadeIn(100);
       $('.float_container2').fadeIn(100).css({'width': '80%', 'font-size': '1.3rem'});
       $('.float_container2').empty().append('<div class="booking_box">' +
@@ -537,11 +552,10 @@
               '<i class="circle_hide_top_right"></i>' +
               '<div class="android_container">' +
               '<span class="android_container_span">客户端下载</span>' +
-              '<img src="/resource/images/pc_app_logo.png">'+
+              '<img src="'+img+'">'+
               '</div>' +
               '</div>'+
               '</div>')
-
     }
 
     function showErrorTips(error_message) {
