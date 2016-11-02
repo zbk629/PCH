@@ -29,10 +29,6 @@ public class UserActionController {
     LaiHuiDB laiHuiDB;
     boolean is_logined=false;
     boolean is_has_openid= false;
-    @RequestMapping("/laihui/accounting_rules/share")
-    public String accounting_rules_share(Model model, HttpServletRequest request) {
-        return "accounting_rules_share";
-    }
     @RequestMapping("/laihui/driver/order_list")
     public String car_departure(Model model, HttpServletRequest request) {
         is_logined= Utils.isLogined(request);

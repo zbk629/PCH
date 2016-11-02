@@ -537,8 +537,9 @@
           //是否在安卓打开
           img = "/resource/images/pc_app_logo.png";
         }else{
+          //todo:添加ios二维码图片地址
           //是否在ios打开
-          img = "";//添加ios二维码图片地址
+          img = "";//
         }
       }
       $('.hover').fadeIn(100);

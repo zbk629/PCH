@@ -313,4 +313,32 @@ public class LoginController {
         return "app_download";
 
     }
+    /***
+     *拼车文案
+     */
+    @RequestMapping("/app/pinche_rules")
+    public String pinche_rules(Model model,HttpServletRequest request){
+
+
+        return "pinche_rules";
+
+    }
+    @RequestMapping("/app/pinche_instructions")
+    public String pinche_instructions(Model model,HttpServletRequest request){
+
+
+        return "pinche_instructions";
+
+    }
+    @RequestMapping("/app/pinche_FQA")
+    public String pinche_FQA(Model model,HttpServletRequest request){
+
+
+        return "pinche_FQA";
+
+    }
+    @RequestMapping("/laihui/accounting_rules/share")
+    public String accounting_rules_share(Model model, HttpServletRequest request) {
+        return "accounting_rules_share";
+    }
 }
