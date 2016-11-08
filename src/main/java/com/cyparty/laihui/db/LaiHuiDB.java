@@ -39,9 +39,13 @@ public class LaiHuiDB {
         List<DepartureInfo> routeInfoList = jdbcTemplateObject.query(SQL, new PCHDepartureInfoMapper());
         return routeInfoList;
     }
-
+    public List<AppDepartureInfo> getAppDriverDpartureInfo(String where) {
+        String SQL = "select * from laihui_pc.pc_driver_publish_info a  left join laihui_pc.pc_user b on a.mobile=b.user_mobile "+ where ;
+        List<AppDepartureInfo> appDriverDepartureInfoMapperList = jdbcTemplateObject.query(SQL, new APPDriverDepartureInfoMapper());
+        return appDriverDepartureInfoMapperList;
+    }
     public int getCount(String table,String where) {
-        String sql = "SELECT count(*)total FROM  "+table + where;
+        String sql = "SELECT count(*)total FROM  "+table +" "+ where;
         //int count=jdbcTemplateObject.queryForInt(sql);
         Map<String, Object> now = jdbcTemplateObject.queryForMap(sql);
         int total = Integer.parseInt(String.valueOf((long) now.get("total")));

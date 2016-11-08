@@ -41,9 +41,8 @@
 </head>
 <body>
 <div class="container">
-
   <%--宣传图--%>
-  <img src="/resource/images/role_ad2.png" class="role_ad">
+  <img src="/resource/images/role_add2.png" class="role_ad">
   <%--内容--%>
   <div class="role_container">
     <div class="role">
@@ -56,7 +55,7 @@
         <span class="role_context">出行者和车主应合理分摊出行成本或免费互助，这意味着政策支持的是来回拼车主张的共享经济。对于某顺风车以盈利为目的的模式，已被定为非法营运。</span>
 
         <div class="role_box">
-          <img src="/resource/images/role_ad1.png">
+          <img src="/resource/images/role_add1.png">
         </div>
 
       </div>

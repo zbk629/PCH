@@ -27,7 +27,8 @@ public class Utils {
     public static void main(String[] args) {
         //System.out.println(Memcache.getMemcache("3d2d8b6b8fdfcbadedb20072010ea842"));
         //System.out.println(getOrderNumber(5));
-        System.out.println(date2TimeStamp("2016-8-27 05:06:40"));
+        //System.out.println(date2TimeStamp("2016-8-27 05:06:40"));
+        getTimeSubOrAdd("2016-8-27 05:06:40",2);
     }
 
 
@@ -74,6 +75,23 @@ public class Utils {
         return datetime;
     }
 
+    public static String getTimeSubOrAdd(String time,int hour){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date=null;
+        try {
+            //"2012-07-25 21:00:00"
+            date = sdf.parse(time);
+        } catch (Exception e) {
+        // TODO 自动生成 catch 块
+            e.printStackTrace();
+        }
+        Calendar ca=Calendar.getInstance();
+        ca.setTime(date);
+        ca.add(Calendar.HOUR, hour);
+
+        System.out.println(sdf.format(ca.getTime()));
+        return sdf.format(ca.getTime());
+    }
     public static String getTimestamp() {
         Long timestamp = System.currentTimeMillis();
         return timestamp.toString();

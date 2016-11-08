@@ -259,7 +259,65 @@ public class ReturnJsonUtil {
 
         return result_json;
     }
+    //得到车单详情
+    public static JSONObject getDepartureInfo(LaiHuiDB laiHuiDB ,int id) {
+        JSONObject result_json = new JSONObject();
+        JSONArray dataArray = new JSONArray();
+        String where = " where is_enable=1 and _id=" + id;
 
+
+        int count = laiHuiDB.getCount("laihui_pc.pc_driver_publish_info",where);
+
+        where=" where a.is_enable=1 and a._id=" + id;
+        List<AppDepartureInfo> departureInfoList = laiHuiDB.getAppDriverDpartureInfo(where);
+        for (AppDepartureInfo departure : departureInfoList) {
+            JSONObject jsonObject = new JSONObject();
+            boolean is_editor = false;
+            jsonObject.put("id", departure.getR_id());
+            jsonObject.put("driver_id", 0);
+            jsonObject.put("start_time", departure.getStart_time());
+            jsonObject.put("end_time", Utils.getTimeSubOrAdd(departure.getStart_time(), 2));
+            long current = Utils.getCurrenTimeStamp();
+            long end_date = Utils.date2TimeStamp(Utils.getTimeSubOrAdd(departure.getStart_time(),2));
+            if (end_date > current) {
+                is_editor = true;
+            }
+            jsonObject.put("is_editor", is_editor);
+
+            jsonObject.put("inits_seats", departure.getCurrent_seats());
+            jsonObject.put("mobile", departure.getMobile());
+            jsonObject.put("points", departure.getPoints());
+            jsonObject.put("description", departure.getDescription());
+            jsonObject.put("car_brand", "");
+            jsonObject.put("departure", "");
+            jsonObject.put("destination", "");
+            jsonObject.put("driving_name", departure.getUser_name());
+            jsonObject.put("tag_yes_content", "");
+            jsonObject.put("tag_no_content", "");
+            jsonObject.put("info_status", departure.getStatus());//-1,1,2
+            jsonObject.put("create_time", departure.getCreate_time());
+            jsonObject.put("price", departure.getPrice());
+            jsonObject.put("origin_price", departure.getPrice());
+
+            JSONObject boardingObject=JSONObject.parseObject(departure.getBoarding_point());
+            JSONObject breakoutObject=JSONObject.parseObject(departure.getBreakout_point());
+
+            jsonObject.put("departure_city", boardingObject.getString("city"));
+            jsonObject.put("destination_city", breakoutObject.getString("city"));
+
+
+            jsonObject.put("boarding_point", boardingObject.getString("name"));
+            jsonObject.put("breakout_point",breakoutObject.getString("name"));
+
+            dataArray.add(jsonObject);
+        }
+        result_json.put("data", dataArray);
+        result_json.put("total", count);
+        result_json.put("page", 0);
+        result_json.put("size", 10);
+
+        return result_json;
+    }
     public static JSONObject getMySelfDepartureInfo(LaiHuiDB laiHuiDB, int page, int size, String departure_city, String destination_city, String status, String start_time, String end_time, String keyword, int id, int user_id) {
         JSONObject result_json = new JSONObject();
         JSONArray dataArray = new JSONArray();

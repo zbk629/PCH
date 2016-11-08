@@ -288,7 +288,12 @@ public class PCXXHController {
                     result= Memcache.getMemcache(key);
                     if(result.getString("cache_status")!=null){*/
                         //说明之前没有有缓存
+                    String source=request.getParameter("source");
+                    if(source!=null&&!source.isEmpty()&&source.equals("app")){
+                        result=ReturnJsonUtil.getDepartureInfo(laiHuiDB,id);
+                    }else {
                         result=ReturnJsonUtil.getPCHDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id);
+                    }
                       /*  Memcache.setMemcache(key,result);
                     }*/
                     json = ReturnJsonUtil.returnSuccessJsonString(result, "全部出车信息获取成功");
