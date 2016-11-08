@@ -15,7 +15,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>后台管理</title>
+  <title>拼车新规</title>
   <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
   <link href="/resource/css/style.css" rel="stylesheet" type="text/css">
   <link href="/resource/css/role.css" rel="stylesheet" type="text/css">
@@ -41,22 +41,21 @@
 </head>
 <body>
 <div class="container">
-
   <%--宣传图--%>
-  <img src="/resource/images/role_ad2.png" class="role_ad">
+  <img src="/resource/images/role_add2.png" class="role_ad">
   <%--内容--%>
   <div class="role_container">
     <div class="role">
       <div class="role_title">
         <span>您的拼车方式符合新的合乘规定吗？</span>
       </div>
-      <span class="role_context">各地私人小客车合乘指导意见相继发布，针对私人小客车合乘的司机、车辆、运行模式、接单次数等做出明确规定，来回拼车所主打的合乘信息服务平台成为唯一合法的拼车途径。拼车新政有哪些规定？快来了解一下。</span>
+      <span class="role_context">各地私人小客车合乘指导意见相继发布，针对私人小客车合乘的司机、车辆、运行模式、接单次数等做出明确规定，来回拼车成为合法的拼车平台。拼车新政有哪些规定？快来了解一下。</span>
       <div class="role_model">
         <span class="role_context_main">仅分摊出行成本或完全免费</span>
         <span class="role_context">出行者和车主应合理分摊出行成本或免费互助，这意味着政策支持的是来回拼车主张的共享经济。对于某顺风车以盈利为目的的模式，已被定为非法营运。</span>
 
         <div class="role_box">
-          <img src="/resource/images/role_ad1.png">
+          <img src="/resource/images/role_add1.png">
         </div>
 
       </div>

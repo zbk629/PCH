@@ -15,7 +15,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>后台管理</title>
+  <title>版本先知</title>
   <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
   <link href="/resource/css/style.css" rel="stylesheet" type="text/css">
   <link href="/resource/css/role.css" rel="stylesheet" type="text/css">

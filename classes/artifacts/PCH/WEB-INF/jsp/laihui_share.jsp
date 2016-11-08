@@ -331,7 +331,7 @@
 
     });
     var url = window.location.href;
-    var item_id = url.split("?id=")[1];
+    var item_id = url.split("id=")[1];
     item_id = item_id.split("&")[0];
     var click_type;
     var global_start_time;
@@ -360,6 +360,7 @@
       var obj = {};
       obj.action = 'show';
       obj.id = item_id;
+      obj.source = 'app';
       validate.validate_submit3('/api/db/departure', obj, insertMessage);
     }
     //更新信息
@@ -368,6 +369,7 @@
       obj.action = 'update';
       obj.id = item_id;
       obj.info_status = status;
+
       validate.validate_submit('/api/db/departure', obj, updateMessage);
     }
     //添加用户数据

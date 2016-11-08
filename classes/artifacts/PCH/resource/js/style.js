@@ -176,11 +176,10 @@ var validate = (function () {
 //改变字体适应效果
 function changeFontSize(){
     var w = $(document.body).width();
-    if(w>1080) {
-        w = 1080;
-        $('html').css('font-size',w/78+'px');
+    if(w>=1080) {
+        $('html').css('font-size',14+'px');
     }else{
-        $('html').css('font-size',w/36+'px');
+        $('html').css('font-size',w/38+'px');
     }
 
 };

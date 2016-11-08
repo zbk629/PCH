@@ -1238,7 +1238,7 @@
       <img src="/resource/images/role_logo.png" class="app_logo">
             <span class="app_text">
                 下载来回拼车APP</br>
-              <span style="font-size: 1.2rem">牵起你生命中的每一个来回</span>
+              <span style="font-size: 1.2rem">相伴你出行的每一个来回</span>
             </span>
     </a>
   </div>
