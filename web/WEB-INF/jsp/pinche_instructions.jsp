@@ -122,13 +122,16 @@
         <div class="role_box">
           <img src="/resource/images/role_ad10.png">
         </div>
-        <span class="role_context">第二步，点击信息进行预订，填写座位数、出发地和目的地。</span>
+        <span class="role_context">第二步，点击信息进行预订，填写人数、出发地和目的地，并点击预约。</span>
         <div class="role_box">
           <img src="/resource/images/role_ad11.png">
         </div>
-        <span class="role_context">第三步，点击预约，座位预订成功。</span>
+        <span class="role_context">最后，车主和乘客都可在我的行程中查看自己的车单详情。</span>
         <div class="role_box">
           <img src="/resource/images/role_ad12.png">
+        </div>
+        <div class="role_box">
+          <img src="/resource/images/role_ad14.png">
         </div>
         <span class="role_context">来回拼车的操作方便快捷，学会了基本操作，接下来就可以投身美好的出行旅程了。更多人性化的功能持续更新中，请不要错过，快叫上你的小伙伴们，一起下载，一起来回吧！</span>
       </div>
