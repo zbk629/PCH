@@ -71,32 +71,39 @@ body{
     color: #888;
     margin-bottom: .4rem;
 }
-/*ÏÂÔØAPP*/
-.app_load{
 
+
+
+/*ÏÂÔØAPP*/
+.app_load {
+    position: fixed;
+    bottom: 0rem;
     height: 4.6rem;
     width: 100%;
     z-index: 100;
-    display: block;
-    background-color: #fff;
+    display: none;
 }
-.app_load_container{
+
+.app_load_container {
     position: relative;
     height: 100%;
     padding: 0 1.5rem;
 }
-.app_load_container a{
+
+.app_load_container a {
     width: 80%;
     height: 100%;
-    display:block;
+    display: block;
     position: relative;
     z-index: 999;
 }
-.app_logo{
+
+.app_logo {
     width: 3rem;
-    margin-top: 1rem;
+    margin-top: .1rem;
 }
-.close_app_load{
+
+.close_app_load {
     position: absolute;
     right: 1rem;
     color: #FFF;
@@ -108,24 +115,26 @@ body{
     font-size: 2.6rem;
     line-height: 4rem;
 }
-.app_text{
+
+.app_text {
     line-height: 2rem;
-    color: #f5ad4e;
+    color: #fff;
     display: inline-block;
     margin-top: .2rem;
-    margin-left: .6rem;
-    font-size: 1.6rem;
+    margin-left: 1rem;
 }
-.app_load_hover{
+
+.app_load_hover {
     background-color: #000;
     opacity: 0.75;
     width: 100%;
     position: absolute;
     height: 100%;
 }
-.app_box{
+
+.app_box {
     position: fixed;
-    bottom: 13.8rem;
+    bottom: 7.8rem;
     right: 1rem;
     width: 3.2rem;
     background-color: #fff;
@@ -135,14 +144,11 @@ body{
     padding: .3rem .3rem .1rem .4rem;
     display: none;
 }
-.app_show{
+
+.app_show {
     width: 100%;
 }
-.open_APP{
-    float: right;
-    background: #f5ad4e;
-    color: #fff;
-    border-radius: 5px;
-    padding: .8rem 1rem;
-    margin-top: .8rem;
+
+.bottom_menu {
+    display: none;
 }

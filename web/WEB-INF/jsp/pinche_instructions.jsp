@@ -27,6 +27,7 @@
   <script type="text/javascript">
     $(document).ready(function () {
       changeFontSize();
+      checkUser();
     });
     //改变字体适应效果
     function changeFontSize() {
@@ -40,7 +41,45 @@
 
     };
 
+    function hideApp() {
+      $('.app_load').hide();
+      $('.app_box').show();
+      $('.bottom_menu ').show();
+    }
+    function showApp() {
+      if ($('.menu_style_icon').hasClass('menu_style_active')) {
+        $('.app_load').show().css('bottom', '4.2rem');
+      } else {
+        $('.app_load').show().css('bottom', '0');
 
+      }
+      $('.app_box').hide();
+      $('.bottom_menu ').hide();
+    }
+    var browser = {
+      versions: function () {
+        var u = navigator.userAgent, app = navigator.appVersion;
+        return {         //移动终端浏览器版本信息
+          trident: u.indexOf('Trident') > -1, //IE内核
+          presto: u.indexOf('Presto') > -1, //opera内核
+          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+          mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+          iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+          iPad: u.indexOf('iPad') > -1, //是否iPad
+          webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+        };
+      }(),
+      language: (navigator.browserLanguage || navigator.language).toLowerCase()
+    };
+
+    function checkUser(){
+      if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+        $('.app_load').show();
+      }
+    }
   </script>
 </head>
 <body>
@@ -96,6 +135,25 @@
 
     </div>
   </div>
+  <%--引导下载APP--%>
+    <a href="http://admin.pinchenet.com/app/download">
+      <div class="app_box">
+        <img src="/resource/images/pc_icon_app_downloade.png" class="app_show">
+      </div>
+    </a>
+    <div class="app_load">
+      <div class="app_load_hover"></div>
+      <div class="app_load_container">
+        <span class="close_app_load" onclick="hideApp()">x</span>
+        <a href="http://admin.pinchenet.com/app/download">
+          <img src="/resource/images/role_logo.png" class="app_logo">
+            <span class="app_text">
+                下载来回拼车APP</br>
+              <span style="font-size: 1.2rem">相伴你出行的每一个来回</span>
+            </span>
+        </a>
+      </div>
+    </div>
 </div>
 </body>
 </html>
