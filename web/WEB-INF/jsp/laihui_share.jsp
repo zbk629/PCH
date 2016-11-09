@@ -531,17 +531,20 @@
     }
 
     function checkUser(){
-      var img;
+      var img="/resource/images/pc_app_logo.png";
       if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
         var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
 
         if(browser.versions.android){
           //是否在安卓打开
           img = "/resource/images/pc_app_logo.png";
-        }else{
+        }else if(browser.versions.ios){
           //todo:添加ios二维码图片地址
           //是否在ios打开
-          img = "";//
+          img = "/resource/images/pc_app_logo.png";//
+        }else{
+          //是否在网页打开
+          img="/resource/images/pc_app_logo.png";
         }
       }
       $('.hover').fadeIn(100);
