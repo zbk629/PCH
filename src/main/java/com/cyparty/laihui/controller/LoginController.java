@@ -341,4 +341,9 @@ public class LoginController {
     public String accounting_rules_share(Model model, HttpServletRequest request) {
         return "accounting_rules_share";
     }
+
+    @RequestMapping("/download/url")
+    public String download(HttpServletRequest request, Model model) {
+        return "download";
+    }
 }
