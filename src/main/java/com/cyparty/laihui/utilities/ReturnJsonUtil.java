@@ -263,12 +263,12 @@ public class ReturnJsonUtil {
     public static JSONObject getDepartureInfo(LaiHuiDB laiHuiDB ,int id) {
         JSONObject result_json = new JSONObject();
         JSONArray dataArray = new JSONArray();
-        String where = " where is_enable=1 and _id=" + id;
+        String where = " where  _id=" + id;
 
 
         int count = laiHuiDB.getCount("laihui_pc.pc_driver_publish_info",where);
 
-        where=" where a.is_enable=1 and a._id=" + id;
+        where=" where  a._id=" + id;
         List<AppDepartureInfo> departureInfoList = laiHuiDB.getAppDriverDpartureInfo(where);
         for (AppDepartureInfo departure : departureInfoList) {
             JSONObject jsonObject = new JSONObject();
