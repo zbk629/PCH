@@ -202,9 +202,10 @@
     .ad_text{
       text-align: center;
       font-size: 1.8rem;
-      color: #f5ad4e;
+      color: #f5ad4e!important;
       padding-bottom: 1rem;
       border-bottom: 2px dashed #e8e8e8;
+      display: block;
     }
     .ad_container{
       position: relative;
@@ -229,10 +230,57 @@
     .android_container_span{
       display: inline-block;
       line-height: 40px;
+      font-size: 2rem;
+      color: #fff;
+      background: #f5ad4e;
+      /* padding: 0 1rem; */
+      width: 100%;
+      margin-top: .5rem;
+      border-radius: 5px;
     }
     .ios_container_span{
       display: inline-block;
-      height: 40px;
+      line-height: 40px;
+      font-size: 2rem;
+      color: #fff;
+      background: #f5ad4e;
+      /* padding: 0 1rem; */
+      width: 100%;
+      margin-top: .5rem;
+      border-radius: 5px;
+    }
+
+    .hover_all_app{
+      top: 0;
+      display:none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      filter:alpha(opacity=85);
+      -moz-opacity:0.85;
+      -khtml-opacity:0.85;
+      opacity: 0.85;
+      z-index: 105;
+    }
+    .app_hover_close{
+      position: absolute;
+      bottom: 30%;
+      width: 100%;
+      cursor: pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .app_hover_close span{
+      color: #fff;
+      font-size: 15px;
+    }
+    .app_hover_box{
+      width: 102px;
+      margin: 0 auto;
+      background-color: #F22910;
+      padding: 6px 12px;
+      border-radius: 18px;
+      text-align: center;
     }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
@@ -325,9 +373,31 @@
   <script>
     $(document).ready(function () {
       changeFontSize();
-      checkId();
+//      checkId();
       changePCStyle();
+      $('.app_hover_box').click(function(){
+        $('.hover_all_app').hide();
+      });
 
+      if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+        var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+          //在微信中打开
+          $('body,html').animate({scrollTop: 0}, 500);
+          $('.hover_all_app').css("display","block");
+
+        }else if (ua.match(/QQ/i) == "qq") {
+          //在QQ空间打开
+          $('body,html').animate({scrollTop: 0}, 500);
+          $('.hover_all_app').css("display","block");
+        }else{
+
+        }
+        openApp();
+      } else {
+        //否则就是PC浏览器打开
+        window.location.href="www.pinchenet.com"
+      }
 
     });
     var url = window.location.href;
@@ -427,11 +497,6 @@
             click_type = 2;
           }
 
-          if(inits_seats ==0){
-            info_status = "已满"
-          }else{
-            info_status = "有空位"
-          }
           //开始时间设置
           var insert_time = start_time.substring(0, 10);
           var time_change = insert_time.split('-');
@@ -531,30 +596,45 @@
     }
 
     function checkUser(){
-      var img;
+      var img="/resource/images/pc_app_logo.png";
+
+
       if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
         var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
-
-        if(browser.versions.android){
-          //是否在安卓打开
-          img = "/resource/images/pc_app_logo.png";
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+          //在微信中打开
+            $('body,html').animate({scrollTop: 0}, 500);
+            $('.hover_all_app').css("display","block");
+        }else if (ua.match(/QQ/i) == "qq") {
+          //在QQ空间打开
+          $('body,html').animate({scrollTop: 0}, 500);
+          $('.hover_all_app').css("display","block");
         }else{
-          //todo:添加ios二维码图片地址
-          //是否在ios打开
-          img = "";//
+
         }
+        if (browser.versions.ios) {
+          //是否在IOS浏览器打开
+          img = "/resource/images/pc_app_logo.png";
+
+        }else {
+          img = "/resource/images/pc_app_logo.png";
+        }
+        openApp();
+      } else {
+        //否则就是PC浏览器打开
+        window.location.href="www.pinchenet.com"
       }
       $('.hover').fadeIn(100);
       $('.float_container2').fadeIn(100).css({'width': '80%', 'font-size': '1.3rem'});
       $('.float_container2').empty().append('<div class="booking_box">' +
               '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
-              '<p class="ad_text">下载来回拼车APP<br>牵起你生命中每一个来回</p>' +
+              '<p class="ad_text" >下载来回拼车APP<br>牵起你生命中每一个来回</p>' +
               '<div class="ad_container">' +
               '<i class="circle_hide_top_left"></i>' +
               '<i class="circle_hide_top_right"></i>' +
               '<div class="android_container">' +
-              '<span class="android_container_span">客户端下载</span>' +
-              '<img src="'+img+'">'+
+              '<img src="'+img+'">' +
+              '<span class="android_container_span" onclick="openApp()">客户端下载</span>' +
               '</div>' +
               '</div>'+
               '</div>')
@@ -564,13 +644,50 @@
       $('.booking_error').text(error_message).show();
     }
 
+    function openApp(){
+      if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+        var loadDateTime = new Date();
+        window.setTimeout(function() {
+                  var timeOutDateTime = new Date();
+                  if (timeOutDateTime - loadDateTime < 5000) {
+                    alert("不存在app");
+                    window.location = "https://itunes.apple.com/app/id1174366776";
+                  } else {
+                    alert("响应超市");
+                    window.close();
+                  }
+                },
+                25);
+        alert("能否打开APP");
+       window.location = "laihuipc://";
+      } else if (navigator.userAgent.match(/android/i)) {
+        var state = null;
+        try {
+          alert("是否存在app");
+          state = window.open("laihuipc://", '_blank');
+        } catch(e) {}
+        if (state) {
+          window.close();
+        } else {
+          alert("不存在app");
+          window.location = "www.baidu.com";
+        }
+      }
+    }
+
 
   </script>
 </head>
 <body>
-<div class="hover_all"></div>
-<div class="loading_box">
-  <img class="loading" src="/resource/images/loading.gif" alt="请等待">
+<div class="hover_all_app">
+  <div class="weixin_hover">
+    <img src="http://hbnewsimg.cyparty.com/hb1_web_image/live_weixin.png" style="width: 95%;margin: 2px 0 0 12px;">
+    <div class="app_hover_close">
+      <div class="app_hover_box">
+        <span>关闭此弹窗</span>
+      </div>
+    </div>
+  </div>
 </div>
 <img src="/resource/images/pch_logo.png" style="display: none">
 
@@ -631,10 +748,10 @@
       </li>
       <li class="publish_message_li" onclick="checkUser()">
         <div class="publish_message_li_left">
-          <span>是否预定</span>
+          <span >是否进入应用查看</span>
         </div>
         <div class="publish_message_li_right mobile_clear">
-          <span class="booking_span">预定</span>
+          <span class="booking_span">打开应用</span>
         </div>
         <div class="clear "></div>
       </li>
