@@ -231,7 +231,7 @@
       display: inline-block;
       line-height: 40px;
       font-size: 2rem;
-      color: #fff;
+      color: #fff!important;
       background: #f5ad4e;
       /* padding: 0 1rem; */
       width: 100%;
@@ -382,7 +382,7 @@
   <script>
     $(document).ready(function () {
       changeFontSize();
-//      checkId();
+      checkId();
       changePCStyle();
 //      $('.app_hover_box').click(function(){
 //        $('.hover_all_app').hide();
@@ -644,7 +644,7 @@
               '<i class="circle_hide_top_right"></i>' +
               '<div class="android_container">' +
               '<img src="'+img+'">' +
-              '<span class="android_container_span" onclick="openApp()">客户端下载</span>' +
+              '<a href="http://sj.qq.com/myapp/detail.htm?apkName=com.laihui.pinche" class="android_container_span" onclick="openApp()">客户端下载</span>' +
               '</div>' +
               '</div>'+
               '</div>')
@@ -660,10 +660,10 @@
         window.setTimeout(function() {
                   var timeOutDateTime = new Date();
                   if (timeOutDateTime - loadDateTime < 5000) {
-                    alert("不存在app");
+//                    alert("不存在app");
                     window.location = "https://itunes.apple.com/app/id1174366776";
                   } else {
-                    alert("响应超时");
+//                    alert("响应超时");
                     window.close();
                   }
                 },
@@ -671,16 +671,18 @@
 //        alert("能否打开APP");
        window.location = "laihuipc://";
       } else if (navigator.userAgent.match(/android/i)) {
+
+
         var state = null;
         try {
-          alert("安卓存在app，即将打开");
-          state = window.open("laihuipc://", '_blank');
+//          alert("安卓存在app，即将打开");
+//          state = window.open("laihuipc://", '_blank');
         } catch(e) {}
         if (state) {
           window.close();
         } else {
-          alert("不存在app，前去下载");
-//          window.location = "www.baidu.com";
+//          alert("不存在app，前去下载");
+//          window.location = "http://sj.qq.com/myapp/detail.htm?apkName=com.laihui.pinche";
         }
       }
     }
