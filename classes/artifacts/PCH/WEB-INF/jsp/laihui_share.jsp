@@ -231,7 +231,7 @@
       display: inline-block;
       line-height: 40px;
       font-size: 2rem;
-      color: #fff;
+      color: #fff!important;
       background: #f5ad4e;
       /* padding: 0 1rem; */
       width: 100%;
@@ -282,15 +282,15 @@
       border-radius: 18px;
       text-align: center;
     }
-    .weixin_hover{
-      margin: 22rem auto;
-      width: 80%;
-      text-align: center;
-      color: #555;
-      background-color: #fff;
-      line-height: 8rem;
-      border-radius: 10px;
-    }
+    /*.weixin_hover{*/
+      /*margin: 22rem auto;*/
+      /*width: 80%;*/
+      /*text-align: center;*/
+      /*color: #555;*/
+      /*background-color: #fff;*/
+      /*line-height: 8rem;*/
+      /*border-radius: 10px;*/
+    /*}*/
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -389,7 +389,6 @@
 //      });
 
       check();
-
     });
     var url = window.location.href;
     var item_id = url.split("id=")[1];
@@ -409,20 +408,21 @@
     }
     function check(){
       if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
-
         var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
         if (ua.match(/MicroMessenger/i) == "micromessenger") {
           //在微信中打开
-//          alert('微信')
+          alert("请在非微信，QQ和QQ浏览器中打开");
           $('body,html').animate({scrollTop: 0}, 300);
           $('.hover_all_app').css("display","block");
+
         }else if (ua.match(/QQ/i) == "qq") {
           //在QQ空间打开
 //          alert('QQ')
+          alert("请在非微信，QQ和QQ浏览器中打开");
           $('body,html').animate({scrollTop: 0}, 300);
           $('.hover_all_app').css("display","block");
+
         }else{
-//          alert('非微信，qq')
           openApp();
         }
       } else {
@@ -608,48 +608,26 @@
     }
 
     function checkUser(){
-      var img="/resource/images/pc_app_logo.png";
       if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
         var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
         if (ua.match(/MicroMessenger/i) == "micromessenger") {
           //在微信中打开
-            $('body,html').animate({scrollTop: 0}, 500);
-            $('.hover_all_app').css("display","block");
+          $('body,html').animate({scrollTop: 0}, 300);
+          $('.hover_all_app').css("display","block");
+          alert("请在非微信，QQ和QQ浏览器中打开")
         }else if (ua.match(/QQ/i) == "qq") {
           //在QQ空间打开
-          $('body,html').animate({scrollTop: 0}, 500);
+          $('body,html').animate({scrollTop: 0}, 300);
           $('.hover_all_app').css("display","block");
+          alert("请在非微信，QQ和QQ浏览器中打开")
         }else{
 
         }
-        if (browser.versions.ios) {
-          //是否在IOS浏览器打开
-          img = "/resource/images/pc_app_logo.png";
-        }else {
-          img = "/resource/images/pc_app_logo.png";
-        }
         openApp();
       } else {
-        //否则就是PC浏览器打开
-        //window.location.href="www.pinchenet.com"
+
       }
-
-      $('.hover').fadeIn(100);
-      $('.float_container2').fadeIn(100).css({'width': '80%', 'font-size': '1.3rem'});
-      $('.float_container2').empty().append('<div class="booking_box">' +
-              '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
-              '<p class="ad_text" >下载来回拼车APP<br>相伴你出行的每一个来回</p>' +
-              '<div class="ad_container">' +
-              '<i class="circle_hide_top_left"></i>' +
-              '<i class="circle_hide_top_right"></i>' +
-              '<div class="android_container">' +
-              '<img src="'+img+'">' +
-              '<span class="android_container_span" onclick="openApp()">客户端下载</span>' +
-              '</div>' +
-              '</div>'+
-              '</div>')
     }
-
     function showErrorTips(error_message) {
       $('.booking_error').text(error_message).show();
     }
@@ -668,20 +646,40 @@
                   }
                 },
                 25);
-//        alert("能否打开APP");
-       window.location = "laihuipc://";
+        alert("能否打开APP");
+       window.location = "laihuipc://"+item_id;
       } else if (navigator.userAgent.match(/android/i)) {
         var state = null;
-        try {
-          alert("安卓存在app，即将打开");
-          state = window.open("laihuipc://", '_blank');
-        } catch(e) {}
-        if (state) {
-          window.close();
-        } else {
-          alert("不存在app，前去下载");
-//          window.location = "www.baidu.com";
-        }
+//        try {
+//          alert("检测是否存在app，即将打开");
+//          state = window.open("laihui://pinche?id="+213, '_blank');
+//        } catch(e) {
+//        }
+//        if (state) {
+//          window.close();
+//        } else {
+//          alert("不存在app，前去下载");
+//          window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";
+//        }
+        alert("能否打开APP");
+
+        window.location="laihui://pinche?id="+213;
+        setTimeout(function(){
+          window.location="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";//如果超时就跳转到app下载页
+        },2000);
+//
+//        window.setTimeout(function() {
+//                  var timeOutDateTime = new Date();
+//                  if (timeOutDateTime - loadDateTime < 5000) {
+//                    alert("响应超时");
+//                    window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";
+//                  } else {
+//                    alert("响应超时");
+//                    window.close();
+//                  }
+//                },
+//                25);
+
       }
     }
 
@@ -691,9 +689,7 @@
 <body>
 <div class="hover_all_app">
   <div class="weixin_hover">
-    <span class="weixin_hover_span">
-      请选择在浏览器中打开此链接
-    </span>
+    <img src="http://hbnewsimg.cyparty.com/hb1_web_image/live_weixin.png" style="width: 95%;margin: 2px 0 0 12px;">
   </div>
 </div>
 <img src="/resource/images/pch_logo.png" style="display: none">
@@ -735,6 +731,7 @@
   </div>
   <div class="publish_message">
     <ul>
+      <%--<a id="J-call-app" href="javascript:;" class="label">立即打开&gt;&gt;</a>--%>
       <li class="publish_message_li item_name_li">
         <div class="publish_message_li_left">
           <span>车主姓名</span>
@@ -758,7 +755,7 @@
           <span >是否进入应用查看</span>
         </div>
         <div class="publish_message_li_right mobile_clear">
-          <span class="booking_span">打开应用</span>
+          <span class="booking_span open_app">打开应用</span>
         </div>
         <div class="clear "></div>
       </li>
@@ -819,11 +816,11 @@
       </li>
     </ul>
   </div>
-  <a href="javascript:(0)" class="call_driver_bottom not_driver" style="display:none;" onclick="checkUser()">
-    <div class="publish_bottom">
-      预定座位
-    </div>
-  </a>
+  <%--<a href="javascript:(0)" class="call_driver_bottom not_driver" style="display:none;" onclick="checkUser()">--%>
+    <%--<div class="publish_bottom">--%>
+      <%--预定座位--%>
+    <%--</div>--%>
+  <%--</a>--%>
   <div class="footer">
     <img src="/resource/images/pch_icon_bottom.png">
   </div>

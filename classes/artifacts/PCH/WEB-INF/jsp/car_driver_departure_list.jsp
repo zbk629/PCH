@@ -522,6 +522,7 @@
         /*//下拉搜索*/
         .show_search_icon{
             position: fixed;
+            display: none;
             top: 0;
             right: 0;
             z-index: 1;

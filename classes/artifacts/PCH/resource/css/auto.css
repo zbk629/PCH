@@ -52,6 +52,8 @@
     }
     .departure_top_box_img{
         width: 20.6rem;
+        position: relative;
+        top:.2rem;
     }
 }
 @media screen and (max-width: 1024px) {
