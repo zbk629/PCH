@@ -644,7 +644,7 @@
                   }
                 },
                 25);
-        alert("能否打开APP");
+//        alert("能否打开APP");
        window.location = "laihuipc://"+item_id;
       } else if (navigator.userAgent.match(/android/i)) {
         var state = null;
@@ -661,10 +661,10 @@
 //        }
 //        alert("能否打开APP");
 
-        window.location="laihui://pinche?id="+213;
+        window.location="laihui://pinche?id="+item_id;
         setTimeout(function(){
           window.location="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";//如果超时就跳转到app下载页
-        },2000);
+        },1500);
 //
 //        window.setTimeout(function() {
 //                  var timeOutDateTime = new Date();
@@ -687,7 +687,7 @@
 <body>
 <div class="hover_all_app">
   <div class="weixin_hover">
-    <img src="http://hbnewsimg.cyparty.com/hb1_web_image/live_weixin.png" style="width: 95%;margin: 2px 0 0 12px;">
+    <img src="/resource/images/live_weixin.png" style="width: 95%;margin: 2px 0 0 12px;">
   </div>
 </div>
 <img src="/resource/images/pch_logo.png" style="display: none">
