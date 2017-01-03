@@ -373,16 +373,14 @@
       // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
     });
     wx.error(function (res) {
-
       // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-
     });
 
   </script>
   <script>
     $(document).ready(function () {
       changeFontSize();
-//      checkId();
+      checkId();
       changePCStyle();
 //      $('.app_hover_box').click(function(){
 //        $('.hover_all_app').hide();
@@ -646,7 +644,7 @@
                   }
                 },
                 25);
-        alert("能否打开APP");
+//        alert("能否打开APP");
        window.location = "laihuipc://"+item_id;
       } else if (navigator.userAgent.match(/android/i)) {
         var state = null;
@@ -663,10 +661,10 @@
 //        }
 //        alert("能否打开APP");
 
-        window.location="laihui://pinche?id="+213;
+        window.location="laihui://pinche?id="+item_id;
         setTimeout(function(){
           window.location="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";//如果超时就跳转到app下载页
-        },2000);
+        },1500);
 //
 //        window.setTimeout(function() {
 //                  var timeOutDateTime = new Date();
@@ -689,7 +687,7 @@
 <body>
 <div class="hover_all_app">
   <div class="weixin_hover">
-    <img src="http://hbnewsimg.cyparty.com/hb1_web_image/live_weixin.png" style="width: 95%;margin: 2px 0 0 12px;">
+    <img src="/resource/images/live_weixin.png" style="width: 95%;margin: 2px 0 0 12px;">
   </div>
 </div>
 <img src="/resource/images/pch_logo.png" style="display: none">

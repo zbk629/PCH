@@ -124,9 +124,7 @@
             $('.get_code').click(function () {
                 if ($('.user_mobile').val() == "") {
                     showFloatStyle("请先输入手机号");
-                } else if (!myreg.test($('.user_mobile').val())) {
-                    showFloatStyle("手机号格式不正确");
-                } else {
+                }else {
                     sendCode();
                     time(this);
                 }
@@ -178,9 +176,7 @@
         function loginCheck(){
             if ($('.user_mobile').val() == "") {
                 showFloatStyle("请先输入手机号");
-            } else if (!myreg.test($('.user_mobile').val())) {
-                showFloatStyle("手机号格式不正确");
-            } else if ($('.user_code').val() == "") {
+            }else if ($('.user_code').val() == "") {
                 showFloatStyle("请输入验证码");
             }else{
                 sendCheckCode();
@@ -195,7 +191,7 @@
             obj.code = $('.user_code').val();
             $.ajax({
                 type: "POST",
-                url: '/api/reg',
+                url: '/api/reg1',
                 data: obj,
                 dataType: "json",
                 success: function (data) {
@@ -248,13 +244,6 @@
             <input type="submit" value="登录" class="btn login_submit_btn disable" disabled="disabled" onclick="loginCheck()">
         </div>
     </form>
-
-    <%--<div class="login_other">--%>
-        <%--<div class="login_other_tips">--%>
-            <%--<div class="login_line"></div>--%>
-            <%--<span>其他社交网站登陆</span>--%>
-        <%--</div>--%>
-    <%--</div>--%>
 </div>
 <script>
     (function (i, s, o, g, r, a, m) {

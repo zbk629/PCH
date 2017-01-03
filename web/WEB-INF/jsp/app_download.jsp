@@ -254,6 +254,7 @@
       margin: 0 auto;
       height: 100%;
       display: block;
+      border-radius: 30px;
     }
     .app_toLast_box{
       height: 19%;

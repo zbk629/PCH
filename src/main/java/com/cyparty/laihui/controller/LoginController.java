@@ -98,14 +98,41 @@ public class LoginController {
         }
         return "redirect:/";
     }
+
+    @RequestMapping("/share_spread")
+    public String share_spread(HttpServletRequest request, Model model) {
+            return "share_spread";
+    }
+    //提现主页
+    @RequestMapping("/withdraw_cash")
+    public String withdraw_cash(HttpServletRequest request, Model model) {
+            return "withdraw_cash";
+    }
+    //提现支付
+    @RequestMapping("/withdraw_cash_pay")
+    public String withdraw_cash_pay(HttpServletRequest request, Model model) {
+        return "withdraw_cash_pay";
+    }
+    //账户明细
+    @RequestMapping("/account_list")
+    public String account_list(HttpServletRequest request, Model model) {
+        return "account_list";
+    }
+    //账户详情
+    @RequestMapping("/account_detail")
+    public String account_detail(HttpServletRequest request, Model model) {
+        return "account_detail";
+    }
+
     @RequestMapping("/wx_map")
     public String wx_map(HttpServletRequest request, Model model) {
-            return "wx_map";
+        return "wx_map";
     }
     @RequestMapping("/reg")
     public String register(HttpServletRequest request, Model model) {
 
-        is_logined=Utils.isLogined(request);
+//        is_logined=Utils.isLogined(request);
+        is_logined=true;
         if(is_logined){
             return "register";
         }

@@ -1277,7 +1277,7 @@
     <div class="app_load_hover"></div>
     <div class="app_load_container">
         <span class="close_app_load" onclick="hideApp()">x</span>
-        <a href="http://admin.pinchenet.com/app/download">
+        <a href="http://www.pinchenet.com/app/download">
             <img src="/resource/images/role_logo.png" class="app_logo">
             <span class="app_text">
                 下载来回拼车APP</br>

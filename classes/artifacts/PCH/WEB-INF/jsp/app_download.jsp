@@ -254,6 +254,7 @@
       margin: 0 auto;
       height: 100%;
       display: block;
+      border-radius: 30px;
     }
     .app_toLast_box{
       height: 19%;
@@ -671,39 +672,36 @@
       $('.app_toLast').click(function(){
         $($('.swiper-pagination-bullet')[3]).click();
       });
-//      if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
-//        var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
-//
-//        if (ua.match(/MicroMessenger/i) == "micromessenger") {
-////                        $('.app_box').css("padding","50px 0px");
-//          $('.app_er_box').css("margin","8px auto 26px");
-////                        $('.img-responsive').css('height',(h-28)+'px');
-//          $('.app_a').click(function(){
-//            $('body,html').animate({scrollTop: 0}, 500);
-//            $('.hover_all').css("display","block");
-//          });
-//        }
-//      }
+      openApp()
     });
 
-//    var browser = {
-//      versions: function () {
-//        var u = navigator.userAgent, app = navigator.appVersion;
-//        return {         //移动终端浏览器版本信息
-//          trident: u.indexOf('Trident') > -1, //IE内核
-//          presto: u.indexOf('Presto') > -1, //opera内核
-//          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-//          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
-//          mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
-//          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-//          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
-//          iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
-//          iPad: u.indexOf('iPad') > -1, //是否iPad
-//          webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
-//        };
-//      }(),
-//      language: (navigator.browserLanguage || navigator.language).toLowerCase()
-//    }
+    var browser = {
+      versions: function () {
+        var u = navigator.userAgent, app = navigator.appVersion;
+        return {         //移动终端浏览器版本信息
+          trident: u.indexOf('Trident') > -1, //IE内核
+          presto: u.indexOf('Presto') > -1, //opera内核
+          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+          mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+          iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+          iPad: u.indexOf('iPad') > -1, //是否iPad
+          webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+        };
+      }(),
+      language: (navigator.browserLanguage || navigator.language).toLowerCase()
+    }
+
+    function openApp(){
+      if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+          $('.app_a').attr('href','https://itunes.apple.com/app/id1174366776')
+      } else if (navigator.userAgent.match(/android/i)) {
+        $('.app_a').attr('href','http://download.pinchenet.com/app/laihui.apk')
+      }
+    }
+
 
   </script>
 
@@ -786,20 +784,20 @@
           <img class="add_news_bg" src="/resource/images/pch_share_logo.png"/>
         </div>
         <div class="app_tittle_next">
-          <p class="app_tittle_next1">牵起你生命中的每一个<span style="color: #F5AD4E;font-size: 18px;">来回</span></p>
+          <p class="app_tittle_next1">相伴你出行的每一个<span style="color: #F5AD4E;font-size: 18px;">来回</span></p>
         </div>
         <div class="app_change">
           <div class="app_mid_box">
             <span>扫描二维码下载客户端</span>
           </div>
           <div class="app_er_box">
-            <img class="add_news_down" src="/resource/images/pc_app_logo.png"/>
+            <img class="add_news_down" src="/resource/images/pc_app_load.png"/>
           </div>
           <div class="clear"></div>
         </div>
         <a href="http://download.pinchenet.com/app/laihui.apk" class="app_a">
           <div class="app_toLoad">
-            <span>下载安卓版</span>
+            <span>下载客户端</span>
           </div>
         </a>
       </div>
