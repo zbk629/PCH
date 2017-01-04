@@ -33,31 +33,6 @@ public class Utils {
 
 
 
-    public static void getRefID(HttpServletRequest request) {
-        String ref = request.getParameter("ref");
-        if (request.getSession().getAttribute("ref") == null) {
-            if (ref == null) {
-                request.getSession().setAttribute("ref", 0);
-            } else {
-                int id = Integer.parseInt(ref);
-                request.getSession().setAttribute("ref", id);
-            }
-        }
-    }
-
-    public static int toInt(String input) {
-        int result = 0;
-        if (input != null && !input.trim().equals("")) {
-            try {
-                result = Integer.parseInt(input);
-            } catch (Exception e) {
-                result = 0;
-                System.out.println("Utils.toInt" + e.getMessage());
-            }
-        }
-        return result;
-    }
-
     public static String getCurrentTime() {
         Date inputDate = new Date();
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -79,7 +54,6 @@ public class Utils {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date=null;
         try {
-            //"2012-07-25 21:00:00"
             date = sdf.parse(time);
         } catch (Exception e) {
         // TODO 自动生成 catch 块
@@ -184,39 +158,6 @@ public class Utils {
         return filepaths;
     }
 
-    //检查得到的内容是否为空
-
-    public static String startDateConverter(String inputDateString) {
-        String result = "1990-01-01 00:00:00";
-        if (!inputDateString.trim().equals("")) {
-            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            try {
-                Date inputDate = df.parse(inputDateString);
-                SimpleDateFormat newDf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String tmp = newDf.format(inputDate);
-                result = tmp;
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        return result;
-    }
-
-    public static String endDateConverter(String inputDateString) {
-        String result = "2100-01-01 00:00:00";
-        if (!inputDateString.trim().equals("")) {
-            SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            try {
-                Date inputDate = df.parse(inputDateString);
-                SimpleDateFormat newDf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String tmp = newDf.format(inputDate);
-                result = tmp;
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        return result;
-    }
 
     //加密算法
     public static String encode(String algorithm, String str) {
@@ -248,57 +189,7 @@ public class Utils {
         }
         return buf.toString();
     }
-    public static String getIP(HttpServletRequest request) {
-        String ip = request.getHeader("X-Forwarded-For");
-        if(StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
-            //多次反向代理后会有多个ip值，第一个ip才是真实ip
-            int index = ip.indexOf(",");
-            if(index != -1){
-                return ip.substring(0,index);
-            }else{
-                return ip;
-            }
-        }
-        ip = request.getHeader("X-Real-IP");
-        if(StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
-            return ip;
-        }
-        return request.getRemoteAddr();
-    }
-    //获取客户端ip
 
-    public static String getClientIp(HttpServletRequest request ){
-        String ip = request.getHeader("x-forwarded-for");
-        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return ip;
-    }
-    public static String getIpAddress(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return ip;
-    }
     public static String checkNull(String input){
         String result="";
         if(input==null||input.trim().equals("")||input.trim().equals("null")){

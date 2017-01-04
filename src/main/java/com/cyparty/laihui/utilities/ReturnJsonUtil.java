@@ -776,4 +776,23 @@ public class ReturnJsonUtil {
 
         return result_json;
     }
+
+    public static JSONObject getAllPayLog(List<PayLog> payLogList) {
+        JSONObject result_json = new JSONObject();
+        JSONArray dataArray = new JSONArray();
+        for(PayLog payLog:payLogList){
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("type",payLog.getAction_type());
+            jsonObject.put("id",payLog.get_id());
+            jsonObject.put("create_time",payLog.getCreate_time());
+            jsonObject.put("cash",payLog.getCash());
+
+
+            dataArray.add(jsonObject);
+        }
+
+        result_json.put("data", dataArray);
+
+        return result_json;
+    }
 }

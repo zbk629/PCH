@@ -272,5 +272,48 @@ public class LaiHuiDB {
         Integer id=jdbcTemplateObject.queryForObject(sql, Integer.class);
         return id.intValue();
     }
+    public boolean createPayLog(PayLog pay) {
+        boolean is_success = true;
+        String SQL = "insert into pay_cash_log(user_id,cash,create_time,action_type,pay_type,order_status,pay_account) VALUES (?,?,?,?,?,?,?)";
+        int count = jdbcTemplateObject.update(SQL, new Object[]{pay.getUser_id(),pay.getCash(), Utils.getCurrentTime(),1,pay.getPay_type(),0,pay.getPay_account()});
+        if (count < 1) {
+            is_success = false;
+        }
+        return is_success;
+    }
+    //得到支付信息
+    public List<PayLog> getPayLog(String where) {
+        String SQL = "SELECT * FROM pay_cash_log " + where ;
+        List<PayLog> payLogList = jdbcTemplateObject.query(SQL, new PayLogMapper());
+        return payLogList;
+    }
+    //得到token对应的id
+    public int getIDByToken(String token) {
+        String SQL = "SELECT user_id from pc_user_token where token=?";
+        List<UserToken> userTokenList =jdbcTemplateObject.query(SQL,new Object[]{token}, new UserIDMapper());
+        int id=0;
+        if(userTokenList.size()>0){
+            id=userTokenList.get(0).getUser_id();
+        }
+        return id;
+    }
+
+    public boolean createCampaign(Campaign campaign) {
+        boolean is_success = true;
+
+        String SQL = "insert into pc_campaign(user_id,be_popularized_mobile,create_time,is_reg) VALUES (?,?,?,?)";
+        int count = jdbcTemplateObject.update(SQL, new Object[]{campaign.getUser_id(), campaign.getBe_popularized_mobile(), Utils.getCurrentTime(), 0});
+        if (count < 1) {
+            is_success = false;
+        }
+
+        return is_success;
+    }
+
+    public List<Campaign> getCampaign(String where) {
+        String SQL = "SELECT * FROM pc_campaign " + where;
+        List<Campaign> campaignList = jdbcTemplateObject.query(SQL, new CampaignMapper());
+        return campaignList;
+    }
 }
 
