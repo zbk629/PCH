@@ -115,7 +115,7 @@
         if(types==1){
             //推广
             var trade_no = global_data.result.trade_no;
-            $('.account_type_title').text("推广-"+pay_type+"-"+pay_account);
+            $('.account_type_title').text("推广");
             $('.account_type_time').text(create_time);
             $('.account_type_number').text(trade_no);
             $('.account_type_income').text(cash);
