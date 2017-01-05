@@ -98,11 +98,21 @@
     $(document).ready(function () {
       changeFontSize();
       android_get_token();
+        if(data_type==1){
+            $('.account_nav_li').removeClass('account_nav_li_active');
+            $('.cash_get').addClass('account_nav_li_active');
+        }else if(data_type==3){
+            $('.account_nav_li').removeClass('account_nav_li_active');
+            $('.cash_money').addClass('account_nav_li_active');
+
+        }else{
+
+        }
     });
     var action_url = "/pay/list";
     var change_type = 0;
-    var token = window.location.href.split('?token=')[1];
-
+    var token = window.location.href.split('?token=')[1].split('&data_type=')[0];
+    var data_type = window.location.href.split('&data_type=')[1];
     function android_get_token()
     {
       try
@@ -121,6 +131,7 @@
     function loadUser() {
       var obj = {};
       obj.token=token;
+      obj.type=data_type;
       validate.validate_submit3(action_url, obj, insertMessage);
     }
 
@@ -169,7 +180,7 @@
               '<div class="account_list_type"> 提现 </div> '+
               '<div class="account_list_time">'+time+'</div>'+
               '</div>'+
-              '<div class="account_list_li_right up_style">+'+cash+'</div>'+
+              '<div class="account_list_li_right down_style">'+cash+'</div>'+
               '<div class="clear"></div>'+
               '</li>');
     }
@@ -228,10 +239,10 @@
     <li class="account_nav_li account_nav_li_active" data_type="" onclick="changeType(this)">
       全部
     </li>
-    <li class="account_nav_li"  data_type="3" onclick="changeType(this)">
+    <li class="account_nav_li cash_money"  data_type="3" onclick="changeType(this)">
       提现
     </li>
-    <li class="account_nav_li"  data_type="1" onclick="changeType(this)">
+    <li class="account_nav_li cash_get"  data_type="1" onclick="changeType(this)">
       推广
     </li>
     <div class="clear"></div>

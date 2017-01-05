@@ -115,11 +115,11 @@
         if(types==1){
             //推广
             var trade_no = global_data.result.trade_no;
-            $('.account_type_title').text("推广-"+pay_type+"-"+pay_account);
+            $('.account_type_title').text("推广");
             $('.account_type_time').text(create_time);
             $('.account_type_number').text(trade_no);
             $('.account_type_income').text(cash);
-            $('.account_type_style').text(pay_status);
+            $('.account_type_style').parent().hide();
         }else if (types==3){
             //提现
             $('.account_type_title').text("提现-"+pay_type+"-"+pay_account);
@@ -134,14 +134,14 @@
             $('.account_type_time').text(create_time);
             $('.account_type_number').text(trade_no);
             $('.account_type_income').text(cash);
-            $('.account_type_style').text(pay_status);
+            $('.account_type_style').parent().hide();
         }else{
             var trade_no = global_data.result.trade_no;
             $('.account_type_title').text("拼车支出");
             $('.account_type_time').text(create_time);
             $('.account_type_number').text(trade_no);
             $('.account_type_income').text(cash);
-            $('.account_type_style').text(pay_status);
+            $('.account_type_style').parent().hide();
         }
       }
 

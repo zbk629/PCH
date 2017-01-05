@@ -519,8 +519,9 @@
             window.location.href="/withdraw_cash_pay?token="+token+"&current_cash="+current_cash;
         }
 //      账户详情
-        function href_to_detail(){
-            window.location.href="/account_list?token="+token;
+        function href_to_detail(obj){
+            var data_type = $(obj).attr('data_type');
+            window.location.href="/account_list?token="+token+"&data_type="+data_type;
         }
     </script>
 </head>
@@ -551,18 +552,18 @@
                     </div>
                     <div class="cash_all_bottom">
                         <div class="cash_all_count">
-                            <div class="cash_all_count_title" onclick="href_to_detail()">累计提现&nbsp;&nbsp;( 元 )</div>
+                            <div class="cash_all_count_title" data_type="3" onclick="href_to_detail(this)">累计提现&nbsp;&nbsp;( 元 )</div>
                             <span class="count_span already_got_cash"></span>
                         </div>
                         <div class="cash_all_count cash_all_count_last">
-                            <div class="cash_all_count_title" onclick="href_to_detail()">累计推广&nbsp;&nbsp;( 元 )</div>
+                            <div class="cash_all_count_title" data_type="1" onclick="href_to_detail(this)">累计推广&nbsp;&nbsp;( 元 )</div>
                             <span class="count_span campaign_cash"></span>
                         </div>
                         <div class="clear"></div>
                     </div>
 
                 </div>
-                <div class="cash_pay_self_message" onclick="href_to_detail()">
+                <div class="cash_pay_self_message" data_type="" onclick="href_to_detail(this)">
                     <img src="/resource/images/pc_icon_cash_money.png" class="cash_pay_logo">
                     <div class="cash_self_message">
                         <span style="color: #535353">账户明细</span>
