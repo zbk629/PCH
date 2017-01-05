@@ -327,7 +327,7 @@ public class LaiHuiDB {
             public PayLog mapRow(ResultSet resultSet, int i) throws SQLException {
                 PayLog payLog=new PayLog();
                 payLog.setCash(resultSet.getDouble("cash"));
-                payLog.setCreate_time(resultSet.getString("create_time"));
+                payLog.setCreate_time(Utils.checkTime(resultSet.getString("create_time")));
                 payLog.setTrade_no(resultSet.getString("trade_no"));
                 return payLog;
             }

@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -103,10 +104,10 @@ public class PayController {
             current_cash=total_cash-already_got_cash-unable_total_cash;
             account_left=total_cash-already_got_cash;
 
-            result.put("campaign_cash",campaign_cash);//推广收入
-            result.put("total_cash",account_left);//全部收入
-            result.put("already_got_cash",already_got_cash);//已提现金额
-            result.put("current_cash",current_cash);//当前可提现金额
+            result.put("campaign_cash",new BigDecimal(campaign_cash).setScale(2,BigDecimal.ROUND_HALF_UP).toString());//推广收入
+            result.put("total_cash",new BigDecimal(account_left).setScale(2,BigDecimal.ROUND_HALF_UP).toString());//全部收入
+            result.put("already_got_cash",new BigDecimal(already_got_cash).setScale(2,BigDecimal.ROUND_HALF_UP).toString());//已提现金额
+            result.put("current_cash",new BigDecimal(current_cash).setScale(2,BigDecimal.ROUND_HALF_UP).toString());//当前可提现金额
         }
         json = ReturnJsonUtil.returnSuccessJsonString(result, "响应成功");
         return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
@@ -150,6 +151,7 @@ public class PayController {
                 List<PayLog> payLogList3=laiHuiDB.getPayLog(where);
                 for(PayLog payLog:payLogList3){
                     payLog.setAction_type(3);//提现
+                    payLog.setCash(-payLog.getCash());
                 }
                 where=" where user_id="+user_id+" and action_type=0 ";//乘客拼车
                 List<PayLog> payLogList4=laiHuiDB.getPayLog(where);
@@ -190,6 +192,7 @@ public class PayController {
                 List<PayLog> payLogList3=laiHuiDB.getPayLog(where);
                 for(PayLog payLog:payLogList3){
                     payLog.setAction_type(3);//提现
+                    payLog.setCash(-payLog.getCash());
                 }
                 List<PayLog> payLogList=new ArrayList<>();
                 payLogList.addAll(payLogList3);
@@ -227,7 +230,7 @@ public class PayController {
             json = ReturnJsonUtil.returnFailJsonString(result, "非法token！");
             return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
         }else {
-            json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPayInfo(laiHuiDB,type,id), "详情获取成功");
+            json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPayInfo(laiHuiDB, type, id), "详情获取成功");
             return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
         }
     }
@@ -240,7 +243,6 @@ public class PayController {
         String json="";
         String token=request.getParameter("token");
         String action=request.getParameter("action");
-        String type=request.getParameter("type");
         int user_id=0;
         if(token!=null&&!token.isEmpty()){
             try {
@@ -282,14 +284,12 @@ public class PayController {
                         json = ReturnJsonUtil.returnFailJsonString(result, "提现类型有误！");
                         return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
                     }
-
                     payLog.setUser_id(user_id);
                     payLog.setPay_account(pay_account);
                     payLog.setPay_type(pay_type);
                     payLog.setCash(cash);
 
                     laiHuiDB.createPayLog(payLog);
-
                     json = ReturnJsonUtil.returnSuccessJsonString(result, "提现申请提交成功！");
                     return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
             }

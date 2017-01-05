@@ -208,6 +208,21 @@ public class Utils {
         }
         return result;
     }
+
+    public static String checkCash(Double input){
+        String cash=input+"";
+        String result="";
+        if(cash!=null&&!cash.trim().equals("")){
+            if(!cash.contains(".")){
+                result=cash+".00";
+            }else {
+                result=cash;
+            }
+        }else {
+            result=cash;
+        }
+        return result;
+    }
     //产生8位随机数
     public static String random(int n){
         int[] i=new int[n];

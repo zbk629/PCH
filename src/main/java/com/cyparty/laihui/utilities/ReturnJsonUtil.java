@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -786,7 +787,7 @@ public class ReturnJsonUtil {
             jsonObject.put("type",payLog.getAction_type());
             jsonObject.put("id",payLog.get_id());
             jsonObject.put("create_time",payLog.getCreate_time());
-            jsonObject.put("cash",payLog.getCash());
+            jsonObject.put("cash",new BigDecimal(payLog.getCash()).setScale(2,BigDecimal.ROUND_HALF_UP).toString());
 
             dataArray.add(jsonObject);
         }
@@ -815,27 +816,27 @@ public class ReturnJsonUtil {
             switch (type){
                 case "1":
                     result_json.put("type","1");
-                    result_json.put("cash",payLog.getCash()*PercentageConfig.getCampaign_percentage());
+                    result_json.put("cash",new BigDecimal(payLog.getCash()*PercentageConfig.getCampaign_percentage()).setScale(2,BigDecimal.ROUND_HALF_UP).toString());
                     result_json.put("create_time",payLog.getCreate_time());
                     result_json.put("trade_no",payLog.getTrade_no());
                     break;
                 case "2":
                     result_json.put("type","2");
-                    result_json.put("cash",payLog.getCash()*PercentageConfig.getPc_percentage());
+                    result_json.put("cash",new BigDecimal(payLog.getCash()*PercentageConfig.getPc_percentage()).setScale(2,BigDecimal.ROUND_HALF_UP).toString());
                     result_json.put("create_time",payLog.getCreate_time());
                     result_json.put("trade_no",payLog.getTrade_no());
                     break;
                 case "3":
                     result_json.put("type","3");
                     result_json.put("pay_type",payLog.getPay_type());
-                    result_json.put("cash",payLog.getCash());
+                    result_json.put("cash",new BigDecimal(-payLog.getCash()).setScale(2,BigDecimal.ROUND_HALF_UP).toString());
                     result_json.put("create_time",payLog.getCreate_time());
                     result_json.put("pay_account",payLog.getPay_account());
                     result_json.put("pay_status",payLog.getOrder_status());
                     break;
                 case "4":
                     result_json.put("type","4");
-                    result_json.put("cash",-payLog.getCash());
+                    result_json.put("cash",new BigDecimal(-payLog.getCash()).setScale(2,BigDecimal.ROUND_HALF_UP).toString());
                     result_json.put("create_time",payLog.getCreate_time());
                     result_json.put("trade_no",payLog.getTrade_no());
                     break;
