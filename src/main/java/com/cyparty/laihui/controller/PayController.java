@@ -154,7 +154,7 @@ public class PayController {
                 where=" where user_id="+user_id+" and action_type=0 ";//乘客拼车
                 List<PayLog> payLogList4=laiHuiDB.getPayLog(where);
                 for(PayLog payLog:payLogList4){
-                    payLog.setAction_type(4);//提现
+                    payLog.setAction_type(4);//乘客
                 }
                 List<PayLog> payLogList=new ArrayList<>();
                 payLogList.addAll(payLogList1);

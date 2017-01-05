@@ -18,6 +18,15 @@ public class PayLog implements Comparable<PayLog> {
     private String create_time;
     private String departure_time;
     private String pay_account;
+    private String trade_no;
+
+    public String getTrade_no() {
+        return trade_no;
+    }
+
+    public void setTrade_no(String trade_no) {
+        this.trade_no = trade_no;
+    }
 
     public int getOrder_status() {
         return order_status;

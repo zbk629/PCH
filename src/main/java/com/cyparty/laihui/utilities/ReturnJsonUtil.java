@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -797,8 +798,49 @@ public class ReturnJsonUtil {
 
     public static JSONObject getPayInfo(LaiHuiDB laiHuiDB,String type,String id) {
         JSONObject result_json = new JSONObject();
-
-
+        String where=" a left join  pc_passenger_publish_info b on a.order_id=b._id where a._id="+id;
+        List<PayLog> payLogList;
+        if(type.equals("3")){
+            where=" where _id="+id;
+            payLogList=laiHuiDB.getPayLog(where);
+        }else {
+            payLogList=laiHuiDB.getPayInfo(where);
+        }
+        PayLog payLog=new PayLog();
+        if(payLogList.size()>0){
+            payLog=payLogList.get(0);
+        }
+        if(type!=null&&!type.isEmpty())
+        {
+            switch (type){
+                case "1":
+                    result_json.put("type","1");
+                    result_json.put("cash",payLog.getCash()*PercentageConfig.getCampaign_percentage());
+                    result_json.put("create_time",payLog.getCreate_time());
+                    result_json.put("trade_no",payLog.getTrade_no());
+                    break;
+                case "2":
+                    result_json.put("type","2");
+                    result_json.put("cash",payLog.getCash()*PercentageConfig.getPc_percentage());
+                    result_json.put("create_time",payLog.getCreate_time());
+                    result_json.put("trade_no",payLog.getTrade_no());
+                    break;
+                case "3":
+                    result_json.put("type","3");
+                    result_json.put("pay_type",payLog.getPay_type());
+                    result_json.put("cash",payLog.getCash());
+                    result_json.put("create_time",payLog.getCreate_time());
+                    result_json.put("pay_account",payLog.getPay_account());
+                    result_json.put("pay_status",payLog.getOrder_status());
+                    break;
+                case "4":
+                    result_json.put("type","4");
+                    result_json.put("cash",-payLog.getCash());
+                    result_json.put("create_time",payLog.getCreate_time());
+                    result_json.put("trade_no",payLog.getTrade_no());
+                    break;
+            }
+        }
         return result_json;
     }
 }

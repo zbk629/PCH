@@ -24,6 +24,7 @@ public class PayLogMapper implements RowMapper<PayLog> {
         pay.setPay_account(resultSet.getString("pay_account"));
         pay.setCreate_time(Utils.checkTime(resultSet.getString("create_time")));
         pay.setDeparture_time(Utils.checkTime(resultSet.getString("departure_time")));
+        pay.setOrder_status(resultSet.getInt("order_status"));
         return pay;
     }
 }

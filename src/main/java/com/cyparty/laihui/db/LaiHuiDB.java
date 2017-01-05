@@ -6,12 +6,14 @@ import com.cyparty.laihui.mapper.*;
 import com.cyparty.laihui.utilities.Utils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -314,6 +316,23 @@ public class LaiHuiDB {
         String SQL = "SELECT * FROM pc_campaign " + where;
         List<Campaign> campaignList = jdbcTemplateObject.query(SQL, new CampaignMapper());
         return campaignList;
+    }
+
+
+    //得到支付信息
+    public List<PayLog> getPayInfo(String where) {
+        String SQL = "SELECT * FROM pay_cash_log " + where ;
+        List<PayLog> payLogList = jdbcTemplateObject.query(SQL, new RowMapper<PayLog>() {
+            @Override
+            public PayLog mapRow(ResultSet resultSet, int i) throws SQLException {
+                PayLog payLog=new PayLog();
+                payLog.setCash(resultSet.getDouble("cash"));
+                payLog.setCreate_time(resultSet.getString("create_time"));
+                payLog.setTrade_no(resultSet.getString("trade_no"));
+                return payLog;
+            }
+        });
+        return payLogList;
     }
 }
 
