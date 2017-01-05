@@ -338,20 +338,34 @@
             if(isNaN($('#inputId').val().trim())){
                 $('#inputId').val("");
                 $('.cancel_input').hide();
+                $('.cash_middle_tips_span').show();
+                $('.cash_middle_tips_span_error').hide();
+                $('.get_cash').addClass("unbackground_color");
+            }else if($('.active_type').find('.cash_input_user').val()==""){
+                $('#inputId').val("");
+                $('.cancel_input').hide();
+                $('.get_cash').addClass("unbackground_color");
+                $('.cash_middle_tips_span').hide();
+                $('.cash_middle_tips_span_error').show().text('提现账号不能为空');
+            }else if($('#inputId').val().trim()==0){
+                $('.cancel_input').show();
+                $('.cash_middle_tips_span').show();
+                $('.cash_middle_tips_span_error').hide();
                 $('.get_cash').addClass("unbackground_color");
             }else{
+                $('.cash_middle_tips_span').show();
+                $('.cash_middle_tips_span_error').hide();
                 if($('#inputId').val()==""){
                     $('.cancel_input').hide();
                     $('.get_cash').addClass("unbackground_color");
                 }else{
                     //判断金额是否超过可提现金额
                     if(parseFloat( $('#inputId').val())>parseFloat($('.balance').text()) ){
-                        $('.cash_middle_tips_span_error').show();
+                        $('.cash_middle_tips_span_error').show().text('金额已超过可提现余额');
                         $('.cash_middle_tips_span').hide();
                         $('.get_cash').addClass("unbackground_color");
                     }else{
-
-                        $('.cash_middle_tips_span_error').hide();
+                        $('.cash_middle_tips_span_error').hide().text("");
                         $('.cash_middle_tips_span').show();
                         $('.cancel_input').show();
                         $('.get_cash').removeClass("unbackground_color");
@@ -425,7 +439,7 @@
             <div class="cash_middle_input">
                 <div class="cash_input_box">
                     <span>¥</span>
-                    <input class="cash_input_style" value="" id="inputId" onkeyup="checkPay()" type="tel">
+                    <input class="cash_input_style" value="" id="inputId" onkeyup="checkPay()" type="tel" onfocus="checkPay()">
                     <img src="/resource/images/pch_cash_cancel.png" class="cancel_input" onclick="clearInput(this)">
 
                     <div class="clear"></div>
@@ -433,7 +447,7 @@
             </div>
             <div class="cash_middle_tips">
                 <span class="cash_middle_tips_span">可用余额&nbsp;<span class="balance"></span>&nbsp;元</span>
-                <span class="cash_middle_tips_span_error">金额已超过可提现余额</span>
+                <span class="cash_middle_tips_span_error"></span>
                 <span class="cash_all" onclick="cashBalance()">全部提现</span>
                 <div class="clear"></div>
             </div>

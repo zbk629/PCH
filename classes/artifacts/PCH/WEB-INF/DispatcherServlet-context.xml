@@ -26,8 +26,6 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
-
     <!--Druid数据缓冲池配置-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -84,19 +82,8 @@
     <bean id="laiHuiDB" class="com.cyparty.laihui.db.LaiHuiDB">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <bean id="is_debug" class="com.cyparty.laihui.utilities.DebugStatusConfig">
-        <property name="status" value="true"></property>
-    </bean>
-   <!-- <mvc:interceptors>
-        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
-        <bean class="com.cyparty.laihui.utilities.UrlInterceptor">
-            <property name="unCheckUrl">
-                <list>
-                    <value>/db/route_list</value>
-                    <value>/db/departure_list</value>
-                    <value>/404</value>
-                </list>
-            </property>
-        </bean>
-    </mvc:interceptors>-->
+    <!--<bean id="is_debug" class="com.cyparty.laihui.utilities.DebugStatusConfig">-->
+        <!--<property name="status" value="true"></property>-->
+    <!--</bean>-->
+
 </beans>

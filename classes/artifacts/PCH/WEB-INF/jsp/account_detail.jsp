@@ -115,6 +115,7 @@
         if(types==1){
             //推广
             var trade_no = global_data.result.trade_no;
+            $('.account_money_type').text("入账金额");
             $('.account_type_title').text("推广");
             $('.account_type_time').text(create_time);
             $('.account_type_number').text(trade_no);
@@ -123,6 +124,7 @@
         }else if (types==3){
             //提现
             $('.account_type_title').text("提现-"+pay_type+"-"+pay_account);
+            $('.account_money_type').text("出账金额");
             $('.account_type_time').text(create_time);
             $('.account_type_number').parent().hide();
             $('.account_type_income').text(cash);
@@ -131,13 +133,15 @@
             //拼车
             var trade_no = global_data.result.trade_no;
             $('.account_type_title').text("拼车收入");
+            $('.account_money_type').text("拼车费用");
             $('.account_type_time').text(create_time);
             $('.account_type_number').text(trade_no);
             $('.account_type_income').text(cash);
             $('.account_type_style').parent().hide();
         }else{
             var trade_no = global_data.result.trade_no;
-            $('.account_type_title').text("拼车支出");
+            $('.account_type_title').text("出账金额");
+            $('.account_money_type').text("拼车费用");
             $('.account_type_time').text(create_time);
             $('.account_type_number').text(trade_no);
             $('.account_type_income').text(cash);
@@ -160,7 +164,7 @@
 </div>
 <div class="account_details_container">
   <div class="account_details_money">
-    <span class="account_details_title">出账金额</span>
+    <span class="account_details_title account_money_type"></span>
     <span class="account_details_text account_type_income" style="font-size: 2.4rem;">0</span>
   </div>
   <div class="account_details_type">

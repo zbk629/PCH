@@ -454,6 +454,10 @@
             font-size: 1.6rem;
             line-height: 2.6rem
         }
+        div{
+            -webkit-tap-highlight-color:rgba(255,0,0,0);
+            -webkit-appearance:none;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -476,7 +480,8 @@
         });
         var action_url = "/app/api/pay/orders";
         var change = 0;
-        var token= "1406a1751986729b225d60635ce9fea3";
+//        var token= "ea80dc5bedc0adc2436864b2f14b653c";
+        var token= "af27e5218139aa423e528dd0148d32b0";
         var current_cash;
         function android_get_token()
         {
@@ -551,12 +556,12 @@
                         </div>
                     </div>
                     <div class="cash_all_bottom">
-                        <div class="cash_all_count">
-                            <div class="cash_all_count_title" data_type="3" onclick="href_to_detail(this)">累计提现&nbsp;&nbsp;( 元 )</div>
+                        <div class="cash_all_count" data_type="3" onclick="href_to_detail(this)">
+                            <div class="cash_all_count_title">累计提现&nbsp;&nbsp;( 元 )</div>
                             <span class="count_span already_got_cash"></span>
                         </div>
-                        <div class="cash_all_count cash_all_count_last">
-                            <div class="cash_all_count_title" data_type="1" onclick="href_to_detail(this)">累计推广&nbsp;&nbsp;( 元 )</div>
+                        <div class="cash_all_count cash_all_count_last" data_type="1" onclick="href_to_detail(this)">
+                            <div class="cash_all_count_title">累计推广&nbsp;&nbsp;( 元 )</div>
                             <span class="count_span campaign_cash"></span>
                         </div>
                         <div class="clear"></div>
