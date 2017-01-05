@@ -476,7 +476,7 @@
         });
         var action_url = "/app/api/pay/orders";
         var change = 0;
-        var token= "b679c73134376e3e167487c4df591922";
+        var token= "1406a1751986729b225d60635ce9fea3";
         var current_cash;
         function android_get_token()
         {
@@ -556,7 +556,7 @@
                         </div>
                         <div class="cash_all_count cash_all_count_last">
                             <div class="cash_all_count_title" onclick="href_to_detail()">累计推广&nbsp;&nbsp;( 元 )</div>
-                            <span class="count_span campaign_cash">6</span>
+                            <span class="count_span campaign_cash"></span>
                         </div>
                         <div class="clear"></div>
                     </div>

@@ -157,31 +157,49 @@
   <script>
     $(document).ready(function () {
       changeFontSize();
+      android_get_token();
       //点击验证码时候的验证
       $('.get_code').click(function () {
         if ($('.user_mobile').val() == "") {
-          alert("请先输入手机号");
+          showFloatStyle2("请先输入手机号");
         }else {
           sendCode();
           time(this);
         }
       });
+
     });
 
     var wait = 60;
     var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
-    var user_id = 86;
+
+
+    var token = "1406a1751986729b225d60635ce9fea3";
+
+    function android_get_token()
+    {
+      try
+      {
+//                var local_token=androidInterface.getToken();
+//                token = local_token;
+      }
+      catch(err)
+      {
+        console.log(err);
+      }
+
+    }
     //发送验证码
     function sendCode(){
       var obj = {};
       obj.action = 'sms';
       obj.mobile = $('.user_mobile').val();
-      obj.user_id = user_id;
-      validate.validate_submit('/api/reg', obj, sendMessage);
+      obj.token = token;
+      validate.validate_submit('/campaign', obj, sendMessage);
     }
     //通过ajax获取验证码
     function sendMessage() {
-//            showFloatStyle("验证码已发送");
+//      showFloatStyle2("验证码已发送");
     }
     //设置定时器
     function time(i) {
@@ -212,9 +230,9 @@
     //最终检测
     function loginCheck(){
       if ($('.user_mobile').val() == "") {
-        alert("请先输入手机号");
+        showFloatStyle2("请先输入手机号");
       }else if ($('.user_code').val() == "") {
-        alert("请输入验证码");
+        showFloatStyle2("请输入验证码");
       }else{
         sendCheckCode();
       }
@@ -224,27 +242,47 @@
       var obj = {};
       obj.action = 'sms_check';
       obj.mobile = $('.user_mobile').val();
-      obj.user_id = user_id;
+      obj.token = token;
       obj.code = $('.user_code').val();
       $.ajax({
         type: "POST",
-        url: '/api/reg1',
+        url: '/campaign',
         data: obj,
         dataType: "json",
         success: function (data) {
           global_data=data;
           if(global_data.status==true){
-
-            window.location.href="/auth/base"
+            if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+              window.location.href="https://itunes.apple.com/app/id1174366776";
+            } else if (navigator.userAgent.match(/android/i)) {
+              window.location.href="http://download.pinchenet.com/app/laihui.apk";
+            }
           }else{
-            alert(global_data.message);
+            showFloatStyle2(global_data.message);
           }
         },
         error: function () {
           console.log("交互失败");
-          alert(global_data.message);
+          showFloatStyle2(global_data.message);
         }
       })
+    }
+    //展示浮动层，自动消失
+    function showFloatStyle2(errorTips) {
+      if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+        alert(errorTips);
+      } else {
+        //否则就是PC浏览器打开
+        $('.hover').fadeIn(200);
+        $('.float_container').empty().append('<div class="float_box">'+
+                '<span class="float_box_span"></span>'+
+                '</div>').fadeIn(200);
+        $('.float_box_span').text(errorTips);
+        setTimeout(function () {
+          $('.hover').fadeOut(200);
+          $('.float_container').fadeOut(200);
+        }, 1500);
+      }
     }
 
   </script>
@@ -289,12 +327,14 @@
       </div>
     </div>
     <div class="login_submit">
-      <input type="submit" value="下载往返" class="btn login_submit_btn disable" disabled="disabled" onclick="loginCheck()">
+
+        <input type="submit" value="下载往返" class="btn login_submit_btn disable" disabled="disabled" onclick="loginCheck()">
+
     </div>
   </form>
 </div>
 <div class="share_footer">
-  <span>c2016 河南来回网路科技有限公司 京ICP备12345678号-4</span></br>
+  <span>c2016 河南来回网络科技有限公司 京ICP备12345678号-4</span></br>
   <span>联系电话：4009997715</span></br>
   <span>点击“注册车主”代表您同意《来回拼车用户服务协议》</span>
 </div>

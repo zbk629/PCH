@@ -61,13 +61,14 @@
     $(document).ready(function () {
       changeFontSize();
 
-//            android_get_token();
+      android_get_token();
 
     });
-    var action_url = "/app/api/pay/orders";
+    var action_url = "/pay/info";
     var change_type = 0;
-    var token= "7f5bfcb450e7425a144f3e20aa1d1a6e";
-
+    var token = window.location.href.split('?token=')[1].split('&id=')[0];
+    var id = window.location.href.split('&id=')[1].split('&type=')[0];
+    var type =window.location.href.split('&type=')[1];
     function android_get_token()
     {
 
@@ -76,7 +77,6 @@
 //                var local_token=androidInterface.getToken();
 //                token = local_token;
         loadUser();
-        loadCash();
       }
       catch(err)
       {
@@ -87,24 +87,63 @@
     }
     //封装传输的信息并提交
     function loadUser() {
-      $('.cash_success_box').show();
-      $('.cash_error_box').hide();
       var obj = {};
-      obj.action = 'check_account';
       obj.token=token;
+      obj.type=type;
+      obj.id=id;
       validate.validate_submit3(action_url, obj, insertMessage);
     }
-
-    //载入提现订单信息
-    function loadCash() {
-      var obj = {};
-      obj.action = 'show_my_pay_orders';
-      obj.token=token;
-      validate.validate_submit3(action_url, obj, insertOrderList);
-    }
-
+      function insertMessage(){
+          var types = global_data.result.type;
+          var create_time = global_data.result.create_time;
+          var pay_type = global_data.result.pay_type;
+          var pay_status = global_data.result.pay_status;
+          var pay_account = global_data.result.pay_account;
+          var cash = global_data.result.cash;
 
 
+          if(pay_type==0){
+              pay_type="支付宝";
+          }else{
+              pay_type="微信";
+          }
+          if(pay_status==0){
+              pay_status="申请处理中";
+          }else{
+              pay_status="已完成";
+          }
+        if(types==1){
+            //推广
+            var trade_no = global_data.result.trade_no;
+            $('.account_type_title').text("推广-"+pay_type+"-"+pay_account);
+            $('.account_type_time').text(create_time);
+            $('.account_type_number').text(trade_no);
+            $('.account_type_income').text(cash);
+            $('.account_type_style').text(pay_status);
+        }else if (types==3){
+            //提现
+            $('.account_type_title').text("提现-"+pay_type+"-"+pay_account);
+            $('.account_type_time').text(create_time);
+            $('.account_type_number').parent().hide();
+            $('.account_type_income').text(cash);
+            $('.account_type_style').text(pay_status);
+        }else if(type==2){
+            //拼车
+            var trade_no = global_data.result.trade_no;
+            $('.account_type_title').text("拼车收入");
+            $('.account_type_time').text(create_time);
+            $('.account_type_number').text(trade_no);
+            $('.account_type_income').text(cash);
+            $('.account_type_style').text(pay_status);
+        }else{
+            var trade_no = global_data.result.trade_no;
+            $('.account_type_title').text("拼车支出");
+            $('.account_type_time').text(create_time);
+            $('.account_type_number').text(trade_no);
+            $('.account_type_income').text(cash);
+            $('.account_type_style').text(pay_status);
+        }
+      }
 
 
   </script>
@@ -122,24 +161,24 @@
 <div class="account_details_container">
   <div class="account_details_money">
     <span class="account_details_title">出账金额</span>
-    <span class="account_details_text" style="font-size: 2.4rem;">-150</span>
+    <span class="account_details_text account_type_income" style="font-size: 2.4rem;">0</span>
   </div>
   <div class="account_details_type">
     <div class="account_details_list">
       <span class="account_details_title">类型</span>
-      <span class="account_details_text">提现-支付宝-xxxxxxxx</span>
+      <span class="account_details_text account_type_title"></span>
     </div>
     <div class="account_details_list">
       <span class="account_details_title">时间</span>
-      <span class="account_details_text">2016-08-12 08:23</span>
+      <span class="account_details_text account_type_time"></span>
     </div>
     <div class="account_details_list">
       <span class="account_details_title">交易单号</span>
-      <span class="account_details_text">2016-08-12 08:23</span>
+      <span class="account_details_text account_type_number"></span>
     </div>
     <div class="account_details_list">
-      <span class="account_details_title">账户余额</span>
-      <span class="account_details_text">150.00元</span>
+      <span class="account_details_title">状态</span>
+      <span class="account_details_text account_type_style"></span>
     </div>
   </div>
 </div>

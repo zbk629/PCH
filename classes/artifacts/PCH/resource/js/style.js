@@ -81,10 +81,11 @@ var validate = (function () {
             beforeSend: loading,//执行ajax前执行loading函数.直到success
             success: function (data) {
                 global_data = data;
+                closeLoading();
                 if (global_data.status == true) {
                     console.log("交互成功");
                     callback();
-                    closeLoading();
+
                 } else {
                     validate.showTips(global_data.message);
                 }

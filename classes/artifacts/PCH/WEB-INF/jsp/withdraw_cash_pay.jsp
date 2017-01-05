@@ -243,7 +243,6 @@
 
             $('.balance').text(current_cash);
         });
-        var action_url = "/app/api/pay/orders";
         var change = 0;
 
         var token = window.location.href.split('?token=')[1].split('&current_cash=')[0];
@@ -377,7 +376,7 @@
 
         function hrefTo(){
             //重新加载
-            window.location.href="/withdraw_cash;
+            window.location.href="/withdraw_cash";
         }
     </script>
 </head>
@@ -448,7 +447,7 @@
     <div class="cash_success_img_box">
         <img src="/resource/images/pch_cash_success.png">
         <div class="cash_success_h1">提现申请已提交</div>
-        <div class="cash_success_time">预计到账时间：2016-12-16 13:35</div>
+        <div class="cash_success_time">预计到账时间：2小时之内</div>
     </div>
     <div class="cash_success_detail">
         <div class="cash_success_item">
