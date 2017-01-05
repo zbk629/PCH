@@ -787,11 +787,17 @@ public class ReturnJsonUtil {
             jsonObject.put("create_time",payLog.getCreate_time());
             jsonObject.put("cash",payLog.getCash());
 
-
             dataArray.add(jsonObject);
         }
 
         result_json.put("data", dataArray);
+
+        return result_json;
+    }
+
+    public static JSONObject getPayInfo(LaiHuiDB laiHuiDB,String type,String id) {
+        JSONObject result_json = new JSONObject();
+
 
         return result_json;
     }

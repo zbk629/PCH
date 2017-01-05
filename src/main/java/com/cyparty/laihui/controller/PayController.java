@@ -151,10 +151,16 @@ public class PayController {
                 for(PayLog payLog:payLogList3){
                     payLog.setAction_type(3);//提现
                 }
+                where=" where user_id="+user_id+" and action_type=0 ";//乘客拼车
+                List<PayLog> payLogList4=laiHuiDB.getPayLog(where);
+                for(PayLog payLog:payLogList4){
+                    payLog.setAction_type(4);//提现
+                }
                 List<PayLog> payLogList=new ArrayList<>();
                 payLogList.addAll(payLogList1);
                 payLogList.addAll(payLogList2);
                 payLogList.addAll(payLogList3);
+                payLogList.addAll(payLogList4);
 
                 Collections.sort(payLogList);
 
@@ -197,6 +203,35 @@ public class PayController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/pay/info", method = RequestMethod.POST)
+    public ResponseEntity<String> info(HttpServletRequest request){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
+        JSONObject result=new JSONObject();
+        String json="";
+        String token=request.getParameter("token");
+        String type=request.getParameter("type");
+        String id=request.getParameter("id");
+        int user_id=0;
+        if(token!=null&&!token.isEmpty()){
+            try {
+                user_id = laiHuiDB.getIDByToken(token);
+            } catch (Exception e) {
+                user_id=0;
+                e.printStackTrace();
+            }
+        }
+        if(user_id==0){
+            json = ReturnJsonUtil.returnFailJsonString(result, "非法token！");
+            return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+        }else {
+
+            json = ReturnJsonUtil.returnFailJsonString(result, "参数错误");
+            return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+
+        }
+    }
     @ResponseBody
     @RequestMapping(value = "/pay/account", method = RequestMethod.POST)
     public ResponseEntity<String> pay_account(HttpServletRequest request){

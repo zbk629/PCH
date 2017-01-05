@@ -75,12 +75,19 @@ public class CampaignController {
                     Code now_code = codeList.get(0);
                     if (now_code.getCode().equals(code)) {
                         //创建该用户
-                        where = " where be_popularized_mobile='" + mobile + "' ";
+                        where = " where be_popularized_mobile='" + mobile + "'";
                         List<Campaign> userList = laiHuiDB.getCampaign(where);
                         if (userList.size() > 0) {
                             //update
-                            update_sql=" set user_id="+user_id+" where be_popularized_mobile='"+mobile+"'";
-                            laiHuiDB.update("pc_campaign",update_sql);
+                            where= " where be_popularized_mobile='" + mobile + "' and is_reg!=1 ";
+                            List<Campaign> userList1 = laiHuiDB.getCampaign(where);
+                            if(userList1.size()>0){
+                                json = ReturnJsonUtil.returnSuccessJsonString(result, "记录保存成功！");
+                                return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+                            }else {
+                                update_sql=" set user_id="+user_id+" where be_popularized_mobile='"+mobile+"'";
+                                laiHuiDB.update("pc_campaign",update_sql);
+                            }
                         } else {
                             //保存推广记录
                             Campaign campaign=new Campaign();
@@ -103,7 +110,6 @@ public class CampaignController {
                     json = ReturnJsonUtil.returnFailJsonString(result, "请确认是否收到验证码！");
                     return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
                 }
-
         }
         json = ReturnJsonUtil.returnFailJsonString(result, "参数错误！");
         return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
