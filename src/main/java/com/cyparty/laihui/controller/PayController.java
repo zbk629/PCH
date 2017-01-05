@@ -155,6 +155,7 @@ public class PayController {
                 List<PayLog> payLogList4=laiHuiDB.getPayLog(where);
                 for(PayLog payLog:payLogList4){
                     payLog.setAction_type(4);//乘客
+                    payLog.setCash(-payLog.getCash());
                 }
                 List<PayLog> payLogList=new ArrayList<>();
                 payLogList.addAll(payLogList1);
@@ -226,10 +227,8 @@ public class PayController {
             json = ReturnJsonUtil.returnFailJsonString(result, "非法token！");
             return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
         }else {
-
-            json = ReturnJsonUtil.returnFailJsonString(result, "参数错误");
+            json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPayInfo(laiHuiDB,type,id), "详情获取成功");
             return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
-
         }
     }
     @ResponseBody
