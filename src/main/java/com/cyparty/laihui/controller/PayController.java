@@ -208,7 +208,7 @@ public class PayController {
         String action=request.getParameter("action");
         String type=request.getParameter("type");
         int user_id=0;
-        if(token!=null&&token.isEmpty()){
+        if(token!=null&&!token.isEmpty()){
             try {
                 user_id = laiHuiDB.getIDByToken(token);
             } catch (Exception e) {

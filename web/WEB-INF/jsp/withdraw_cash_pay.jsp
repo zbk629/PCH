@@ -239,29 +239,16 @@
     <script>
         $(document).ready(function () {
             changeFontSize();
-//            android_get_token();
-            document.getElementById('inputId').focus();
-            $('.cash_type1').click(function(){
-                $('.cash_type1').removeClass('active_type');
-                $(this).addClass('active_type');
-                $('.cash_type_select').attr('src','/resource/images/pch_cash_unselect.png');
-                $(this).find('.cash_type_select').attr('src','/resource/images/pch_cash_select.png');
-                $(this).find('.cash_top_input input').focus();
-                $('.cash_input_user').attr('placeholder','');
-                if($(this).index()==1){
-                    type = 1;
-                    $('.zf').attr('placeholder','请输入您的支付宝帐号');
-                }else{
-                    type = 0;
-                    $('.wx').attr('placeholder','请输入您的微信账号');
-                }
-            })
+            android_get_token();
 
-
+            $('.balance').text(current_cash);
         });
         var action_url = "/app/api/pay/orders";
         var change = 0;
-        var token = "7f5bfcb450e7425a144f3e20aa1d1a6e";
+
+        var token = window.location.href.split('?token=')[1].split('&current_cash=')[0];
+        var current_cash = window.location.href.split('&current_cash=')[1];
+        var pay_account;
         var type = 0;
         function android_get_token() {
 
@@ -280,30 +267,57 @@
         }
         //封装传输的信息并提交
         function loadUser() {
-            $('.cash_success_box').show();
-            $('.cash_error_box').hide();
             var obj = {};
-            obj.action = 'check_account';
+            obj.action = 'show';
             obj.token = token;
-            validate.validate_submit3(action_url, obj, insertMessage);
+            validate.validate_submit3('/pay/account', obj, insertMessage);
+        }
+        //判断是否存在账户记录
+        function insertMessage(){
+            var count_type = global_data.result.type;
+            pay_account = global_data.result.pay_account;
+            if(count_type==0){
+                //支付宝
+                changePay($('.zhifu_type'));
+                $('.zf').val(pay_account);
+            }else if(count_type==1){
+                //微信
+                changePay($('.weixin_type'));
+                $('.wx').val(pay_account);
+            }else{
+
+            }
+        }
+//        改变支付方式
+        function changePay(obj){
+            $('.cash_type1').removeClass('active_type');
+            $(obj).addClass('active_type');
+            $('.cash_type_select').attr('src','/resource/images/pch_cash_unselect.png');
+            $(obj).find('.cash_type_select').attr('src','/resource/images/pch_cash_select.png');
+            $(obj).find('.cash_top_input input').focus();
+            $('.cash_input_user').attr('placeholder','');
+            if($(obj).index()==1){
+                type = 0;
+                $('.zf').attr('placeholder','请输入您的支付宝帐号');
+            }else{
+                type = 1;
+                $('.wx').attr('placeholder','请输入您的微信账号');
+            }
+            $('#inputId').val("");
+            $('.cancel_input').hide();
+            $('.get_cash').addClass("unbackground_color");
         }
         //封装传输的信息并提交
         function upCash() {
             if(!$('.get_cash').hasClass('unbackground_color')){
-                var mobile;
-                if(type == 1){
-                    //支付宝帐号
-                    mobile = $('.zf').val().trim();
-                }else{
-                    mobile = $('.wx').val().trim();
-                }
+                pay_account = $('.active_type').find('.cash_input_user').val();
                 var obj = {};
-                obj.action = 'get_cash';
+                obj.action = 'add';
                 obj.token = token;
-                obj.cashMonery = $('#inputId').val();
-                obj.cashtype =type ;
-                obj.cashMobile =mobile ;
-                validate.validate_submit3(action_url, obj, showSuccess);
+                obj.cash = $('#inputId').val();
+                obj.pay_type =type;
+                obj.pay_account =pay_account;
+                validate.validate_submit3('/pay/account', obj, showSuccess);
             }
         }
 
@@ -311,6 +325,14 @@
         function showSuccess(){
             $('.cash_container').hide();
             $('.cash_success').show();
+            if(type==0){
+                $('.success_type').text("支付宝");
+            }else{
+                $('.success_type').text("微信");
+            }
+            $('.success_count').text(pay_account);
+            $('.success_money').text($('#inputId').val()+'元')
+
         }
         //检测数据的正确性
         function checkPay(){
@@ -329,6 +351,7 @@
                         $('.cash_middle_tips_span').hide();
                         $('.get_cash').addClass("unbackground_color");
                     }else{
+
                         $('.cash_middle_tips_span_error').hide();
                         $('.cash_middle_tips_span').show();
                         $('.cancel_input').show();
@@ -351,6 +374,11 @@
          $('.cash_input_style').val($('.balance').text());
             checkPay();
         }
+
+        function hrefTo(){
+            //重新加载
+            window.location.href="/withdraw_cash;
+        }
     </script>
 </head>
 <body>
@@ -365,7 +393,7 @@
             选择账户类型
         </div>
         <div class="cash_type">
-            <div class="cash_type1 active_type">
+            <div class="cash_type1 active_type weixin_type" onclick="changePay(this)">
                 <div class="cash_top_input">
                     <input placeholder="请输入您的微信帐号" type="tel" class="cash_input_user wx">
                 </div>
@@ -376,7 +404,7 @@
                 </div>
                 <div class="clear"></div>
             </div>
-            <div class="cash_type1">
+            <div class="cash_type1 zhifu_type" onclick="changePay(this)">
                 <div class="cash_top_input">
                     <input placeholder="" type="tel" class="cash_input_user zf">
                 </div>
@@ -405,7 +433,7 @@
                 </div>
             </div>
             <div class="cash_middle_tips">
-                <span class="cash_middle_tips_span">可用余额&nbsp;<span class="balance">150.00</span>&nbsp;元</span>
+                <span class="cash_middle_tips_span">可用余额&nbsp;<span class="balance"></span>&nbsp;元</span>
                 <span class="cash_middle_tips_span_error">金额已超过可提现余额</span>
                 <span class="cash_all" onclick="cashBalance()">全部提现</span>
                 <div class="clear"></div>
@@ -424,19 +452,19 @@
     </div>
     <div class="cash_success_detail">
         <div class="cash_success_item">
-            <span class="success_item_name">微信</span>
-            <span class="success_item_val">18838164316</span>
+            <span class="success_item_name success_type">微信</span>
+            <span class="success_item_val success_count">18838164316</span>
         </div>
         <div class="cash_success_item">
             <span class="success_item_name">提现金额</span>
-            <span class="success_item_val">120.00元</span>
+            <span class="success_item_val success_money">120.00元</span>
         </div>
-        <div class="cash_success_item">
-            <span class="success_item_name">账户余额</span>
-            <span class="success_item_val balance_money">30.00元</span>
-        </div>
+        <%--<div class="cash_success_item">--%>
+            <%--<span class="success_item_name">账户余额</span>--%>
+            <%--<span class="success_item_val balance_money sucess_balance">30.00元</span>--%>
+        <%--</div>--%>
     </div>
-    <div class="cash_success_get">
+    <div class="cash_success_get" onclick="hrefTo()">
         <span>完成</span>
     </div>
 </div>

@@ -86,13 +86,11 @@
   <script>
     $(document).ready(function () {
       changeFontSize();
-
-//            android_get_token();
-
+      android_get_token();
     });
-    var action_url = "/app/api/pay/orders";
+    var action_url = "/pay/list";
     var change_type = 0;
-    var token= "7f5bfcb450e7425a144f3e20aa1d1a6e";
+    var token = window.location.href.split('?token=')[1];
 
     function android_get_token()
     {
@@ -101,7 +99,6 @@
 //                var local_token=androidInterface.getToken();
 //                token = local_token;
         loadUser();
-        loadCash();
       }
       catch(err)
       {
@@ -111,8 +108,6 @@
     }
     //封装传输的信息并提交
     function loadUser() {
-      $('.cash_success_box').show();
-      $('.cash_error_box').hide();
       var obj = {};
       obj.action = 'check_account';
       obj.token=token;

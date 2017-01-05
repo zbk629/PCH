@@ -31,7 +31,7 @@
     <!--Druid数据缓冲池配置-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://rdska466r2fvvzh5vr7gb.mysql.rds.aliyuncs.com:3306/cyparty_pc"/>
+        <property name="url" value="jdbc:mysql://rdska466r2fvvzh5vr7gb.mysql.rds.aliyuncs.com:3306/copy_cyparty_pc"/>
         <property name="username" value="cyparty_pc"/>
         <property name="password" value="Cyparty2016"/>
         <!-- 配置初始化大小、最小、最大 -->

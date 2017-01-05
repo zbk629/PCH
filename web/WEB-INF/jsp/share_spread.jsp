@@ -25,7 +25,7 @@
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <style type="text/css">
     body{
-      background-color: #fff;
+      background-color: #f5f5f5;
     }
     .login_container{
       height: 100%;
@@ -120,9 +120,9 @@
     /*推广界面*/
     .banner_logo{
       position: absolute;
-      left: 0;
-      top: 0;
-      width: 16rem;
+      left: 10px;
+      top: 10px;
+      width: 12rem;
     }
     .banner_logo img{
       width: 100%;
@@ -140,6 +140,18 @@
       color: #fff;
       font-size: 26px;
     }
+    .share_title{
+      text-align: center;
+      line-height: 2.4rem;
+      color: #999;
+    }
+    .share_footer{
+      margin: 1rem 0 0;
+      padding-bottom: 1rem;
+      color: #999;
+      text-align: center;
+      font-size: 1.2rem;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
@@ -148,7 +160,7 @@
       //点击验证码时候的验证
       $('.get_code').click(function () {
         if ($('.user_mobile').val() == "") {
-          showFloatStyle("请先输入手机号");
+          alert("请先输入手机号");
         }else {
           sendCode();
           time(this);
@@ -200,9 +212,9 @@
     //最终检测
     function loginCheck(){
       if ($('.user_mobile').val() == "") {
-        showFloatStyle("请先输入手机号");
+        alert("请先输入手机号");
       }else if ($('.user_code').val() == "") {
-        showFloatStyle("请输入验证码");
+        alert("请输入验证码");
       }else{
         sendCheckCode();
       }
@@ -225,12 +237,12 @@
 
             window.location.href="/auth/base"
           }else{
-            showFloatStyle(global_data.message);
+            alert(global_data.message);
           }
         },
         error: function () {
           console.log("交互失败");
-          showFloatStyle(global_data.message);
+          alert(global_data.message);
         }
       })
     }
@@ -249,18 +261,19 @@
   </div>
 </div>
 <div class="banner_img">
-  <img id="banner_img_new" src="https://static.dorado.xiaojukeji.com/images/honeyv3/chahua/cBgImg.jpg">
+  <img id="banner_img_new" src="/resource/images/pc_share_spread.jpg">
 </div>
 <div class="banner_logo">
-  <img src="/resource/images/pch_share_logo.png">
+  <img src="/resource/images/pc_shared_logo.jpg">
 </div>
-<div class="login_title">
-  <div class="word">
-    <p class="banner_word">接受来回用户的邀请,体验来回拼车</p>
-    <h3 class="banner_word_h3">立 省 10 元 车 费</h3>
-  </div>
-  <div class="clear"></div>
-</div>
+<%--<div class="login_title">--%>
+  <%--<div class="word">--%>
+    <%--<p class="banner_word">接受来回用户的邀请,体验来回拼车</p>--%>
+    <%--<h3 class="banner_word_h3">立 省 10 元 车 费</h3>--%>
+  <%--</div>--%>
+  <%--<div class="clear"></div>--%>
+<%--</div>--%>
+<div class="share_title">全民代理，你的第二份工作</div>
 <div class="login_container">
 
   <form method="post" id="form_login" onsubmit="return false" action="/">
@@ -276,9 +289,14 @@
       </div>
     </div>
     <div class="login_submit">
-      <input type="submit" value="领取优惠卷" class="btn login_submit_btn disable" disabled="disabled" onclick="loginCheck()">
+      <input type="submit" value="下载往返" class="btn login_submit_btn disable" disabled="disabled" onclick="loginCheck()">
     </div>
   </form>
+</div>
+<div class="share_footer">
+  <span>c2016 河南来回网路科技有限公司 京ICP备12345678号-4</span></br>
+  <span>联系电话：4009997715</span></br>
+  <span>点击“注册车主”代表您同意《来回拼车用户服务协议》</span>
 </div>
 <script>
   (function (i, s, o, g, r, a, m) {
