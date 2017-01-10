@@ -484,7 +484,6 @@
         var current_cash;
         function android_get_token()
         {
-
             try
             {
 //                var local_token=androidInterface.getToken();
