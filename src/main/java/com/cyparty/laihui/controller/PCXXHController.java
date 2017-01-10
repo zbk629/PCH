@@ -73,24 +73,24 @@ public class PCXXHController {
             switch (action) {
                 case "show":
                     json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoute(laiHuiDB, page, size), "线路信息获取成功");
-                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                    return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
                 case "departure":
                     json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoutePlace(laiHuiDB, departure_city), "出发市信息获取成功");
-                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                    return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
                 case "show_all":
                     json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHAllRoutePlace(laiHuiDB), "出发市信息获取成功");
-                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                    return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
                 case "destination":
                     json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getPCHRoutePlace(laiHuiDB, departure_city), "目的地市获取成功");
-                    return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+                    return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
             }
             json = ReturnJsonUtil.returnFailJsonString(result, "获取参数错误");
-            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(json, responseHeaders, HttpStatus.BAD_REQUEST);
 
         } catch (Exception e) {
             e.printStackTrace();
             json = ReturnJsonUtil.returnFailJsonString(result, "获取参数错误");
-            return new ResponseEntity<String>(json, responseHeaders, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(json, responseHeaders, HttpStatus.BAD_REQUEST);
         }
     }
 

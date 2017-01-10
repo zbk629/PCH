@@ -157,7 +157,7 @@
   <script>
     $(document).ready(function () {
       changeFontSize();
-      android_get_token();
+//      android_get_token();
       //点击验证码时候的验证
       $('.get_code').click(function () {
         if ($('.user_mobile').val() == "") {
@@ -174,7 +174,7 @@
     var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
 
 
-    var token = "1406a1751986729b225d60635ce9fea3";
+    var token= window.location.href.split('token=')[1];
 
     function android_get_token()
     {
