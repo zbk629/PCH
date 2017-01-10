@@ -284,7 +284,6 @@
         }, 1500);
       }
     }
-
   </script>
 </head>
 <body>
@@ -304,13 +303,7 @@
 <div class="banner_logo">
   <img src="/resource/images/pc_shared_logo.jpg">
 </div>
-<%--<div class="login_title">--%>
-  <%--<div class="word">--%>
-    <%--<p class="banner_word">接受来回用户的邀请,体验来回拼车</p>--%>
-    <%--<h3 class="banner_word_h3">立 省 10 元 车 费</h3>--%>
-  <%--</div>--%>
-  <%--<div class="clear"></div>--%>
-<%--</div>--%>
+
 <div class="share_title">全民代理，你的第二份工作</div>
 <div class="login_container">
 
