@@ -390,7 +390,7 @@
 
         function hrefTo(){
             //重新加载
-            window.location.href="/withdraw_cash";
+            window.location.href="/withdraw_cash?token="+token;
         }
     </script>
 </head>
@@ -465,17 +465,13 @@
     </div>
     <div class="cash_success_detail">
         <div class="cash_success_item">
-            <span class="success_item_name success_type">微信</span>
-            <span class="success_item_val success_count">18838164316</span>
+            <span class="success_item_name success_type"></span>
+            <span class="success_item_val success_count"></span>
         </div>
         <div class="cash_success_item">
             <span class="success_item_name">提现金额</span>
-            <span class="success_item_val success_money">120.00元</span>
+            <span class="success_item_val success_money"></span>
         </div>
-        <%--<div class="cash_success_item">--%>
-            <%--<span class="success_item_name">账户余额</span>--%>
-            <%--<span class="success_item_val balance_money sucess_balance">30.00元</span>--%>
-        <%--</div>--%>
     </div>
     <div class="cash_success_get" onclick="hrefTo()">
         <span>完成</span>

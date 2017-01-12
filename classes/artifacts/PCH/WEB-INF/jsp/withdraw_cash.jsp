@@ -480,12 +480,10 @@
         });
         var action_url = "/app/api/pay/orders";
         var change = 0;
-//        var token= "ea80dc5bedc0adc2436864b2f14b653c";
-        var token= "af27e5218139aa423e528dd0148d32b0";
+        var token = window.location.href.split('token=')[1];
         var current_cash;
         function android_get_token()
         {
-
             try
             {
 //                var local_token=androidInterface.getToken();
@@ -509,7 +507,6 @@
         function sendKeepDownInput(){
             $('.booking_error').hide();
         }
-
         function insertMessage() {
             var cash_balance = global_data.result.total_cash;//全部收入
             var campaign_cash = global_data.result.campaign_cash;//推广

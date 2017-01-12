@@ -252,6 +252,7 @@
         success: function (data) {
           global_data=data;
           if(global_data.status==true){
+            showFloatStyle2('验证完成');
             if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
               window.location.href="https://itunes.apple.com/app/id1174366776";
             } else if (navigator.userAgent.match(/android/i)) {

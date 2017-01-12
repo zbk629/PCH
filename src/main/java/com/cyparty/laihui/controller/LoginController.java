@@ -113,6 +113,11 @@ public class LoginController {
     public String withdraw_cash_pay(HttpServletRequest request, Model model) {
         return "withdraw_cash_pay";
     }
+    //退款
+    @RequestMapping("/refund_page")
+    public String refund_money(HttpServletRequest request, Model model) {
+        return "refund_page";
+    }
     //账户明细
     @RequestMapping("/account_list")
     public String account_list(HttpServletRequest request, Model model) {

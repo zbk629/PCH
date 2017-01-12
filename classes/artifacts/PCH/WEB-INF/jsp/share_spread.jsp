@@ -157,7 +157,7 @@
   <script>
     $(document).ready(function () {
       changeFontSize();
-      android_get_token();
+//      android_get_token();
       //点击验证码时候的验证
       $('.get_code').click(function () {
         if ($('.user_mobile').val() == "") {
@@ -174,7 +174,7 @@
     var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
 
 
-    var token = "1406a1751986729b225d60635ce9fea3";
+    var token= window.location.href.split('token=')[1];
 
     function android_get_token()
     {
@@ -252,6 +252,7 @@
         success: function (data) {
           global_data=data;
           if(global_data.status==true){
+            showFloatStyle2('验证完成');
             if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
               window.location.href="https://itunes.apple.com/app/id1174366776";
             } else if (navigator.userAgent.match(/android/i)) {
@@ -284,7 +285,6 @@
         }, 1500);
       }
     }
-
   </script>
 </head>
 <body>
@@ -304,13 +304,7 @@
 <div class="banner_logo">
   <img src="/resource/images/pc_shared_logo.jpg">
 </div>
-<%--<div class="login_title">--%>
-  <%--<div class="word">--%>
-    <%--<p class="banner_word">接受来回用户的邀请,体验来回拼车</p>--%>
-    <%--<h3 class="banner_word_h3">立 省 10 元 车 费</h3>--%>
-  <%--</div>--%>
-  <%--<div class="clear"></div>--%>
-<%--</div>--%>
+
 <div class="share_title">全民代理，你的第二份工作</div>
 <div class="login_container">
 
