@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LHDB;
 import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.AlipayNotify;
+import com.cyparty.laihui.domain.PayBack;
 import com.cyparty.laihui.domain.PayLog;
 import com.cyparty.laihui.utilities.PercentageConfig;
 import com.cyparty.laihui.utilities.ReturnJsonUtil;
@@ -68,10 +69,10 @@ public class PayController {
             List<PayLog> payLogList1=laiHuiDB.getPayLog(where);
             for(PayLog pay:payLogList1){
                 //分为可用和即将可用，保护期大于最大支付时间间隔
-                long is_enable_timeStamp=Utils.date2TimeStamp(Utils.getTimeSubOrAdd(pay.getDeparture_time(), 24));
-                long current_timeStamp=Utils.date2TimeStamp(Utils.getCurrentTime());
-                //如果当前时间大于订单创建时间5天，则为可提现金额
-                if(current_timeStamp<=is_enable_timeStamp){
+                /*long is_enable_timeStamp=Utils.date2TimeStamp(Utils.getTimeSubOrAdd(pay.getDeparture_time(), 24));
+                long current_timeStamp=Utils.date2TimeStamp(Utils.getCurrentTime());*/
+                //则为可提现金额 current_timeStamp<=is_enable_timeStamp
+                if(pay.getIs_complete()!=1){
                     unable_campaign_cash=unable_campaign_cash+pay.getCash();//即将可用拼车金额
                 }
                 campaign_cash=campaign_cash+pay.getCash();
@@ -84,10 +85,10 @@ public class PayController {
             List<PayLog> payLogList2=laiHuiDB.getPayLog(where);
             for(PayLog pay:payLogList2){
                 //分为可用和即将可用，保护期大于最大支付时间间隔
-                long is_enable_timeStamp=Utils.date2TimeStamp(Utils.getTimeSubOrAdd(pay.getDeparture_time(), 24));
-                long current_timeStamp=Utils.date2TimeStamp(Utils.getCurrentTime());
-                //如果当前时间大于订单创建时间5天，则为可提现金额
-                if(current_timeStamp<=is_enable_timeStamp){
+               /* long is_enable_timeStamp=Utils.date2TimeStamp(Utils.getTimeSubOrAdd(pay.getDeparture_time(), 24));
+                long current_timeStamp=Utils.date2TimeStamp(Utils.getCurrentTime());*/
+                //如果当前时间大于订单创建时间5天，则为可提现金额 current_timeStamp<=is_enable_timeStamp
+                if(pay.getIs_complete()!=1){
                     unable_pc_cash=unable_pc_cash+pay.getCash();//即将可用拼车金额
                 }
                 pc_cash=pc_cash+pay.getCash();//全部拼车所得金额
@@ -111,6 +112,59 @@ public class PayController {
         }
         json = ReturnJsonUtil.returnSuccessJsonString(result, "响应成功");
         return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/pay/back", method = RequestMethod.POST)
+    public ResponseEntity<String> pay_back(HttpServletRequest request,HttpServletResponse response) {
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
+        JSONObject result = new JSONObject();
+        String json = "";
+        String token=request.getParameter("token");
+        int user_id=0;
+        int order_id=0;
+        boolean is_success=false;
+        if(token!=null&&!token.isEmpty()){
+            try {
+                user_id = laiHuiDB.getIDByToken(token);
+                order_id=Integer.parseInt(request.getParameter("order_id"));
+            } catch (Exception e) {
+                user_id=0;
+                order_id=0;
+                e.printStackTrace();
+            }
+        }
+        if(user_id==0){
+            json = ReturnJsonUtil.returnFailJsonString(result, "参数错误！");
+            return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+        }else {
+            PayBack payBack=new PayBack();
+            int pay_type=Integer.parseInt(request.getParameter("pay_type"));
+            String pay_account=request.getParameter("pay_account");
+            String pay_reason=request.getParameter("pay_reason");
+
+            payBack.setUser_id(user_id);
+            payBack.setOrder_id(order_id);
+            payBack.setPay_type(pay_type);
+            payBack.setPay_account(pay_account);
+            payBack.setPay_reason(pay_reason);
+
+            is_success=laiHuiDB.createPayBack(payBack);
+
+            if(is_success){
+                String update_sql=" set order_status=-1  where action_type=0 and order_id="+order_id;//更新支付表
+                laiHuiDB.update("pay_cash_log",update_sql);
+
+                update_sql=" set order_status=-1  where order_type=0 and order_id="+order_id;//更新记录表
+                laiHuiDB.update("pc_orders",update_sql);
+
+                json = ReturnJsonUtil.returnSuccessJsonString(result, "申请退款提交成功！");
+                return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+            }
+            json = ReturnJsonUtil.returnFailJsonString(result, "申请退款失败，请稍后重试！");
+            return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+        }
     }
     @ResponseBody
     @RequestMapping(value = "/pay/list", method = RequestMethod.POST)

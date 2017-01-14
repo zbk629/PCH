@@ -17,6 +17,7 @@ public class PayLogMapper implements RowMapper<PayLog> {
         PayLog pay=new PayLog();
         pay.set_id(resultSet.getInt("_id"));
         pay.setPay_type(resultSet.getInt("pay_type"));
+        pay.setIs_complete(resultSet.getInt("is_complete"));
         pay.setOrder_id(resultSet.getInt("order_id"));
         pay.setP_id(resultSet.getInt("p_id"));
         pay.setDriver_id(resultSet.getInt("driver_id"));

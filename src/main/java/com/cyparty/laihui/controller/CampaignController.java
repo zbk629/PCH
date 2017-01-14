@@ -37,8 +37,11 @@ public class CampaignController {
         String json;
         JSONObject result=new JSONObject();
         int user_id;
+        String user_mobile="";
         try {
             user_id=laiHuiDB.getIDByToken(token);
+            String where=" where _id="+user_id;
+            user_mobile=laiHuiDB.getUserList(where).get(0).getUser_mobile();
         } catch (Exception e) {
             user_id=0;
             e.printStackTrace();
@@ -94,7 +97,7 @@ public class CampaignController {
                             campaign.setUser_id(user_id);
                             campaign.setBe_popularized_mobile(mobile);
 
-                            if(user_id!=0){
+                            if(user_id!=0&&!mobile.equals(user_mobile)){
                                 laiHuiDB.createCampaign(campaign);
                             }
                         }

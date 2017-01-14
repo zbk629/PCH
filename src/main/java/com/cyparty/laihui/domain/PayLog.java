@@ -9,6 +9,7 @@ public class PayLog implements Comparable<PayLog> {
     private int _id;
     private int order_id;
     private int user_id;
+    private int is_complete;
     private int p_id;
     private int driver_id;
     private double cash;
@@ -19,6 +20,14 @@ public class PayLog implements Comparable<PayLog> {
     private String departure_time;
     private String pay_account;
     private String trade_no;
+
+    public int getIs_complete() {
+        return is_complete;
+    }
+
+    public void setIs_complete(int is_complete) {
+        this.is_complete = is_complete;
+    }
 
     public String getTrade_no() {
         return trade_no;
