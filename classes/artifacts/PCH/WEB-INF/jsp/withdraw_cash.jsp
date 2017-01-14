@@ -39,7 +39,7 @@
             /* font-size: 1.4rem; */
             color: #999794;
             /* line-height: 3.2rem; */
-            width: 1.8rem;
+            width: 1.6rem;
             position: relative;
             top: 1rem;
         }
@@ -136,13 +136,13 @@
         .cash_self_message {
             float: left;
             padding: .3rem 1rem;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
 
         .cash_self_message_img {
             float: right;
             padding: .4rem 0;
-            /* font-size: 1.8rem; */
+            /* font-size: 1.6rem; */
             width: 2rem;
         }
 
@@ -417,11 +417,11 @@
         }
         .cash_title{
             display: inline-block;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
         .cash_explain{
             float: right;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
         .cash_all_top{
             padding: 2.6rem 1.4rem 2.4rem;
@@ -433,6 +433,7 @@
         .cash_explain img{
             width: 1.4rem;
             position: relative;
+            top: .2rem;
         }
         .count_span{
             font-size: 2.4rem;
@@ -556,7 +557,7 @@
                     <div class="cash_all_bottom">
                         <div class="cash_all_count" data_type="3" onclick="href_to_detail(this)">
                             <div class="cash_all_count_title">累计提现&nbsp;&nbsp;( 元 )</div>
-                            <span class="count_span already_got_cash">0.</span>
+                            <span class="count_span already_got_cash">0.0</span>
                         </div>
                         <div class="cash_all_count cash_all_count_last" data_type="1" onclick="href_to_detail(this)">
                             <div class="cash_all_count_title">累计推广&nbsp;&nbsp;( 元 )</div>

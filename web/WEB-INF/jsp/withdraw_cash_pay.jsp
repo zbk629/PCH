@@ -23,7 +23,7 @@
     <style type="text/css">
         body {
             background-color: #F9F9F9;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
 
         input:focus {
@@ -67,7 +67,7 @@
             /*line-height: 4.6rem;*/
             /* padding: 0 1.4rem; */
             padding-top: 1.4rem;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             /* margin-top: 2.4rem; */
             padding-left: 1.4rem;
             -moz-box-sizing: border-box; /*Firefox3.5+*/
@@ -118,7 +118,7 @@
         }
 
         .cancel_input {
-            width: 1.8rem;
+            width: 1.6rem;
             position: absolute;
             right: 1.5rem;
             top: 1.6rem;
@@ -240,8 +240,12 @@
         $(document).ready(function () {
             changeFontSize();
             android_get_token();
-
-            $('.balance').text(current_cash);
+            if(current_cash=="undefined"){
+                current_cash="0.0";
+                $('.balance').text(current_cash)
+            }else{
+                $('.balance').text(current_cash)
+            }
         });
         var change = 0;
 

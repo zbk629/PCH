@@ -23,7 +23,7 @@
   <style type="text/css">
     body {
       background-color: #F9F9F9;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
     }
 
     input:focus {
@@ -74,7 +74,7 @@
       /*line-height: 4.6rem;*/
       /* padding: 0 1.4rem; */
       padding-top: 1.4rem;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       /* margin-top: 2.4rem; */
       padding-left: 1.4rem;
       -moz-box-sizing: border-box; /*Firefox3.5+*/
@@ -127,7 +127,7 @@
     }
 
     .cancel_input {
-      width: 1.8rem;
+      width: 1.6rem;
       position: absolute;
       right: 1.5rem;
       top: 1.6rem;
@@ -245,7 +245,7 @@
     }
     .cash_input_box_textarea{
       height: 9rem;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       width: 100%;
       resize:none;
       border: none;
@@ -295,7 +295,7 @@
 
     var token = window.location.href.split('token=')[1].split('&order_id=')[0];
     var order_id = window.location.href.split('order_id=')[1].split('&price=')[0];
-    var current_cash = window.location.href.split('&price=')[1];
+    var refund_money = window.location.href.split('&price=')[1];
 //    var token ="2bb25449b6ed54c2200617bf0bdcbf76";
 //    var order_id =2;
 //    var refund_money =234.56;
@@ -511,9 +511,6 @@
       <span class="success_item_name">退款金额</span>
       <span class="success_item_val success_money">0.00 元</span>
     </div>
-  </div>
-  <div class="cash_success_get" onclick="hrefTo()">
-    <span>完成</span>
   </div>
 </div>
 </body>
