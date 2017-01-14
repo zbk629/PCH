@@ -378,4 +378,9 @@ public class LoginController {
     public String download() {
         return "download";
     }
+    //全民代理规则说明
+    @RequestMapping("/app/agent_rule")
+    public String agent_rule(Model model,HttpServletRequest request){
+        return "agent_rule";
+    }
 }
