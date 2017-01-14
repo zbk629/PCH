@@ -128,7 +128,7 @@ public class PayController {
         if(token!=null&&!token.isEmpty()){
             try {
                 user_id = laiHuiDB.getIDByToken(token);
-                order_id=Integer.parseInt(request.getParameter("order_id"));
+                order_id=Integer.parseInt(request.getParameter("order_id"));//order_id为record_id
             } catch (Exception e) {
                 user_id=0;
                 order_id=0;
@@ -139,19 +139,38 @@ public class PayController {
             json = ReturnJsonUtil.returnFailJsonString(result, "参数错误！");
             return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
         }else {
-            PayBack payBack=new PayBack();
-            int pay_type=Integer.parseInt(request.getParameter("pay_type"));
-            String pay_account=request.getParameter("pay_account");
-            String pay_reason=request.getParameter("pay_reason");
-
-            payBack.setUser_id(user_id);
-            payBack.setOrder_id(order_id);
-            payBack.setPay_type(pay_type);
-            payBack.setPay_account(pay_account);
-            payBack.setPay_reason(pay_reason);
-
-            is_success=laiHuiDB.createPayBack(payBack);
-
+            String where=" where action_type=0 and order_id="+order_id+" and is_complete=0";
+            List<PayLog> payLogList=laiHuiDB.getPayLog(where);
+            if(payLogList.size()>0){
+                PayBack payBack=new PayBack();
+                int pay_type=Integer.parseInt(request.getParameter("pay_type"));
+                String pay_account=request.getParameter("pay_account");
+                String pay_reason=request.getParameter("pay_reason");
+                double pay_cash=0;
+                if(request.getParameter("money")!=null&&!request.getParameter("money").isEmpty()){
+                    try {
+                        pay_cash=Double.parseDouble(request.getParameter("money"));
+                    } catch (NumberFormatException e) {
+                        pay_cash=0;
+                        e.printStackTrace();
+                    }
+                }
+                payBack.setUser_id(user_id);
+                payBack.setOrder_id(order_id);
+                payBack.setPay_type(pay_type);
+                payBack.setPay_account(pay_account);
+                payBack.setPay_reason(pay_reason);
+                payBack.setPay_cash(pay_cash);
+                if(pay_cash!=0){
+                    is_success=laiHuiDB.createPayBack(payBack);
+                }else {
+                    json = ReturnJsonUtil.returnFailJsonString(result, "退款金额有误，请重新核对！");
+                    return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+                }
+            }else {
+                json = ReturnJsonUtil.returnFailJsonString(result, "申请退款失败，请稍后重试！");
+                return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+            }
             if(is_success){
                 String update_sql=" set order_status=-1  where action_type=0 and order_id="+order_id;//更新支付表
                 laiHuiDB.update("pay_cash_log",update_sql);

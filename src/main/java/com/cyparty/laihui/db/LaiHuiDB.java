@@ -336,8 +336,8 @@ public class LaiHuiDB {
     }
     public boolean createPayBack(PayBack pay) {
         boolean is_success = true;
-        String SQL = "insert into pc_application_pay_back(order_id,user_id,pay_type,pay_account,pay_reason,create_time,pay_status) VALUES (?,?,?,?,?,?,?)";
-        int count = jdbcTemplateObject.update(SQL, new Object[]{pay.getOrder_id(), pay.getUser_id(), pay.getPay_type(), pay.getPay_account(),pay.getPay_reason(), Utils.getCurrentTime(),0});
+        String SQL = "insert into pc_application_pay_back(order_id,user_id,pay_type,pay_account,pay_reason,create_time,pay_status,pay_cash) VALUES (?,?,?,?,?,?,?,?)";
+        int count = jdbcTemplateObject.update(SQL, new Object[]{pay.getOrder_id(), pay.getUser_id(), pay.getPay_type(), pay.getPay_account(),pay.getPay_reason(), Utils.getCurrentTime(),0,pay.getPay_cash()});
         if (count < 1) {
             is_success = false;
         }

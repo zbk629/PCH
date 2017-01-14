@@ -8,9 +8,18 @@ public class PayBack {
     private int order_id;
     private int pay_type;
     private int pay_status;
+    private double pay_cash;
     private String pay_account;
     private String pay_reason;
     private String create_time;
+
+    public double getPay_cash() {
+        return pay_cash;
+    }
+
+    public void setPay_cash(double pay_cash) {
+        this.pay_cash = pay_cash;
+    }
 
     public int getUser_id() {
         return user_id;
