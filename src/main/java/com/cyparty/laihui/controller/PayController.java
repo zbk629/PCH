@@ -121,7 +121,7 @@ public class PayController {
         responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
         JSONObject result = new JSONObject();
         String json = "";
-        String token=request.getParameter("token");
+        String token=request.getParameter("token"); //token,order_id,price
         int user_id=0;
         int order_id=0;
         boolean is_success=false;

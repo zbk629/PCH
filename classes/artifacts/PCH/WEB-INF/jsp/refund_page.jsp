@@ -289,19 +289,20 @@
   <script>
     $(document).ready(function () {
       changeFontSize();
-//      android_get_token();
-
-      $('.balance').text(current_cash);
+      android_get_token();
     });
     var change = 0;
 
-    var token = window.location.href.split('?token=')[1].split('&current_cash=')[0];
-    var current_cash = window.location.href.split('&current_cash=')[1];
+//    var token = window.location.href.split('token=')[1].split('&order_id=')[0];
+//    var order_id = window.location.href.split('order_id=')[1].split('&price=')[0];
+//    var current_cash = window.location.href.split('&price=')[1];
+    var token ="2bb25449b6ed54c2200617bf0bdcbf76";
+    var order_id =2;
+    var refund_money =234.56;
     var pay_account;
     var type = 0;
-    var refund_money;
-    function android_get_token() {
 
+    function android_get_token() {
       try {
 //                var local_token=androidInterface.getToken();
 //                token = local_token;
@@ -317,26 +318,8 @@
     }
     //封装传输的信息并提交
     function loadUser() {
-      var obj = {};
-      obj.action = 'show';
-      obj.token = token;
-      validate.validate_submit3('/pay/account', obj, insertMessage);
-    }
-    //判断是否存在账户记录
-    function insertMessage(){
-      var count_type = global_data.result.type;
-      pay_account = global_data.result.pay_account;
-      if(count_type==0){
-        //支付宝
-        changePay($('.zhifu_type'));
-        $('.zf').val(pay_account);
-      }else if(count_type==1){
-        //微信
-        changePay($('.weixin_type'));
-        $('.wx').val(pay_account);
-      }else{
-
-      }
+      $('.refund_money_cont_span').text(refund_money);
+//      $('.success_money').text(refund_money+" 元");
     }
     //        改变支付方式
     function changePay(obj){
@@ -365,7 +348,6 @@
     function upCash() {
       if(!$('.get_cash').hasClass('unbackground_color')){
         pay_account = $('.active_type').find('.cash_input_user').val();
-        refund_money = $('.refund_money_cont_span').text();
         if($('.active_refund').hasClass('other_reason')){
           var reason = $('.cash_input_box_textarea').val()
         }else{
@@ -373,13 +355,12 @@
         }
 
         var obj = {};
-        obj.action = 'add1';
         obj.token = token;
-        obj.pay_type =type;
+        obj.order_id =order_id;
         obj.pay_account =pay_account;
-        obj.refund_money =refund_money;
-        obj.reason =reason;
-        validate.validate_submit3('/pay/account', obj, showSuccess);
+        obj.pay_reason =reason;
+        obj.pay_type =type;
+        validate.validate_submit3('/pay/back', obj, showSuccess);
       }
     }
 
@@ -394,7 +375,7 @@
         $('.success_type').text("微信");
       }
       $('.success_count').text(pay_account);
-      $('.success_money').text(refund_money+'元')
+      $('.success_money').text(refund_money+' 元')
 
     }
     //检测数据的正确性
@@ -450,7 +431,7 @@
 </div>
 <div class="hover"></div>
 <div class="refund_money">
-  <span class="refund_money_cont">￥<span class="refund_money_cont_span" style="display: inline-block">8</span></span>
+  <span class="refund_money_cont">￥<span class="refund_money_cont_span" style="display: inline-block">0</span></span>
   <span class="refund_money_title">退款金额</span>
   <span class="refund_money_tips">退款将在2个工作日内退回</span>
 </div>
@@ -523,11 +504,11 @@
   <div class="cash_success_detail">
     <div class="cash_success_item">
       <span class="success_item_name success_type">微信</span>
-      <span class="success_item_val success_count">18838164316</span>
+      <span class="success_item_val success_count"></span>
     </div>
     <div class="cash_success_item">
       <span class="success_item_name">退款金额</span>
-      <span class="success_item_val success_money">120.00元</span>
+      <span class="success_item_val success_money">0.00 元</span>
     </div>
   </div>
   <div class="cash_success_get" onclick="hrefTo()">
