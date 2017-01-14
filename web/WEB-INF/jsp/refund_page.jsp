@@ -293,12 +293,12 @@
     });
     var change = 0;
 
-//    var token = window.location.href.split('token=')[1].split('&order_id=')[0];
-//    var order_id = window.location.href.split('order_id=')[1].split('&price=')[0];
-//    var current_cash = window.location.href.split('&price=')[1];
-    var token ="2bb25449b6ed54c2200617bf0bdcbf76";
-    var order_id =2;
-    var refund_money =234.56;
+    var token = window.location.href.split('token=')[1].split('&order_id=')[0];
+    var order_id = window.location.href.split('order_id=')[1].split('&price=')[0];
+    var current_cash = window.location.href.split('&price=')[1];
+//    var token ="2bb25449b6ed54c2200617bf0bdcbf76";
+//    var order_id =2;
+//    var refund_money =234.56;
     var pay_account;
     var type = 0;
 
