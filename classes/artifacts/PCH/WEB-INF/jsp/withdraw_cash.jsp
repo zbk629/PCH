@@ -484,6 +484,7 @@
         var current_cash;
         function android_get_token()
         {
+
             try
             {
 //                var local_token=androidInterface.getToken();
@@ -549,17 +550,17 @@
                             <span class="cash_explain"><img src="/resource/images/pc_icon_cash_question.png"> 提现说明</span>
                         </div>
                         <div class="cash_balance">
-
+                            0.0
                         </div>
                     </div>
                     <div class="cash_all_bottom">
                         <div class="cash_all_count" data_type="3" onclick="href_to_detail(this)">
                             <div class="cash_all_count_title">累计提现&nbsp;&nbsp;( 元 )</div>
-                            <span class="count_span already_got_cash"></span>
+                            <span class="count_span already_got_cash">0.</span>
                         </div>
                         <div class="cash_all_count cash_all_count_last" data_type="1" onclick="href_to_detail(this)">
                             <div class="cash_all_count_title">累计推广&nbsp;&nbsp;( 元 )</div>
-                            <span class="count_span campaign_cash"></span>
+                            <span class="count_span campaign_cash">0.0</span>
                         </div>
                         <div class="clear"></div>
                     </div>
