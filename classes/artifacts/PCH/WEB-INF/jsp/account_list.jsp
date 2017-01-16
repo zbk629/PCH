@@ -23,7 +23,7 @@
   <style type="text/css">
     body{
       background-color: #F9F9F9;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
     }
     .account_nav{
       background: #fff;

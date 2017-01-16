@@ -17,7 +17,7 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <%--<meta name="msapplication-tap-highlight" content="no">--%>
-  <title>来回拼车-推广界面-微信</title>
+  <title>来回拼车-推广界面</title>
   <link rel="shortcut icon" href="/resource/images/pc_logo.ico"/>
   <script src="/resource/js/jquery-1.11.3.min.js" type="text/javascript"></script>
   <script src="/resource/js/style.js" type="text/javascript"></script>
@@ -25,7 +25,12 @@
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <style type="text/css">
     body{
-      background-color: #f5f5f5;
+      background-color: #F9C86B;
+      background: -webkit-linear-gradient(#F8B71D,#F8B71D, #FAD9BA);
+      background: -o-linear-gradient(#F8B71D, #F8B71D,#FAD9BA);
+      background: -moz-linear-gradient(#F8B71D,#F8B71D, #FAD9BA);
+      background: linear-gradient(#F8B71D,#F8B71D, #FAD9BA);
+      font-size: 1.6rem;
     }
     .login_container{
       height: 100%;
@@ -46,8 +51,6 @@
       width: 100%;
     }
     .login_mid{
-      background-color: #fff;
-      border: 1px solid #e8e8e8;
       border-left: none;
       border-right: none;
       position: relative;
@@ -55,15 +58,16 @@
     }
     .login_input_box{
       position: relative;
-      margin-top: 2px;
-      padding-left: 1.8rem;
+      width: 90%;
+      margin: 0 auto;
     }
     .login_input_box input[type=text]{
       width: 100%;
       height: 4.4rem;
-      /*text-indent: 1.8rem;*/
+      text-indent: 1.8rem;
       border:none;
       filter:chroma(color=#000000);
+
       /*line-height: 5rem;*/
     }
     .login_line{
@@ -74,38 +78,40 @@
     }
     .login_submit{
       text-align: center;
-      margin-top: 4.4rem;
+      margin-top: 2.4rem;
+      position: relative;
     }
     .login_submit_btn{
-      background-color: #F5ad4e;
+      background-color: #FA4F47;
       border: none;
       color: #fff;
       width: 90%;
-      border-radius: 5px;
+      border-radius: 1.8rem;
       height: 4.4rem;
       line-height: 4.4rem;
+      border-bottom: 3px solid #DE281E;
     }
     .get_code{
       height: 4.4rem;
-      width: 36%;
+      width: 100%;
       text-align: center;
       border: none;
-      color: #F5AD4E;
-      background-color: #fff;
+      color: #fff;
       position: relative;
-      border-left: 1px solid #e8e8e8;
-      float: right;
-      border-radius: 0;
+      border-radius: 1.8rem;
+      background-color: #FA4F47;
+      border-bottom: 3px solid #DE281E;
     }
-    .get_code:focus{
-      margin:0 -1px;
-      border-left: 1px solid #e8e8e8;
-      border-right: 2px solid #fff;
+    .get_code_container{
+      position: relative;
+      display: inline-block;
+      width: 47%;
     }
     .disable{
       background: #e8e8e8;
       cursor: not-allowed;
       font-size: 1.8rem;
+      border-bottom: 3px solid #e8e8e8;
     }
     .user_mobile,.user_code{
       -webkit-tap-highlight-color:rgba(255,0,0,0);
@@ -113,9 +119,13 @@
       border: 0;
       height: 4.4rem;
       font-size: 1.6rem;
+      border-radius: 1.8rem;
+      text-indent: 2.3rem;
+      background-color: #FFF7E4;
     }
     .user_mobile{
       width: 100%;
+      margin-bottom: 1rem;
     }
     /*推广界面*/
     .banner_logo{
@@ -128,7 +138,10 @@
       width: 100%;
     }
     #banner_img_new{
-      width: 100%;
+      width: 97%;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 1rem;
     }
     .banner_word {
       font-size: 18px;
@@ -146,11 +159,60 @@
       color: #999;
     }
     .share_footer{
-      margin: 1rem 0 0;
       padding-bottom: 1rem;
       color: #999;
       text-align: center;
       font-size: 1.2rem;
+      width: 90%;
+      margin: 1rem auto 0;
+    }
+    .get_code_circle1{
+      position: absolute;
+      top: 5px;
+      left: 28px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #FFF7E4;
+      z-index: 1;
+    }
+    .get_code_circle2{
+      position: absolute;
+      top: 11px;
+      left: 20px;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #FFF7E4;
+      z-index: 1;
+    }
+    .get_code_circle3{
+      position: absolute;
+      top: 4px;
+      left: 52px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #FFF7E4;
+      z-index: 1;
+      display: none;
+    }
+    .get_code_circle4{
+      position: absolute;
+      top: 13px;
+      left: 38px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #FFF7E4;
+      z-index: 1;
+      display: none;
+    }
+    .user_code{
+      float: left;
+    }
+    .get_code_container{
+      float: right;
     }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
@@ -207,11 +269,15 @@
         $(i).val("获取短信验证码");
         $(i).css({background: "#fff", cursor: "pointer"});
         $('.get_code').removeAttr("disabled", "true");
+        $('.get_code_circle1').show();
+        $('.get_code_circle2').show();
         wait = 60;
       } else {
         $(i).css({background: "#e8e8e8", cursor: "not-allowed"});
         $(i).val("重新发送(" + wait + ")");
         $('.get_code').attr("disabled", "disabled");
+        $('.get_code_circle1').hide();
+        $('.get_code_circle2').hide();
         wait--;
         setTimeout(function () {
           time(i);
@@ -223,8 +289,13 @@
     function checkCode(obj){
       if($(obj).val()==""){
         $('.login_submit_btn').addClass('disable').attr("disabled", "disabled");
+        $('.get_code_circle3').hide();
+        $('.get_code_circle4').hide();
+
       }else{
         $('.login_submit_btn').removeClass('disable').removeAttr("disabled", "true");
+        $('.get_code_circle3').show();
+        $('.get_code_circle4').show();
       }
     }
     //最终检测
@@ -299,13 +370,10 @@
   </div>
 </div>
 <div class="banner_img">
-  <img id="banner_img_new" src="/resource/images/pc_share_spread.jpg">
-</div>
-<div class="banner_logo">
-  <img src="/resource/images/pc_shared_logo.jpg">
+  <img id="banner_img_new" src="/resource/images/pch_tuiguang.jpg">
 </div>
 
-<div class="share_title">全民代理，你的第二份工作</div>
+<%--<div class="share_title">全民代理，你的第二份工作</div>--%>
 <div class="login_container">
 
   <form method="post" id="form_login" onsubmit="return false" action="/">
@@ -313,24 +381,28 @@
       <div class="login_input_box">
         <input type="tel" placeholder="请输入手机号" class="user_mobile">
       </div>
-      <div class="login_line"></div>
+      <%--<div class="login_line"></div>--%>
       <div class="login_input_box">
-        <input type="tel" placeholder="验证码" style="width: 63%" class="user_code" onkeyup="checkCode(this)">
-        <input type="button" value="获取短信验证码" class="get_code" onselectstart="return false">
+        <input type="tel" placeholder="验证码" style="width: 50%" class="user_code" onkeyup="checkCode(this)">
+        <span class="get_code_container">
+          <i class="get_code_circle get_code_circle1"></i>
+          <i class="get_code_circle get_code_circle2"></i>
+          <input type="button" value="获取短信验证码" class="get_code" onselectstart="return false">
+        </span>
+
         <div class="clear"></div>
       </div>
     </div>
     <div class="login_submit">
-
-        <input type="submit" value="下载往返" class="btn login_submit_btn disable" disabled="disabled" onclick="loginCheck()">
+      <i class="get_code_circle get_code_circle3"></i>
+      <i class="get_code_circle get_code_circle4"></i>
+        <input type="submit" value="一键下载" class="btn login_submit_btn disable" disabled="disabled" onclick="loginCheck()">
 
     </div>
   </form>
 </div>
 <div class="share_footer">
-  <span>c2016 河南来回网络科技有限公司 京ICP备12345678号-4</span></br>
-  <span>联系电话：4009997715</span></br>
-  <span>点击“注册车主”代表您同意《来回拼车用户服务协议》</span>
+  <span>邀请用户注册来回拼车APP，则该用户在平台上产生的每一笔交易，您都可以获得2%-5%不等的提成。前期邀请1000个有效用户，后期每月将获得万元以上收入</span>
 </div>
 <script>
   (function (i, s, o, g, r, a, m) {

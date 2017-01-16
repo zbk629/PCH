@@ -23,7 +23,7 @@
   <style type="text/css">
     body{
       background-color: #F9F9F9;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
         -moz-box-sizing: border-box; /*Firefox3.5+*/
         -webkit-box-sizing: border-box; /*Safari3.2+*/
         -o-box-sizing: border-box; /*Opera9.6*/

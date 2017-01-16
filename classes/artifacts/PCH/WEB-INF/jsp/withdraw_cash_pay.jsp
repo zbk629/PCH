@@ -241,7 +241,7 @@
             changeFontSize();
             android_get_token();
             if(current_cash=="undefined"){
-                current_cash=0.0;
+                current_cash="0.0";
                 $('.balance').text(current_cash)
             }else{
                 $('.balance').text(current_cash)
