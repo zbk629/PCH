@@ -102,6 +102,9 @@
       background-color: #FA4F47;
       border-bottom: 3px solid #DE281E;
     }
+    .get_code[disable]{
+
+    }
     .get_code_container{
       position: relative;
       display: inline-block;
@@ -268,14 +271,14 @@
       if (wait == 0) {
         $(i).val("获取短信验证码");
         $(i).css({background: "#fff", cursor: "pointer"});
-        $('.get_code').removeAttr("disabled", "true");
+        $('.get_code').removeAttr("disabled", "true").css({'border-bottom':'3px solid #DE281E','background':'#DE281E'});
         $('.get_code_circle1').show();
         $('.get_code_circle2').show();
         wait = 60;
       } else {
         $(i).css({background: "#e8e8e8", cursor: "not-allowed"});
         $(i).val("重新发送(" + wait + ")");
-        $('.get_code').attr("disabled", "disabled");
+        $('.get_code').attr("disabled", "disabled").css('border-bottom','3px solid #e8e8e8');
         $('.get_code_circle1').hide();
         $('.get_code_circle2').hide();
         wait--;

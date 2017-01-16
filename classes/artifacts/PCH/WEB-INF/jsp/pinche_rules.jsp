@@ -23,6 +23,7 @@
     $(document).ready(function () {
       changeFontSize();
       checkUser();
+      hideAll();
     });
     //改变字体适应效果
     function changeFontSize() {
