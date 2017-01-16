@@ -271,7 +271,7 @@
       if (wait == 0) {
         $(i).val("获取短信验证码");
         $(i).css({background: "#fff", cursor: "pointer"});
-        $('.get_code').removeAttr("disabled", "true").css({'border-bottom':'3px solid #DE281E','background':'#DE281E'});
+        $('.get_code').removeAttr("disabled", "true").css({'border-bottom':'3px solid #DE281E','background':'#FA4F47'});
         $('.get_code_circle1').show();
         $('.get_code_circle2').show();
         wait = 60;
