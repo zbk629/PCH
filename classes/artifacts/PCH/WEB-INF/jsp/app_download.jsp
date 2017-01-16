@@ -660,7 +660,38 @@
         }
       }
     }
-
+    .hover_all_app{
+      top: 0;
+      display:none;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      filter:alpha(opacity=85);
+      -moz-opacity:0.85;
+      -khtml-opacity:0.85;
+      opacity: 0.85;
+      z-index: 105;
+    }
+    .app_hover_close{
+      position: absolute;
+      bottom: 30%;
+      width: 100%;
+      cursor: pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .app_hover_close span{
+      color: #fff;
+      font-size: 15px;
+    }
+    .app_hover_box{
+      width: 102px;
+      margin: 0 auto;
+      background-color: #F22910;
+      padding: 6px 12px;
+      border-radius: 18px;
+      text-align: center;
+    }
   </style>
   <script>
     $(document).ready(function () {
@@ -673,6 +704,7 @@
         $($('.swiper-pagination-bullet')[3]).click();
       });
       openApp()
+      check();
     });
 
     var browser = {
@@ -702,21 +734,29 @@
       }
     }
 
+    function check(){
+      if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+        var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+          //在微信中打开
+//          alert("请在非微信，QQ和QQ浏览器中打开");
+          $('body,html').animate({scrollTop: 0}, 300);
+          $('.hover_all_app').css("display","block");
 
+        }else{
+          openApp();
+        }
+      } else {
+      }
+    }
   </script>
 
 </head>
 <body>
 <%--APP下载遮罩层--%>
-<div class="hover_all">
+<div class="hover_all_app">
   <div class="weixin_hover">
-    <img src="http://hbnewsimg.cyparty.com/hb1_web_image/live_weixin.png" style="width: 95%;margin: 2px 0 0 12px;">
-    <div class="app_hover_close">
-      <div class="app_hover_box">
-        <span>关闭此弹窗</span>
-      </div>
-
-    </div>
+    <img src="/resource/images/live_weixin.png" style="width: 95%;margin: 2px 0 0 12px;">
   </div>
 </div>
 <%--轮播效果--%>
@@ -725,60 +765,60 @@
 <div class="app_hover_all">
   <div class="swiper-container">
     <div class="swiper-wrapper" id="mySwipe">
-      <div class="swiper-slide">
-        <div class="app_box_up app_box_bg1"  width="100%">
-          <div class="app_toLast_box">
-            <div class="app_toLast">
-              <span>跳过</span>
-            </div>
-          </div>
-          <img class="app_box_up_img" src="/resource/images/ad_1.png">
-        </div>
-        <div class="app_box_down">
-          <div class="app_box_down_tittle app_box_tittle1">
-            <span>超低价格</span>
-          </div>
-          <div class="app_box_down_text app_box_down_t1">
-            <span>仅分摊出行成本</span>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="app_box_up app_box_bg2"  width="100%">
-          <div class="app_toLast_box">
-            <div class="app_toLast">
-              <span>跳过</span>
-            </div>
-          </div>
-          <img class="app_box_up_img" src="/resource/images/ad_2.png">
-        </div>
-        <div class="app_box_down app_box_down_t2">
-          <div class="app_box_down_tittle app_box_tittle2">
-            <span>手机发布</span>
-          </div>
-          <div class="app_box_down_text  app_box_down_t2">
-            <span>一键寻找顺路乘客</span>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div class="app_box_up app_box_bg3"  width="100%">
-          <div class="app_toLast_box">
-            <div class="app_toLast">
-              <span>跳过</span>
-            </div>
-          </div>
-          <img class="app_box_up_img" src="/resource/images/ad_3.png">
-        </div>
-        <div class="app_box_down app_box_down_t3">
-          <div class="app_box_down_tittle app_box_tittle3">
-            <span>实时定位</span>
-          </div>
-          <div class="app_box_down_text app_box_down_t3">
-            <span>行车位置一目了然</span>
-          </div>
-        </div>
-      </div>
+      <%--<div class="swiper-slide">--%>
+        <%--<div class="app_box_up app_box_bg1"  width="100%">--%>
+          <%--<div class="app_toLast_box">--%>
+            <%--<div class="app_toLast">--%>
+              <%--<span>跳过</span>--%>
+            <%--</div>--%>
+          <%--</div>--%>
+          <%--<img class="app_box_up_img" src="/resource/images/ad_1.png">--%>
+        <%--</div>--%>
+        <%--<div class="app_box_down">--%>
+          <%--<div class="app_box_down_tittle app_box_tittle1">--%>
+            <%--<span>超低价格</span>--%>
+          <%--</div>--%>
+          <%--<div class="app_box_down_text app_box_down_t1">--%>
+            <%--<span>仅分摊出行成本</span>--%>
+          <%--</div>--%>
+        <%--</div>--%>
+      <%--</div>--%>
+      <%--<div class="swiper-slide">--%>
+        <%--<div class="app_box_up app_box_bg2"  width="100%">--%>
+          <%--<div class="app_toLast_box">--%>
+            <%--<div class="app_toLast">--%>
+              <%--<span>跳过</span>--%>
+            <%--</div>--%>
+          <%--</div>--%>
+          <%--<img class="app_box_up_img" src="/resource/images/ad_2.png">--%>
+        <%--</div>--%>
+        <%--<div class="app_box_down app_box_down_t2">--%>
+          <%--<div class="app_box_down_tittle app_box_tittle2">--%>
+            <%--<span>手机发布</span>--%>
+          <%--</div>--%>
+          <%--<div class="app_box_down_text  app_box_down_t2">--%>
+            <%--<span>一键寻找顺路乘客</span>--%>
+          <%--</div>--%>
+        <%--</div>--%>
+      <%--</div>--%>
+      <%--<div class="swiper-slide">--%>
+        <%--<div class="app_box_up app_box_bg3"  width="100%">--%>
+          <%--<div class="app_toLast_box">--%>
+            <%--<div class="app_toLast">--%>
+              <%--<span>跳过</span>--%>
+            <%--</div>--%>
+          <%--</div>--%>
+          <%--<img class="app_box_up_img" src="/resource/images/ad_3.png">--%>
+        <%--</div>--%>
+        <%--<div class="app_box_down app_box_down_t3">--%>
+          <%--<div class="app_box_down_tittle app_box_tittle3">--%>
+            <%--<span>实时定位</span>--%>
+          <%--</div>--%>
+          <%--<div class="app_box_down_text app_box_down_t3">--%>
+            <%--<span>行车位置一目了然</span>--%>
+          <%--</div>--%>
+        <%--</div>--%>
+      <%--</div>--%>
       <div class="swiper-slide app_box">
         <div class="app_tittle_box">
           <img class="add_news_bg" src="/resource/images/pch_share_logo.png"/>
@@ -787,12 +827,12 @@
           <p class="app_tittle_next1">相伴你出行的每一个<span style="color: #F5AD4E;font-size: 18px;">来回</span></p>
         </div>
         <div class="app_change">
-          <div class="app_mid_box">
-            <span>扫描二维码下载客户端</span>
-          </div>
-          <div class="app_er_box">
-            <img class="add_news_down" src="/resource/images/pc_app_load.png"/>
-          </div>
+          <%--<div class="app_mid_box">--%>
+            <%--<span>扫描二维码下载客户端</span>--%>
+          <%--</div>--%>
+          <%--<div class="app_er_box">--%>
+            <%--<img class="add_news_down" src="/resource/images/pc_app_load.png"/>--%>
+          <%--</div>--%>
           <div class="clear"></div>
         </div>
         <a href="http://download.pinchenet.com/app/laihui.apk" class="app_a">
@@ -803,27 +843,27 @@
       </div>
       <%--</div>--%>
     </div>
-    <div class="swiper-pagination" id="position">
-      <span class="swiper-pagination-bullet"></span>
-    </div>
+    <%--<div class="swiper-pagination" id="position">--%>
+      <%--<span class="swiper-pagination-bullet"></span>--%>
+    <%--</div>--%>
   </div>
 </div>
 <!-- Swiper JS -->
 <script src="/resource/js/swiper.min.js"></script>
 
 <!-- Initialize Swiper -->
-<script type="text/javascript">
-  var bullets = document.getElementById('position').getElementsByTagName('li');
-  var banner = new Swiper('.swiper-container', {
-    pagination: '.swiper-pagination',
-    nextButton: '.swiper-button-next',
-    prevButton: '.swiper-button-prev',
-    slidesPerView: 1,
-    paginationClickable: true,
-    autoplayDisableOnInteraction:false,
-    spaceBetween: 0,
-    loop: false
-  });
-</script>
+<%--<script type="text/javascript">--%>
+  <%--var bullets = document.getElementById('position').getElementsByTagName('li');--%>
+  <%--var banner = new Swiper('.swiper-container', {--%>
+    <%--pagination: '.swiper-pagination',--%>
+    <%--nextButton: '.swiper-button-next',--%>
+    <%--prevButton: '.swiper-button-prev',--%>
+    <%--slidesPerView: 1,--%>
+    <%--paginationClickable: true,--%>
+    <%--autoplayDisableOnInteraction:false,--%>
+    <%--spaceBetween: 0,--%>
+    <%--loop: false--%>
+  <%--});--%>
+<%--</script>--%>
 </body>
 </html>
