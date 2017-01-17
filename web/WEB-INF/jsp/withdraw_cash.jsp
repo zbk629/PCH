@@ -59,7 +59,7 @@
         /*end*/
         .cash_pay_message {
             background-color: #fff;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .cash_error_img {
@@ -440,7 +440,7 @@
         }
         .cash_get{
             position: absolute;
-            bottom: 5rem;
+            bottom: 4.4rem;
             text-align: center;
             width:100%;
         }
@@ -475,12 +475,10 @@
             float: right;
         }
         .success_push_li{
-            line-height: 3.2rem;
+            line-height: 2.6rem;
             color: #888;
         }
-        .success_push_time{
-            margin-left: 1.6rem;
-        }
+
         .success_push_type{
             float: right;
             color: #5B9BD5;
@@ -493,10 +491,24 @@
             display: none;
         }
         .not_have{
-            line-height: 3.2rem;
+            line-height: 14.2rem;
             text-align: center;
             color: #888;
             display: none;
+        }
+        .success_push_li span{
+            width: 33%;
+            display: inline-block;
+
+        }
+        .success_push_type{
+            text-align: right;
+        }
+        .success_push_time{
+            text-align: center;
+        }
+        .success_push_ul{
+            min-height: 150px;
         }
     </style>
     <script>
@@ -562,22 +574,22 @@
                 $('.more_success').hide();
                 for(var i=0;i<global_data.result.total;i++){
                     var mobile = global_data.result.data[i].mobile;
-                    var create_time = global_data.result.data[i].create_time;
+                    var create_time = global_data.result.data[i].create_time.substring(0,16);
                     $('.success_push_ul').append('<li class="success_push_li">'+
                             '<span class="success_push_mobile">'+mobile+'</span>'+
                             '<span class="success_push_time">'+create_time+'</span>'+
-                            '<span class="success_push_type">成功邀请！</span>'+
+                            '<span class="success_push_type">成功邀请 !</span>'+
                             '</li>');
                 }
             }else{
                 $('.more_success').show();
                 for(var i=0;i<global_data.result.total;i++){
                     var mobile = global_data.result.data[i].mobile;
-                    var create_time = global_data.result.data[i].create_time;
+                    var create_time = global_data.result.data[i].create_time.substring(0,16);
                     $('.success_push_ul').append('<li class="success_push_li">'+
                             '<span class="success_push_mobile">'+mobile+'</span>'+
                             '<span class="success_push_time">'+create_time+'</span>'+
-                            '<span class="success_push_type">成功邀请！</span>'+
+                            '<span class="success_push_type">成功邀请 !</span>'+
                             '</li>');
                 }
             }
@@ -625,12 +637,11 @@
     <div class="cash_pay_message">
         <div class="cash_success_box" style="display: block">
             <div class="cash_message_box">
-
                 <div class="cash_message_top">
                     <div class="cash_all_top">
                         <div class="cash_message_title">
                             <div class="cash_title">账户余额 (元)</div>
-                            <span class="cash_explain"><img src="/resource/images/pc_icon_cash_question.png"> 提现说明</span>
+                            <%--<span class="cash_explain"><img src="/resource/images/pc_icon_cash_question.png"> 提现说明</span>--%>
                         </div>
                         <div class="cash_balance">
                             0.00
