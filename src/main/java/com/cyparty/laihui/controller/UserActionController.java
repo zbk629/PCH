@@ -119,6 +119,17 @@ public class UserActionController {
         }
         return "redirect:/";
     }
+
+    @RequestMapping("/share_more")
+    public String share_more(Model model, HttpServletRequest request) {
+        //is_logined= Utils.isLogined(request);
+        is_logined=true;
+        if(is_logined){
+            return "share_more";
+        }
+        return "redirect:/";
+    }
+
     @ResponseBody
     @RequestMapping(value = "/api/db/passenger/departure", method = RequestMethod.POST)
     public ResponseEntity<String> booking(HttpServletRequest request) {

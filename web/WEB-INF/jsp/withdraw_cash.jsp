@@ -440,7 +440,7 @@
         }
         .cash_get{
             position: absolute;
-            bottom: 8.8rem;
+            bottom: 5rem;
             text-align: center;
             width:100%;
         }
@@ -459,11 +459,51 @@
             -webkit-tap-highlight-color:rgba(255,0,0,0);
             -webkit-appearance:none;
         }
+        .success_push_container{
+            padding: 0 2rem;
+            background: #fff;
+        }
+        .success_push{
+            line-height: 3.2rem;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        .success_push_left{
+            color: #535353;
+            display: inline-block
+        }
+        .success_push_right{
+            float: right;
+        }
+        .success_push_li{
+            line-height: 3.2rem;
+            color: #888;
+        }
+        .success_push_time{
+            margin-left: 1.6rem;
+        }
+        .success_push_type{
+            float: right;
+            color: #5B9BD5;
+        }
+        .more_success{
+            border-top: 1px solid #e8e8e8;
+            text-align: center;
+            line-height: 3.2rem;
+            color: #5B9BD5;
+            display: none;
+        }
+        .not_have{
+            line-height: 3.2rem;
+            text-align: center;
+            color: #888;
+            display: none;
+        }
     </style>
     <script>
         $(document).ready(function () {
             changeFontSize();
             android_get_token();
+
             $('.cash_error_box').click(function(){
                 showFloatStyle2();
                 $('.float_container2').empty().append('<div class="booking_box">' +
@@ -481,7 +521,7 @@
         });
         var action_url = "/app/api/pay/orders";
         var change = 0;
-        var token = window.location.href.split('token=')[1];
+        var token = window.location.href.split('token=')[1].substring(0,32);
         var current_cash;
         function android_get_token()
         {
@@ -491,6 +531,7 @@
 //                var local_token=androidInterface.getToken();
 //                token = local_token;
                 loadUser();
+                loadSuccess();
             }
             catch(err)
             {
@@ -504,7 +545,35 @@
             obj.token=token;
             validate.validate_submit3('/pay/abstract', obj, insertMessage);
         }
+        //查看邀请人数
+        function loadSuccess() {
+            var obj = {};
+            obj.action = 'show';
+            obj.token = token;
+            obj.page = 0;
+            obj.size = 5;
+            validate.validate_submit3('/campaign', obj, insertSuccessMessage);
+        }
+        function insertSuccessMessage(){
+            $('.success_total').text(global_data.result.total);
+            if(global_data.result.data.length==0){
+                $('.not_have').show();
+            }else if(global_data.result.data.length<=5){
+                $('.more_success').hide();
+            }else{
+                $('.more_success').show();
+                for(var i=0;i<global_data.result.data.length;i++){
+                    var mobile = global_data.result.data[i].mobile;
+                    var create_time = global_data.result.data[i].create_time;
+                    $('.success_push_ul').append('<li class="success_push_li">'+
+                            '<span class="success_push_mobile">'+mobile+'</span>'+
+                            '<span class="success_push_time">'+create_time+'</span>'+
+                            '<span class="success_push_type">成功邀请！</span>'+
+                            '</li>');
+                }
+            }
 
+        }
         //展示错误信息
         function sendKeepDownInput(){
             $('.booking_error').hide();
@@ -526,6 +595,10 @@
         function href_to_detail(obj){
             var data_type = $(obj).attr('data_type');
             window.location.href="/account_list?token="+token+"&data_type="+data_type;
+        }
+        //推广详情
+        function href_to_success_detail(){
+            window.location.href="/share_more?token="+token+"&end";
         }
     </script>
 </head>
@@ -551,17 +624,17 @@
                             <span class="cash_explain"><img src="/resource/images/pc_icon_cash_question.png"> 提现说明</span>
                         </div>
                         <div class="cash_balance">
-                            0.0
+                            0.00
                         </div>
                     </div>
                     <div class="cash_all_bottom">
                         <div class="cash_all_count" data_type="3" onclick="href_to_detail(this)">
                             <div class="cash_all_count_title">累计提现&nbsp;&nbsp;( 元 )</div>
-                            <span class="count_span already_got_cash">0.0</span>
+                            <span class="count_span already_got_cash">0.00</span>
                         </div>
                         <div class="cash_all_count cash_all_count_last" data_type="1" onclick="href_to_detail(this)">
                             <div class="cash_all_count_title">累计推广&nbsp;&nbsp;( 元 )</div>
-                            <span class="count_span campaign_cash">0.0</span>
+                            <span class="count_span campaign_cash">0.00</span>
                         </div>
                         <div class="clear"></div>
                     </div>
@@ -576,7 +649,22 @@
                     <img src="/resource/images/pc_icon_cash_right.png" class="cash_self_message_img">
                     <div class="clear"></div>
                 </div>
+
             </div>
+
+        </div>
+    </div>
+
+    <div class="success_push_container">
+        <div class="success_push">
+            <div class="success_push_left" style="color: #535353">成功邀请人数（<span class="success_total"></span>）</div>
+            <div class="clear"></div>
+        </div>
+        <ul class="success_push_ul">
+            <div class="not_have">还没有邀请好友哦~</div>
+        </ul>
+        <div class="more_success" onclick="href_to_success_detail()">
+            <span>查看更多</span>
         </div>
     </div>
     <div class="cash_get" onclick="href_to_cash()">

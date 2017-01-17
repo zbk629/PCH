@@ -275,6 +275,7 @@
             obj.token = token;
             validate.validate_submit3('/pay/account', obj, insertMessage);
         }
+
         //判断是否存在账户记录
         function insertMessage(){
             var count_type = global_data.result.type;

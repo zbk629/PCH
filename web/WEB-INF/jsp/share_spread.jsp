@@ -217,11 +217,44 @@
     .get_code_container{
       float: right;
     }
+    .hover_all_app{
+      top: 0;
+      display:none;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      filter:alpha(opacity=85);
+      -moz-opacity:0.85;
+      -khtml-opacity:0.85;
+      opacity: 0.85;
+      z-index: 105;
+    }
+    .app_hover_close{
+      position: absolute;
+      bottom: 30%;
+      width: 100%;
+      cursor: pointer;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .app_hover_close span{
+      color: #fff;
+      font-size: 15px;
+    }
+    .app_hover_box{
+      width: 102px;
+      margin: 0 auto;
+      background-color: #F22910;
+      padding: 6px 12px;
+      border-radius: 18px;
+      text-align: center;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script>
     $(document).ready(function () {
       changeFontSize();
+      check();
 //      android_get_token();
       //点击验证码时候的验证
       $('.get_code').click(function () {
@@ -239,7 +272,7 @@
     var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
 
 
-    var token= window.location.href.split('token=')[1];
+    var token= window.location.href.split('token=')[1].substring(0,32);
 
     function android_get_token()
     {
@@ -326,7 +359,7 @@
         success: function (data) {
           global_data=data;
           if(global_data.status==true){
-            showFloatStyle2('验证完成');
+//            showFloatStyle2('验证完成');
             if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
               window.location.href="https://itunes.apple.com/app/id1174366776";
             } else if (navigator.userAgent.match(/android/i)) {
@@ -359,9 +392,49 @@
         }, 1500);
       }
     }
+//    var browser = {
+//      versions: function () {
+//        var u = navigator.userAgent, app = navigator.appVersion;
+//        return {         //移动终端浏览器版本信息
+//          trident: u.indexOf('Trident') > -1, //IE内核
+//          presto: u.indexOf('Presto') > -1, //opera内核
+//          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+//          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+//          mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+//          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+//          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+//          iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+//          iPad: u.indexOf('iPad') > -1, //是否iPad
+//          webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+//        };
+//      }(),
+//      language: (navigator.browserLanguage || navigator.language).toLowerCase()
+//    }
+    function check(){
+      if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+        var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+          //在微信中打开
+//          alert("请在非微信，QQ和QQ浏览器中打开");
+          $('body,html').animate({scrollTop: 0}, 300);
+          $('.hover_all_app').css("display","block");
+
+        }else{
+          openApp();
+        }
+      } else {
+      }
+    }
   </script>
 </head>
 <body>
+<%--APP下载遮罩层--%>
+<div class="hover_all_app">
+  <div class="weixin_hover">
+    <img src="/resource/images/live_weixin.png" style="width: 95%;margin: 2px 0 0 12px;">
+  </div>
+</div>
+
 <div class="loading_box">
   <img class="loading" src="/resource/images/loading.gif" alt="请等待">
 </div>

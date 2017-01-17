@@ -703,7 +703,7 @@
       $('.app_toLast').click(function(){
         $($('.swiper-pagination-bullet')[3]).click();
       });
-      openApp()
+      openApp();
       check();
     });
 
@@ -730,7 +730,7 @@
       if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
           $('.app_a').attr('href','https://itunes.apple.com/app/id1174366776')
       } else if (navigator.userAgent.match(/android/i)) {
-        $('.app_a').attr('href','http://download.pinchenet.com/app/laihui.apk')
+        $('.app_a').attr('href','http://laihui.oss-cn-shanghai.aliyuncs.com/app/laihui.apk')
       }
     }
 
@@ -835,7 +835,7 @@
           <%--</div>--%>
           <div class="clear"></div>
         </div>
-        <a href="http://download.pinchenet.com/app/laihui.apk" class="app_a">
+        <a href="http://laihui.oss-cn-shanghai.aliyuncs.com/app/laihui.apk" class="app_a">
           <div class="app_toLoad">
             <span>下载客户端</span>
           </div>

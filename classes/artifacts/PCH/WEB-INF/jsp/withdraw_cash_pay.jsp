@@ -126,7 +126,7 @@
         }
 
         .cash_middle_tips {
-            line-height: 5rem;
+            line-height: 4rem;
         }
 
         .cash_all {
@@ -275,6 +275,7 @@
             obj.token = token;
             validate.validate_submit3('/pay/account', obj, insertMessage);
         }
+
         //判断是否存在账户记录
         function insertMessage(){
             var count_type = global_data.result.type;

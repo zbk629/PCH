@@ -123,7 +123,7 @@
         </tr>
         <tr class="role_tr">
           <td>
-            均为车主
+            车主
           </td>
           <td>
             100
@@ -134,7 +134,7 @@
         </tr>
         <tr class="role_tr">
           <td>
-            均为乘客
+            乘客
           </td>
           <td>
             500
@@ -145,7 +145,7 @@
         </tr>
         <tr class="role_tr">
           <td>
-            既有车主又有乘客
+            车主和乘客
           </td>
           <td>
             400
