@@ -100,6 +100,9 @@ public class CampaignController {
 
                             if(user_id!=0&&!mobile.equals(user_mobile)){
                                 laiHuiDB.createCampaign(campaign);
+                            }else {
+                                json = ReturnJsonUtil.returnFailJsonString(result, "抱歉，自己不能邀请自己哦！");
+                                return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
                             }
                         }
                         json = ReturnJsonUtil.returnSuccessJsonString(result, "验证码正确！");
