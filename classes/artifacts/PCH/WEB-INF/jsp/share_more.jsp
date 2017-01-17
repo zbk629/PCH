@@ -102,6 +102,7 @@
       text-align: center;
       line-height: 3.2rem;
       color: #999;
+      display: none;
     }
   </style>
   <script>
@@ -126,7 +127,7 @@
 
                     } else {
                       $('.not_more').remove();
-                      $('.footer').prepend('<span class="not_more">没有更多数据</span>')
+                      $('.last_span').show();
                     }
                   }
 

@@ -420,7 +420,7 @@
           $('.hover_all_app').css("display","block");
 
         }else{
-          openApp();
+//          openApp();
         }
       } else {
       }
