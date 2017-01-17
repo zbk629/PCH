@@ -556,13 +556,22 @@
         }
         function insertSuccessMessage(){
             $('.success_total').text(global_data.result.total);
-            if(global_data.result.data.length==0){
+            if(global_data.result.total==0){
                 $('.not_have').show();
-            }else if(global_data.result.data.length<=5){
+            }else if(global_data.result.total<=5){
                 $('.more_success').hide();
+                for(var i=0;i<global_data.result.total;i++){
+                    var mobile = global_data.result.data[i].mobile;
+                    var create_time = global_data.result.data[i].create_time;
+                    $('.success_push_ul').append('<li class="success_push_li">'+
+                            '<span class="success_push_mobile">'+mobile+'</span>'+
+                            '<span class="success_push_time">'+create_time+'</span>'+
+                            '<span class="success_push_type">成功邀请！</span>'+
+                            '</li>');
+                }
             }else{
                 $('.more_success').show();
-                for(var i=0;i<global_data.result.data.length;i++){
+                for(var i=0;i<global_data.result.total;i++){
                     var mobile = global_data.result.data[i].mobile;
                     var create_time = global_data.result.data[i].create_time;
                     $('.success_push_ul').append('<li class="success_push_li">'+
