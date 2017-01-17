@@ -126,7 +126,7 @@
         }
 
         .cash_middle_tips {
-            line-height: 5rem;
+            line-height: 4rem;
         }
 
         .cash_all {

@@ -1,5 +1,6 @@
 package com.cyparty.laihui.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.Campaign;
@@ -113,6 +114,56 @@ public class CampaignController {
                     json = ReturnJsonUtil.returnFailJsonString(result, "请确认是否收到验证码！");
                     return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
                 }
+            case "show":
+                int page=0;
+                int size=10;
+                if(request.getParameter("page")!=null&&!request.getParameter("page").trim().equals("")){
+                    try {
+                        page=Integer.parseInt(request.getParameter("page"));
+                    } catch (NumberFormatException e) {
+                        page=0;
+                        e.printStackTrace();
+                    }
+                }
+                if(request.getParameter("size")!=null&&!request.getParameter("size").trim().equals("")){
+                    try {
+                        size=Integer.parseInt(request.getParameter("size"));
+                    } catch (NumberFormatException e) {
+                        size=10;
+                        e.printStackTrace();
+                    }
+                }
+                int id=0;
+                if(token!=null&&!token.isEmpty()){
+                    try {
+                        id=laiHuiDB.getIDByToken(token);
+                    } catch (Exception e) {
+                        result.put("status",false);
+                        result.put("msg","非法token！");
+                    }
+                }else {
+                    result.put("status",false);
+                    result.put("msg","非法token！");
+                }
+                JSONArray dataArray=new JSONArray();
+                int offset=page*size;
+                where=" where user_id="+id+" and is_reg=1";
+                total=laiHuiDB.getCount("pc_campaign",where);
+                where=where+" order by create_time DESC limit "+offset+","+size;
+
+                List<Campaign> campaignList=laiHuiDB.getCampaign(where);
+                for(Campaign campaign:campaignList){
+                    JSONObject jsonObject=new JSONObject();
+                    jsonObject.put("mobile",campaign.getBe_popularized_mobile());
+                    jsonObject.put("create_time",campaign.getCreate_time());
+
+                    dataArray.add(jsonObject);
+                }
+                result.put("data",dataArray);
+                result.put("total",total);
+
+                json = ReturnJsonUtil.returnSuccessJsonString(result, "推广人信息获取成功！");
+                return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
         }
         json = ReturnJsonUtil.returnFailJsonString(result, "参数错误！");
         return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);

@@ -29,17 +29,14 @@ public class Utils {
         //System.out.println(getOrderNumber(5));
         //System.out.println(date2TimeStamp("2016-8-27 05:06:40"));
         getTimeSubOrAdd("2016-8-27 05:06:40",2);
+
     }
-
-
-
     public static String getCurrentTime() {
         Date inputDate = new Date();
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String datetime = outputFormat.format(inputDate);
         return datetime;
     }
-
     //
     public static String getCurrentTimeSubOrAdd(int minute) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

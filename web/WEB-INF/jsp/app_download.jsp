@@ -835,7 +835,7 @@
           <%--</div>--%>
           <div class="clear"></div>
         </div>
-        <a href="http://download.pinchenet.com/app/laihui.apk" class="app_a">
+        <a href="http://laihui.oss-cn-shanghai.aliyuncs.com/app/laihui.apk" class="app_a">
           <div class="app_toLoad">
             <span>下载客户端</span>
           </div>

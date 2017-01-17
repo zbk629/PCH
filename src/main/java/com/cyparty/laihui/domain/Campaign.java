@@ -6,6 +6,15 @@ package com.cyparty.laihui.domain;
 public class Campaign {
     private int user_id;
     private String be_popularized_mobile;
+    private String create_time;
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
 
     public int getUser_id() {
         return user_id;
