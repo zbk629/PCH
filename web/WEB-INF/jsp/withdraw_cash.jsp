@@ -496,16 +496,10 @@
             color: #888;
             display: none;
         }
-        .success_push_li span{
-            width: 33%;
-            display: inline-block;
 
-        }
-        .success_push_type{
-            text-align: right;
-        }
         .success_push_time{
-            text-align: center;
+            /*text-align: center;*/
+            margin-left: 2.2rem;
         }
         .success_push_ul{
             min-height: 150px;
