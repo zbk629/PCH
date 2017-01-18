@@ -102,6 +102,7 @@
 
         .cash_all_count {
             color: #fff;
+            position: relative;
             float: left;
             width: 50%;
             -moz-box-sizing: border-box; /*Firefox3.5+*/
@@ -109,12 +110,12 @@
             -o-box-sizing: border-box; /*Opera9.6*/
             -ms-box-sizing: border-box; /*IE8*/
             box-sizing: border-box; /*W3C标准(IE9+，Safari5.1+,Chrome10.0+,Opera10.6+都符合box-sizing的w3c标准语法)*/
-            padding: 1rem 0 1.1rem;
+            padding: 1rem 0 1.1rem 2.8rem;
             font-size: 2rem;
         }
         .cash_all_count_last{
             border-left: 1px solid #699BC8;
-            padding-left: 2rem;
+            padding-left: 3.8rem;
         }
 
         .cash_all_count_title {
@@ -491,7 +492,7 @@
             display: none;
         }
         .not_have{
-            line-height: 14.2rem;
+            line-height: 11rem;
             text-align: center;
             color: #888;
             display: none;
@@ -502,7 +503,27 @@
             margin-left: 2.2rem;
         }
         .success_push_ul{
-            min-height: 150px;
+            min-height: 11rem;
+        }
+        .cash_all_count_left{
+            position: absolute;
+            width: 2.8rem;
+            left: -.6rem;
+            top: 1rem;
+        }
+        .cash_all_count_right{
+            width: 2.4rem;
+            position: absolute;
+            right: .6rem;
+            top: 3.8rem;
+        }
+        .cash_all_count_last .cash_all_count_left{
+            left: .6rem;
+            top: 1rem;
+        }
+        .cash_all_count_last .cash_all_count_right{
+            right: -.4rem;
+            top: 3.8rem;
         }
     </style>
     <script>
@@ -643,12 +664,16 @@
                     </div>
                     <div class="cash_all_bottom">
                         <div class="cash_all_count" data_type="3" onclick="href_to_detail(this)">
+                            <img src="/resource/images/wash_out.png" class="cash_all_count_left">
                             <div class="cash_all_count_title">累计提现&nbsp;&nbsp;( 元 )</div>
                             <span class="count_span already_got_cash">0.00</span>
+                            <%--<img src="/resource/images/wash_right.png" class="cash_all_count_right">--%>
                         </div>
                         <div class="cash_all_count cash_all_count_last" data_type="1" onclick="href_to_detail(this)">
+                            <img src="/resource/images/wash_pig.png" class="cash_all_count_left">
                             <div class="cash_all_count_title">累计推广&nbsp;&nbsp;( 元 )</div>
                             <span class="count_span campaign_cash">0.00</span>
+                            <%--<img src="/resource/images/wash_right.png" class="cash_all_count_right">--%>
                         </div>
                         <div class="clear"></div>
                     </div>
