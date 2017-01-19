@@ -655,7 +655,7 @@
                 <div class="cash_message_top">
                     <div class="cash_all_top">
                         <div class="cash_message_title">
-                            <div class="cash_title">账户余额 (元)</div>
+                            <div class="cash_title">账户余额 ( 元 )</div>
                             <%--<span class="cash_explain"><img src="/resource/images/pc_icon_cash_question.png"> 提现说明</span>--%>
                         </div>
                         <div class="cash_balance">
@@ -696,7 +696,7 @@
 
     <div class="success_push_container">
         <div class="success_push">
-            <div class="success_push_left" style="color: #535353">成功邀请人数（<span class="success_total"></span>）</div>
+            <div class="success_push_left" style="color: #535353">成功邀请人数（ <span class="success_total"></span> ）</div>
             <div class="clear"></div>
         </div>
         <ul class="success_push_ul">
