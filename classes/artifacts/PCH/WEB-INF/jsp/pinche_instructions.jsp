@@ -118,46 +118,64 @@
         <span>一秒看懂如何发布车单，预约车辆</span>
       </div>
       <div class="role_model">
-        <span class="role_context">来回拼车app实现了城际出行线上操作的完整流程，乘客可直接筛选找车，车主只需通过认证，即可发布出行信息。那么，如何玩转来回拼车app？还不知如何操作的小伙伴看这里。</span>
+        <span class="role_context">最新版本来回拼车APP新鲜出炉，实现了乘客车主双向寻找，功能更强大，出行更便捷。那么，新版本该如何使用？小伙伴们看这里。</span>
         <br>
         <span class="role_context">首先，打开来回拼车app，填写手机号进行登录。</span>
         <div class="role_box">
-          <img src="/resource/images/role_ad5.png">
+          <img src="/resource/images/m_01.jpg">
         </div>
         <span class="role_context">如您是车主：</span>
-        <span class="role_context">第一步，点击左上角三横线标志。</span>
+        <span class="role_context">第一步，点击右下角“我的”，点击车主认证进行身份认证。</span>
         <div class="role_box">
-          <img src="/resource/images/role_ad6.png">
+          <img src="/resource/images/m_02.jpg">
         </div>
-        <span class="role_context">第二步，点击车主认证进行身份认证。（点击头像可更换头像照片）</span>
+        <span class="role_context">第二步，审核通过后，点击左下角“首页”。</span>
         <div class="role_box">
-          <img src="/resource/images/role_ad7.png">
+          <img src="/resource/images/m_03.jpg">
         </div>
-        <span class="role_context">第三步，填写相关信息，申请认证，等待管理员审核。（在线即时审核）</span>
+        <span class="role_context">第三步，选择“车主”，输入您的行程信息，点击发布，发布信息；点击搜索，搜索同行乘客。</span>
         <div class="role_box">
-          <img src="/resource/images/role_ad8.png">
+          <img src="/resource/images/m_04.jpg">
         </div>
-        <span class="role_context">第四步，审核通过后，点击主页右下角发布按钮，即可发布出行信息。</span>
+        <span class="role_context">第四步，点击“我的发布”，查看自己发布的信息；点击“我的订单”，可查看当前订单详情。</span>
         <div class="role_box">
-          <img src="/resource/images/role_ad9.png">
+          <img src="/resource/images/m_05.jpg">
         </div>
         <span class="role_context">如果您是乘客：</span>
-        <span class="role_context">第一步，直接点击页面信息，或点击搜索车单来选择合适出行信息。</span>
+        <span class="role_context">第一步，点击右下角“我的”，点击实名认证进行身份认证。</span>
         <div class="role_box">
-          <img src="/resource/images/role_ad10.png">
+          <img src="/resource/images/m_06.jpg">
         </div>
-        <span class="role_context">第二步，点击信息进行预订，填写人数、出发地和目的地，并点击预约。</span>
+        <span class="role_context">第二步，审核通过后，点击左下角“首页”。</span>
         <div class="role_box">
-          <img src="/resource/images/role_ad11.png">
+          <img src="/resource/images/m_03.jpg">
         </div>
-        <span class="role_context">最后，车主和乘客都可在我的行程中查看自己的车单详情。</span>
+        <span class="role_context">第三步，选择“乘客”，输入您的行程信息，点击发布，发布信息；点击搜索，搜索同行车主。</span>
         <div class="role_box">
-          <img src="/resource/images/role_ad12.png">
+          <img src="/resource/images/m_08.jpg">
         </div>
+        <span class="role_context">第四步，点击“我的订单”，可查看当前发布订单详情。</span>
         <div class="role_box">
-          <img src="/resource/images/role_ad14.png">
+          <img src="/resource/images/m_09.jpg">
         </div>
+
+        <span class="role_context">订单动态会有消息提醒，详情可在“消息”中查看。</span>
+        <div class="role_box">
+          <img src="/resource/images/m_10.jpg">
+        </div>
+
+        <span class="role_context">点击“活动”查看活动介绍。</span>
+        <div class="role_box">
+          <img src="/resource/images/m_11.jpg">
+        </div>
+
+        <span class="role_context">点击“我的”页面中“我的钱包”，可查看账户余额及明细，也可进行余额提现。</span>
+        <div class="role_box">
+          <img src="/resource/images/m_12.jpg">
+        </div>
+
         <span class="role_context">来回拼车的操作方便快捷，学会了基本操作，接下来就可以投身美好的出行旅程了。更多人性化的功能持续更新中，请不要错过，快叫上你的小伙伴们，一起下载，一起来回吧！</span>
+
       </div>
 
     </div>
