@@ -254,7 +254,7 @@
   <script>
     $(document).ready(function () {
       changeFontSize();
-      check();
+//      check();
 //      android_get_token();
       //点击验证码时候的验证
       $('.get_code').click(function () {
@@ -363,7 +363,7 @@
             if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
               window.location.href="https://itunes.apple.com/app/id1174366776";
             } else if (navigator.userAgent.match(/android/i)) {
-              window.location.href="http://download.pinchenet.com/app/laihui.apk";
+              window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";
             }
           }else{
             showFloatStyle2(global_data.message);
