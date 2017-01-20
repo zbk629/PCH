@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -348,6 +349,59 @@ public class LaiHuiDB {
         String SQL = "SELECT * FROM pc_user "+where ;
         List<AppUser> userList = jdbcTemplateObject.query(SQL, new AppUserMapper());
         return userList;
+    }
+    public List<Order> getOrderReview(String where,int type) {
+        String SQL = "SELECT * FROM pc_orders " + where;
+        List<Order> orders =new ArrayList<>();
+        switch (type){
+            case 0: //不关联表
+                orders=jdbcTemplateObject.query(SQL, new OrderMapper());
+                break;
+            case 1:
+                orders=jdbcTemplateObject.query(SQL, new RowMapper<Order>() {
+                    @Override
+                    public Order mapRow(ResultSet resultSet, int i) throws SQLException {
+                        Order order=new Order();
+
+                        order.set_id(resultSet.getInt("a._id"));
+                        order.setOrder_id(resultSet.getInt("order_id"));
+                        order.setUser_id(resultSet.getInt("user_id"));
+                        order.setOrder_status(resultSet.getInt("order_status"));
+                        order.setUpdate_time(Utils.checkTime(resultSet.getString("update_time")));
+                        order.setCreate_time(Utils.checkTime(resultSet.getString("create_time")));
+                        String name= Utils.checkNull(resultSet.getString("user_name"));
+                        String idsn= Utils.checkNull(resultSet.getString("user_idsn"));
+
+                        if(!name.isEmpty()) {
+                            String endName = "";
+                            if (!idsn.isEmpty()) {
+                                String sexNum = idsn.substring(16, 17);
+                                if (!sexNum.isEmpty()) {
+                                    if (Integer.parseInt(sexNum) % 2 == 1) {
+                                        endName = "先生";
+                                    } else {
+                                        endName = "女士";
+                                    }
+                                }
+                            }
+                            if (name.length() <= 3) {
+                                name = name.substring(0, 1) + endName;
+                            } else {
+                                name = name.substring(0, 2) + endName;
+                            }
+                        }
+                        order.setUser_name(name);
+                        order.setUser_mobile(Utils.checkNull(resultSet.getString("user_mobile")));
+                        order.setUser_avatar(Utils.checkNull(resultSet.getString("user_avatar")));
+                        return order;
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+
+        return orders;
     }
 }
 

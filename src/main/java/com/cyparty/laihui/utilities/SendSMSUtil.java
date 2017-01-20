@@ -236,8 +236,6 @@ public class SendSMSUtil {
                 {
                     flag=true;
                 }
-                System.out.println("object信息：" + object);
-
                 if(flag==true){
                     break;
                 }

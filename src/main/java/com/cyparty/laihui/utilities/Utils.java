@@ -319,4 +319,9 @@ public class Utils {
         }
         return is_has;
     }
+    public static boolean sendAllNotifyMessage(String d_mobile,String title,String content){
+        String typ_val="#title#="+title+"&#orderstatus#="+content;
+        boolean send_isSuccess= SendSMSUtil.sendSMS(d_mobile, 15292, typ_val);
+        return send_isSuccess;
+    }
 }

@@ -3,8 +3,10 @@ package com.cyparty.laihui.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
+import com.cyparty.laihui.domain.AppUser;
 import com.cyparty.laihui.domain.Campaign;
 import com.cyparty.laihui.domain.Code;
+import com.cyparty.laihui.domain.User;
 import com.cyparty.laihui.utilities.ReturnJsonUtil;
 import com.cyparty.laihui.utilities.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +101,12 @@ public class CampaignController {
                             campaign.setBe_popularized_mobile(mobile);
 
                             if(user_id!=0&&!mobile.equals(user_mobile)){
+                                String user_where=" where user_mobile like '%"+mobile+"%'";
+                                List<AppUser> appUserList=laiHuiDB.getUserList(user_where);
+                                if(appUserList.size()>0){
+                                    json = ReturnJsonUtil.returnFailJsonString(result, "抱歉，您已经是注册用户了哦！");
+                                    return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+                                }
                                 laiHuiDB.createCampaign(campaign);
                             }else {
                                 json = ReturnJsonUtil.returnFailJsonString(result, "抱歉，自己不能邀请自己哦！");

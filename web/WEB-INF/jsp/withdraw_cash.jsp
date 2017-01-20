@@ -507,7 +507,7 @@
         }
         .cash_all_count_left{
             position: absolute;
-            width: 2.4rem;
+            width: 2rem;
             left: -.6rem;
             top: 1rem;
         }
@@ -696,7 +696,7 @@
 
     <div class="success_push_container">
         <div class="success_push">
-            <div class="success_push_left" style="color: #535353">成功邀请人数（ <span class="success_total"></span> ）</div>
+            <div class="success_push_left" style="color: #535353;margin-top: .8rem">成功邀请人数（ <span class="success_total"></span> ）</div>
             <div class="clear"></div>
         </div>
         <ul class="success_push_ul">

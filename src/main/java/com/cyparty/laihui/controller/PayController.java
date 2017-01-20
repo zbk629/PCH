@@ -3,9 +3,7 @@ package com.cyparty.laihui.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LHDB;
 import com.cyparty.laihui.db.LaiHuiDB;
-import com.cyparty.laihui.domain.AlipayNotify;
-import com.cyparty.laihui.domain.PayBack;
-import com.cyparty.laihui.domain.PayLog;
+import com.cyparty.laihui.domain.*;
 import com.cyparty.laihui.utilities.PercentageConfig;
 import com.cyparty.laihui.utilities.ReturnJsonUtil;
 import com.cyparty.laihui.utilities.Utils;
@@ -124,10 +122,16 @@ public class PayController {
         String token=request.getParameter("token"); //token,order_id,price
         int user_id=0;
         int order_id=0;
+        AppUser user=new AppUser();
         boolean is_success=false;
         if(token!=null&&!token.isEmpty()){
             try {
                 user_id = laiHuiDB.getIDByToken(token);
+                String user_where=" where _id="+user_id;
+                List<AppUser> userList=laiHuiDB.getUserList(user_where);
+                if(userList.size()>0){
+                    user=userList.get(0);
+                }
                 order_id=Integer.parseInt(request.getParameter("order_id"));//order_id为record_id
             } catch (Exception e) {
                 user_id=0;
@@ -141,11 +145,12 @@ public class PayController {
         }else {
             String where=" where action_type=0 and order_id="+order_id+" and is_complete=0";
             List<PayLog> payLogList=laiHuiDB.getPayLog(where);
+            String pay_reason="";
             if(payLogList.size()>0){
                 PayBack payBack=new PayBack();
                 int pay_type=Integer.parseInt(request.getParameter("pay_type"));
                 String pay_account=request.getParameter("pay_account");
-                String pay_reason=request.getParameter("pay_reason");
+                pay_reason=request.getParameter("pay_reason");
                 double pay_cash=0;
                 if(request.getParameter("money")!=null&&!request.getParameter("money").isEmpty()){
                     try {
@@ -178,6 +183,20 @@ public class PayController {
                 update_sql=" set order_status=-1  where order_type=0 and order_id="+order_id;//更新记录表
                 laiHuiDB.update("pc_orders",update_sql);
 
+                update_sql=" set order_status=6  where order_type=2 and order_status=2 and order_id="+order_id;//更新记录表
+                laiHuiDB.update("pc_orders",update_sql);
+
+                //todo:通知司机
+                String driver_where=" a left join pc_user b on a.user_id=b._id where order_type=2 and order_status=6 and order_id="+order_id;
+                List<Order> driverData=laiHuiDB.getOrderReview(driver_where, 1);
+
+                if(driverData.size()>0){
+                    String d_mobile=driverData.get(0).getUser_mobile();
+                    String title="车主";
+                    String time=Utils.getCurrentTime();
+                    String content="乘客"+user.getUser_nick_name()+"在"+time.substring(0,time.length()-3)+"因为"+pay_reason+"发起了退款申请，";
+                    Utils.sendAllNotifyMessage(d_mobile,title,content);
+                }
                 json = ReturnJsonUtil.returnSuccessJsonString(result, "申请退款提交成功！");
                 return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
             }
