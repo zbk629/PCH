@@ -51,12 +51,12 @@
     function hideAll(){
       $('.app_load').hide();
       $('.app_box').hide();
-      $('.bottom_menu ').hide();
+      $('.bottom_menu').hide();
     }
     function hideApp() {
       $('.app_load').hide();
       $('.app_box').show();
-      $('.bottom_menu ').show();
+      $('.bottom_menu').show();
     }
     function showApp() {
       if ($('.menu_style_icon').hasClass('menu_style_active')) {

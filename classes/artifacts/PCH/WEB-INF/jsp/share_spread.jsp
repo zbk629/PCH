@@ -360,11 +360,12 @@
           global_data=data;
           if(global_data.status==true){
 //            showFloatStyle2('验证完成');
-            if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
-              window.location.href="https://itunes.apple.com/app/id1174366776";
-            } else if (navigator.userAgent.match(/android/i)) {
-              window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";
-            }
+//            if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+//              window.location.href="https://itunes.apple.com/app/id1174366776";
+//            } else if (navigator.userAgent.match(/android/i)) {
+//              window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";
+//            }
+            window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";
           }else{
             showFloatStyle2(global_data.message);
           }
