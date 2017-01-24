@@ -21,9 +21,10 @@
     <link href="/resource/css/style.css" rel="stylesheet" type="text/css">
     <link href="/resource/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <style type="text/css">
-        body{
+        body {
             background-color: #F9F9F9;
         }
+
         /*返回上一层*/
         .publish_top {
             background-color: #F5AD4E;
@@ -113,7 +114,8 @@
             padding: 1rem 0 1.1rem 2.8rem;
             font-size: 2rem;
         }
-        .cash_all_count_last{
+
+        .cash_all_count_last {
             border-left: 1px solid #699BC8;
             padding-left: 3.8rem;
         }
@@ -211,9 +213,10 @@
             /* border-bottom: 1px solid #e8e8e8; */
             background: #fff;
         }
-        .loading{
-             width: 3rem;
-         }
+
+        .loading {
+            width: 3rem;
+        }
 
         .cash_departure_style {
             line-height: 3rem;
@@ -319,6 +322,7 @@
             top: .4rem;
             margin-right: .4rem;
         }
+
         /*账户填写*/
         .booking_span {
             display: inline-block;
@@ -340,9 +344,10 @@
             font-size: 24px;
             color: #999;
             cursor: pointer;
-            -webkit-tap-highlight-color:transparent;
+            -webkit-tap-highlight-color: transparent;
         }
-        .close_booking:hover{
+
+        .close_booking:hover {
             background-color: #fff;
         }
 
@@ -397,12 +402,14 @@
             color: #e74c3c;
             left: 2rem;
         }
-        .change_pay_message{
+
+        .change_pay_message {
             float: right;
             padding: 1rem .8rem;
             color: #f5ad4e;
         }
-        .not_message{
+
+        .not_message {
             color: #888;
             text-align: center;
             margin-top: 5rem;
@@ -411,41 +418,49 @@
         }
 
         /*修改样式*/
-        .cash_balance{
+        .cash_balance {
             font-size: 5rem;
             line-height: 3.2rem;
             margin: 2.4rem 0 .6rem;
         }
-        .cash_title{
+
+        .cash_title {
             display: inline-block;
             font-size: 1.6rem;
         }
-        .cash_explain{
+
+        .cash_explain {
             float: right;
             font-size: 1.6rem;
         }
-        .cash_all_top{
+
+        .cash_all_top {
             padding: 2.6rem 1.4rem 2.4rem;
         }
-        .cash_all_bottom{
-            background-color:#548DC1;
+
+        .cash_all_bottom {
+            background-color: #548DC1;
             padding: .8rem 1.4rem 1rem;
         }
-        .cash_explain img{
+
+        .cash_explain img {
             width: 1.4rem;
             position: relative;
             top: .2rem;
         }
-        .count_span{
+
+        .count_span {
             font-size: 2.4rem;
         }
-        .cash_get{
+
+        .cash_get {
             position: absolute;
             bottom: 4.4rem;
             text-align: center;
-            width:100%;
+            width: 100%;
         }
-        .cash_get span{
+
+        .cash_get span {
             width: 90%;
             margin: 0 auto;
             background: #5B9BD5;
@@ -456,72 +471,86 @@
             font-size: 1.6rem;
             line-height: 2.6rem
         }
-        div{
-            -webkit-tap-highlight-color:rgba(255,0,0,0);
-            -webkit-appearance:none;
+
+        div {
+            -webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+            -webkit-appearance: none;
         }
-        .success_push_container{
+
+        .success_push_container {
             padding: 0 2rem;
             background: #fff;
         }
-        .success_push{
+
+        .success_push {
             line-height: 3.2rem;
             border-bottom: 1px solid #e8e8e8;
         }
-        .success_push_left{
+
+        .success_push_left {
             color: #535353;
             display: inline-block
         }
-        .success_push_right{
+
+        .success_push_right {
             float: right;
         }
-        .success_push_li{
+
+        .success_push_li {
             line-height: 2.6rem;
             color: #888;
         }
 
-        .success_push_type{
+        .success_push_type {
             float: right;
             color: #5B9BD5;
         }
-        .more_success{
+
+        .more_success {
             border-top: 1px solid #e8e8e8;
             text-align: center;
             line-height: 3.2rem;
             color: #5B9BD5;
             display: none;
         }
-        .not_have{
+
+        .not_have {
             line-height: 11rem;
             text-align: center;
             color: #888;
             display: none;
         }
 
-        .success_push_time{
+        .success_push_time {
             /*text-align: center;*/
             margin-left: 2.2rem;
         }
-        .success_push_ul{
-            min-height: 11rem;
+
+        .success_push_ul {
+            max-height: 8rem;
+            overflow: hidden;
         }
-        .cash_all_count_left{
+
+        .cash_all_count_left {
             position: absolute;
             width: 2rem;
             left: -.6rem;
             top: 1rem;
         }
-        .cash_all_count_right{
+
+        .cash_all_count_right {
             width: 2.4rem;
             position: absolute;
             right: .6rem;
             top: 3.8rem;
         }
-        .cash_all_count_last .cash_all_count_left{
+
+        .cash_all_count_last .cash_all_count_left {
             left: .6rem;
             top: 1rem;
         }
-        .cash_all_count_last .cash_all_count_right{
+
+        .cash_all_count_last .cash_all_count_right {
             right: -.4rem;
             top: 3.8rem;
         }
@@ -531,7 +560,7 @@
             changeFontSize();
             android_get_token();
 
-            $('.cash_error_box').click(function(){
+            $('.cash_error_box').click(function () {
                 showFloatStyle2();
                 $('.float_container2').empty().append('<div class="booking_box">' +
                         '<div class="close_booking" onclick="removeFloatMessage()">x</div>' +
@@ -548,20 +577,17 @@
         });
         var action_url = "/app/api/pay/orders";
         var change = 0;
-        var token = window.location.href.split('token=')[1].substring(0,32);
+        var token = window.location.href.split('token=')[1].substring(0, 32);
         var current_cash;
-        function android_get_token()
-        {
+        function android_get_token() {
 
-            try
-            {
+            try {
 //                var local_token=androidInterface.getToken();
 //                token = local_token;
                 loadUser();
                 loadSuccess();
             }
-            catch(err)
-            {
+            catch (err) {
                 alert(err);
             }
 
@@ -569,7 +595,7 @@
         //封装传输的信息并提交
         function loadUser() {
             var obj = {};
-            obj.token=token;
+            obj.token = token;
             validate.validate_submit3('/pay/abstract', obj, insertMessage);
         }
         //查看邀请人数
@@ -581,37 +607,88 @@
             obj.size = 5;
             validate.validate_submit3('/campaign', obj, insertSuccessMessage);
         }
-        function insertSuccessMessage(){
-            $('.success_total').text(global_data.result.total);
-            if(global_data.result.total==0){
-                $('.not_have').show();
-            }else if(global_data.result.total<=5){
-                $('.more_success').hide();
-                for(var i=0;i<global_data.result.total;i++){
-                    var mobile = global_data.result.data[i].mobile;
-                    var create_time = global_data.result.data[i].create_time.substring(0,16);
-                    $('.success_push_ul').append('<li class="success_push_li">'+
-                            '<span class="success_push_mobile">'+mobile+'</span>'+
-                            '<span class="success_push_time">'+create_time+'</span>'+
-                            '<span class="success_push_type">成功邀请 !</span>'+
-                            '</li>');
+        function insertSuccessMessage() {
+            try{
+//                global_data = {
+//                    "result": {
+//                        "total": 5,
+//                        "data": [{
+//                            "create_time": "2017-01-22 21:37:39",
+//                            "mobile": "186****8382"
+//                        }, {
+//                            "create_time": "2017-01-22 21:26:09",
+//                            "mobile": "181****9987"
+//                        }, {"create_time": "2017-01-22 17:16:21",
+//                            "mobile": "185****5600"
+//                        },{
+//                            "create_time": "2017-01-22 21:37:39",
+//                            "mobile": "186****8382"
+//                        },{
+//                            "create_time": "2017-01-22 21:37:39",
+//                            "mobile": "186****8382"
+//                        },{
+//                            "create_time": "2017-01-22 21:37:39",
+//                            "mobile": "186****8382"
+//                        },{
+//                            "create_time": "2017-01-22 21:37:39",
+//                            "mobile": "186****8382"
+//                        },{
+//                            "create_time": "2017-01-22 21:37:39",
+//                            "mobile": "186****8382"
+//                        },{
+//                            "create_time": "2017-01-22 21:37:39",
+//                            "mobile": "186****8382"
+//                        },{
+//                            "create_time": "2017-01-22 21:37:39",
+//                            "mobile": "186****8382"
+//                        },{
+//                            "create_time": "2017-01-22 21:37:39",
+//                            "mobile": "186****8382"
+//                        },{
+//                            "create_time": "2017-01-22 21:37:39",
+//                            "mobile": "186****8382"
+//                        }]
+//                    }, "message": "推广人信息获取成功！", "status": true
+//                }
+                $('.success_total').text(global_data.result.total);
+                alert("最外部：total="+global_data.result.total);
+                if (global_data.result.total == 0) {
+                    $('.not_have').show();
+//                    alert("最外部：total=0的时候，："+global_data.result.total);
+                } else if (global_data.result.total < 5) {
+                    alert("最外部：total<5："+global_data.result.total);
+                    $('.more_success').hide();
+                    for (var i = 0; i < global_data.result.total; i++) {
+                        var mobile = global_data.result.data[i].mobile;
+                        var create_time = global_data.result.data[i].create_time.substring(0, 16);
+                        $('.success_push_ul').append('<li class="success_push_li">' +
+                                '<span class="success_push_mobile">' + mobile + '</span>' +
+                                '<span class="success_push_time">' + create_time + '</span>' +
+                                '<span class="success_push_type">成功邀请 !</span>' +
+                                '</li>');
+//                        alert("第"+(i+1)+"个:"+mobile);
+                    }
+                } else {
+                    $('.more_success').show();
+                    for (var i = 0; i < global_data.result.total; i++) {
+                        var mobile = global_data.result.data[i].mobile;
+                        var create_time = global_data.result.data[i].create_time.substring(0, 16);
+                        $('.success_push_ul').append('<li class="success_push_li">' +
+                                '<span class="success_push_mobile">' + mobile + '</span>' +
+                                '<span class="success_push_time">' + create_time + '</span>' +
+                                '<span class="success_push_type">成功邀请 !</span>' +
+                                '</li>');
+//                        alert("第"+(i+1)+"个:"+mobile);
+                    }
                 }
-            }else{
-                $('.more_success').show();
-                for(var i=0;i<global_data.result.total;i++){
-                    var mobile = global_data.result.data[i].mobile;
-                    var create_time = global_data.result.data[i].create_time.substring(0,16);
-                    $('.success_push_ul').append('<li class="success_push_li">'+
-                            '<span class="success_push_mobile">'+mobile+'</span>'+
-                            '<span class="success_push_time">'+create_time+'</span>'+
-                            '<span class="success_push_type">成功邀请 !</span>'+
-                            '</li>');
-                }
+
+            }catch (err) {
+                alert(err);
             }
 
         }
         //展示错误信息
-        function sendKeepDownInput(){
+        function sendKeepDownInput() {
             $('.booking_error').hide();
         }
         function insertMessage() {
@@ -623,18 +700,18 @@
             $('.campaign_cash').text(campaign_cash);
             $('.already_got_cash').text(already_got_cash);
         }
-//      提现
-        function href_to_cash(){
-            window.location.href="/withdraw_cash_pay?token="+token+"&current_cash="+current_cash;
+        //      提现
+        function href_to_cash() {
+            window.location.href = "/withdraw_cash_pay?token=" + token + "&current_cash=" + current_cash;
         }
-//      账户详情
-        function href_to_detail(obj){
+        //      账户详情
+        function href_to_detail(obj) {
             var data_type = $(obj).attr('data_type');
-            window.location.href="/account_list?token="+token+"&data_type="+data_type;
+            window.location.href = "/account_list?token=" + token + "&data_type=" + data_type;
         }
         //推广详情
-        function href_to_success_detail(){
-            window.location.href="/share_more?token="+token+"&end";
+        function href_to_success_detail() {
+            window.location.href = "/share_more?token=" + token + "&end";
         }
     </script>
 </head>
@@ -665,12 +742,14 @@
                     <div class="cash_all_bottom">
                         <div class="cash_all_count" data_type="3" onclick="href_to_detail(this)">
                             <img src="/resource/images/wash_out.png" class="cash_all_count_left">
+
                             <div class="cash_all_count_title">累计提现&nbsp;&nbsp;( 元 )</div>
                             <span class="count_span already_got_cash">0.00</span>
                             <%--<img src="/resource/images/wash_right.png" class="cash_all_count_right">--%>
                         </div>
                         <div class="cash_all_count cash_all_count_last" data_type="1" onclick="href_to_detail(this)">
                             <img src="/resource/images/wash_pig.png" class="cash_all_count_left">
+
                             <div class="cash_all_count_title">累计推广&nbsp;&nbsp;( 元 )</div>
                             <span class="count_span campaign_cash">0.00</span>
                             <%--<img src="/resource/images/wash_right.png" class="cash_all_count_right">--%>
@@ -681,11 +760,13 @@
                 </div>
                 <div class="cash_pay_self_message" data_type="" onclick="href_to_detail(this)">
                     <img src="/resource/images/pc_icon_cash_money.png" class="cash_pay_logo">
+
                     <div class="cash_self_message">
                         <span style="color: #535353">账户明细</span>
                         <span class="cash_user"></span>
                     </div>
                     <img src="/resource/images/pc_icon_cash_right.png" class="cash_self_message_img">
+
                     <div class="clear"></div>
                 </div>
 
@@ -696,7 +777,9 @@
 
     <div class="success_push_container">
         <div class="success_push">
-            <div class="success_push_left" style="color: #535353;margin-top: .8rem">成功邀请人数（ <span class="success_total"></span> ）</div>
+            <div class="success_push_left" style="color: #535353;margin-top: .8rem">成功邀请人数（ <span
+                    class="success_total"></span> ）
+            </div>
             <div class="clear"></div>
         </div>
         <ul class="success_push_ul">
