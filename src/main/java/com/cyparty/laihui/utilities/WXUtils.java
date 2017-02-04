@@ -98,35 +98,6 @@ public class WXUtils {
         }
         return json.toString();
     }
-    //加密
-    public static String encode(String algorithm, String str) {
-        String ALGORITHM = "MD5";
-
-        char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5',
-                '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-        if (str == null) {
-            return null;
-        }
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
-            messageDigest.update(str.getBytes());
-            return getFormattedText(messageDigest.digest());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private static String getFormattedText(byte[] bytes) {
-        int len = bytes.length;
-        StringBuilder buf = new StringBuilder(len * 2);
-        char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5',
-                '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-        // 把密文转换成十六进制的字符串形式
-        for (int j = 0; j<len; j++) {
-            buf.append(HEX_DIGITS[(bytes[j] >> 4) & 0x0f]);
-            buf.append(HEX_DIGITS[bytes[j] & 0x0f]);
-        }
-        return buf.toString();
-    }
     //微信分享信息
     public static void wx_intro(HttpServletRequest request,Model model,String pagetitle,String image_name){
         long last_time=0;
@@ -159,7 +130,7 @@ public class WXUtils {
             request.getSession().getServletContext().setAttribute("time", now_time);
         }
         String wx_encode="jsapi_ticket="+wx_jsapi_token+"&noncestr="+wx_nonceStr+"&timestamp="+wx_timestamp+"&url="+wx_url;
-        String wx_encryption=encode("SHA1", wx_encode);
+        String wx_encryption=Utils.encode("SHA1", wx_encode);
         String wx_title = pagetitle;
 
         if(pagetitle.contains("|")) {

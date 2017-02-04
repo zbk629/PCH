@@ -167,7 +167,7 @@ public class Utils {
         }
         try {
             MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
-            messageDigest.update(str.getBytes());
+            messageDigest.update(str.getBytes("utf-8"));
             return getFormattedText(messageDigest.digest());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -176,15 +176,14 @@ public class Utils {
 
     private static String getFormattedText(byte[] bytes) {
         int len = bytes.length;
-        StringBuilder buf = new StringBuilder(len * 2);
+        StringBuilder buff = new StringBuilder(len * 2);
         char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5',
                 '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-        // 把密文转换成十六进制的字符串形式
         for (int j = 0; j < len; j++) {
-            buf.append(HEX_DIGITS[(bytes[j] >> 4) & 0x0f]);
-            buf.append(HEX_DIGITS[bytes[j] & 0x0f]);
+            buff.append(HEX_DIGITS[(bytes[j] >> 4) & 0x0f]);
+            buff.append(HEX_DIGITS[bytes[j] & 0x0f]);
         }
-        return buf.toString();
+        return buff.toString();
     }
 
     public static String checkNull(String input){

@@ -523,92 +523,92 @@
     <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
     <script>
         $(document).ready(function () {
-            changeFontSize();
-            $('.publish_slide').mouseleave(function () {
-                $('.publish_slide_ul').hide();
-            });
-            $('.publish_slide2').mouseleave(function () {
-                $('.publish_slide_ul').hide();
-            });
-            $('.hover').click(function () {
-                removeFloatMessage();
-            });
-            IsPC(inPc, inMobile);
-            // 绑定键盘按下事件
-            $(document).keypress(function (e) {
-                // 回车键事件
-                if (e.which == 13) {
-                    jQuery('.search_img').click();
-                }
-            });
-            setShowData();
-            movetop();
-            checkId();
-            $(window).scroll(function () {
-                $(window).scrollTop() > 100 ? $(".backtop").animate({bottom: "100rem;"}, 300).show() : $(".backtop").hide().css({bottom: "9.3rem"})
-            });
-            $(".backtop").click(function () {
-                $('body,html').animate({scrollTop: 0}, 400);
-                return false;
-            });
-
-            //分页操
-            // 作
-            $(window).scroll(function () {
-                        var Scroll = $(document).scrollTop();
-                        var height = $(window).height();
-                        var WD = $(document).height();
-                        if (Scroll + height == WD) {
-                            if (total < 10) {
-                                page_list = 1;
-                            } else {
-                                if (page_list < Math.ceil(total / size)) {
-                                    page_list++;
-                                    if (page_list != Math.ceil(total / size)) {
-                                        loadPageList(page_list);
-                                    }
-
-                                } else {
-                                    $('.not_more').remove();
-                                    $('.footer').prepend('<span class="not_more">没有更多数据</span>')
-                                }
-                            }
-
-                        }
-                    }
-            );
-
-            if ($(window).width() > 1100) {
-                $('.bottom_menu ').hide();
-                $('.footer_box').hide();
-                $('.message_bottom_footer').show();
-                $('.message_bottom').css({'bottom': '58px'});
-                $('.message_bottom_type ').css({
-                    'background': '#fff',
-                    'width': '33.333%',
-                    'line-height': '10.4rem',
-                    'height': '7rem'
-                });
-            } else {
-                $('.message_bottom_footer').remove();
-            }
-
-            var p = 0, t = 0;
-            $(window).scroll(function (e) {
-                p = $(this).scrollTop();
-                if (t <= p) {//下滚
-                    $('.search_container').stop(true, false).animate({top: "-30rem"}, 100);
-                    hideApp();
-                }
-                else {//上滚
-
-                    $('.search_container').stop(true, false).animate({top: "0"}, 100).show();
-                    showApp();
-                }
-                setTimeout(function () {
-                    t = p;
-                }, 0);
-            });
+//            changeFontSize();
+//            $('.publish_slide').mouseleave(function () {
+//                $('.publish_slide_ul').hide();
+//            });
+//            $('.publish_slide2').mouseleave(function () {
+//                $('.publish_slide_ul').hide();
+//            });
+//            $('.hover').click(function () {
+//                removeFloatMessage();
+//            });
+////            IsPC(inPc, inMobile);
+//            // 绑定键盘按下事件
+//            $(document).keypress(function (e) {
+//                // 回车键事件
+//                if (e.which == 13) {
+//                    jQuery('.search_img').click();
+//                }
+//            });
+//            setShowData();
+//            movetop();
+//            checkId();
+//            $(window).scroll(function () {
+//                $(window).scrollTop() > 100 ? $(".backtop").animate({bottom: "100rem;"}, 300).show() : $(".backtop").hide().css({bottom: "9.3rem"})
+//            });
+//            $(".backtop").click(function () {
+//                $('body,html').animate({scrollTop: 0}, 400);
+//                return false;
+//            });
+//
+//            //分页操
+//            // 作
+//            $(window).scroll(function () {
+//                        var Scroll = $(document).scrollTop();
+//                        var height = $(window).height();
+//                        var WD = $(document).height();
+//                        if (Scroll + height == WD) {
+//                            if (total < 10) {
+//                                page_list = 1;
+//                            } else {
+//                                if (page_list < Math.ceil(total / size)) {
+//                                    page_list++;
+//                                    if (page_list != Math.ceil(total / size)) {
+//                                        loadPageList(page_list);
+//                                    }
+//
+//                                } else {
+//                                    $('.not_more').remove();
+//                                    $('.footer').prepend('<span class="not_more">没有更多数据</span>')
+//                                }
+//                            }
+//
+//                        }
+//                    }
+//            );
+//
+//            if ($(window).width() > 1100) {
+//                $('.bottom_menu ').hide();
+//                $('.footer_box').hide();
+//                $('.message_bottom_footer').show();
+//                $('.message_bottom').css({'bottom': '58px'});
+//                $('.message_bottom_type ').css({
+//                    'background': '#fff',
+//                    'width': '33.333%',
+//                    'line-height': '10.4rem',
+//                    'height': '7rem'
+//                });
+//            } else {
+//                $('.message_bottom_footer').remove();
+//            }
+//
+//            var p = 0, t = 0;
+//            $(window).scroll(function (e) {
+//                p = $(this).scrollTop();
+//                if (t <= p) {//下滚
+//                    $('.search_container').stop(true, false).animate({top: "-30rem"}, 100);
+//                    hideApp();
+//                }
+//                else {//上滚
+//
+//                    $('.search_container').stop(true, false).animate({top: "0"}, 100).show();
+//                    showApp();
+//                }
+//                setTimeout(function () {
+//                    t = p;
+//                }, 0);
+//            });
         });
 
         //加载城市数组

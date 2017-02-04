@@ -83,27 +83,6 @@ public class LaiHuiDB {
         List<RouteInfo> routeInfoList = jdbcTemplateObject.query(SQL, new PCHRouteInfoMapper());
         return routeInfoList;
     }
-
-    //创建司机缴纳诚信保障金订单
-    public boolean createMustDepartureOrder(int current_id, String order_number) {
-        boolean is_success = true;
-        String SQL = "insert into pc_pay_order(departure_info_id,pay_order_id,order_create_time,order_type,order_status) VALUES (?,?,?,?,?)";
-        int count = jdbcTemplateObject.update(SQL, new Object[]{current_id, order_number, Utils.getCurrentTime(), 2, 0});
-        if (count < 1) {
-            is_success = false;
-        }
-        return is_success;
-    }
-    //创建司机缴纳诚信保障金订单
-    public boolean createAlipayNotify(AlipayNotify alipayNotify,int parameter_num) {
-        boolean is_success = true;
-        String SQL = "insert into pc_alipay_log(buyer_email,buyer_id,seller_id,seller_email,price,trade_status,gmt_create,sign,out_trade_no,discount,payment_type,trade_no,notify_type,quantity,notify_time,body,total_fee,gmt_payment,notify_id,use_coupon,sign_type,is_total_fee_adjust,subject,parameter_num) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        int count = jdbcTemplateObject.update(SQL, new Object[]{alipayNotify.getBuyer_email(), alipayNotify.getBuyer_id(),alipayNotify.getSeller_id(), alipayNotify.getSeller_email(), alipayNotify.getPrice(),alipayNotify.getTrade_status(),alipayNotify.getGmt_create(),alipayNotify.getSign(),alipayNotify.getOut_trade_no(),alipayNotify.getDiscount(),alipayNotify.getPayment_type(),alipayNotify.getTrade_no(),alipayNotify.getNotify_type(),alipayNotify.getQuantity(),alipayNotify.getNotify_time(),alipayNotify.getBody(),alipayNotify.getTotal_fee(),alipayNotify.getGmt_payment(),alipayNotify.getNotify_id(),alipayNotify.getUse_coupon(),alipayNotify.getSign_type(),alipayNotify.getIs_total_fee_adjust(),alipayNotify.getSubject(),parameter_num});
-        if (count < 1) {
-            is_success = false;
-        }
-        return is_success;
-    }
     //微信用户注册
     public int createWxUser(final User user){
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -402,6 +381,11 @@ public class LaiHuiDB {
         }
 
         return orders;
+    }
+    public List<PassengerOrder> getPassengerDepartureInfo(String where) {
+        String SQL = "SELECT * FROM pc_passenger_publish_info a left join pc_user b on a.user_id=b._id " + where;
+        List<PassengerOrder> passengerPublishInfoList = jdbcTemplateObject.query(SQL, new PassengerPublishInfoMapper());
+        return passengerPublishInfoList;
     }
 }
 

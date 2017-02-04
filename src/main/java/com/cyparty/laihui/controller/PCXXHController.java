@@ -271,7 +271,6 @@ public class PCXXHController {
                     }
                 case "delete":
                     id = Integer.parseInt(request.getParameter("id"));
-
                     where = " set is_enable=0 where _id=" + id;
                     is_success = laiHuiDB.update("pch_publish_info ", where);
                     String delete_sql=" where driver_order_id="+id;
@@ -289,14 +288,14 @@ public class PCXXHController {
                     if(result.getString("cache_status")!=null){*/
                         //说明之前没有有缓存
                     String source=request.getParameter("source");
-                    if(source!=null&&!source.isEmpty()&&source.equals("app")){
+                    if(source!=null&&source.equals("app")){
                         result=ReturnJsonUtil.getDepartureInfo(laiHuiDB,id);
                     }else {
                         result=ReturnJsonUtil.getPCHDepartureInfo(laiHuiDB, page, size, departure_city, destination_city, status, start_time, end_time, keyword,id);
                     }
                       /*  Memcache.setMemcache(key,result);
                     }*/
-                    json = ReturnJsonUtil.returnSuccessJsonString(result, "全部出车信息获取成功");
+                    json = ReturnJsonUtil.returnSuccessJsonString(result, "乘客订单信息获取成功");
                     return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
                 case "show_myself":
                    /* String key2=page+size+departure_city+destination_city+status+start_time+end_time+keyword+id+"show_myself";

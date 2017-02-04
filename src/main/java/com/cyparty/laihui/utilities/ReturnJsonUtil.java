@@ -265,58 +265,37 @@ public class ReturnJsonUtil {
     public static JSONObject getDepartureInfo(LaiHuiDB laiHuiDB ,int id) {
         JSONObject result_json = new JSONObject();
         JSONArray dataArray = new JSONArray();
-        String where = " where  _id=" + id;
 
+        String where=" where  a._id=" + id;
+        List<PassengerOrder> passengerOrderList = laiHuiDB.getPassengerDepartureInfo(where);
+        for (PassengerOrder departure : passengerOrderList) {
+            JSONObject passengerObject = new JSONObject();
+            JSONObject dataObject = new JSONObject();
 
-        int count = laiHuiDB.getCount("laihui_pc.pc_driver_publish_info",where);
+            passengerObject.put("mobile", departure.getMobile());
+            passengerObject.put("name", departure.getName());
+            passengerObject.put("avatar", departure.getAvatar());
 
-        where=" where  a._id=" + id;
-        List<AppDepartureInfo> departureInfoList = laiHuiDB.getAppDriverDpartureInfo(where);
-        for (AppDepartureInfo departure : departureInfoList) {
-            JSONObject jsonObject = new JSONObject();
-            boolean is_editor = false;
-            jsonObject.put("id", departure.getR_id());
-            jsonObject.put("driver_id", 0);
-            jsonObject.put("start_time", departure.getStart_time());
-            jsonObject.put("end_time", Utils.getTimeSubOrAdd(departure.getStart_time(), 2));
-            long current = Utils.getCurrenTimeStamp();
-            long end_date = Utils.date2TimeStamp(Utils.getTimeSubOrAdd(departure.getStart_time(),2));
-            if (end_date > current) {
-                is_editor = true;
+            String order_where=" where order_type=0 and order_id="+departure.get_id();
+            List<Order> orderList=laiHuiDB.getOrderReview(order_where,0);
+            Order order=new Order();
+            if (orderList.size()>0){
+                order=orderList.get(0);
+                dataObject.put("id", orderList.get(0).getOrder_id());
             }
-            jsonObject.put("is_editor", is_editor);
+            dataObject.put("order_status", order.getOrder_status());
+            dataObject.put("departure_time", departure.getDeparture_time());
+            dataObject.put("seats", departure.getSeats());
+            dataObject.put("price", new BigDecimal (departure.getPrice()).setScale(2,BigDecimal.ROUND_HALF_UP).toString());
+            dataObject.put("create_time", departure.getCreate_time());
+            dataObject.put("boarding_point",JSONObject.parseObject(departure.getBoarding_point()));
+            dataObject.put("breakout_point",JSONObject.parseObject(departure.getBreakout_ponit()));
 
-            jsonObject.put("inits_seats", departure.getCurrent_seats());
-            jsonObject.put("mobile", departure.getMobile());
-            jsonObject.put("points", departure.getPoints());
-            jsonObject.put("description", departure.getDescription());
-            jsonObject.put("car_brand", "");
-            jsonObject.put("departure", "");
-            jsonObject.put("destination", "");
-            jsonObject.put("driving_name", departure.getUser_name());
-            jsonObject.put("tag_yes_content", "");
-            jsonObject.put("tag_no_content", "");
-            jsonObject.put("info_status", departure.getStatus());//-1,1,2
-            jsonObject.put("create_time", departure.getCreate_time());
-            jsonObject.put("price", departure.getPrice());
-            jsonObject.put("origin_price", departure.getPrice());
+            dataObject.put("user_data",passengerObject);
 
-            JSONObject boardingObject=JSONObject.parseObject(departure.getBoarding_point());
-            JSONObject breakoutObject=JSONObject.parseObject(departure.getBreakout_point());
-
-            jsonObject.put("departure_city", boardingObject.getString("city"));
-            jsonObject.put("destination_city", breakoutObject.getString("city"));
-
-
-            jsonObject.put("boarding_point", boardingObject.getString("name"));
-            jsonObject.put("breakout_point",breakoutObject.getString("name"));
-
-            dataArray.add(jsonObject);
+            dataArray.add(dataObject);
         }
         result_json.put("data", dataArray);
-        result_json.put("total", count);
-        result_json.put("page", 0);
-        result_json.put("size", 10);
 
         return result_json;
     }

@@ -8,18 +8,36 @@ public class PassengerOrder {
     private int driver_order_id;
     private int user_id;
     private int seats;
+    private double price;
     private String boarding_point;
     private String breakout_ponit;
     private String departure_city;
     private String destination_city;
     private String description;
     private String name;
+    private String avatar;
     private String create_time;
     private String departure_time;
     private String start_time;
     private String end_time;
     private String mobile;
     private int  pay_status;
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public int getPay_status() {
         return pay_status;
