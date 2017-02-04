@@ -56,15 +56,18 @@
     }
 
     .publish_message_driver_title img {
-      width: 1.4rem;
+      width: 2rem;
       position: relative;
-      top: .3rem;
+      top: .7rem;
     }
 
     .publish_message_driver_time_img {
       width: 1.4rem;
       position: relative;
       top: .26rem;
+      margin-left: .3rem;
+      margin-right: .3rem;
+
     }
 
     .publish_message_driver_time {
@@ -291,6 +294,10 @@
       /*line-height: 8rem;*/
       /*border-radius: 10px;*/
     /*}*/
+    .driver_avatar{
+      width: 2.4rem;
+      border-radius: 50%;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -455,29 +462,28 @@
     //添加用户数据
     function insertMessage() {
       if (global_data.result.total == 0) {
-        window.location.href = "/404"
+        alert("数据跑丢了，工程师正在寻找路上~")
       } else {
         for (var i = 0; i < global_data.result.data.length; i++) {
-          var driving_name = global_data.result.data[i].driving_name;//车主姓名
-          var info_status = global_data.result.data[i].info_status;//状态信息1：有空位；2：已满；-1：已取消
-          var start_time = global_data.result.data[i].start_time;//开始时间
-          var end_time = global_data.result.data[i].end_time;//结束时间
-          var mobile = global_data.result.data[i].mobile;//手机号
-          var departure_city = global_data.result.data[i].departure_city;//出发城市
-          var destination_city = global_data.result.data[i].destination_city;//目的城市
+          var driving_name = global_data.result.data[i].user_data.name;//车主姓名
+          var driving_avatar = global_data.result.data[i].user_data.avatar;//车主头像
+          var info_status = global_data.result.data[i].order_status;//状态信息1：有空位；2：已满；-1：已取消
+          var departure_time = global_data.result.data[i].departure_time;//开始时间
 
-          var description = global_data.result.data[i].description;//描述信息
-          var tag_yes_content = global_data.result.data[i].tag_yes_content;//yes标签
-          var tag_no_content = global_data.result.data[i].tag_no_content;//no标签
-          var points = global_data.result.data[i].points;//地点
-          var inits_seats = global_data.result.data[i].inits_seats;//可用座位
+          var mobile = global_data.result.data[i].user_data.mobile;//手机号
+          var departure_city = global_data.result.data[i].boarding_point.district;//出发城市
+          var destination_city = global_data.result.data[i].breakout_point.district;//目的城市
+
+          var description ="";//描述信息
+          var tag_yes_content = "";//yes标签
+          var tag_no_content = "";//no标签
+          var points = "";//地点
+          var inits_seats = global_data.result.data[i].seats;//可用座位
           var car_brand = global_data.result.data[i].car_brand;//车辆品牌
           var id = global_data.result.data[i].id;//id
           var create_time = global_data.result.data[i].create_time;//id
-          var departure = global_data.result.data[i].departure;//出发小城
-          var destination = global_data.result.data[i].destination;//目的小城市
-          var boarding_point = global_data.result.data[i].boarding_point;//上车地点
-          var breakout_point = global_data.result.data[i].breakout_point;//下车地点
+          var departure = global_data.result.data[i].boarding_point.name;//出发小城
+          var destination = global_data.result.data[i].breakout_point.name;//目的小城市
           var price = global_data.result.data[i].price;
           if(destination_city == ""){
             destination_city = "郑州"
@@ -491,51 +497,30 @@
 
 
           global_driver_id = global_data.result.data[i].driver_id;//id
-          global_start_time = start_time;
+          global_start_time = departure_time;
           global_mobile = mobile;
-          if (info_status == 1) {
-            $($('.item_seat_status')[i]).css('color', '#2ecc71');
-            info_status = "有空位";
-            click_type = 0;
-          } else if (info_status == 2) {
+          if (info_status == 0) {
             $($('.item_seat_status')[i]).css('color', '#e74c3c');
-            info_status = "已满";
-            click_type = 1;
+            info_status = "等待接单";
+            click_type = 0;
           } else {
-            $($('.item_seat_status')[i]).css('color', '##95a5a6');
-            info_status = "已取消";
-            click_type = 2;
+            $($('.item_seat_status')[i]).css('color', '#2ecc71');
+            info_status = "司机已接单";
+            click_type = 1;
           }
 
-          //开始时间设置
-          var insert_time = start_time.substring(0, 10);
-          var time_change = insert_time.split('-');
-          insert_time = time_change[1] + '月' + time_change[2] + '日';
-          //发布时间设置
-          var begin_create_time = create_time.substring(11, 16);
-          create_time = create_time.substring(0, 10);
-          var time_create = create_time.split('-');
-          create_time = time_create[1] + '月' + time_create[2] + '日';
 
-          //开始结束时间
-          var begin_start_time = start_time.substring(11, 16);
-          var begin_end_time = end_time.substring(11, 16);
-          var title_time = insert_time;
-          var title_city = "来回拼车：" + departure_city + "-" + destination_city + " " + title_time + " " + "拼车信息详情";
 
           //添加标题信息
-          $(document).attr("title", title_city);
-          pageTitle = $(document).attr('title');
-          points = points.replace(/丶/g, " - ");
-          tag_yes_content = tag_yes_content.replace(/丶/g, "、");
-          tag_no_content = tag_no_content.replace(/丶/g, "、");
+
           var mobile_array = [];
           mobile_array = mobile.split(',');
           $('.departure_city').text(departure_city);
+          $('.driver_avatar').attr('src',driving_avatar);
           $('.destination_city').text(destination_city);
           $('.item_tips_span').text(description);
-          $('.item_mouth').text(insert_time);
-          $('.item_start_end_times').text(begin_start_time + "-" + begin_end_time);
+//          $('.item_mouth').text(insert_time);
+          $('.item_start_end_times').text(departure_time);
           $('.item_seat_status').text(info_status);
           $('.item_seat').text(inits_seats + "个");
           $('.item_yes_tips_span').text(tag_yes_content);
@@ -704,13 +689,15 @@
   </div>
   <div class="publish_message_driver">
     <div class="publish_message_driver_title">
-      <img src="/resource/images/pc_icon_stratRoute.png">
+      <img src="/resource/images/start_place.png">
       <span class="departure_city"></span>
             <span class="start_city_type">
             <i class="circle"></i>
             <span class="begin_city" style="color:#999794"></span>
             </span>
-      <span>——</span>
+      </br>
+      <%--<span></span>--%>
+      <img src="/resource/images/end_place.png">
       <span class="destination_city"> </span>
             <span class="end_city_type">
             <i class="circle"></i>
@@ -719,7 +706,7 @@
     </div>
     <div class="publish_message_driver_time">
       <img src="/resource/images/pc_icon_thin_time.png" class="publish_message_driver_time_img">
-      <span class="item_mouth"></span>
+      <%--<span class="item_mouth"></span>--%>
       <span class="item_start_end_times"></span>
 
       <div class="publish_seat">
@@ -730,9 +717,9 @@
   <div class="publish_message">
     <ul>
       <%--<a id="J-call-app" href="javascript:;" class="label">立即打开&gt;&gt;</a>--%>
-      <li class="publish_message_li item_name_li">
+      <li class="publish_message_li item_name_li" style="padding: .4rem 0;">
         <div class="publish_message_li_left">
-          <span>车主姓名</span>
+          <img src="/resource/images/icon_people.png" class="driver_avatar">
         </div>
         <div class="publish_message_li_right">
           <span class="item_name"></span>
@@ -758,57 +745,12 @@
         <div class="clear "></div>
       </li>
 
-      <li class="publish_message_li item_points_li">
-        <div class="publish_message_li_left">
-          <span>途径</span>
-        </div>
-        <div class="publish_message_li_right publish_message_li_route">
-          <span class="item_points"></span>
-        </div>
-        <div class="clear"></div>
-      </li>
-
-      <li class="publish_message_li item_type_li">
-        <div class="publish_message_li_left">
-          <span>车型</span>
-        </div>
-        <div class="publish_message_li_right">
-          <span class="item_type"></span>
-        </div>
-        <div class="clear"></div>
-      </li>
       <li class="publish_message_li li_change">
         <div class="publish_message_li_left">
-          <span>可用座位</span>
+          <span>预定座位</span>
         </div>
         <div class="publish_message_li_right">
           <span class="item_seat"></span>
-        </div>
-        <div class="clear"></div>
-      </li>
-      <li class="publish_message_li li_last item_tips_li">
-        <div class="publish_message_li_left">
-          <span>备注</span>
-        </div>
-        <div class="publish_message_li_right">
-                    <span class="item_tips">
-                        <span class="item_tips_span">
-
-                        </span>
-                        <br>
-                    </span>
-                    <span class="item_yes_tips">
-                        <span class="item_yes_tips_span">
-
-                        </span>
-                        <br>
-                    </span>
-                    <span class="item_no_tips">
-                        <span class="item_no_tips_span">
-
-                        </span>
-                        <br>
-                    </span>
         </div>
         <div class="clear"></div>
       </li>

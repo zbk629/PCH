@@ -588,7 +588,7 @@
                 loadSuccess();
             }
             catch (err) {
-                alert(err);
+                console.log(err);
             }
 
         }
@@ -611,7 +611,7 @@
             try{
 //                global_data = {
 //                    "result": {
-//                        "total": 5,
+//                        "total": 4,
 //                        "data": [{
 //                            "create_time": "2017-01-22 21:37:39",
 //                            "mobile": "186****8382"
@@ -623,40 +623,16 @@
 //                        },{
 //                            "create_time": "2017-01-22 21:37:39",
 //                            "mobile": "186****8382"
-//                        },{
-//                            "create_time": "2017-01-22 21:37:39",
-//                            "mobile": "186****8382"
-//                        },{
-//                            "create_time": "2017-01-22 21:37:39",
-//                            "mobile": "186****8382"
-//                        },{
-//                            "create_time": "2017-01-22 21:37:39",
-//                            "mobile": "186****8382"
-//                        },{
-//                            "create_time": "2017-01-22 21:37:39",
-//                            "mobile": "186****8382"
-//                        },{
-//                            "create_time": "2017-01-22 21:37:39",
-//                            "mobile": "186****8382"
-//                        },{
-//                            "create_time": "2017-01-22 21:37:39",
-//                            "mobile": "186****8382"
-//                        },{
-//                            "create_time": "2017-01-22 21:37:39",
-//                            "mobile": "186****8382"
-//                        },{
-//                            "create_time": "2017-01-22 21:37:39",
-//                            "mobile": "186****8382"
 //                        }]
 //                    }, "message": "推广人信息获取成功！", "status": true
 //                }
                 $('.success_total').text(global_data.result.total);
-                alert("最外部：total="+global_data.result.total);
+//                alert("最外部：total="+global_data.result.total);
                 if (global_data.result.total == 0) {
                     $('.not_have').show();
 //                    alert("最外部：total=0的时候，："+global_data.result.total);
                 } else if (global_data.result.total < 5) {
-                    alert("最外部：total<5："+global_data.result.total);
+//                    alert("最外部：total<5："+global_data.result.total);
                     $('.more_success').hide();
                     for (var i = 0; i < global_data.result.total; i++) {
                         var mobile = global_data.result.data[i].mobile;
@@ -683,7 +659,7 @@
                 }
 
             }catch (err) {
-                alert(err);
+                console.log(err);
             }
 
         }

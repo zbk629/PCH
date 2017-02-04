@@ -516,6 +516,7 @@
             var obj = {};
             obj.action = 'show';
             obj.id = item_id;
+            obj.source = "app";
             validate.validate_submit3('/api/db/departure', obj, insertMessage);
         }
         //更新信息
@@ -1037,7 +1038,7 @@
             <img class="return_perv_img" alt="" src="/resource/images/pc_icon_home.png"
                  onclick="returnCheck()">
         </div>
-        <span style="font-size: 1.6rem">来回拼车--车主信息</span>
+        <span style="font-size: 1.6rem">来回拼车--行程信息</span>
     </div>
     <div class="publish_message_driver">
         <div class="publish_message_driver_title">
