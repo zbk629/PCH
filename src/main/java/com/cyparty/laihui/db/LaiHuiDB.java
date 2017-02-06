@@ -265,13 +265,13 @@ public class LaiHuiDB {
     }
     //得到支付信息
     public List<PayLog> getPayLog(String where) {
-        String SQL = "SELECT * FROM pay_cash_log " + where ;
+        String SQL = "SELECT * FROM pay_cash_log " + where +" order by create_time DESC ";
         List<PayLog> payLogList = jdbcTemplateObject.query(SQL, new PayLogMapper());
         return payLogList;
     }
     //得到支付信息
     public List<PayLog> getPayLogInfo(String where) {
-        String SQL = "SELECT departure_time,cash,user_mobile from  pay_cash_log " + where ;
+        String SQL = "SELECT departure_time,cash,user_mobile from  pay_cash_log " + where +" order by create_time DESC limit 0,20";
         List<PayLog> payLogList = jdbcTemplateObject.query(SQL, new RowMapper<PayLog>() {
             @Override
             public PayLog mapRow(ResultSet resultSet, int i) throws SQLException {
