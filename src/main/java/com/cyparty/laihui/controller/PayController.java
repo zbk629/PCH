@@ -102,6 +102,7 @@ public class PayController {
             }
             current_cash=total_cash-already_got_cash-unable_total_cash;
             account_left=total_cash-already_got_cash;
+            double day=campaign_cash/PercentageConfig.getSingle_person();
 
             result.put("campaign_cash",new BigDecimal(campaign_cash).setScale(2,BigDecimal.ROUND_HALF_UP).toString());//推广收入
             result.put("total_cash",new BigDecimal(account_left).setScale(2,BigDecimal.ROUND_HALF_UP).toString());//全部收入
@@ -264,15 +265,25 @@ public class PayController {
                 return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
             }else if(type.equals("1")){
                 //推广
-                String where=" where p_id="+user_id+" and order_status=1";//推广
-                List<PayLog> payLogList1=laiHuiDB.getPayLog(where);
-                for(PayLog payLog:payLogList1){
-                    payLog.setAction_type(1);//推广
-                    payLog.setCash(payLog.getCash()*PercentageConfig.getCampaign_percentage());
-                }
-
+                String source=request.getParameter("source");
                 List<PayLog> payLogList=new ArrayList<>();
-                payLogList.addAll(payLogList1);
+                if(source!=null&&source.equals("info")){
+                    String where=" a left join pc_user b on a.user_id=b._id  where p_id="+user_id+" and order_status=1";//推广
+                    List<PayLog> payLogList1=laiHuiDB.getPayLogInfo(where);
+                    for(PayLog payLog:payLogList1){
+                        payLog.setAction_type(1);//推广
+                        payLog.setCash(payLog.getTotal_cash()*PercentageConfig.getCampaign_percentage());
+                    }
+                    payLogList.addAll(payLogList1);
+                }else {
+                    String where=" where p_id="+user_id+" and order_status=1";//推广
+                    List<PayLog> payLogList1=laiHuiDB.getPayLog(where);
+                    for(PayLog payLog:payLogList1){
+                        payLog.setAction_type(1);//推广
+                        payLog.setCash(payLog.getCash()*PercentageConfig.getCampaign_percentage());
+                    }
+                    payLogList.addAll(payLogList1);
+                }
 
                 Collections.sort(payLogList);
 

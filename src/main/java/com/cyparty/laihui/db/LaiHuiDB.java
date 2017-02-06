@@ -269,6 +269,27 @@ public class LaiHuiDB {
         List<PayLog> payLogList = jdbcTemplateObject.query(SQL, new PayLogMapper());
         return payLogList;
     }
+    //得到支付信息
+    public List<PayLog> getPayLogInfo(String where) {
+        String SQL = "SELECT departure_time,cash,user_mobile from  pay_cash_log " + where ;
+        List<PayLog> payLogList = jdbcTemplateObject.query(SQL, new RowMapper<PayLog>() {
+            @Override
+            public PayLog mapRow(ResultSet resultSet, int i) throws SQLException {
+                PayLog pay=new PayLog();
+                pay.setTotal_cash(resultSet.getDouble("cash"));
+                String time=Utils.checkTime(resultSet.getString("departure_time"));
+                pay.setDeparture_time(Utils.getTimeDate(time));
+                String mobile=resultSet.getString("be_popularized_mobile");
+                String now_mobile=mobile;
+                if(mobile.length()==11){
+                    mobile=mobile.substring(0,3)+"****"+now_mobile.substring(now_mobile.length()-4);
+                }
+                pay.setUser_mobile(mobile);
+                return pay;
+            }
+        });
+        return payLogList;
+    }
     //得到token对应的id
     public int getIDByToken(String token) {
         String SQL = "SELECT user_id from pc_user_token where token=?";

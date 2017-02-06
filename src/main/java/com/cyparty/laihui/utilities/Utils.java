@@ -28,8 +28,8 @@ public class Utils {
         //System.out.println(Memcache.getMemcache("3d2d8b6b8fdfcbadedb20072010ea842"));
         //System.out.println(getOrderNumber(5));
         //System.out.println(date2TimeStamp("2016-8-27 05:06:40"));
-        getTimeSubOrAdd("2016-8-27 05:06:40",2);
-
+        //getTimeSubOrAdd("2016-8-27 05:06:40",2);
+        getTimeDate("2016-8-27 05:06:40");
     }
     public static String getCurrentTime() {
         Date inputDate = new Date();
@@ -322,5 +322,13 @@ public class Utils {
         String typ_val="#title#="+title+"&#orderstatus#="+content;
         boolean send_isSuccess= SendSMSUtil.sendSMS(d_mobile, 15292, typ_val);
         return send_isSuccess;
+    }
+    public static String getTimeDate(String time){
+        String cur_time=time.split(" ")[0];
+        int year=Integer.parseInt(cur_time.split("-")[0]);
+        int month=Integer.parseInt(cur_time.split("-")[1]);
+        int day=Integer.parseInt(cur_time.split("-")[2]);
+        String now_time=year+"年"+month+"月"+day+"日";
+        return now_time;
     }
 }

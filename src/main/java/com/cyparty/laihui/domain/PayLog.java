@@ -13,13 +13,31 @@ public class PayLog implements Comparable<PayLog> {
     private int p_id;
     private int driver_id;
     private double cash;
+    private double total_cash;
     private int action_type;
     private int pay_type;
     private int order_status;
     private String create_time;
     private String departure_time;
+    private String user_mobile;
     private String pay_account;
     private String trade_no;
+
+    public double getTotal_cash() {
+        return total_cash;
+    }
+
+    public void setTotal_cash(double total_cash) {
+        this.total_cash = total_cash;
+    }
+
+    public String getUser_mobile() {
+        return user_mobile;
+    }
+
+    public void setUser_mobile(String user_mobile) {
+        this.user_mobile = user_mobile;
+    }
 
     public int getIs_complete() {
         return is_complete;

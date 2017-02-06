@@ -3,10 +3,8 @@ package com.cyparty.laihui.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cyparty.laihui.db.LaiHuiDB;
-import com.cyparty.laihui.domain.AppUser;
-import com.cyparty.laihui.domain.Campaign;
-import com.cyparty.laihui.domain.Code;
-import com.cyparty.laihui.domain.User;
+import com.cyparty.laihui.domain.*;
+import com.cyparty.laihui.utilities.PercentageConfig;
 import com.cyparty.laihui.utilities.ReturnJsonUtil;
 import com.cyparty.laihui.utilities.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -175,7 +173,46 @@ public class CampaignController {
 
                 json = ReturnJsonUtil.returnSuccessJsonString(result, "推广人信息获取成功！");
                 return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+            case "show_info":
+                id=0;
+                AppUser user=new AppUser();
+                if(token!=null&&!token.isEmpty()){
+                    try {
+                        id=laiHuiDB.getIDByToken(token);
+                        String user_where=" where _id="+id;
+                        List<AppUser> userList=laiHuiDB.getUserList(user_where);
+                        if(userList.size()>0){
+                            user=userList.get(0);
+                        }
+                    } catch (Exception e) {
+                        result.put("status",false);
+                        result.put("msg","非法token！");
+                    }
+                }else {
+                    result.put("status",false);
+                    result.put("msg","非法token！");
+                }
+                where=" where user_id="+id+" and is_reg=1";
+                int total_campaign=laiHuiDB.getCount("pc_campaign",where);
+
+                where=" where p_id="+user_id+" and order_status=1 ";
+                int total_departure=laiHuiDB.getCount("pay_cash_log",where);
+
+                result.put("total_campaign",total_campaign);
+                result.put("total_departure",total_departure);
+
+                mobile=user.getUser_mobile();
+                String now_mobile=mobile;
+                if(mobile.length()==11){
+                    mobile=mobile.substring(0,3)+"****"+now_mobile.substring(now_mobile.length()-4);
+                }
+                result.put("mobile",mobile);
+                result.put("avatar",user.getAvatar());
+
+                json = ReturnJsonUtil.returnSuccessJsonString(result, "全民代理信息获取成功！");
+                return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
         }
+
         json = ReturnJsonUtil.returnFailJsonString(result, "参数错误！");
         return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
     }

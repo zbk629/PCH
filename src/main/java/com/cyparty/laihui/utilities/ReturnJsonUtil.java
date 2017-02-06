@@ -766,6 +766,9 @@ public class ReturnJsonUtil {
             jsonObject.put("type",payLog.getAction_type());
             jsonObject.put("id",payLog.get_id());
             jsonObject.put("create_time",payLog.getCreate_time());
+            jsonObject.put("departure_time",payLog.getDeparture_time());
+            jsonObject.put("mobile",payLog.getUser_mobile());
+            jsonObject.put("total",new BigDecimal(payLog.getTotal_cash()).setScale(2,BigDecimal.ROUND_HALF_UP).toString());
             jsonObject.put("cash",new BigDecimal(payLog.getCash()).setScale(2,BigDecimal.ROUND_HALF_UP).toString());
 
             dataArray.add(jsonObject);
