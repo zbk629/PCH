@@ -105,6 +105,7 @@ public class PayController {
             double day=campaign_cash/PercentageConfig.getSingle_person();
 
             result.put("campaign_cash",new BigDecimal(campaign_cash).setScale(2,BigDecimal.ROUND_HALF_UP).toString());//推广收入
+            result.put("total_day",new BigDecimal(day).setScale(2,BigDecimal.ROUND_HALF_UP).toString());//推广收入
             result.put("total_cash",new BigDecimal(account_left).setScale(2,BigDecimal.ROUND_HALF_UP).toString());//全部收入
             result.put("already_got_cash",new BigDecimal(already_got_cash).setScale(2,BigDecimal.ROUND_HALF_UP).toString());//已提现金额
             result.put("current_cash",new BigDecimal(current_cash).setScale(2,BigDecimal.ROUND_HALF_UP).toString());//当前可提现金额
