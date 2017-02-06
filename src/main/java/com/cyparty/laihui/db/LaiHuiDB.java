@@ -279,7 +279,7 @@ public class LaiHuiDB {
                 pay.setTotal_cash(resultSet.getDouble("cash"));
                 String time=Utils.checkTime(resultSet.getString("departure_time"));
                 pay.setDeparture_time(Utils.getTimeDate(time));
-                String mobile=resultSet.getString("be_popularized_mobile");
+                String mobile=resultSet.getString("user_mobile");
                 String now_mobile=mobile;
                 if(mobile.length()==11){
                     mobile=mobile.substring(0,3)+"****"+now_mobile.substring(now_mobile.length()-4);

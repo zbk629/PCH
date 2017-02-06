@@ -213,7 +213,7 @@
         <span>加载更多</span>
         <div class="clear"></div>
       </div>
-      <div class="last_span">~~~~我到底了~~~~</div>
+      <div class="last_span">~~~~我是有底线的~~~~</div>
     </ul>
   </div>
 </div>

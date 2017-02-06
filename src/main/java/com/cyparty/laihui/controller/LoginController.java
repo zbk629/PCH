@@ -128,7 +128,16 @@ public class LoginController {
     public String account_detail(HttpServletRequest request, Model model) {
         return "account_detail";
     }
-
+    //全民代理
+    @RequestMapping("/universal_agency")
+    public String universal_agency(HttpServletRequest request, Model model) {
+        return "universal_agency";
+    }
+    //全民代理--账户明细
+    @RequestMapping("/universal_account")
+    public String universal_account(HttpServletRequest request, Model model) {
+        return "universal_account";
+    }
     @RequestMapping("/wx_map")
     public String wx_map(HttpServletRequest request, Model model) {
         return "wx_map";

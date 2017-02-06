@@ -269,7 +269,7 @@ public class PayController {
                 String source=request.getParameter("source");
                 List<PayLog> payLogList=new ArrayList<>();
                 if(source!=null&&source.equals("info")){
-                    String where=" a left join pc_user b on a.user_id=b._id  where p_id="+user_id+" and order_status=1 ";//推广
+                    String where=" a left join pc_user b on a.user_id=b._id  where a.p_id="+user_id+" and order_status=1 ";//推广
                     List<PayLog> payLogList1=laiHuiDB.getPayLogInfo(where);
                     for(PayLog payLog:payLogList1){
                         payLog.setAction_type(1);//推广
