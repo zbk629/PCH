@@ -303,11 +303,14 @@
       validate.validate_submit3('/campaign', obj, insertSuccessMessage);
     }
     function insertSuccessMessage() {
+      var avatar = global_data.result.avatar;
+      if(avatar==""){
+        avatar="/resource/images/user_logo.png"
+      }
         $('.un_mobile').text(global_data.result.mobile);
         $('.total_campaign').text(global_data.result.total_campaign);
         $('.total_departure').text(global_data.result.total_departure);
-        $('.un_avatar').attr('src',global_data.result.avatar);
-    }
+        $('.un_avatar').attr('src',avatar);
     //展示错误信息
     function sendKeepDownInput() {
       $('.booking_error').hide();
