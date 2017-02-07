@@ -149,6 +149,7 @@ public class PayController {
             List<PayLog> payLogList=laiHuiDB.getPayLog(where);
             String pay_reason="";
             if(payLogList.size()>0){
+                PayLog payLog=payLogList.get(0);
                 PayBack payBack=new PayBack();
                 int pay_type=Integer.parseInt(request.getParameter("pay_type"));
                 String pay_account=request.getParameter("pay_account");
@@ -168,7 +169,7 @@ public class PayController {
                 payBack.setPay_account(pay_account);
                 payBack.setPay_reason(pay_reason);
                 payBack.setPay_cash(pay_cash);
-                if(pay_cash!=0){
+                if(pay_cash!=0&&payLog.getCash()==pay_cash){
                     is_success=laiHuiDB.createPayBack(payBack);
                 }else {
                     json = ReturnJsonUtil.returnFailJsonString(result, "退款金额有误，请重新核对！");
