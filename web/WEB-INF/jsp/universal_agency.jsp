@@ -371,7 +371,7 @@
                     <div class="cash_all_top">
                         <div class="cash_message_title">
                             <div class="cash_title">全民代理总收益</div>
-                            <span class="cash_explain"><img src="/resource/images/universal/icon_question.png"></span>
+                            <%--<span class="cash_explain"><img src="/resource/images/universal/icon_question.png"></span>--%>
                         </div>
                         <div class="cash_balance">
                             <span class="cash_balance_span">￥</span>
