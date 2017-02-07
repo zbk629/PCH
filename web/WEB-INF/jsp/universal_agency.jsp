@@ -273,8 +273,8 @@
     });
     var action_url = "/app/api/pay/orders";
     var change = 0;
-//    var token = window.location.href.split('token=')[1].substring(0, 32);
-    var token = "cb15c3cf28cb81be4e82e4896da8c4c8";
+    var token = window.location.href.split('token=')[1].substring(0, 32);
+    //var token = "cb15c3cf28cb81be4e82e4896da8c4c8";
     var current_cash;
     function android_get_token() {
 

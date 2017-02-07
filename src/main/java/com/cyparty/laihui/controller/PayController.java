@@ -277,7 +277,7 @@ public class PayController {
                     }
                     payLogList.addAll(payLogList1);
                 }else {
-                    String where=" where p_id="+user_id+" and order_status=1 ";//推广
+                    String where=" where p_id="+user_id+" and order_status=1 "+" order by create_time DESC ";//推广
                     List<PayLog> payLogList1=laiHuiDB.getPayLog(where);
                     for(PayLog payLog:payLogList1){
                         payLog.setAction_type(1);//推广
@@ -292,7 +292,7 @@ public class PayController {
                 return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
             }else if(type.equals("3")){
                 //提现
-                String where=" where user_id="+user_id+" and action_type=1 ";//提现
+                String where=" where user_id="+user_id+" and action_type=1 "+" order by create_time DESC ";//提现
                 List<PayLog> payLogList3=laiHuiDB.getPayLog(where);
                 for(PayLog payLog:payLogList3){
                     payLog.setAction_type(3);//提现
