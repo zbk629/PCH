@@ -317,6 +317,9 @@
       var already_got_cash = global_data.result.already_got_cash;//已提现金额
       var total_day = global_data.result.total_day;//天数
       current_cash = global_data.result.current_cash;//可提现金额
+      if(campaign_cash=="0.00"){
+        campaign_cash=0;
+      }
       $('.cash_balance_money').text(campaign_cash);
       $('.cash_money').text('+'+already_got_cash);
       $('.total_day').text(total_day);

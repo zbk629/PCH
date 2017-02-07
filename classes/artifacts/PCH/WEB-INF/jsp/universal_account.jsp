@@ -145,8 +145,8 @@
     var action_url = "/pay/list";
 
     var total;
-//    var token = window.location.href.split('?token=')[1].split('&end')[0];
-    var token = "cb15c3cf28cb81be4e82e4896da8c4c8";
+    var token = window.location.href.split('?token=')[1].split('&end')[0];
+//    var token = "cb15c3cf28cb81be4e82e4896da8c4c8";
     var time_span;
     function android_get_token()
     {
@@ -171,57 +171,6 @@
     }
 
     function insertMessage(){
-//     var global_data = {
-//        "result":{
-//          "data":[
-//            {
-//              "total":"79.00",
-//              "mobile":"188****4316",
-//              "id":0,
-//              "type":1,
-//              "departure_time":"2017年1月21日",
-//              "cash":"2.37"
-//            },{
-//              "total":"79.00",
-//              "mobile":"188****4316",
-//              "id":0,
-//              "type":1,
-//              "departure_time":"2017年1月21日",
-//              "cash":"2.37"
-//            },{
-//              "total":"79.00",
-//              "mobile":"188****4316",
-//              "id":0,
-//              "type":1,
-//              "departure_time":"2017年1月20日",
-//              "cash":"2.37"
-//            },{
-//              "total":"79.00",
-//              "mobile":"188****4316",
-//              "id":0,
-//              "type":1,
-//              "departure_time":"2017年1月20日",
-//              "cash":"2.37"
-//            },{
-//              "total":"79.00",
-//              "mobile":"188****4316",
-//              "id":0,
-//              "type":1,
-//              "departure_time":"2017年1月19日",
-//              "cash":"2.37"
-//            },{
-//              "total":"79.00",
-//              "mobile":"188****4316",
-//              "id":0,
-//              "type":1,
-//              "departure_time":"2017年1月18日",
-//              "cash":"2.37"
-//            }
-//          ]
-//        },
-//        "message":"响应成功",
-//        "status":true
-//      }
       if(global_data.result.data.length==0){
         $('.account_list_more2').show();
       }else{

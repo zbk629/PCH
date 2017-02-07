@@ -273,8 +273,8 @@
     });
     var action_url = "/app/api/pay/orders";
     var change = 0;
-//    var token = window.location.href.split('token=')[1].substring(0, 32);
-    var token = "cb15c3cf28cb81be4e82e4896da8c4c8";
+    var token = window.location.href.split('token=')[1].substring(0, 32);
+    //var token = "cb15c3cf28cb81be4e82e4896da8c4c8";
     var current_cash;
     function android_get_token() {
 
@@ -317,6 +317,9 @@
       var already_got_cash = global_data.result.already_got_cash;//已提现金额
       var total_day = global_data.result.total_day;//天数
       current_cash = global_data.result.current_cash;//可提现金额
+      if(campaign_cash=="0.00"){
+        campaign_cash=0;
+      }
       $('.cash_balance_money').text(campaign_cash);
       $('.cash_money').text('+'+already_got_cash);
       $('.total_day').text(total_day);
