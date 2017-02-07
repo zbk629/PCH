@@ -249,8 +249,8 @@
         });
         var change = 0;
 
-        var token = window.location.href.split('?token=')[1].split('&current_cash=')[0];
-        var current_cash = window.location.href.split('&current_cash=')[1];
+        var token = window.location.href.split('token=')[1].substring(0, 32);
+        var current_cash ;
         var pay_account;
         var type = 0;
         function android_get_token() {
@@ -258,6 +258,7 @@
             try {
 //                var local_token=androidInterface.getToken();
 //                token = local_token;
+                loadCash();
                 loadUser();
             }
             catch (err) {
@@ -275,7 +276,15 @@
             obj.token = token;
             validate.validate_submit3('/pay/account', obj, insertMessage);
         }
-
+        //封装传输的信息并提交
+        function loadCash() {
+            var obj = {};
+            obj.token = token;
+            validate.validate_submit3('/pay/abstract', obj, insertCash);
+        }
+        function insertCash(){
+            current_cash = global_data.result.current_cash;//可提现金额
+        }
         //判断是否存在账户记录
         function insertMessage(){
             var count_type = global_data.result.type;
