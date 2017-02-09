@@ -447,6 +447,7 @@ public class UserActionController {
                 case "show_my_passenger_orders":
                     if(user_id>0){
 
+
                         String user_where=" where user_id="+user_id;
                         String p_mobile=laiHuiDB.getWxUser(user_where).get(0).getUser_mobile();
 

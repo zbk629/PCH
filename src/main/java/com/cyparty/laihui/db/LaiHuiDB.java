@@ -323,15 +323,12 @@ public class LaiHuiDB {
     //得到支付信息
     public List<PayLog> getPayInfo(String where) {
         String SQL = "SELECT * FROM pay_cash_log " + where ;
-        List<PayLog> payLogList = jdbcTemplateObject.query(SQL, new RowMapper<PayLog>() {
-            @Override
-            public PayLog mapRow(ResultSet resultSet, int i) throws SQLException {
-                PayLog payLog=new PayLog();
-                payLog.setCash(resultSet.getDouble("cash"));
-                payLog.setCreate_time(Utils.checkTime(resultSet.getString("create_time")));
-                payLog.setTrade_no(resultSet.getString("trade_no"));
-                return payLog;
-            }
+        List<PayLog> payLogList = jdbcTemplateObject.query(SQL, (resultSet, i) -> {
+            PayLog payLog=new PayLog();
+            payLog.setCash(resultSet.getDouble("cash"));
+            payLog.setCreate_time(Utils.checkTime(resultSet.getString("create_time")));
+            payLog.setTrade_no(resultSet.getString("trade_no"));
+            return payLog;
         });
         return payLogList;
     }
@@ -358,43 +355,40 @@ public class LaiHuiDB {
                 orders=jdbcTemplateObject.query(SQL, new OrderMapper());
                 break;
             case 1:
-                orders=jdbcTemplateObject.query(SQL, new RowMapper<Order>() {
-                    @Override
-                    public Order mapRow(ResultSet resultSet, int i) throws SQLException {
-                        Order order=new Order();
+                orders=jdbcTemplateObject.query(SQL, (resultSet, i) -> {
+                    Order order=new Order();
 
-                        order.set_id(resultSet.getInt("a._id"));
-                        order.setOrder_id(resultSet.getInt("order_id"));
-                        order.setUser_id(resultSet.getInt("user_id"));
-                        order.setOrder_status(resultSet.getInt("order_status"));
-                        order.setUpdate_time(Utils.checkTime(resultSet.getString("update_time")));
-                        order.setCreate_time(Utils.checkTime(resultSet.getString("create_time")));
-                        String name= Utils.checkNull(resultSet.getString("user_name"));
-                        String idsn= Utils.checkNull(resultSet.getString("user_idsn"));
+                    order.set_id(resultSet.getInt("a._id"));
+                    order.setOrder_id(resultSet.getInt("order_id"));
+                    order.setUser_id(resultSet.getInt("user_id"));
+                    order.setOrder_status(resultSet.getInt("order_status"));
+                    order.setUpdate_time(Utils.checkTime(resultSet.getString("update_time")));
+                    order.setCreate_time(Utils.checkTime(resultSet.getString("create_time")));
+                    String name= Utils.checkNull(resultSet.getString("user_name"));
+                    String idsn= Utils.checkNull(resultSet.getString("user_idsn"));
 
-                        if(!name.isEmpty()) {
-                            String endName = "";
-                            if (!idsn.isEmpty()) {
-                                String sexNum = idsn.substring(16, 17);
-                                if (!sexNum.isEmpty()) {
-                                    if (Integer.parseInt(sexNum) % 2 == 1) {
-                                        endName = "先生";
-                                    } else {
-                                        endName = "女士";
-                                    }
+                    if(!name.isEmpty()) {
+                        String endName = "";
+                        if (!idsn.isEmpty()) {
+                            String sexNum = idsn.substring(16, 17);
+                            if (!sexNum.isEmpty()) {
+                                if (Integer.parseInt(sexNum) % 2 == 1) {
+                                    endName = "先生";
+                                } else {
+                                    endName = "女士";
                                 }
                             }
-                            if (name.length() <= 3) {
-                                name = name.substring(0, 1) + endName;
-                            } else {
-                                name = name.substring(0, 2) + endName;
-                            }
                         }
-                        order.setUser_name(name);
-                        order.setUser_mobile(Utils.checkNull(resultSet.getString("user_mobile")));
-                        order.setUser_avatar(Utils.checkNull(resultSet.getString("user_avatar")));
-                        return order;
+                        if (name.length() <= 3) {
+                            name = name.substring(0, 1) + endName;
+                        } else {
+                            name = name.substring(0, 2) + endName;
+                        }
                     }
+                    order.setUser_name(name);
+                    order.setUser_mobile(Utils.checkNull(resultSet.getString("user_mobile")));
+                    order.setUser_avatar(Utils.checkNull(resultSet.getString("user_avatar")));
+                    return order;
                 });
                 break;
             default:

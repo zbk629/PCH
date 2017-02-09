@@ -2,6 +2,7 @@ package com.cyparty.laihui.controller;
 
 import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.User;
+import com.cyparty.laihui.utilities.WXUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,14 +21,11 @@ public class DepartureInfoController {
 
     @RequestMapping("/laihui/car/list")
     public String car_departure(Model model, HttpServletRequest request) {
-       /* //微信分享模块
+        //微信分享模块
         String title = "来回拼车，你值得拥有！";
-        WXUtils.wx_intro(request, model, title, "eat.gif");*/
-        /*try {
-            WXUtils.pinCheNotify(request);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        WXUtils.wx_intro(request, model, title, "icon_share.png");
+
+
         return "car_driver_departure_list";
     }
 
@@ -82,6 +80,7 @@ public class DepartureInfoController {
     @RequestMapping("/")
     public String index(Model model, HttpServletRequest request) {
         model.asMap().clear();
+
         return "redirect:/laihui/car/list";
     }
 

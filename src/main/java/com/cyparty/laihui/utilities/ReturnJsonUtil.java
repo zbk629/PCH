@@ -266,7 +266,7 @@ public class ReturnJsonUtil {
         JSONObject result_json = new JSONObject();
         JSONArray dataArray = new JSONArray();
 
-        String where=" where  a._id=" + id;
+        String where=" where  a._id=" + id+" and a.is_enable=1 ";
         List<PassengerOrder> passengerOrderList = laiHuiDB.getPassengerDepartureInfo(where);
         for (PassengerOrder departure : passengerOrderList) {
             JSONObject passengerObject = new JSONObject();

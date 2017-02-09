@@ -238,6 +238,26 @@ public class Utils {
         }
         return randomNum;
     }
+
+    //产生16位随机数
+    public static String random16(){
+        int[] i=new int[16];
+        int count=0;
+        String randomNum="";
+        while(count<16){
+            int t=(int)(Math.random()*122);//抽取的数值小于char类型的“z”（122）
+            if((t>=0&t<=9)|(t>=65&t<=90)|(t>=97&t<=122)){
+                i[count]=t;
+                count++;
+            }
+        }for(int k=0;k<16;k++){
+            if(i[k]>=0&i[k]<=9)
+                randomNum=randomNum+i[k];
+            else
+                randomNum=randomNum+(char)i[k];
+        }
+        return randomNum;
+    }
     /**
      * 日期格式字符串转换成时间戳
      * @param date 字符串日期

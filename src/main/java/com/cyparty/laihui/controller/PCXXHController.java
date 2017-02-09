@@ -384,6 +384,7 @@ public class PCXXHController {
             String action = request.getParameter("action");
             int page = 0;
             int size = 10;
+
             if (request.getParameter("page") != null && !request.getParameter("page").trim().equals("")) {
                 try {
                     page = Integer.parseInt(request.getParameter("page"));

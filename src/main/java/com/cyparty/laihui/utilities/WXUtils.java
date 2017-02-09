@@ -146,6 +146,13 @@ public class WXUtils {
         model.addAttribute("wx_encryption", wx_encryption);
         String imageUrl=wx_url_base+"/resource/images/"+image_name;
         model.addAttribute("imageUrl",imageUrl);
+
+/*
+        System.out.println("wx_jsapi_token:"+wx_jsapi_token);
+        System.out.println("noncestr:"+wx_nonceStr);
+        System.out.println("timestamp:"+wx_timestamp);
+        System.out.println("url:"+wx_url);
+        System.out.println("signature:"+wx_encryption);*/
     }
     //得到微信公众号的token
     public static String getWXPublishAccessToken()
