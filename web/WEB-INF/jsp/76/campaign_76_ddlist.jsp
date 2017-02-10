@@ -12,7 +12,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>订单列表</title>
-    <link rel="stylesheet" href="/resource/css/default.css">
+    <link rel="stylesheet" href="/resource/76/css/default.css">
 </head>
 
 <body class="bg1">
@@ -31,7 +31,7 @@
             <div class="ddlist-i-t"><span class="t">2017-01-16</span> <span class="zt">待发货</span></div>
             <div class="ddlist-i-c">
                 <div class="ddlist-item">
-                    <div class="ddlist-item-img"><img src="/resource/images/gg1.jpg"/> </div>
+                    <div class="ddlist-item-img"><img src="/resource/76/images/gg1.jpg"/> </div>
                     <div class="ddlist-item-con">
                         <div class="ddlist-item-con-t">礼品装(麻辣烩面)</div>
                         <div class="ddlist-item-con-c">12克*12包</div>
@@ -51,7 +51,7 @@
             <div class="ddlist-i-t"><span class="t">2017-01-16</span> <span class="zt">待发货</span></div>
             <div class="ddlist-i-c">
                 <div class="ddlist-item">
-                    <div class="ddlist-item-img"><img src="images/gg1.jpg"/> </div>
+                    <div class="ddlist-item-img"><img src="/resource/76/images/gg1.jpg"/> </div>
                     <div class="ddlist-item-con">
                         <div class="ddlist-item-con-t">礼品装(麻辣烩面)</div>
                         <div class="ddlist-item-con-c">129克*12包</div>
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="ddlist-item">
-                    <div class="ddlist-item-img"><img src="images/gg1.jpg"/> </div>
+                    <div class="ddlist-item-img"><img src="/resource/76/images/gg1.jpg"/> </div>
                     <div class="ddlist-item-con">
                         <div class="ddlist-item-con-t">礼品装(麻辣烩面)</div>
                         <div class="ddlist-item-con-c">130*8盒</div>

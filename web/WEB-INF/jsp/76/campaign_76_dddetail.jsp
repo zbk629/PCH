@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="ddlist-item">
-                <div class="ddlist-item-img"><img src="images/gg1.jpg"/> </div>
+                <div class="ddlist-item-img"><img src="/resource/76/images/gg1.jpg"/> </div>
                 <div class="ddlist-item-con">
                     <div class="ddlist-item-con-t">礼品装(麻辣烩面)</div>
                     <div class="ddlist-item-con-c">130*8盒</div>
