@@ -217,5 +217,4 @@ public class CampaignController {
         return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
     }
 
-
 }
