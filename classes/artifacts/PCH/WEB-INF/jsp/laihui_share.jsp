@@ -298,6 +298,14 @@
       width: 2.4rem;
       border-radius: 50%;
     }
+    .publish_not_has{
+      color: #888;
+      font-size: 2rem;
+      text-align: center;
+      margin-top: 9rem;
+      margin-bottom: 19rem;
+      display: none;
+    }
   </style>
   <link href="/resource/css/auto.css" rel="stylesheet" type="text/css">
   <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -389,10 +397,7 @@
       changeFontSize();
       checkId();
       changePCStyle();
-//      $('.app_hover_box').click(function(){
-//        $('.hover_all_app').hide();
-//      });
-
+//      window.location="laihui://pinche?id="+item_id;
       check();
     });
     var url = window.location.href;
@@ -461,8 +466,12 @@
     }
     //添加用户数据
     function insertMessage() {
-      if (global_data.result.total == 0) {
-        alert("数据跑丢了，工程师正在寻找路上~")
+      if (global_data.result.data.length == 0) {
+
+        $('.publish_message').hide();
+        $('.publish_has').hide();
+        $('.publish_not_has').show();
+          alert("订单已被删除！");
       } else {
         for (var i = 0; i < global_data.result.data.length; i++) {
           var driving_name = global_data.result.data[i].user_data.name;//车主姓名
@@ -471,8 +480,8 @@
           var departure_time = global_data.result.data[i].departure_time;//开始时间
 
           var mobile = global_data.result.data[i].user_data.mobile;//手机号
-          var departure_city = global_data.result.data[i].boarding_point.district;//出发城市
-          var destination_city = global_data.result.data[i].breakout_point.district;//目的城市
+          var departure_city = global_data.result.data[i].boarding_point.city;//出发城市
+          var destination_city = global_data.result.data[i].breakout_point.city;//目的城市
 
           var description ="";//描述信息
           var tag_yes_content = "";//yes标签
@@ -494,8 +503,6 @@
           if (destination == "" || destination =="null") {
             destination = breakout_point;
           }
-
-
           global_driver_id = global_data.result.data[i].driver_id;//id
           global_start_time = departure_time;
           global_mobile = mobile;
@@ -629,39 +636,15 @@
                   }
                 },
                 25);
-//        alert("能否打开APP");
+//        alert("我是IOS，我要打开的链接是，laihuipc://"+item_id);
        window.location = "laihuipc://"+item_id;
       } else if (navigator.userAgent.match(/android/i)) {
-        var state = null;
-//        try {
-//          alert("检测是否存在app，即将打开");
-//          state = window.open("laihui://pinche?id="+213, '_blank');
-//        } catch(e) {
-//        }
-//        if (state) {
-//          window.close();
-//        } else {
-//          alert("不存在app，前去下载");
-//          window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";
-//        }
-//        alert("能否打开APP");
 
+//        alert("我是安卓，我要打开的链接是，laihui://pinche?id="+item_id);
         window.location="laihui://pinche?id="+item_id;
-        setTimeout(function(){
-          window.location="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";//如果超时就跳转到app下载页
-        },1500);
-//
-//        window.setTimeout(function() {
-//                  var timeOutDateTime = new Date();
-//                  if (timeOutDateTime - loadDateTime < 5000) {
-//                    alert("响应超时");
-//                    window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";
-//                  } else {
-//                    alert("响应超时");
-//                    window.close();
-//                  }
-//                },
-//                25);
+//        setTimeout(function(){
+//          window.location="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";//如果超时就跳转到app下载页
+//        },1500);
 
       }
     }
@@ -688,7 +671,7 @@
     <span style="font-size: 1.6rem">来回拼车--行程信息</span>
   </div>
   <div class="publish_message_driver">
-    <div class="publish_message_driver_title">
+    <div class="publish_message_driver_title publish_has">
       <img src="/resource/images/start_place.png">
       <span class="departure_city"></span>
             <span class="start_city_type">
@@ -704,7 +687,7 @@
             <span class="end_city" style="color:#999794"></span>
             </span>
     </div>
-    <div class="publish_message_driver_time">
+    <div class="publish_message_driver_time publish_has">
       <img src="/resource/images/pc_icon_thin_time.png" class="publish_message_driver_time_img">
       <%--<span class="item_mouth"></span>--%>
       <span class="item_start_end_times"></span>
@@ -713,6 +696,7 @@
         <span class="item_seat_status"></span>
       </div>
     </div>
+    <div class="publish_not_has">订单已被删除</div>
   </div>
   <div class="publish_message">
     <ul>

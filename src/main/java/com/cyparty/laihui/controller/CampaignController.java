@@ -217,4 +217,19 @@ public class CampaignController {
         return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
     }
 
+    /**
+     * 活动页面 ,以/campaign开头
+     */
+    @RequestMapping("/campaign/76/index")
+    public String campaign_76_index() {
+        return "76/campaign_76_index";
+    }
+    @RequestMapping("/campaign/76/ddlist")
+    public String campaign_76_ddlist() {
+        return "76/campaign_76_ddlist";
+    }
+    @RequestMapping("/campaign/76/detail")
+    public String passenger_order_info() {
+        return "76/campaign_76_dddetail";
+    }
 }

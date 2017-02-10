@@ -397,10 +397,7 @@
       changeFontSize();
       checkId();
       changePCStyle();
-//      $('.app_hover_box').click(function(){
-//        $('.hover_all_app').hide();
-//      });
-
+//      window.location="laihui://pinche?id="+item_id;
       check();
     });
     var url = window.location.href;
@@ -639,39 +636,15 @@
                   }
                 },
                 25);
-//        alert("能否打开APP");
+//        alert("我是IOS，我要打开的链接是，laihuipc://"+item_id);
        window.location = "laihuipc://"+item_id;
       } else if (navigator.userAgent.match(/android/i)) {
-        var state = null;
-//        try {
-//          alert("检测是否存在app，即将打开");
-//          state = window.open("laihui://pinche?id="+213, '_blank');
-//        } catch(e) {
-//        }
-//        if (state) {
-//          window.close();
-//        } else {
-//          alert("不存在app，前去下载");
-//          window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";
-//        }
-//        alert("能否打开APP");
 
+//        alert("我是安卓，我要打开的链接是，laihui://pinche?id="+item_id);
         window.location="laihui://pinche?id="+item_id;
-        setTimeout(function(){
-          window.location="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";//如果超时就跳转到app下载页
-        },1500);
-//
-//        window.setTimeout(function() {
-//                  var timeOutDateTime = new Date();
-//                  if (timeOutDateTime - loadDateTime < 5000) {
-//                    alert("响应超时");
-//                    window.location = "http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";
-//                  } else {
-//                    alert("响应超时");
-//                    window.close();
-//                  }
-//                },
-//                25);
+//        setTimeout(function(){
+//          window.location="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";//如果超时就跳转到app下载页
+//        },1500);
 
       }
     }

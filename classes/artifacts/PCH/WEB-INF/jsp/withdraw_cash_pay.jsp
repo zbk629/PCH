@@ -422,7 +422,7 @@
         <div class="cash_type">
             <div class="cash_type1 active_type weixin_type" onclick="changePay(this)">
                 <div class="cash_top_input">
-                    <input placeholder="请输入您的微信帐号" type="tel" class="cash_input_user wx">
+                    <input placeholder="请输入您的微信帐号"  class="cash_input_user wx">
                 </div>
                 <div class="cash_type_box">
                     <img src="/resource/images/pch_cash_wx.png" class="cash_type_img">
@@ -433,7 +433,7 @@
             </div>
             <div class="cash_type1 zhifu_type" onclick="changePay(this)">
                 <div class="cash_top_input">
-                    <input placeholder="" type="tel" class="cash_input_user zf">
+                    <input placeholder="" class="cash_input_user zf">
                 </div>
                 <div class="cash_type_box">
                     <img src="/resource/images/pch_cash_zhi.png" class="cash_type_img" >
