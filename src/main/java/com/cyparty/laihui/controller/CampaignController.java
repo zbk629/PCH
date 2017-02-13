@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -218,7 +219,7 @@ public class CampaignController {
     }
 
     /**
-     * 活动页面 ,以/campaign开头
+     * 活动页面 ,76人烩面
      */
     @RequestMapping("/campaign/76/index")
     public String campaign_76_index() {
@@ -232,4 +233,64 @@ public class CampaignController {
     public String passenger_order_info() {
         return "76/campaign_76_dddetail";
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/api/campaign/76", method = RequestMethod.POST)
+    public ResponseEntity<String> pay_back(HttpServletRequest request,HttpServletResponse response) {
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
+        JSONObject result = new JSONObject();
+        String json = "";
+
+        int order_id = 0;
+        int goods_num ;
+        double goods_price;
+        OrderOf76 order=new OrderOf76();
+        String goods_name=request.getParameter("name");
+        try {
+            goods_num=Integer.valueOf(request.getParameter("number"));
+        } catch (NumberFormatException e) {
+            goods_num=0;
+        }
+        try {
+            goods_price=Double.valueOf(request.getParameter("price"));
+        } catch (NumberFormatException e) {
+            goods_price=0;
+        }
+        String buyer_location=request.getParameter("location");
+        String buyer_name=request.getParameter("user_name");
+        String buyer_mobile=request.getParameter("mobile");
+        String buyer_description=request.getParameter("description");
+
+        order.setGoods_name(goods_name);
+        order.setGoods_num(goods_num);
+        order.setGoods_price(goods_price);
+        order.setBuyer_location(buyer_location);
+        order.setBuyer_name(buyer_name);
+        order.setBuyer_mobile(buyer_mobile);
+        order.setBuyer_description(buyer_description);
+
+        try {
+            order_id=laiHuiDB.createOderOf76(order);
+        } catch (Exception e) {
+            order_id=0;
+        }
+        if (order_id!=0){
+            String pay_id=Utils.transformID(order_id);
+            String update_sql=" set pay_number='"+pay_id+"' where _id="+order_id;
+            laiHuiDB.update("pc_76_orders",update_sql);
+
+            result.put("pay_id",pay_id);
+            result.put("pay_money",goods_price);
+
+            json = ReturnJsonUtil.returnSuccessJsonString(result, "订单提交成功！");
+            return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+        }
+        json = ReturnJsonUtil.returnFailJsonString(result, "订单创建失败！");
+        return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+    }
+
+
 }

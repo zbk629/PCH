@@ -28,7 +28,7 @@ public class WebPayController {
     public ResponseEntity<String> sendAlipay(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws Exception {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
-        AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", PayConfigUtils.getApp_id(), PayConfigUtils.getPrivate_key(), "json", "utf-8", PayConfigUtils.getAlipay_public_key(), "RSA2");
+        AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", PayConfigUtils.getApp_id(), PayConfigUtils.getPrivate_key(), "json", "utf-8", PayConfigUtils.getAlipay_public_key(), "RSA");
         AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();//创建API对应的request
         alipayRequest.setReturnUrl("http://domain.com/CallBack/return_url.jsp");
         alipayRequest.setNotifyUrl("http://domain.com/CallBack/notify_url.jsp");//在公共参数中设置回跳和通知地址
