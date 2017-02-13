@@ -11,8 +11,11 @@ public class PayConfigUtils {
     private final static String wx_mch_id="1409441702";
     private final static String wx_app_secret_key="eo2MwtDcK6y3HaWzkbTpMvW8tMMxIbo4";
 
-    private final static String wx_pay_notify_url="http://laihuirun2.cyparty.com/wx_pay/notify";//运行环境
-    private final static String alipay_notify_url="http://laihuirun2.cyparty.com/alipay/notify";
+   /* private final static String wx_pay_notify_url="http://laihui.cyparty.com/wx_pay/notify";//运行环境
+    private final static String alipay_notify_url="http://laihui.cyparty.com/alipay/notify";*/
+
+    private final static String wx_pay_notify_url="http://laihuiwx.cyparty.com/wx_pay/notify";//测试环境
+    private final static String alipay_notify_url="http://laihuiwx.cyparty.com/alipay/notify";
 
    /* //测试通知地址
     private final static String wx_pay_notify_url="http://laihuiapi.cyparty.com/wx_pay/notify";

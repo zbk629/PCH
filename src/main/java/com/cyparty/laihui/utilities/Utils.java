@@ -5,6 +5,10 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.cyparty.laihui.domain.User;
 import org.apache.commons.lang.StringUtils;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -408,7 +412,75 @@ public class Utils {
         String md5= Utils.encode("MD5", now_value);
         return md5;
     }
+    public static String getIP(HttpServletRequest request) {
+        String ip = request.getHeader("X-Forwarded-For");
+        if(StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
+            //多次反向代理后会有多个ip值，第一个ip才是真实ip
+            int index = ip.indexOf(",");
+            if(index != -1){
+                return ip.substring(0,index);
+            }else{
+                return ip;
+            }
+        }
+        ip = request.getHeader("X-Real-IP");
+        if(StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
+            return ip;
+        }
+        return request.getRemoteAddr();
+    }
+    public static String getCharAndNum(int length) {
+        String val = "";
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            // 输出字母还是数字
+            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
+            // 字符串
+            if ("char".equalsIgnoreCase(charOrNum)) {
+                // 取得大写字母还是小写字母
+                int choice = random.nextInt(2) % 2 == 0 ? 65 : 97;
+                val += (char) (choice + random.nextInt(26));
+            } else if ("num".equalsIgnoreCase(charOrNum)) { // 数字
+                val += String.valueOf(random.nextInt(10));
+            }
+        }
+        return val;
+    }
+    public static String readStringXml( String xml) {
 
+        Document doc ;
+        String result=null;
+        try {
+            doc = DocumentHelper.parseText(xml); // 将字符串转为XML
+            Element rootElt = doc.getRootElement(); // 获取根节点
+
+            Iterator return_code = rootElt.elementIterator("return_code"); // 获取根节点下的子节点return_code
+            // 获取根节点下的子节点return_code
+            String is_success=null;
+
+            // 遍历head节点
+            while (return_code.hasNext()) {
+                Element recordEle = (Element) return_code.next();
+                is_success = recordEle.getText(); // 拿到return_code返回值
+                //System.out.println("return_code:" + is_success);
+            }
+            if(is_success!=null&&is_success.equals("SUCCESS")){
+                Iterator prepay_id = rootElt.elementIterator("prepay_id");
+                while (prepay_id.hasNext()) {
+
+                    Element recordEle = (Element) prepay_id.next();
+                    result = recordEle.getText(); // 拿到prepay_id返回值
+                    //System.out.println("prepay_id:" + result);
+
+                }
+            }
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
     //产生8位随机数
     public static String random8(){
         int[] i=new int[8];
