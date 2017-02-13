@@ -10,6 +10,11 @@ a{
     text-decoration: none;
     color:#333;
 }
+input:focus{
+    border-color: transparent;
+    outline: none;
+}
+
 .bg1{
     background-color: #F1F2F3;
 }
@@ -301,9 +306,9 @@ a{
 .fk-item > div.inpt{
     padding: 0 5px;
 }
-.fk-item > div.inpt input{
+.fk-item-input{
     display: block;
-    width: 100%;
+    width: 77%;
     height: 30px;
     line-height: 30px;
     border:0;

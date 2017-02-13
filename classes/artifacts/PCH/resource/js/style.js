@@ -219,16 +219,16 @@ var changeImg = (function () {
 
 })();
 
-$("input").bind("touchstart click", function (e) {
-    e.stopPropagation()
-    if (e.originalEvent.touches) {
-        //touch 移动端事件处理
-        return false;
-    } else {
-        // PC端 click事件处理
-    }
-
-});
+// $("input").bind("touchstart click", function (e) {
+//     e.stopPropagation()
+//     if (e.originalEvent.touches) {
+//         //touch 移动端事件处理
+//         return false;
+//     } else {
+//         // PC端 click事件处理
+//     }
+//
+// });
 
 //展示浮动层，自动消失
 function showFloatStyle(errorTips) {

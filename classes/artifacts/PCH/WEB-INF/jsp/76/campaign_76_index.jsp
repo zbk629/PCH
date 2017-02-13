@@ -16,11 +16,11 @@
     <link rel="stylesheet" href="/resource/76/css/swiper-3.4.1.min.css">
     <link rel="stylesheet" href="/resource/76/css/default.css">
 </head>
-
 <body>
 <div class="swiper-container">
     <div class="swiper-wrapper">
-        <div class="swiper-slide"><img src="/resource/76/images/banner-2.jpg" /></div>
+        <div class="swiper-slide"><img src="/resource/76/images/banner-5.png" /></div>
+        <div class="swiper-slide"><img src="/resource/76/images/banner-6.jpg" /></div>
         <div class="swiper-slide"><img src="/resource/76/images/banner-3.jpg" /></div>
         <div class="swiper-slide"><img src="/resource/76/images/banner-4.jpg" /></div>
     </div>
@@ -49,8 +49,8 @@
                 <p>目前，76人烩面已有52家实体店，每天销售15000碗面，历时六年的精心沉淀，只为一筷子到河南！ 送亲戚，送朋友，76人老烩面都是最好的选择！</p>
                 <p style="text-align: center;">一筷子到河南</p>
             </div>
-            <img src="/resource/76/images/a05.jpg" />
             <img src="/resource/76/images/a04.jpg" />
+            <img src="/resource/76/images/a05.jpg" />
             <img src="/resource/76/images/a03.jpg" />
             <img src="/resource/76/images/a02.jpg" />
             <img src="/resource/76/images/a08.jpg" />
@@ -63,18 +63,41 @@
     <div id="js-guige" style="display: none;">
         <div class="o">
             <div class="o-item">
-                <div class="t">产品1</div>
-                <p>单价: 60元</p>
-                <p>口味: 麻辣味</p>
-                <p>净含量：面饼+配料125克×12包</p>
+                <div class="t">五连包</div>
+                <p>单价: 48元</p>
+                <p>口味: 麻辣口味</p>
+                <p>净含量：面饼+配料130克×5包</p>
             </div>
             <div class="o-item">
-                <div class="t">产品2</div>
-                <p>单价: 60元</p>
-                <p>口味: 麻辣味</p>
-                <p>净含量：面饼+配料125克×12包</p>
+                <div class="t">五连包</div>
+                <p>单价: 52元</p>
+                <p>口味: 咖喱口味</p>
+                <p>净含量：面饼+配料130克×5包</p>
             </div>
-
+            <div class="o-item">
+                <div class="t">五连包</div>
+                <p>单价: 58元</p>
+                <p>口味: 滋补口味</p>
+                <p>净含量：面饼+配料130克×5包</p>
+            </div>
+            <div class="o-item">
+                <div class="t">礼盒装</div>
+                <p>单价: 98元</p>
+                <p>口味: 麻辣口味</p>
+                <p>净含量：面饼+配料130克×8碗</p>
+            </div>
+            <div class="o-item">
+                <div class="t">礼盒装</div>
+                <p>单价: 108元</p>
+                <p>口味: 咖喱口味</p>
+                <p>净含量：面饼+配料130克×8碗</p>
+            </div>
+            <div class="o-item">
+                <div class="t">礼盒装</div>
+                <p>单价: 106</p>
+                <p>口味: 滋补口味</p>
+                <p>净含量：面饼+配料130克×8碗</p>
+            </div>
         </div>
     </div>
 
@@ -85,7 +108,7 @@
                 <div class="p-price">单价</div>
                 <div class="p-number">购买数量</div>
             </div>
-            <div class="p-header list">
+            <div class="p-header list product_list">
                 <div class="p-name">五连包(麻辣口味)</div>
                 <div class="p-price">48元</div>
                 <div class="p-number item">
@@ -96,7 +119,7 @@
                     <div class="jia">&nbsp;</div>
                 </div>
             </div>
-            <div class="p-header list">
+            <div class="p-header list product_list">
                 <div class="p-name">五连包(咖喱口味)</div>
                 <div class="p-price">52元</div>
                 <div class="p-number item">
@@ -107,7 +130,7 @@
                     <div class="jia">&nbsp;</div>
                 </div>
             </div>
-            <div class="p-header list">
+            <div class="p-header list product_list">
                 <div class="p-name">五连包(滋补口味)</div>
                 <div class="p-price">58元</div>
                 <div class="p-number item">
@@ -118,7 +141,7 @@
                     <div class="jia">&nbsp;</div>
                 </div>
             </div>
-            <div class="p-header list">
+            <div class="p-header list product_list">
                 <div class="p-name">礼盒装(麻辣口味)</div>
                 <div class="p-price">98元</div>
                 <div class="p-number item">
@@ -129,7 +152,7 @@
                     <div class="jia">&nbsp;</div>
                 </div>
             </div>
-            <div class="p-header list">
+            <div class="p-header list product_list">
                 <div class="p-name">礼盒装(咖喱口味)</div>
                 <div class="p-price">108元</div>
                 <div class="p-number item">
@@ -140,7 +163,7 @@
                     <div class="jia">&nbsp;</div>
                 </div>
             </div>
-            <div class="p-header list last">
+            <div class="p-header list last product_list">
                 <div class="p-name">礼盒装(滋补口味)</div>
                 <div class="p-price">106元</div>
                 <div class="p-number item">
@@ -158,7 +181,7 @@
                 <div class="fb-i-t"><div class="tongji-t">合计:<span><strong>￥</strong><strong id="js-zongji">0</strong></span></div></div>
                 <div class="fb-i-n"><div id="js-yuofei" class="tongji-y">含邮费<strong>20</strong>元(满<strong>60</strong>包邮)</div></div>
             </div>
-            <div id="js-jiesuan" class="">结算</div>
+            <div id="js-jiesuan" class="" onclick="saveMessage()">结算</div>
         </div>
 
     </div>
@@ -177,36 +200,36 @@
     -->
     <div class="fk">
         <div class="fk-item">
-            <div class="label">收货地址:</div>
-            <div class="inpt"><input id="city" name="city" type="text" placeholder="请选择收获地址" readonly /></div>
+        <div class="label">收货地址:</div>
+        <input id="city" name="city" type="text" placeholder="请选择收获地址" readonly  class="fk-item-input"/>
         </div>
         <div class="fk-item">
-            <div class="label">详细地址:</div>
-            <div class="inpt"><input id="address" type="text" name="address" placeholder="请填写详细地址" /></div>
+        <div class="label">详细地址:</div>
+        <input id="address" type="text" name="address" placeholder="请填写详细地址"  class="fk-item-input"/>
         </div>
         <div class="fk-item">
-            <div class="label">收件人:</div>
-            <div class="inpt"><input id="username" type="text" name="username" placeholder="请填写收件人" /></div>
+        <div class="label">收件人:</div>
+        <input id="username" type="text" name="username" placeholder="请填写收件人"  class="fk-item-input"/>
         </div>
         <div class="fk-item">
-            <div class="label">手机号:</div>
-            <div class="inpt"><input id="mobile" type="tel" name="mobile" placeholder="请填写手机号" /></div>
+        <div class="label">手机号:</div>
+        <input id="mobile" type="tel" name="mobile" placeholder="请填写手机号"  class="fk-item-input"/>
         </div>
         <div class="fk-item">
-            <div class="label">备注信息:</div>
-            <div class="inpt"><input id="remark" type="text" name="remark" placeholder="备注信息" /></div>
+        <div class="label">备注信息:</div>
+        <input id="remark" type="text" name="remark" placeholder="备注信息"  class="fk-item-input"/>
         </div>
         <div class="zf">
             <div class="zf-t">支付方式</div>
             <label class="zf-i" for="zfb">
-                <input type="radio" name="zfsf" value="zfb" id="zfb" checked>
+                <input type="radio" name="zfsf" value="0" id="zfb" checked>
                 <div class="zf-i-s">&nbsp</div>
                 <div class="zf-i-i zfb"></div>
                 <div class="zf-i-t">支付宝</div>
 
             </label>
             <label class="zf-i" for="wx">
-                <input type="radio" name="zfsf" value="wx" id="wx">
+                <input type="radio" name="zfsf" value="1" id="wx">
                 <div class="zf-i-s">&nbsp</div>
                 <div class="zf-i-i wx"></div>
                 <div class="zf-i-t">微信</div>
@@ -219,7 +242,7 @@
         <div class="fb-i">
             <div class="fkb-productFee">总计<strong>￥</strong><strong id="js-fkb-Fee">300</strong></div>
         </div>
-        <div id="js-qzf" class="">去支付</div>
+        <div id="js-qzf" class="" >去支付</div>
     </div>
 
 </form>
@@ -234,20 +257,30 @@
         <span class="op-ok">好的</span>
     </div>
 </div>
-
+<script src="/resource/js/style.js"></script>
 
 <script src="/resource/76/js/jquery3.1.1-min.js"></script>
 <script src="/resource/76/js/mobiscroll.min.js"></script>
 <script src="/resource/76/js/mobiscroll.i18n.zh.min.js"></script>
 <script src="/resource/76/js/swiper-3.4.1.jquery.min.js"></script>
 
+
 <script>
+
     var mySwiper = new Swiper ('.swiper-container', {
         loop: true,
 
         // 如果需要分页器
         pagination: '.swiper-pagination'
     })
+
+    $(document).ready(function(){
+        $('.fk-item').click(function(){
+            $(this).find('input').focus();
+        })
+    })
+
+
 </script>
 
 <script>
@@ -299,69 +332,62 @@
         return false;
     }
 
-    var feikongChecker = checker(validator(true, inputValueIsValid))
+    var feikongChecker = checker(validator(true, inputValueIsValid));
     var mobileChecker = checker(validator("手机号不能为空", inputValueIsValid), validator("手机号不正确",inputCheckPhone));
 
     function formTip(message){
-        $("#js-layer-tipcon").html(message)
-        $(".layer-tip").css("top","50%")
+        $("#js-layer-tipcon").html(message);
+        $(".layer-tip").css("top","50%");
         $("#mask2, .layer-tip").show();
     }
 </script>
 <script>
+    var productFee = 0;
+    var data_json="";
+    var data_array=[];
     $(function(){
-
         $("#js-pnav span").click(function(){
             var $this = $(this);
             $("#js-xiangqing, #js-guige").hide();
-            console.log($this.attr("data-target"))
+            console.log($this.attr("data-target"));
             $($this.attr("data-target")).show();
             $this.addClass("active").siblings().removeClass("active");
 
         });
 
         //商品总金额
-        var productFee = 0;
+
 
         //带TA回家点击后进入商品规格选择
-        $qxd = $("#js-qxd")
+        $qxd = $("#js-qxd");
 
 
-        $jiesuan = $("#js-jiesuan")
-        $zongji = $("#js-zongji")
+        $jiesuan = $("#js-jiesuan");
+        $zongji = $("#js-zongji");
 
         /*==========================
          数据提交
          ==========================*/
         $("#js-qzf").click(function(){
             if(feikongChecker($("#city").val()).length != 0){
-                formTip("请选择城市")
+                formTip("请选择城市");
                 return;
             }
             if(feikongChecker($("#address").val()).length != 0){
-                formTip("请填写详细地址")
+                formTip("请填写详细地址");
                 return;
             }
             if(feikongChecker($("#username").val()).length != 0){
-                formTip("请填写收件人")
+                formTip("请填写收件人");
                 return;
             }
-            var mobilemessage = mobileChecker($("#mobile").val())
+            var mobilemessage = mobileChecker($("#mobile").val());
             if( mobilemessage.length != 0){
                 formTip(mobilemessage[0])
                 return;
             }
 
-            $.post({
-                url: "",
-                data: $("#form").serialize(),
-                success: function(data){
-                    if(data.sucess){
-                        formTip(data.message)
-                    }
-
-                }
-            })
+            sendAllMessage();
         })
 
         /*==========================
@@ -377,25 +403,25 @@
         function tongji(){
             productFee = 0;
             $(".inputn").each(function(){
-                productFee += parseInt($(this).val()) * parseInt($(this).attr("data-price"))
+                productFee += parseInt($(this).val()) * parseInt($(this).attr("data-price"));
             })
             if(productFee === 0){
-                $("#js-yuofei").html('含邮费<strong>20</strong>元(满<strong>60</strong>包邮)')
+                $("#js-yuofei").html('含邮费<strong>20</strong>元(满<strong>60</strong>包邮)');
             }else if(productFee < limitProductFee){
                 productFee += postageFee;
-                $("#js-yuofei").html('含邮费<strong>20</strong>元(满<strong>60</strong>包邮)')
+                $("#js-yuofei").html('含邮费<strong>20</strong>元(满<strong>60</strong>包邮)');
             }else{
                 $("#js-yuofei").html('免包邮')
             }
-            $zongji.html(productFee)
+            $zongji.html(productFee);
             console.log(productFee)
         }
         /*==========================
          商品规格选择 加号
          ==========================*/
         $(".jia").click(function(){
-            var $input = $(this).siblings(".np").find("input")
-            var number = parseInt($input.val())+1
+            var $input = $(this).siblings(".np").find("input");
+            var number = parseInt($input.val())+1;
             $input.val(number);
             tongji()
 
@@ -404,9 +430,9 @@
          商品数量 减号
          ==========================*/
         $(".jian").click(function(){
-            var $input = $(this).siblings(".np").find("input")
+            var $input = $(this).siblings(".np").find("input");
             if(parseInt($input.val()) ===0 ) {
-                $input.val(0)
+                $input.val(0);
                 return;
             }
             $input.val(parseInt($input.val())-1);
@@ -421,8 +447,8 @@
 
         function xd_show(){
             $("#mask").show();
-            $(".xd").css("display","block")
-            $(".xd").animate({"bottom":"0"},200)
+            $(".xd").css("display","block");
+            $(".xd").animate({"bottom":"0"},200);
             scrollnum = $(window).scrollTop();
             setTimeout(function(){
                 $(window).scrollTop(0)
@@ -434,7 +460,7 @@
          ==========================*/
         function xd_hide(){
             $("#mask").hide();
-            $(".xd").animate({"bottom":"-110%"},200)
+            $(".xd").animate({"bottom":"-110%"},200);
             $(window).scrollTop(scrollnum)
         }
         $qxd.click(function(){
@@ -450,13 +476,13 @@
 
         $jiesuan.click(function(){
             if(productFee===0){
-                $("#js-layer-tipcon").html("请选择一些商品再结算")
+                $("#js-layer-tipcon").html("请选择一些商品再结算");
                 $(".layer-tip").show();
 
                 return;
             }
-            xd_hide()
-            $(".intro").hide()
+            xd_hide();
+            $(".intro").hide();
 
             setTimeout(function(){
                 $("#js-fkb-Fee").html(productFee);
@@ -469,11 +495,9 @@
 
 
         $(".op-ok").click(function(){
-            $("#mask2").hide()
+            $("#mask2").hide();
             $(this).parents(".layer-tip").hide();
         });
-
-
 
 
         /*==========================
@@ -516,7 +540,7 @@
                     parseValue[0] = i;
                 }
                 nc_a.province[i] = {key: item[0], value : i, display: item[1]};
-            })
+            });
             //初始化城市
             function city(key){
                 if(key){
@@ -524,7 +548,7 @@
                 }
 
                 key = (!key)?nc_a.province[0].key:key;
-                nc_a.city.length = 0
+                nc_a.city.length = 0;
                 $.each(nc_a[key], function(i,item) {
                     if(init[1] && item[0] == init[1]){
                         parseValue[1] = i;
@@ -541,7 +565,6 @@
                 circular : false,
                 width : 120,
                 height:40,
-                lang: 'zh',
                 display: 'bottom',
                 cssClass : "set-area",
                 headerText: false,
@@ -558,9 +581,9 @@
                 buttons:['set', 'cancel'],
                 validate: function (data, inst) {
                     var nowIndex = data.index;
-                    var wheelsIndexArr = data.values
-                    var wheelsDataArr = inst.settings.wheels[0]
-                    var key = wheelsDataArr[0].data[wheelsIndexArr[0]].key
+                    var wheelsIndexArr = data.values;
+                    var wheelsDataArr = inst.settings.wheels[0];
+                    var key = wheelsDataArr[0].data[wheelsIndexArr[0]].key;
 
 
                     if(nowIndex===0){
@@ -582,7 +605,47 @@
             });
 
         })();
+
+
     })
+    function saveMessage(){
+        data_array = [];
+        for(var i = 0;i<$('.product_list').length;i++){
+            var obj = {};
+            if($($('.product_list')[i]).find('.inputn').val()!=0){
+                obj.name =$($('.product_list')[i]).find('.p-name').text();
+                obj.price =$($('.product_list')[i]).find('.p-price').text();
+                obj.number =$($('.product_list')[i]).find('.inputn').val();
+                data_array.push(obj);
+            }
+        }
+
+    }
+    //    送数据
+    function sendAllMessage(){
+        var location = $('#city').val()+" "+$('#address').val();
+        var user_name = $('#username').val();
+        var mobile = $('#mobile').val();
+        var description = $('#remark').val();
+
+        var json_obj = {};
+        json_obj.data=data_array;
+        json_obj.price=productFee;
+        json_obj.location=location;
+        json_obj.user_name=user_name;
+        json_obj.mobile=mobile;
+        json_obj.description=description;
+//        json_obj.description=description;
+        data_json = JSON.stringify(json_obj);
+//        $("input[name='city']:checked").val();
+        var obj = {}
+        obj.result=data_json;
+        validate.validate_submit3('/api/campaign/76', obj, successMessage);
+    }
+
+    function successMessage(){
+        formTip("订单创建成功");
+    }
 </script>
 </body>
 </html>

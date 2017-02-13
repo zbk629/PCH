@@ -221,14 +221,17 @@ public class CampaignController {
     /**
      * 活动页面 ,76人烩面
      */
+    //76主页
     @RequestMapping("/campaign/76/index")
     public String campaign_76_index() {
         return "76/campaign_76_index";
     }
+    //76列表
     @RequestMapping("/campaign/76/ddlist")
     public String campaign_76_ddlist() {
         return "76/campaign_76_ddlist";
     }
+    //76详情
     @RequestMapping("/campaign/76/detail")
     public String passenger_order_info() {
         return "76/campaign_76_dddetail";
