@@ -408,18 +408,16 @@ public class LaiHuiDB {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int autoIncId = 0;
         jdbcTemplateObject.update(con -> {
-            String sql = "insert into pc_76_orders(goods_name,goods_num,goods_price,buyer_location,buyer_name,buyer_mobile,buyer_description,pay_status,create_time) VALUES (?,?,?,?,?,?,?,?,?)";
+            String sql = "insert into pc_76_orders(goods_data,goods_price,buyer_location,buyer_name,buyer_mobile,buyer_description,pay_status,create_time) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setString(1, order.getGoods_name());
-            ps.setInt(2, order.getGoods_num());
-            ps.setDouble(3, order.getGoods_price());
-            ps.setString(4, order.getBuyer_location());
-            ps.setString(5, order.getBuyer_name());
-            ps.setString(6, order.getBuyer_mobile());
-            ps.setString(7, order.getBuyer_description());
-            ps.setInt(8, 0);
-            ps.setString(9, Utils.getCurrentTime());
-
+            ps.setString(1, order.getData());
+            ps.setDouble(2, order.getGoods_price());
+            ps.setString(3, order.getBuyer_location());
+            ps.setString(4, order.getBuyer_name());
+            ps.setString(5, order.getBuyer_mobile());
+            ps.setString(6, order.getBuyer_description());
+            ps.setInt(7, 0);
+            ps.setString(8, Utils.getCurrentTime());
             return ps;
         }, keyHolder);
 
@@ -434,8 +432,7 @@ public class LaiHuiDB {
             public OrderOf76 mapRow(ResultSet resultSet, int i) throws SQLException {
                 OrderOf76 order=new OrderOf76();
                 order.setId(resultSet.getInt("_id"));
-                order.setGoods_name(resultSet.getString("goods_name"));
-                order.setGoods_num(resultSet.getInt("goods_num"));
+                order.setData(resultSet.getString("goods_data"));
                 order.setGoods_price(resultSet.getDouble("goods_price"));
                 order.setBuyer_location(resultSet.getString("buyer_location"));
                 order.setBuyer_name(resultSet.getString("buyer_name"));

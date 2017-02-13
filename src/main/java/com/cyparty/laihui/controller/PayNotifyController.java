@@ -222,7 +222,6 @@ public class PayNotifyController {
 
         if(is_success){
             if(result_code.equals("SUCCESS")){
-
                 if(is_success) {
                     String where =" where pay_number="+out_trade_no;
                     OrderOf76 order;

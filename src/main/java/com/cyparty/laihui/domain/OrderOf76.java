@@ -7,9 +7,9 @@ public class OrderOf76 {
     private int id;
     private int pay_type;
     private int pay_status;
-    private String  goods_name;
+
     private String  pay_number;
-    private int goods_num;
+    private String data;
     private double goods_price;
     private String buyer_location;
     private String buyer_name;
@@ -49,20 +49,12 @@ public class OrderOf76 {
         this.pay_status = pay_status;
     }
 
-    public String getGoods_name() {
-        return goods_name;
+    public String getData() {
+        return data;
     }
 
-    public void setGoods_name(String goods_name) {
-        this.goods_name = goods_name;
-    }
-
-    public int getGoods_num() {
-        return goods_num;
-    }
-
-    public void setGoods_num(int goods_num) {
-        this.goods_num = goods_num;
+    public void setData(String data) {
+        this.data = data;
     }
 
     public double getGoods_price() {

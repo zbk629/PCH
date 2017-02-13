@@ -245,15 +245,10 @@ public class CampaignController {
         String json = "";
 
         int order_id = 0;
-        int goods_num ;
+
         double goods_price;
         OrderOf76 order=new OrderOf76();
-        String goods_name=request.getParameter("name");
-        try {
-            goods_num=Integer.valueOf(request.getParameter("number"));
-        } catch (NumberFormatException e) {
-            goods_num=0;
-        }
+        String data=request.getParameter("data");
         try {
             goods_price=Double.valueOf(request.getParameter("price"));
         } catch (NumberFormatException e) {
@@ -264,8 +259,7 @@ public class CampaignController {
         String buyer_mobile=request.getParameter("mobile");
         String buyer_description=request.getParameter("description");
 
-        order.setGoods_name(goods_name);
-        order.setGoods_num(goods_num);
+        order.setData(data);
         order.setGoods_price(goods_price);
         order.setBuyer_location(buyer_location);
         order.setBuyer_name(buyer_name);
