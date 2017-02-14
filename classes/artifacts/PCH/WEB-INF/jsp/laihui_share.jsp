@@ -639,9 +639,9 @@
 //        alert("我是IOS，我要打开的链接是，laihuipc://"+item_id);
        window.location = "laihuipc://"+item_id;
       } else if (navigator.userAgent.match(/android/i)) {
-
+          $('.open_app_href').attr('href',"laihui://pinche?id="+item_id);
 //        alert("我是安卓，我要打开的链接是，laihui://pinche?id="+item_id);
-        window.location="laihui://pinche?id="+item_id;
+//        window.location="laihui://pinche?id="+item_id;
 //        setTimeout(function(){
 //          window.location="http://a.app.qq.com/o/simple.jsp?pkgname=com.laihui.pinche";//如果超时就跳转到app下载页
 //        },1500);
@@ -719,16 +719,17 @@
         </div>
         <div class="clear"></div>
       </li>
-      <li class="publish_message_li" onclick="checkUser()">
-        <div class="publish_message_li_left">
-          <span >是否进入应用查看</span>
-        </div>
-        <div class="publish_message_li_right mobile_clear">
-          <span class="booking_span open_app">打开应用</span>
-        </div>
-        <div class="clear "></div>
-      </li>
-
+        <a href="" class="open_app_href">
+          <li class="publish_message_li" onclick="checkUser()">
+          <div class="publish_message_li_left">
+            <span >是否进入应用查看</span>
+          </div>
+          <div class="publish_message_li_right mobile_clear">
+            <span class="booking_span open_app">打开应用</span>
+          </div>
+          <div class="clear "></div>
+        </li>
+        </a>
       <li class="publish_message_li li_change">
         <div class="publish_message_li_left">
           <span>预定座位</span>
