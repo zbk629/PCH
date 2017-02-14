@@ -6,8 +6,10 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.OrderOf76;
+import com.cyparty.laihui.domain.User;
 import com.cyparty.laihui.utilities.PayConfigUtils;
 import com.cyparty.laihui.utilities.Utils;
+import com.cyparty.laihui.utilities.WxUserBaseUtil;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -42,7 +44,7 @@ public class WebPayController {
         responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
         String pay_number=request.getParameter("pay_id");
 
-        String where =" where pay_number="+pay_number+" and pay_status=0";
+        String where =" where pay_number='"+pay_number+"' and pay_status=0";
         OrderOf76 order=new OrderOf76();
         List<OrderOf76> orderList = laiHuiDB.getOrderOf76(where);
         if(orderList.size()>0){
@@ -60,6 +62,7 @@ public class WebPayController {
                     "    \"seller_id\":\"2088421500051433\"," +
                     "    \"product_code\":\"QUICK_WAP_PAY\"" +
                     "  }");//填充业务参数
+
             String form = alipayClient.pageExecute(alipayRequest).getBody(); //调用SDK生成表单 AlipayServiceEnvConstants.CHARSET
             httpResponse.setContentType("text/html;charset=" + "utf-8");
             httpResponse.getWriter().write(form);//直接将完整的表单html输出到页面
@@ -74,14 +77,19 @@ public class WebPayController {
         responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
         String pay_number=request.getParameter("pay_id");
         JSONObject result=new JSONObject();
-        String where =" where pay_number="+pay_number+" and pay_status=0";
+
+        String code = request.getParameter("code");
+        System.out.println("code:"+code);
+        User user = WxUserBaseUtil.getUserWXOpenid(code);
+        System.out.println("openId:"+user.getOpenid());
+        String where =" where pay_number='"+pay_number+"' and pay_status=0";
         OrderOf76 order=new OrderOf76();
         List<OrderOf76> orderList = laiHuiDB.getOrderOf76(where);
         if(orderList.size()>0){
             order=orderList.get(0);
             String subject="76烩面";
-            //微信支付
-            String now_ip= Utils.getIP(request);
+            //微信支付 Utils.getIP(request)
+            String now_ip= "192.168.1.3";
             String nonce_str=Utils.getCharAndNum(32);
             double inputFee=order.getGoods_price()*100;
             int inputIntFee=(int)inputFee;
@@ -95,6 +103,7 @@ public class WebPayController {
             paraMap.put("mch_id", PayConfigUtils.getWx_mch_id());
             paraMap.put("nonce_str", nonce_str);
             paraMap.put("notify_url", PayConfigUtils.getWx_pay_notify_url());
+            paraMap.put("openid", user.getOpenid());
             paraMap.put("out_trade_no", order.getPay_number());
             paraMap.put("spbill_create_ip", now_ip);
             paraMap.put("total_fee", total_fee);
@@ -121,7 +130,8 @@ public class WebPayController {
                     "   <out_trade_no>"+order.getPay_number()+"</out_trade_no>\n" +
                     "   <spbill_create_ip>"+now_ip+"</spbill_create_ip>\n" +
                     "   <total_fee>"+total_fee+"</total_fee>\n" +
-                    "   <trade_type>APP</trade_type>\n" +
+                    "   <openid>"+user.getOpenid()+"</openid>\n" +
+                    "   <trade_type>JSAPI</trade_type>\n" +
                     "   <sign>"+sign+"</sign>\n" +
                     "</xml>";
             try {
@@ -156,9 +166,7 @@ public class WebPayController {
         int i=0;
         String  result="";
         while (is_success){
-
             String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost post = new HttpPost(url);
             StringEntity postingString = new StringEntity(paras,"utf-8");// xml传递
@@ -176,7 +184,7 @@ public class WebPayController {
                 break;
             }
         }
-
+        System.out.println(result);
         return result;
     }
 

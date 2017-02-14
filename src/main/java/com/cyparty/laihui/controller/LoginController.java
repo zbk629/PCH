@@ -27,6 +27,12 @@ public class LoginController {
     @Autowired
     LaiHuiDB laiHuiDB;
     boolean is_logined=false;
+    @RequestMapping("/MP_verify_suf8fVQzCk0Mh42y.txt")
+    public ResponseEntity<String> checkWX(){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
+        return new ResponseEntity<String>("suf8fVQzCk0Mh42y",responseHeaders, HttpStatus.OK);
+    }
     @RequestMapping("/login")
     public String car_departure(Model model, HttpServletRequest request) {
         String mode = request.getParameter("mode");
@@ -98,7 +104,16 @@ public class LoginController {
         }
         return "redirect:/";
     }
+    @RequestMapping("/sendCode")
+    public ResponseEntity<String> getOpenId( HttpServletRequest request) {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
+        //微信登陆
+        String code = request.getParameter("code");
+        User user = WxUserBaseUtil.getUserWXIntro(code,"wx");
 
+        return new ResponseEntity<>(user.getOpenid(), responseHeaders, HttpStatus.OK);
+    }
     @RequestMapping("/share_spread")
     public String share_spread(HttpServletRequest request, Model model) {
             return "share_spread";
@@ -173,6 +188,11 @@ public class LoginController {
                 return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
             }
         }
+    }
+    @RequestMapping("/wx/sendCode")
+    public String send(HttpServletRequest request) {
+        String pre_id=request.getParameter("pay_id");
+        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2Flaihuiwx.cyparty.com%2Fwxpay%2Ftrade?pay_id="+pre_id+"&response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
     }
     @RequestMapping("/wx/pc/login")
     public String pc(HttpServletRequest request, Model model) {

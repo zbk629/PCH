@@ -63,6 +63,7 @@ public class PayController {
             double already_got_cash=0;
             double current_cash=0;
             double account_left=0;
+            //推广乘客所得
             String where=" where p_id="+user_id+" and order_status=1 ";
             List<PayLog> payLogList1=laiHuiDB.getPayLog(where);
             for(PayLog pay:payLogList1){
@@ -75,7 +76,7 @@ public class PayController {
                 }
                 campaign_cash=campaign_cash+pay.getCash();
             }
-
+            //推广司机所得
             campaign_cash=campaign_cash* PercentageConfig.getCampaign_percentage();
             unable_campaign_cash=unable_campaign_cash* PercentageConfig.getCampaign_percentage();
             //拼车所得
@@ -91,6 +92,7 @@ public class PayController {
                 }
                 pc_cash=pc_cash+pay.getCash();//全部拼车所得金额
             }
+
             pc_cash=pc_cash* PercentageConfig.getPc_percentage();
             unable_pc_cash=unable_pc_cash* PercentageConfig.getPc_percentage();
             total_cash=campaign_cash+pc_cash;
