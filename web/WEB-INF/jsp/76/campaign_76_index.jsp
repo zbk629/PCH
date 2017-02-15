@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!doctype html>
 <html>
 <head>
@@ -670,7 +671,9 @@
         formTip("订单创建成功");
     }
     function onBridgeReady() {
-        alert(global_data.package)
+        alert("onBridgeReady")
+        global_data=<%=request.getSession().getAttribute("result")%>
+        alert(global_data)
         var package = global_data.package;
         var paySign = global_data.paySign;
         var appid = global_data.appid;

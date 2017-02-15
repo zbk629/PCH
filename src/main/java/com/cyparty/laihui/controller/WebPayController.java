@@ -77,11 +77,8 @@ public class WebPayController {
         responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
         String pay_number=request.getParameter("pay_id");
         JSONObject result=new JSONObject();
-
-        String code = request.getParameter("code");
-        System.out.println("code:"+code);
-        User user = WxUserBaseUtil.getUserWXOpenid(code);
-        System.out.println("openId:"+user.getOpenid());
+        String  openId=(String) request.getSession().getAttribute("openId");
+        System.out.println("openId:"+openId);
         String where =" where pay_number='"+pay_number+"' and pay_status=0";
         OrderOf76 order=new OrderOf76();
         List<OrderOf76> orderList = laiHuiDB.getOrderOf76(where);
@@ -103,7 +100,7 @@ public class WebPayController {
             paraMap.put("mch_id", PayConfigUtils.getWx_mch_id());
             paraMap.put("nonce_str", nonce_str);
             paraMap.put("notify_url", PayConfigUtils.getWx_pay_notify_url());
-            paraMap.put("openid", user.getOpenid());
+            paraMap.put("openid", openId);
             paraMap.put("out_trade_no", order.getPay_number());
             paraMap.put("spbill_create_ip", now_ip);
             paraMap.put("total_fee", total_fee);
@@ -130,7 +127,7 @@ public class WebPayController {
                     "   <out_trade_no>"+order.getPay_number()+"</out_trade_no>\n" +
                     "   <spbill_create_ip>"+now_ip+"</spbill_create_ip>\n" +
                     "   <total_fee>"+total_fee+"</total_fee>\n" +
-                    "   <openid>"+user.getOpenid()+"</openid>\n" +
+                    "   <openid>"+openId+"</openid>\n" +
                     "   <trade_type>JSAPI</trade_type>\n" +
                     "   <sign>"+sign+"</sign>\n" +
                     "</xml>";
@@ -160,6 +157,94 @@ public class WebPayController {
         }
         return null;
     }
+
+    /*@RequestMapping(value = "/wxpay/trade")
+    public String sendWX(HttpServletRequest request, HttpServletResponse httpResponse) throws Exception {
+
+        String pay_number=request.getParameter("pay_id");
+        JSONObject result=new JSONObject();
+        String openId=(String) request.getSession().getAttribute("openId");
+
+        String where =" where pay_number='"+pay_number+"' and pay_status=0";
+        OrderOf76 order=new OrderOf76();
+        List<OrderOf76> orderList = laiHuiDB.getOrderOf76(where);
+        if(orderList.size()>0){
+            order=orderList.get(0);
+            String subject="76烩面";
+            //微信支付 Utils.getIP(request)
+            String now_ip= "192.168.1.3";
+            String nonce_str=Utils.getCharAndNum(32);
+            double inputFee=order.getGoods_price()*100;
+            int inputIntFee=(int)inputFee;
+            String total_fee=inputIntFee+"";
+            //total_fee="1";//
+            String prepay_id=null;
+            Map<String,String> paraMap=new HashMap<>();
+            paraMap.put("appid", PayConfigUtils.getWx_app_id());
+            paraMap.put("attach", subject);
+            paraMap.put("body", subject);
+            paraMap.put("mch_id", PayConfigUtils.getWx_mch_id());
+            paraMap.put("nonce_str", nonce_str);
+            paraMap.put("notify_url", PayConfigUtils.getWx_pay_notify_url());
+            paraMap.put("openid", openId);
+            paraMap.put("out_trade_no", order.getPay_number());
+            paraMap.put("spbill_create_ip", now_ip);
+            paraMap.put("total_fee", total_fee);
+            paraMap.put("trade_type", "JSAPI");
+            List<String> keys =new ArrayList<>(paraMap.keySet());
+            Collections.sort(keys);
+
+            StringBuilder authInfo = new StringBuilder();
+            for (int i=0;i<keys.size()-1; i++) {
+                String value = paraMap.get(keys.get(i));
+                authInfo.append(keys.get(i)+"="+value+"&");
+            }
+            authInfo.append(keys.get(keys.size()-1)+"="+paraMap.get(keys.get(keys.size()-1)));
+            String stringA=authInfo.toString()+"&key="+PayConfigUtils.getWx_app_secret_key();
+            String sign=Utils.encode("MD5",stringA).toUpperCase();
+            //封装xml
+            String paras="<xml>\n" +
+                    "   <appid>"+PayConfigUtils.getWx_app_id()+"</appid>\n" +
+                    "   <attach>"+subject+"</attach>\n" +
+                    "   <body>"+subject+"</body>\n" +
+                    "   <mch_id>"+PayConfigUtils.getWx_mch_id()+"</mch_id>\n" +
+                    "   <nonce_str>"+nonce_str+"</nonce_str>\n" +
+                    "   <notify_url>"+PayConfigUtils.getWx_pay_notify_url()+"</notify_url>\n" +
+                    "   <out_trade_no>"+order.getPay_number()+"</out_trade_no>\n" +
+                    "   <spbill_create_ip>"+now_ip+"</spbill_create_ip>\n" +
+                    "   <total_fee>"+total_fee+"</total_fee>\n" +
+                    "   <openid>"+openId+"</openid>\n" +
+                    "   <trade_type>JSAPI</trade_type>\n" +
+                    "   <sign>"+sign+"</sign>\n" +
+                    "</xml>";
+            try {
+                String content=senPost(paras);
+                if(content!=null){
+                    prepay_id=Utils.readStringXml(content);
+                }
+                if(prepay_id!=null){
+                    String current_noncestr=Utils.getCharAndNum(32);
+                    String current_sign=null;
+                    long current_timestamp=System.currentTimeMillis()/1000;
+                    result.put("appid",PayConfigUtils.getWx_app_id());
+                    result.put("signType","MD5");
+                    result.put("package","prepay_id="+prepay_id);
+                    result.put("noncestr",current_noncestr);
+                    result.put("timestamp",current_timestamp);
+                    //加密算法
+                    String nowStringA="appid="+PayConfigUtils.getWx_app_id()+"&noncestr="+current_noncestr+"&package=Sign=WXPay&partnerid="+PayConfigUtils.getWx_mch_id()+"&prepayid="+prepay_id+"&timestamp="+current_timestamp+"&key="+PayConfigUtils.getWx_app_secret_key();
+                    current_sign=Utils.encode("MD5",nowStringA).toUpperCase();
+                    result.put("paySign",current_sign);
+
+                    request.getSession().setAttribute("result",result);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "76/campaign_76_index";
+        }
+        return null;
+    }*/
 
     public static String senPost(String paras) throws IOException {
         boolean is_success=true;

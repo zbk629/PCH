@@ -42,7 +42,8 @@ var validate = (function () {
                     validate.showTips(global_data.message);
                 }
             },
-            error: function () {
+            error: function (data) {
+
                 alert('交互失败');
                 console.log("交互失败");
                 callback();

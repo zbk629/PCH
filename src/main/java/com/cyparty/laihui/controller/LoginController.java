@@ -192,7 +192,18 @@ public class LoginController {
     @RequestMapping("/wx/sendCode")
     public String send(HttpServletRequest request) {
         String pre_id=request.getParameter("pay_id");
-        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2Flaihuiwx.cyparty.com%2Fwxpay%2Ftrade?pay_id="+pre_id+"&response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2Flaihuiwx.cyparty.com%2Fwx%2Fopen?pay_id="+pre_id+"&response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+    }
+    @RequestMapping("/wx/open")
+    public String wx_open(HttpServletRequest request, Model model) {
+        String code = request.getParameter("code");
+        System.out.println("code:"+code);
+        User user = WxUserBaseUtil.getUserWXOpenid(code);
+
+        System.out.println("openId:"+user.getOpenid());
+
+        request.getSession().setAttribute("openId",user.getOpenid());
+        return "76/campaign_76_index";
     }
     @RequestMapping("/wx/pc/login")
     public String pc(HttpServletRequest request, Model model) {
