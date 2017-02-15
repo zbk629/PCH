@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!doctype html>
 <html>
 <head>
@@ -232,14 +233,14 @@
         </div>
         <div class="zf">
             <div class="zf-t">支付方式</div>
-            <label class="zf-i" for="zfb">
+            <label class="zf-i zfb_label" for="zfb">
                 <input type="radio" name="zfsf" value="0" id="zfb" checked>
                 <div class="zf-i-s">&nbsp</div>
                 <div class="zf-i-i zfb"></div>
                 <div class="zf-i-t">支付宝</div>
 
             </label>
-            <label class="zf-i" for="wx">
+            <label class="zf-i wx_label" for="wx">
                 <input type="radio" name="zfsf" value="1" id="wx">
                 <div class="zf-i-s">&nbsp</div>
                 <div class="zf-i-i wx"></div>
@@ -289,6 +290,8 @@
         $('.fk-item').click(function () {
             $(this).find('input').focus();
         })
+
+        checkUser();
     })
 
 
@@ -664,13 +667,13 @@
         var pay_id = global_data.result.pay_id;
         var obj = {};
         obj.pay_id = pay_id;
-        validate.validate_submit('/wx/sendCode', obj, onBridgeReady);
+        validate.validate_submit('/wxpay/trade', obj, onBridgeReady);
     }
     function successMessage(){
         formTip("订单创建成功");
     }
     function onBridgeReady() {
-        alert(global_data.package)
+        alert(global_data)
         var package = global_data.package;
         var paySign = global_data.paySign;
         var appid = global_data.appid;
@@ -715,6 +718,41 @@
         onBridgeReady();
     }
 
+
+    function checkUser(){
+        if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+            var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                //在微信中打开
+                $('body,html').animate({scrollTop: 0}, 300);
+                $('.hover_all_app').css("display","block");
+                $('#wx').attr("checked",true);
+                $('.zfb_label').remove();
+                wxGetOpenId();
+            }else if (ua.match(/QQ/i) == "qq") {
+                //在QQ空间打开
+                $('body,html').animate({scrollTop: 0}, 300);
+                $('.hover_all_app').css("display","block");
+                alert("请在微信中打开")
+            }else{
+                $('#zfb').attr("checked",true);
+                $('.wx').remove();
+            }
+        } else {
+
+        }
+    }
+
+    //微信调去获取token
+    function wxGetOpenId() {
+        var obj = {};
+        validate.validate_submit('/wx/sendCode', obj, successOpen);
+    }
+
+    //
+    function successOpen(){
+
+    }
 </script>
 </body>
 </html>

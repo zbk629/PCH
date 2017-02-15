@@ -42,9 +42,8 @@ var validate = (function () {
                     validate.showTips(global_data.message);
                 }
             },
-            error: function (data) {
-
-                alert('交互失败');
+            error: function () {
+                alert('网络信号不稳定');
                 console.log("交互失败");
                 callback();
             }

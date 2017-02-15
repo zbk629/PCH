@@ -191,8 +191,8 @@ public class LoginController {
     }
     @RequestMapping("/wx/sendCode")
     public String send(HttpServletRequest request) {
-        String pre_id=request.getParameter("pay_id");
-        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2Flaihuiwx.cyparty.com%2Fwx%2Fopen?pay_id="+pre_id+"&response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+
+        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2Flaihuiwx.cyparty.com%2Fwx%2Fopen?response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
     }
     @RequestMapping("/wx/open")
     public String wx_open(HttpServletRequest request, Model model) {
