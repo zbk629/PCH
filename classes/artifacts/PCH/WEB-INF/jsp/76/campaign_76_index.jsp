@@ -736,7 +736,7 @@
                 alert("请在微信中打开")
             }else{
                 $('#zfb').attr("checked",true);
-                $('.wx').remove();
+                $('.wx_label').remove();
             }
         } else {
 

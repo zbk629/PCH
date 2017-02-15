@@ -667,13 +667,28 @@
         var pay_id = global_data.result.pay_id;
         var obj = {};
         obj.pay_id = pay_id;
-        validate.validate_submit('/wxpay/trade', obj, onBridgeReady);
+        $.ajax({
+            type: "POST",
+            url: '/wxpay/trade',
+            data: obj,
+            dataType: "json",
+            beforeSend: loading,//执行ajax前执行loading函数.直到success
+            success: function (data) {
+                alert('ajax交互');
+                global_data = data;
+                onBridgeReady();
+            },
+            error: function () {
+                alert('ajax交互失败');
+                onBridgeReady();
+            }
+        })
     }
     function successMessage(){
         formTip("订单创建成功");
     }
     function onBridgeReady() {
-        alert(global_data)
+        alert(global_data);
         var package = global_data.package;
         var paySign = global_data.paySign;
         var appid = global_data.appid;
@@ -718,7 +733,7 @@
         onBridgeReady();
     }
 
-
+    var is_got_auth=<%=request.getSession().getAttribute("is_got_auth")%>;
     function checkUser(){
         if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
             var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
@@ -728,7 +743,9 @@
                 $('.hover_all_app').css("display","block");
                 $('#wx').attr("checked",true);
                 $('.zfb_label').remove();
-                wxGetOpenId();
+                if(!is_got_auth){
+                    wxGetOpenId();
+                }
             }else if (ua.match(/QQ/i) == "qq") {
                 //在QQ空间打开
                 $('body,html').animate({scrollTop: 0}, 300);
@@ -745,8 +762,8 @@
 
     //微信调去获取token
     function wxGetOpenId() {
-        var obj = {};
-        validate.validate_submit('/wx/sendCode', obj, successOpen);
+
+        window.location.href="/wx/callBack?url=3213";//url指定回调链接
     }
 
     //
