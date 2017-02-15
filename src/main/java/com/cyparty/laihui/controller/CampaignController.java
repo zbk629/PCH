@@ -223,7 +223,8 @@ public class CampaignController {
      */
     //76主页
     @RequestMapping("/campaign/76/index")
-    public String campaign_76_index() {
+    public String campaign_76_index(HttpServletRequest request) {
+        request.getSession().setAttribute("is_got_auth",false);
         return "76/campaign_76_index";
     }
     //76列表

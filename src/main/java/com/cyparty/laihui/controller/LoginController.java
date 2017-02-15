@@ -189,13 +189,15 @@ public class LoginController {
             }
         }
     }
-    @RequestMapping("/wx/sendCode")
-    public String send(HttpServletRequest request) {
-
+    @RequestMapping("/wx/callBack")
+    public String getCode(HttpServletRequest request) {
+        String url=request.getParameter("url");//通过该url指定回调链接及页面
+        System.out.println("开始获取code");
         return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2Flaihuiwx.cyparty.com%2Fwx%2Fopen?response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
     }
     @RequestMapping("/wx/open")
     public String wx_open(HttpServletRequest request, Model model) {
+        System.out.println("得到code");
         String code = request.getParameter("code");
         System.out.println("code:"+code);
         User user = WxUserBaseUtil.getUserWXOpenid(code);
@@ -203,6 +205,7 @@ public class LoginController {
         System.out.println("openId:"+user.getOpenid());
 
         request.getSession().setAttribute("openId",user.getOpenid());
+        request.getSession().setAttribute("is_got_auth",true);
         return "76/campaign_76_index";
     }
     @RequestMapping("/wx/pc/login")
