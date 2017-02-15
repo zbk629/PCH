@@ -88,20 +88,18 @@
 
     function checkUser(){
       if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
-        $('.app_load').show();
+//        $('.app_load').show();
       }else{
-        $('.iOS').show();
-        $('.android').remove();
+        $('.iOS').remove();
+        $('.android').show();
       }
       if (browser.versions.ios) {
         //是否在IOS浏览器打开
         $('.iOS').show();
         $('.android').remove();
-      }
-      if(browser.versions.android){
-        //是否在安卓浏览器打开
-        $('.android').show();
-        $('.iOS').remove();
+      }else{
+          $('.android').show();
+          $('.iOS').remove();
       }
     }
   </script>

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/resource/76/css/mobiscroll.min.css">
     <link rel="stylesheet" href="/resource/76/css/swiper-3.4.1.min.css">
     <link rel="stylesheet" href="/resource/76/css/default.css">
+
 </head>
 <body>
 <div class="swiper-container">
@@ -52,7 +53,6 @@
             </div>
             <img src="/resource/76/images/a04.jpg"/>
             <img src="/resource/76/images/a05.jpg"/>
-            <img src="/resource/76/images/a03.jpg"/>
             <img src="/resource/76/images/a02.jpg"/>
             <img src="/resource/76/images/a08.jpg"/>
             <img src="/resource/76/images/a07.jpg"/>
@@ -274,7 +274,7 @@
 <script src="/resource/76/js/mobiscroll.min.js"></script>
 <script src="/resource/76/js/mobiscroll.i18n.zh.min.js"></script>
 <script src="/resource/76/js/swiper-3.4.1.jquery.min.js"></script>
-
+<script src="/resource/76/js/jweixin-1.0.0.js"></script>
 
 <script>
 
@@ -657,22 +657,34 @@
         obj.user_name = user_name;
         obj.mobile = mobile;
         obj.description = description;
-        validate.validate_submit3('/api/campaign/76', obj, successMessage);
+        validate.validate_submit3('/api/campaign/76', obj, getPayId);
     }
 
-    function successMessage() {
+    function getPayId() {
+        var pay_id = global_data.result.pay_id;
+        var obj = {};
+        obj.pay_id = pay_id;
+        validate.validate_submit('/wx/sendCode', obj, onBridgeReady);
+    }
+    function successMessage(){
         formTip("订单创建成功");
     }
-
     function onBridgeReady() {
+        alert(global_data.package)
+        var package = global_data.package;
+        var paySign = global_data.paySign;
+        var appid = global_data.appid;
+        var signType = global_data.signType;
+        var noncestr = global_data.noncestr;
+        var timestamp = global_data.timestamp;
         WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
-                "appId": "wx2421b1c4370ec43b",     //公众号名称，由商户传入
-                "timeStamp": " 1395712654",         //时间戳，自1970年以来的秒数
-                "nonceStr": "e61463f8efa94090b1f366cccfbbb444", //随机串
-                "package": "prepay_id=u802345jgfjsdfgsdg888",
-                "signType": "MD5",         //微信签名方式：
-                "paySign": "70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名
+                "appId": appid,     //公众号名称，由商户传入
+                "timeStamp": timestamp,         //时间戳，自1970年以来的秒数
+                "nonceStr": noncestr, //随机串
+                "package": package,
+                "signType": signType,         //微信签名方式：
+                "paySign": paySign //微信签名
             },
             function (res) {
                 if (res.err_msg == "get_brand_wcpay_request：ok") {

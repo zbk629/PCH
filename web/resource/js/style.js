@@ -43,6 +43,7 @@ var validate = (function () {
                 }
             },
             error: function () {
+                alert('信网络信号不稳定');
                 console.log("交互失败");
                 callback();
             }

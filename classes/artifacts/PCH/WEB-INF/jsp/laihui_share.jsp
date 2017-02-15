@@ -638,6 +638,7 @@
                 25);
 //        alert("我是IOS，我要打开的链接是，laihuipc://"+item_id);
        window.location = "laihuipc://"+item_id;
+       $('.open_app_href').attr('href',"laihuipc://"+item_id);
       } else if (navigator.userAgent.match(/android/i)) {
           $('.open_app_href').attr('href',"laihui://pinche?id="+item_id);
 //        alert("我是安卓，我要打开的链接是，laihui://pinche?id="+item_id);
