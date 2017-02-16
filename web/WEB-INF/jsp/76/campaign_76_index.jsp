@@ -688,13 +688,14 @@
         formTip("订单创建成功");
     }
     function onBridgeReady() {
-        alert(global_data);
+
         var package = global_data.package;
         var paySign = global_data.paySign;
         var appid = global_data.appid;
         var signType = global_data.signType;
         var noncestr = global_data.noncestr;
         var timestamp = global_data.timestamp;
+
         WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
                 "appId": appid,     //公众号名称，由商户传入
@@ -705,6 +706,7 @@
                 "paySign": paySign //微信签名
             },
             function (res) {
+                alert(res.err_msg);
                 if (res.err_msg == "get_brand_wcpay_request：ok") {
                     //支付成功
                     formTip("支付成功");

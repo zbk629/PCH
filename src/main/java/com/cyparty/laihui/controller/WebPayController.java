@@ -10,6 +10,7 @@ import com.cyparty.laihui.domain.User;
 import com.cyparty.laihui.utilities.PayConfigUtils;
 import com.cyparty.laihui.utilities.Utils;
 import com.cyparty.laihui.utilities.WxUserBaseUtil;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -142,12 +143,27 @@ public class WebPayController {
                     long current_timestamp=System.currentTimeMillis()/1000;
                     result.put("appid",PayConfigUtils.getWx_app_id());
                     result.put("signType","MD5");
-                    result.put("package","prepay_id="+prepay_id);
+                    result.put("package","prepay_id="+prepay_id); //a,n,p,s,t
                     result.put("noncestr",current_noncestr);
                     result.put("timestamp",current_timestamp);
                     //加密算法
-                    String nowStringA="appid="+PayConfigUtils.getWx_app_id()+"&noncestr="+current_noncestr+"&package=Sign=WXPay&partnerid="+PayConfigUtils.getWx_mch_id()+"&prepayid="+prepay_id+"&timestamp="+current_timestamp+"&key="+PayConfigUtils.getWx_app_secret_key();
+                    String nowStringA="appId="+PayConfigUtils.getWx_app_id()+"&nonceStr="+current_noncestr+"&package=prepay_id="+prepay_id+"&signType=MD5&timeStamp="+current_timestamp+"&key="+PayConfigUtils.getWx_app_secret_key();
+                    System.out.println(nowStringA);
                     current_sign=Utils.encode("MD5",nowStringA).toUpperCase();
+                    System.out.println(current_sign);
+                    /*StringBuffer paraString = new StringBuffer();
+                    paraString.append("appId=").append(PayConfigUtils.getWx_app_id());
+                    paraString.append("&nonceStr=").append(current_noncestr);
+                    paraString.append("&package=").append("prepay_id="+prepay_id);
+                    paraString.append("&signType=").append("MD5");
+                    paraString.append("&timeStamp=").append(current_timestamp);
+                    paraString.append("&key=").append(PayConfigUtils.getWx_app_secret_key());
+                    String signature = DigestUtils.md5Hex(sign.toString()).toUpperCase();
+
+                    System.out.println(paraString);
+                    System.out.println(signature);*/
+
+
                     result.put("paySign",current_sign);
                 }
             } catch (Exception e) {
