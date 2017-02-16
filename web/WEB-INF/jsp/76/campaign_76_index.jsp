@@ -217,7 +217,7 @@
         </div>
         <div class="fk-item">
             <div class="label">详细地址:</div>
-            <input id="address" type="text" name="address" placeholder="请填写详细地址" class="fk-item-input"/>
+            <input id="address" type="text" name="address" placeholder="请填写详细地址"  class="fk-item-input"/>
         </div>
         <div class="fk-item">
             <div class="label">收件人:</div>
@@ -674,12 +674,12 @@
             dataType: "json",
             beforeSend: loading,//执行ajax前执行loading函数.直到success
             success: function (data) {
-                alert('ajax交互');
+               /* alert('ajax交互');*/
                 global_data = data;
                 onBridgeReady();
             },
             error: function () {
-                alert('ajax交互失败');
+               /* alert('ajax交互失败');*/
                 onBridgeReady();
             }
         })
@@ -706,14 +706,15 @@
                 "paySign": paySign //微信签名
             },
             function (res) {
-                alert(res.err_msg);
-                if (res.err_msg == "get_brand_wcpay_request：ok") {
+               /* alert(res.err_msg);
+                alert(res.err_code+res.err_desc+res.err_msg);*/
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
                     //支付成功
                     formTip("支付成功");
-                }else if(res.err_msg == "get_brand_wcpay_request：cancel"){
+                }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
                     //支付取消
                     formTip("支付取消");
-                }else if(res.err_msg == "get_brand_wcpay_request：fail"){
+                }else if(res.err_msg == "get_brand_wcpay_request:fail"){
                     //支付失败
                     formTip("支付失败");
                 }else{
