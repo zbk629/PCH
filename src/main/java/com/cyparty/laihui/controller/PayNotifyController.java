@@ -86,7 +86,7 @@ public class PayNotifyController {
                 }
                 if(is_success&&is_pay_success){
 
-                    String where =" where pay_number="+out_trade_no+" and pay_status=0";
+                    String where =" where pay_number='"+out_trade_no+"' and pay_status=0";
                     OrderOf76 order;
                     List<OrderOf76> orderList = appDB.getOrderOf76(where);
                     if(orderList.size()>0){
@@ -223,7 +223,7 @@ public class PayNotifyController {
         if(is_success){
             if(result_code.equals("SUCCESS")){
                 if(is_success) {
-                    String where =" where pay_number="+out_trade_no+" and pay_status=0";
+                    String where =" where pay_number='"+out_trade_no+"' and pay_status=0";
                     OrderOf76 order;
                     List<OrderOf76> orderList = appDB.getOrderOf76(where);
                     if(orderList.size()>0){

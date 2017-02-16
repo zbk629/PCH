@@ -440,6 +440,8 @@ public class LaiHuiDB {
                 order.setBuyer_description(resultSet.getString("buyer_description"));
                 order.setPay_number(resultSet.getString("pay_number"));
                 order.setCreate_time(resultSet.getString("create_time"));
+                order.setDeliver_name(Utils.checkNull(resultSet.getString("deliver_name")));
+                order.setDeliver_number(Utils.checkNull(resultSet.getString("deliver_number")));
                 return order;
             }
         });

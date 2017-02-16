@@ -54,7 +54,7 @@ public class WebPayController {
             String subject="76烩面";
             AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", PayConfigUtils.getApp_id(), PayConfigUtils.getPrivate_key(), "json", "utf-8", PayConfigUtils.getAlipay_public_key(), "RSA");
             AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();//创建API对应的request
-            alipayRequest.setReturnUrl("http://domain.com/CallBack/return_url.jsp");
+            alipayRequest.setReturnUrl("http://laihuiwx.cyparty.com/campaign/76/ddlist");
             alipayRequest.setNotifyUrl(PayConfigUtils.getAlipay_notify_url());//在公共参数中设置回跳和通知地址
             alipayRequest.setBizContent("{" +
                     "    \"out_trade_no\":\""+order.getPay_number()+"\"," +
@@ -73,7 +73,7 @@ public class WebPayController {
     }
     @ResponseBody
     @RequestMapping(value = "/wxpay/trade")
-    public ResponseEntity<String> sendWX(HttpServletRequest request, HttpServletResponse httpResponse) throws Exception {
+    public ResponseEntity<String> sendWXPay(HttpServletRequest request, HttpServletResponse httpResponse) throws Exception {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
         String pay_number=request.getParameter("pay_id");
@@ -92,7 +92,7 @@ public class WebPayController {
             double inputFee=order.getGoods_price()*100;
             int inputIntFee=(int)inputFee;
             String total_fee=inputIntFee+"";
-            //total_fee="1";//
+            total_fee="1";//
             String prepay_id=null;
             Map<String,String> paraMap=new HashMap<>();
             paraMap.put("appid", PayConfigUtils.getWx_app_id());

@@ -16,6 +16,24 @@ public class OrderOf76 {
     private String buyer_mobile;
     private String buyer_description;
     private String create_time;
+    private String deliver_name;
+    private String deliver_number;
+
+    public String getDeliver_name() {
+        return deliver_name;
+    }
+
+    public void setDeliver_name(String deliver_name) {
+        this.deliver_name = deliver_name;
+    }
+
+    public String getDeliver_number() {
+        return deliver_number;
+    }
+
+    public void setDeliver_number(String deliver_number) {
+        this.deliver_number = deliver_number;
+    }
 
     public String getPay_number() {
         return pay_number;

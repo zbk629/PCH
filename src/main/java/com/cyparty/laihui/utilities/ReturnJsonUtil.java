@@ -826,4 +826,43 @@ public class ReturnJsonUtil {
         }
         return result_json;
     }
+
+    public static JSONObject getCampaign76Json(LaiHuiDB laiHuiDB,String mobile,int id,int type){
+        String where=" where _id >0  and buyer_mobile like '%"+mobile+"%'";
+        if(type==1){
+            where=where+" and pay_status=1";
+        }else if(type==0){
+            where=where+" and pay_status=0";
+        }else if(type==2){
+            where=where+" and pay_status=2";
+        }
+        JSONObject result_json=new JSONObject();
+        JSONArray dataArray=new JSONArray();
+        int count=1;
+        if(id==0){
+            count=laiHuiDB.getOrderOf76(where).size();
+            where=where+" order by create_time DESC  ";
+        }else {
+            where=" where _id="+id;
+        }
+        List<OrderOf76> orderList=laiHuiDB.getOrderOf76(where);
+        for(OrderOf76 order:orderList){
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("id",order.getId());
+
+            jsonObject.put("data",order.getData());
+            jsonObject.put("total_price",order.getGoods_price());
+            jsonObject.put("buyer_location",order.getBuyer_location());
+            jsonObject.put("buyer_name",order.getBuyer_name());
+            jsonObject.put("buyer_mobile",order.getBuyer_mobile());
+            jsonObject.put("buyer_description",order.getBuyer_description());
+            jsonObject.put("deliver_name",order.getDeliver_name());
+            jsonObject.put("deliver_number",order.getDeliver_number());
+            jsonObject.put("create_time",order.getCreate_time());
+            dataArray.add(jsonObject);
+        }
+        result_json.put("total",count);
+        result_json.put("orders",dataArray);
+        return result_json;
+    }
 }

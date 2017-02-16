@@ -249,46 +249,76 @@ public class CampaignController {
         responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
         JSONObject result = new JSONObject();
         String json = "";
+        String action=request.getParameter("action");
+        switch (action){
+            case "add":
+                int order_id = 0;
 
-        int order_id = 0;
+                double goods_price;
+                OrderOf76 order=new OrderOf76();
+                String data=request.getParameter("data");
+                try {
+                    goods_price=Double.valueOf(request.getParameter("price"));
+                } catch (NumberFormatException e) {
+                    goods_price=0;
+                }
+                String buyer_location=request.getParameter("location");
+                String buyer_name=request.getParameter("user_name");
+                String buyer_mobile=request.getParameter("mobile");
+                String buyer_description=request.getParameter("description");
 
-        double goods_price;
-        OrderOf76 order=new OrderOf76();
-        String data=request.getParameter("data");
-        try {
-            goods_price=Double.valueOf(request.getParameter("price"));
-        } catch (NumberFormatException e) {
-            goods_price=0;
+                order.setData(data);
+                order.setGoods_price(goods_price);
+                order.setBuyer_location(buyer_location);
+                order.setBuyer_name(buyer_name);
+                order.setBuyer_mobile(buyer_mobile);
+                order.setBuyer_description(buyer_description);
+
+                try {
+                    order_id=laiHuiDB.createOderOf76(order);
+                } catch (Exception e) {
+                    order_id=0;
+                }
+                if (order_id!=0){
+                    String pay_id=Utils.transformID(order_id);
+                    String update_sql=" set pay_number='"+pay_id+"' where _id="+order_id;
+                    laiHuiDB.update("pc_76_orders",update_sql);
+
+                    result.put("pay_id",pay_id);
+                    result.put("pay_money",goods_price);
+
+                    json = ReturnJsonUtil.returnSuccessJsonString(result, "订单提交成功！");
+                    return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+                }
+                json = ReturnJsonUtil.returnFailJsonString(result, "订单创建失败！");
+                return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
+            case "show":
+                String mobile=request.getParameter("mobile");
+                int id=0;
+                if(request.getParameter("id")!=null&&!request.getParameter("id").isEmpty()){
+                    try {
+                        id=Integer.parseInt(request.getParameter("id"));
+                    } catch (NumberFormatException e) {
+                        id=0;
+                    }
+                }else {
+                    id=0;
+                }
+                int type;
+                if(request.getParameter("type")!=null&&!request.getParameter("type").isEmpty()){
+                    try {
+                        type=Integer.parseInt(request.getParameter("type"));
+                    } catch (NumberFormatException e) {
+                        type=0;
+                    }
+                }else {
+                    type=0;
+                }
+                json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getCampaign76Json(laiHuiDB, mobile, id,type), "76烩面订单获取成功");
+                return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+
         }
-        String buyer_location=request.getParameter("location");
-        String buyer_name=request.getParameter("user_name");
-        String buyer_mobile=request.getParameter("mobile");
-        String buyer_description=request.getParameter("description");
-
-        order.setData(data);
-        order.setGoods_price(goods_price);
-        order.setBuyer_location(buyer_location);
-        order.setBuyer_name(buyer_name);
-        order.setBuyer_mobile(buyer_mobile);
-        order.setBuyer_description(buyer_description);
-
-        try {
-            order_id=laiHuiDB.createOderOf76(order);
-        } catch (Exception e) {
-            order_id=0;
-        }
-        if (order_id!=0){
-            String pay_id=Utils.transformID(order_id);
-            String update_sql=" set pay_number='"+pay_id+"' where _id="+order_id;
-            laiHuiDB.update("pc_76_orders",update_sql);
-
-            result.put("pay_id",pay_id);
-            result.put("pay_money",goods_price);
-
-            json = ReturnJsonUtil.returnSuccessJsonString(result, "订单提交成功！");
-            return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
-        }
-        json = ReturnJsonUtil.returnFailJsonString(result, "订单创建失败！");
+        json = ReturnJsonUtil.returnFailJsonString(result, "参数错误！");
         return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
     }
 

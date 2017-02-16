@@ -217,19 +217,19 @@
         </div>
         <div class="fk-item">
             <div class="label">详细地址:</div>
-            <input id="address" type="text" name="address" placeholder="请填写详细地址"  class="fk-item-input"/>
+            <input id="address" type="text" name="address" placeholder="请填写详细地址" value="华城国际" class="fk-item-input"/>
         </div>
         <div class="fk-item">
             <div class="label">收件人:</div>
-            <input id="username" type="text" name="username" placeholder="请填写收件人" class="fk-item-input"/>
+            <input id="username" type="text" name="username" placeholder="请填写收件人" value="正式在下" class="fk-item-input"/>
         </div>
         <div class="fk-item">
             <div class="label">手机号:</div>
-            <input id="mobile" type="tel" name="mobile" placeholder="请填写手机号" class="fk-item-input"/>
+            <input id="mobile" type="tel" name="mobile" placeholder="请填写手机号" value="13838741272" class="fk-item-input"/>
         </div>
         <div class="fk-item">
             <div class="label">备注信息:</div>
-            <input id="remark" type="text" name="remark" placeholder="备注信息" class="fk-item-input"/>
+            <input id="remark" type="text" name="remark" placeholder="备注信息" value="快点送" class="fk-item-input"/>
         </div>
         <div class="zf">
             <div class="zf-t">支付方式</div>
