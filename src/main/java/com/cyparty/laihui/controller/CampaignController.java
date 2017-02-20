@@ -253,7 +253,6 @@ public class CampaignController {
         switch (action){
             case "add":
                 int order_id = 0;
-
                 double goods_price;
                 OrderOf76 order=new OrderOf76();
                 String data=request.getParameter("data");

@@ -20,6 +20,8 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -34,7 +36,9 @@ public class Utils {
         //System.out.println(date2TimeStamp("2016-8-27 05:06:40"));
         //getTimeSubOrAdd("2016-8-27 05:06:40",2);
         //getTimeDate("2016-8-27 05:06:40");
-        getRed(10,100f,1d);
+        /*getRed(10,100f,1d);
+        System.out.println(LocalDateTime.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));*/
+        System.out.println(encode("MD5","app_id=2016072001643878&biz_content={\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"0.01\",\"subject\":\"76烩面\",\"body\":\"76烩面\",\"out_trade_no\":\"9decbcf46cd16e4da7a95fcea7f9f235\"}&charset=utf-8&method=alipay.trade.wap.pay&notify_url=http://laihuiwx.cyparty.com/alipay/notify&return_url=http://laihuiwx.cyparty.com/campaign/76/ddlist&sign_type=RSA&timestamp=2017-02-17 17:24:37&version=1.0"));
     }
     public static String getCurrentTime() {
         Date inputDate = new Date();
