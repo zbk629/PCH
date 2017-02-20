@@ -673,10 +673,10 @@
         obj.pay_id = pay_id;
         var action_url;
         if($("input[name='zfsf']:checked").val()==0){
-            window.location.href='/alipay/trade?pay_id'+pay_id;
+            window.location.href='/alipay/trade?pay_id='+pay_id;
         }else{
             action_url='/wxpay/trade';
-            alert("我是action_url："+action_url)
+            alert("我是action_url："+action_url);
             $.ajax({
                 type: "POST",
                 url: action_url,
