@@ -73,7 +73,6 @@ var validate = (function () {
     };
     //同步传输,数据格式同1
     var validate_submit3 = function (url, array, callback) {
-        alert("创建AJAX通信")
         $.ajax({
             type: "POST",
             url: url,
@@ -82,7 +81,7 @@ var validate = (function () {
             dataType: "json",
             beforeSend: loading,//执行ajax前执行loading函数.直到success
             success: function (data) {
-                alert("创建订单成功")
+
                 global_data = data;
                 closeLoading();
                 if (global_data.status == true) {
@@ -94,7 +93,6 @@ var validate = (function () {
                 }
             },
             error: function () {
-                alert("创建订单失败")
                 console.log("交互失败");
                 callback();
             }

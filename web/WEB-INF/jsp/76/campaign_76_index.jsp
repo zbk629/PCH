@@ -360,6 +360,7 @@
     var productFee = 0;
     var data_json = "";
     var data_array = [];
+    var data_mobile;
     $(function () {
         $("#js-pnav span").click(function () {
             var $this = $(this);
@@ -644,7 +645,7 @@
     function sendAllMessage() {
         var location = $('#city').val() + " " + $('#address').val();
         var user_name = $('#username').val();
-        var mobile = $('#mobile').val();
+        data_mobile = $('#mobile').val();
         var description = $('#remark').val();
 
         var json_obj = {};
@@ -660,7 +661,7 @@
         obj.price = productFee;
         obj.location = location;
         obj.user_name = user_name;
-        obj.mobile = mobile;
+        obj.mobile = data_mobile;
         obj.description = description;
         validate.validate_submit3('/api/campaign/76', obj, getPayId);
     }
@@ -673,7 +674,7 @@
         obj.pay_id = pay_id;
         var action_url;
         if($("input[name='zfsf']:checked").val()==0){
-            window.location.href='/alipay/trade?pay_id='+pay_id;
+            window.location.href='/alipay/trade?pay_id='+pay_id+'&mobile='+data_mobile+'&end';
         }else{
             action_url='/wxpay/trade';
             $.ajax({
@@ -721,7 +722,7 @@
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
                     //支付成功
                     formTip("支付成功");
-                    window.location.href="";
+                    window.location.href='/campaign/76/ddlist?mobile='+data_mobile;
                 }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
                     //支付取消
                     formTip("支付取消");

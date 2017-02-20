@@ -312,7 +312,8 @@ public class CampaignController {
                 }else {
                     type=0;
                 }
-                json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getCampaign76Json(laiHuiDB, mobile, id,type), "76烩面订单获取成功");
+                JSONObject dataObject=ReturnJsonUtil.getCampaign76Json(laiHuiDB, mobile, id,type);
+                json = ReturnJsonUtil.returnSuccessJsonString(dataObject, "76烩面订单获取成功");
                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
             case "delete":
                 mobile=request.getParameter("mobile");
@@ -326,7 +327,7 @@ public class CampaignController {
                 }else {
                     id=0;
                 }
-                String update_sql=" where _id="+id+" and mobile like '%"+mobile+"%'";
+                String update_sql=" where _id="+id+" and buyer_mobile like '%"+mobile+"%'";
                 laiHuiDB.delete("pc_76_orders",update_sql);
                 json = ReturnJsonUtil.returnSuccessJsonString(result, "订单删除成功！");
                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
