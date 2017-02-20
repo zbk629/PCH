@@ -45,6 +45,7 @@ public class WebPayController {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
         String pay_number=request.getParameter("pay_id");
+        String mobile=request.getParameter("mobile");
 
         String where =" where pay_number='"+pay_number+"' and pay_status=0";
         OrderOf76 order=new OrderOf76();
@@ -82,7 +83,7 @@ public class WebPayController {
             keyValues.put("timestamp", current_time);
             keyValues.put("biz_content", "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\""+price+"\",\"subject\":\""+subject+"\",\"body\":\""+body+"\",\"out_trade_no\":\"" + defort_pay_number +  "\"}");
             keyValues.put("notify_url", PayConfigUtils.getAlipay_notify_url());
-            keyValues.put("return_url", "http://laihuiwx.cyparty.com/campaign/76/ddlist");
+            keyValues.put("return_url", "http://laihuiwx.cyparty.com/campaign/76/ddlist?mobile="+mobile);
             String sign=getSign(keyValues,PayConfigUtils.getPrivate_key());
 
             httpResponse.setContentType("text/html;charset=utf-8");
@@ -94,7 +95,7 @@ public class WebPayController {
                     "<input type='hidden' name='method' value='alipay.trade.wap.pay'/>\n" +
                     "<input type='hidden' name='timestamp' value='"+current_time+"'/>\n" +
                     "<input type='hidden' name='notify_url' value='"+keyValues.get("notify_url")+"'/>\n" +
-                    "<input type='hidden' name='return_url' value='http://laihuiwx.cyparty.com/campaign/76/ddlist'/>\n" +
+                    "<input type='hidden' name='return_url' value='"+keyValues.get("return_url")+"'/>\n" +
                     "<input type='hidden' name='charset' value='utf-8'/>\n" +
                     "<input type='hidden' name='sign' value='"+sign+"'/>\n" +
                     "<input type='submit' value='ok' style='display:none;''></form><script>document.forms['alipaysubmit'].submit();</script>";
