@@ -7,6 +7,7 @@ import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.cyparty.laihui.db.LaiHuiDB;
 import com.cyparty.laihui.domain.OrderOf76;
 import com.cyparty.laihui.utilities.PayConfigUtils;
+import com.cyparty.laihui.utilities.ReturnJsonUtil;
 import com.cyparty.laihui.utilities.SignUtils;
 import com.cyparty.laihui.utilities.Utils;
 import org.apache.http.HttpResponse;
@@ -35,9 +36,10 @@ import java.util.*;
  */
 @Controller
 public class WebPayController {
-   /* @Autowired
+    @Autowired
     LaiHuiDB laiHuiDB;
-    @ResponseBody
+
+
     @RequestMapping(value = "/alipay/trade")
     public ResponseEntity<String> sendAlipay(HttpServletRequest request, HttpServletResponse httpResponse) throws Exception {
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -52,7 +54,7 @@ public class WebPayController {
             double price=0.01;
             String subject="76烩面"; //utf-8
             String body="76烩面"; //utf-8
-            AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", PayConfigUtils.getApp_id(), PayConfigUtils.getPrivate_key(), "json", "utf-8", PayConfigUtils.getAlipay_public_key(), "RSA");
+            /*AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", PayConfigUtils.getApp_id(), PayConfigUtils.getPrivate_key(), "json", "utf-8", PayConfigUtils.getAlipay_public_key(), "RSA");
             AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();//创建API对应的request
             alipayRequest.setReturnUrl("http://laihuiwx.cyparty.com/campaign/76/ddlist");
             alipayRequest.setNotifyUrl(PayConfigUtils.getAlipay_notify_url());//在公共参数中设置回跳和通知地址
@@ -64,14 +66,12 @@ public class WebPayController {
                     "    \"product_code\":\"QUICK_WAP_PAY\"" +
                     "  }");//填充业务参数
 
-            String form = alipayClient.pageExecute(alipayRequest).getBody(); //调用SDK生成表单 AlipayServiceEnvConstants.CHARSET
+            String form = alipayClient.pageExecute(alipayRequest).getBody(); //调用SDK生成表单 AlipayServiceEnvConstants.CHARSET*/
             String form1="<form id='alipaysubmit' name='alipaysubmit' action='https://openapi.alipay.com/gateway.do?charset=UTF-8' method='POST'><input type='hidden' name='biz_content' value='{\"productCode\":\"QUICK_WAP_PAY\",\"body\":\"支付宝公众号充值\",\"subject\":\"梦想直播充值\",\"out_trade_no\":\"17021712041001000583\",\"total_amount\":\"0.01\",\"timeout_express\":\"1m\"}'/><input type='hidden' name='app_id' value='2016122004460499'/><input type='hidden' name='version' value='1.0'/><input type='hidden' name='format' value='json'/><input type='hidden' name='sign_type' value='RSA'/><input type='hidden' name='method' value='alipay.trade.wap.pay'/><input type='hidden' name='timestamp' value='2017-02-17 12:04:10'/><input type='hidden' name='alipay_sdk' value='alipay-sdk-php-20161101'/><input type='hidden' name='notify_url' value='http://api.dreamlive.tv/deposit/notify_alipay5'/><input type='hidden' name='return_url' value='http://api.dreamlive.tv/deposit/notify_alipay5'/><input type='hidden' name='charset' value='UTF-8'/><input type='hidden' name='sign' value='fQAs7/QIQqkWf/0Z7IM9mpHNygx8L5Y/fO5n80l8ueHMPOfsRVptZzHbUE+8gSunm1QTc1E3V1TW0+peA6gS580q3FQrq+b2fkcQf2uueTp/xDuI6V7rRcwiwRWNl0PksRQNrCvzHWl7Ll+QOlumGmgbHMNuGLxld+3Cv7ZP4Vw='/><input type='submit' value='ok' style='display:none;''></form><script>document.forms['alipaysubmit'].submit();</script>";
-            String form3="<form id='alipaysubmit' name='alipaysubmit' action='https://openapi.alipay.com/gateway.do?charset=UTF-8' method='POST'><input type='hidden' name='biz_content' value='{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"0.01\",\"subject\":\"76烩面\",\"body\":\"76烩面\",\"out_trade_no\":\"17021712041001000583\"}'/><input type='hidden' name='app_id' value='2016072001643878'/><input type='hidden' name='version' value='1.0'/><input type='hidden' name='sign_type' value='RSA'/><input type='hidden' name='timestamp' value='2017-02-20 13:56:16'/><input type='hidden' name='alipay_sdk' value='alipay-sdk-php-20161101'/><input type='hidden' name='notify_url' value='http://laihuiwx.cyparty.com/alipay/notify'/><input type='hidden' name='return_url' value='http://laihuiwx.cyparty.com/campaign/76/ddlist'/><input type='hidden' name='charset' value='utf-8'/><input type='hidden' name='sign'value='H29QEqZ0v+cfUirHbC7ygM8c9x1TpQDzYKmTx+9krgbuGyBQAeTUHAHfgs4xpl/eQb0ioC8fR/Ew8hJNH190CjQ7j5/oZdAthO+T1o5vdo7g7ZCklDA3TIfdKEtFt+orSINOdw8d7Hqq3dOjIiK0AeBYqQjvD9Ii3VGk/x4SNvU='/><input type='submit' value='ok' style='display:none;''></form><script>document.forms['alipaysubmit'].submit();</script>";
-
-            *//**
+            /**
              * 构造支付参数
-             * *//*
-            String defort_pay_number="17021712041001000583";
+             * */
+            String defort_pay_number=order.getPay_number();
             Map<String, String> keyValues = new HashMap<String, String>();
             String current_time=Utils.getCurrentTime();
             keyValues.put("app_id", PayConfigUtils.getApp_id());
@@ -79,7 +79,6 @@ public class WebPayController {
             keyValues.put("charset", "UTF-8");
             keyValues.put("sign_type", "RSA");
             keyValues.put("version", "1.0");
-            keyValues.put("alipay_sdk", "alipay-sdk-php-20161101");
             keyValues.put("timestamp", current_time);
             keyValues.put("biz_content", "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\""+price+"\",\"subject\":\""+subject+"\",\"body\":\""+body+"\",\"out_trade_no\":\"" + defort_pay_number +  "\"}");
             keyValues.put("notify_url", PayConfigUtils.getAlipay_notify_url());
@@ -87,14 +86,13 @@ public class WebPayController {
             String sign=getSign(keyValues,PayConfigUtils.getPrivate_key());
 
             httpResponse.setContentType("text/html;charset=utf-8");
-            String form2="<form id='alipaysubmit' name='alipaysubmit' action='https://openapi.alipay.com/gateway.do?charset=UTF-8' method='POST'\n" +
+            String form2="<form id='alipaysubmit' name='alipaysubmit' action='https://openapi.alipay.com/gateway.do?charset=UTF-8' method='POST'>\n" +
                     "<input type='hidden' name='biz_content' value='"+keyValues.get("biz_content")+"'/>\n" +
                     "<input type='hidden' name='app_id' value='"+PayConfigUtils.getApp_id()+"'/>\n" +
                     "<input type='hidden' name='version' value='1.0'/>\n" +
                     "<input type='hidden' name='sign_type' value='RSA'/>\n" +
                     "<input type='hidden' name='method' value='alipay.trade.wap.pay'/>\n" +
                     "<input type='hidden' name='timestamp' value='"+current_time+"'/>\n" +
-                    "<input type='hidden' name='alipay_sdk' value='alipay-sdk-php-20161101'/>\n" +
                     "<input type='hidden' name='notify_url' value='"+keyValues.get("notify_url")+"'/>\n" +
                     "<input type='hidden' name='return_url' value='http://laihuiwx.cyparty.com/campaign/76/ddlist'/>\n" +
                     "<input type='hidden' name='charset' value='utf-8'/>\n" +
@@ -103,7 +101,12 @@ public class WebPayController {
             httpResponse.getWriter().write(form2);//直接将完整的表单html输出到页面
             httpResponse.getWriter().flush();
         }
-        return null;
+       /* String json="";
+        JSONObject result=new JSONObject();
+        json = ReturnJsonUtil.returnSuccessJsonString(result, "支付！");
+        return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);*/
+
+       return null;
     }
     public static String getSign(Map<String, String> map, String rsaKey) {
         List<String> keys = new ArrayList<String>(map.keySet());
@@ -125,21 +128,21 @@ public class WebPayController {
         String oriSign = SignUtils.sign(authInfo.toString(), rsaKey);
         String encodedSign = "";
 
-      *//*  try {
+      /*  try {
             encodedSign = URLEncoder.encode(oriSign, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-        }*//*
+        }*/
         return  oriSign.trim().replace("\n","");
     }
-    *//**
+    /**
      * 拼接键值对
      *
      * @param key
      * @param value
      * @param isEncode
      * @return
-     *//*
+     */
     private static String buildKeyValue(String key, String value, boolean isEncode) {
         StringBuilder sb = new StringBuilder();
         sb.append(key);
@@ -235,7 +238,7 @@ public class WebPayController {
                     System.out.println(nowStringA);
                     current_sign=Utils.encode("MD5",nowStringA).toUpperCase();
                     System.out.println(current_sign);
-                    *//*StringBuffer paraString = new StringBuffer();
+                    /*StringBuffer paraString = new StringBuffer();
                     paraString.append("appId=").append(PayConfigUtils.getWx_app_id());
                     paraString.append("&nonceStr=").append(current_noncestr);
                     paraString.append("&package=").append("prepay_id="+prepay_id);
@@ -245,7 +248,7 @@ public class WebPayController {
                     String signature = DigestUtils.md5Hex(sign.toString()).toUpperCase();
 
                     System.out.println(paraString);
-                    System.out.println(signature);*//*
+                    System.out.println(signature);*/
 
 
                     result.put("paySign",current_sign);
@@ -283,6 +286,6 @@ public class WebPayController {
             }
         }
         return result;
-    }*/
+    }
 
 }

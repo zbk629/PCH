@@ -206,7 +206,7 @@ public class LoginController {
 
         request.getSession().setAttribute("openId",user.getOpenid());
         request.getSession().setAttribute("is_got_auth",true);
-        return "76/campaign_76_index";
+        return "redirect:/campaign/76/index";
     }
     @RequestMapping("/wx/pc/login")
     public String pc(HttpServletRequest request, Model model) {

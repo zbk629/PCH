@@ -240,7 +240,6 @@ public class CampaignController {
         return "76/campaign_76_dddetail";
     }
 
-
     @ResponseBody
     @RequestMapping(value = "/api/campaign/76", method = RequestMethod.POST)
     public ResponseEntity<String> pay_back(HttpServletRequest request,HttpServletResponse response) {
@@ -315,11 +314,8 @@ public class CampaignController {
                 }
                 json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getCampaign76Json(laiHuiDB, mobile, id,type), "76烩面订单获取成功");
                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
-
         }
         json = ReturnJsonUtil.returnFailJsonString(result, "参数错误！");
         return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
     }
-
-
 }
