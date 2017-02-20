@@ -653,7 +653,7 @@
 //        json_obj.description=description;
         data_json = JSON.stringify(json_obj);
 //        $("input[name='city']:checked").val();
-        alert("我是要开始创建订单")
+//        alert("我是要开始创建订单")
         var obj = {};
         obj.data = data_json;
         obj.action = "add";
@@ -668,7 +668,7 @@
     function getPayId() {
 
         var pay_id = global_data.result.pay_id;
-        alert("我是pay_id："+pay_id)
+//        alert("我是pay_id："+pay_id)
         var obj = {};
         obj.pay_id = pay_id;
         var action_url;
@@ -676,7 +676,6 @@
             window.location.href='/alipay/trade?pay_id='+pay_id;
         }else{
             action_url='/wxpay/trade';
-            alert("我是action_url："+action_url);
             $.ajax({
                 type: "POST",
                 url: action_url,
@@ -684,7 +683,6 @@
                 dataType: "json",
                 beforeSend: loading,//执行ajax前执行loading函数.直到success
                 success: function (data) {
-                    alert("交易交互成功")
                     global_data = data;
                     onBridgeReady();
                 },
@@ -723,6 +721,7 @@
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
                     //支付成功
                     formTip("支付成功");
+                    window.location.href="";
                 }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
                     //支付取消
                     formTip("支付取消");
