@@ -673,27 +673,28 @@
         obj.pay_id = pay_id;
         var action_url;
         if($("input[name='zfsf']:checked").val()==0){
-            action_url='/alipay/trade';
+            window.location.href='/alipay/trade?pay_id'+pay_id;
         }else{
             action_url='/wxpay/trade';
+            alert("我是action_url："+action_url)
+            $.ajax({
+                type: "POST",
+                url: action_url,
+                data: obj,
+                dataType: "json",
+                beforeSend: loading,//执行ajax前执行loading函数.直到success
+                success: function (data) {
+                    alert("交易交互成功")
+                    global_data = data;
+                    onBridgeReady();
+                },
+                error: function () {
+                    /* alert('ajax交互失败');*/
+                    onBridgeReady();
+                }
+            })
         }
-        alert("我是action_url："+action_url)
-        $.ajax({
-            type: "POST",
-            url: action_url,
-            data: obj,
-            dataType: "json",
-            beforeSend: loading,//执行ajax前执行loading函数.直到success
-            success: function (data) {
-               alert("交易交互成功")
-                global_data = data;
-                onBridgeReady();
-            },
-            error: function () {
-               /* alert('ajax交互失败');*/
-                onBridgeReady();
-            }
-        })
+
     }
     function successMessage(){
         formTip("订单创建成功");
