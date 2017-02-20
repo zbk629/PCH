@@ -217,19 +217,19 @@
         </div>
         <div class="fk-item">
             <div class="label">详细地址:</div>
-            <input id="address" type="text" name="address" placeholder="请填写详细地址" class="fk-item-input"/>
+            <input id="address" type="text" name="address" placeholder="请填写详细地址" value="华城国际" class="fk-item-input"/>
         </div>
         <div class="fk-item">
             <div class="label">收件人:</div>
-            <input id="username" type="text" name="username" placeholder="请填写收件人" class="fk-item-input"/>
+            <input id="username" type="text" name="username" placeholder="请填写收件人" value="正式在下" class="fk-item-input"/>
         </div>
         <div class="fk-item">
             <div class="label">手机号:</div>
-            <input id="mobile" type="tel" name="mobile" placeholder="请填写手机号" class="fk-item-input"/>
+            <input id="mobile" type="tel" name="mobile" placeholder="请填写手机号" value="13838741272" class="fk-item-input"/>
         </div>
         <div class="fk-item">
             <div class="label">备注信息:</div>
-            <input id="remark" type="text" name="remark" placeholder="备注信息" class="fk-item-input"/>
+            <input id="remark" type="text" name="remark" placeholder="备注信息" value="快点送" class="fk-item-input"/>
         </div>
         <div class="zf">
             <div class="zf-t">支付方式</div>
@@ -653,8 +653,10 @@
 //        json_obj.description=description;
         data_json = JSON.stringify(json_obj);
 //        $("input[name='city']:checked").val();
+        alert("我是要开始创建订单")
         var obj = {};
         obj.data = data_json;
+        obj.action = "add";
         obj.price = productFee;
         obj.location = location;
         obj.user_name = user_name;
@@ -664,22 +666,47 @@
     }
 
     function getPayId() {
+
         var pay_id = global_data.result.pay_id;
+        alert("我是pay_id："+pay_id)
         var obj = {};
         obj.pay_id = pay_id;
-        validate.validate_submit('/wxpay/trade', obj, onBridgeReady);
+        var action_url;
+        if($("input[name='zfsf']:checked").val()==0){
+            action_url='/alipay/trade';
+        }else{
+            action_url='/wxpay/trade';
+        }
+        alert("我是action_url："+action_url)
+        $.ajax({
+            type: "POST",
+            url: action_url,
+            data: obj,
+            dataType: "json",
+            beforeSend: loading,//执行ajax前执行loading函数.直到success
+            success: function (data) {
+               alert("交易交互成功")
+                global_data = data;
+                onBridgeReady();
+            },
+            error: function () {
+               /* alert('ajax交互失败');*/
+                onBridgeReady();
+            }
+        })
     }
     function successMessage(){
         formTip("订单创建成功");
     }
     function onBridgeReady() {
-        alert(global_data)
+
         var package = global_data.package;
         var paySign = global_data.paySign;
         var appid = global_data.appid;
         var signType = global_data.signType;
         var noncestr = global_data.noncestr;
         var timestamp = global_data.timestamp;
+
         WeixinJSBridge.invoke(
             'getBrandWCPayRequest', {
                 "appId": appid,     //公众号名称，由商户传入
@@ -690,13 +717,15 @@
                 "paySign": paySign //微信签名
             },
             function (res) {
-                if (res.err_msg == "get_brand_wcpay_request：ok") {
+               /* alert(res.err_msg);
+                alert(res.err_code+res.err_desc+res.err_msg);*/
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
                     //支付成功
                     formTip("支付成功");
-                }else if(res.err_msg == "get_brand_wcpay_request：cancel"){
+                }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
                     //支付取消
                     formTip("支付取消");
-                }else if(res.err_msg == "get_brand_wcpay_request：fail"){
+                }else if(res.err_msg == "get_brand_wcpay_request:fail"){
                     //支付失败
                     formTip("支付失败");
                 }else{
@@ -718,7 +747,7 @@
         onBridgeReady();
     }
 
-
+    var is_got_auth=<%=request.getSession().getAttribute("is_got_auth")%>;
     function checkUser(){
         if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
             var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
@@ -728,12 +757,9 @@
                 $('.hover_all_app').css("display","block");
                 $('#wx').attr("checked",true);
                 $('.zfb_label').remove();
-                wxGetOpenId();
-            }else if (ua.match(/QQ/i) == "qq") {
-                //在QQ空间打开
-                $('body,html').animate({scrollTop: 0}, 300);
-                $('.hover_all_app').css("display","block");
-                alert("请在微信中打开")
+                if(!is_got_auth){
+                    wxGetOpenId();
+                }
             }else{
                 $('#zfb').attr("checked",true);
                 $('.wx_label').remove();
@@ -745,8 +771,8 @@
 
     //微信调去获取token
     function wxGetOpenId() {
-        var obj = {};
-        validate.validate_submit('/wx/sendCode', obj, successOpen);
+
+        window.location.href="/wx/callBack?url=3213";//url指定回调链接
     }
 
     //

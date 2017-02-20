@@ -653,8 +653,10 @@
 //        json_obj.description=description;
         data_json = JSON.stringify(json_obj);
 //        $("input[name='city']:checked").val();
+        alert("我是要开始创建订单")
         var obj = {};
         obj.data = data_json;
+        obj.action = "add";
         obj.price = productFee;
         obj.location = location;
         obj.user_name = user_name;
@@ -664,17 +666,26 @@
     }
 
     function getPayId() {
+
         var pay_id = global_data.result.pay_id;
+        alert("我是pay_id："+pay_id)
         var obj = {};
         obj.pay_id = pay_id;
+        var action_url;
+        if($("input[name='zfsf']:checked").val()==0){
+            action_url='/alipay/trade';
+        }else{
+            action_url='/wxpay/trade';
+        }
+        alert("我是action_url："+action_url)
         $.ajax({
             type: "POST",
-            url: '/wxpay/trade',
+            url: action_url,
             data: obj,
             dataType: "json",
             beforeSend: loading,//执行ajax前执行loading函数.直到success
             success: function (data) {
-               /* alert('ajax交互');*/
+               alert("交易交互成功")
                 global_data = data;
                 onBridgeReady();
             },
@@ -749,11 +760,6 @@
                 if(!is_got_auth){
                     wxGetOpenId();
                 }
-            }else if (ua.match(/QQ/i) == "qq") {
-                //在QQ空间打开
-                $('body,html').animate({scrollTop: 0}, 300);
-                $('.hover_all_app').css("display","block");
-                alert("请在微信中打开")
             }else{
                 $('#zfb').attr("checked",true);
                 $('.wx_label').remove();
