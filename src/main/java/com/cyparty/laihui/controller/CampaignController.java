@@ -314,6 +314,22 @@ public class CampaignController {
                 }
                 json = ReturnJsonUtil.returnSuccessJsonString(ReturnJsonUtil.getCampaign76Json(laiHuiDB, mobile, id,type), "76烩面订单获取成功");
                 return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
+            case "delete":
+                mobile=request.getParameter("mobile");
+                id=0;
+                if(request.getParameter("id")!=null&&!request.getParameter("id").isEmpty()){
+                    try {
+                        id=Integer.parseInt(request.getParameter("id"));
+                    } catch (NumberFormatException e) {
+                        id=0;
+                    }
+                }else {
+                    id=0;
+                }
+                String update_sql=" where _id="+id+" and mobile like '%"+mobile+"%'";
+                laiHuiDB.delete("pc_76_orders",update_sql);
+                json = ReturnJsonUtil.returnSuccessJsonString(result, "订单删除成功！");
+                return new ResponseEntity<String>(json, responseHeaders, HttpStatus.OK);
         }
         json = ReturnJsonUtil.returnFailJsonString(result, "参数错误！");
         return new ResponseEntity<>(json, responseHeaders, HttpStatus.OK);
