@@ -123,53 +123,60 @@
 
     function innerMessage() {
         $('.order_box').remove();
-        for (var i = 0; i < global_data.result.orders.length; i++) {
-            var buyer_description = global_data.result.orders[i].buyer_description;
-            var buyer_mobile = global_data.result.orders[i].buyer_mobile;
-            var data = global_data.result.orders[i].data;
-            var total_price = global_data.result.orders[i].total_price;
-            var buyer_location = global_data.result.orders[i].buyer_location;
-            var deliver_name = global_data.result.orders[i].deliver_name;
-            var create_time = global_data.result.orders[i].create_time.substring(0,10);
-            var buyer_name = global_data.result.orders[i].buyer_name;
-            var id = global_data.result.orders[i].id;
-            var deliver_number = global_data.result.orders[i].deliver_number;
-            var data_obj = JSON.parse(data);
-            var data_message = "";
-            if(type==0){
-                data_message = "待支付"
-            }else if(type==1){
-                data_message = "待发货"
-            }else if(type==2){
-                data_message = "待收货"
-            }else{
-                data_message = "全部"
-            }
+        if(global_data.result.orders.length==0){
+            $('.not_message').show();
+        }else{
+            for (var i = 0; i < global_data.result.orders.length; i++) {
+                var buyer_description = global_data.result.orders[i].buyer_description;
+                var buyer_mobile = global_data.result.orders[i].buyer_mobile;
+                var data = global_data.result.orders[i].data;
+                var total_price = global_data.result.orders[i].total_price;
+                var buyer_location = global_data.result.orders[i].buyer_location;
+                var deliver_name = global_data.result.orders[i].deliver_name;
+                var create_time = global_data.result.orders[i].create_time.substring(0,10);
+                var buyer_name = global_data.result.orders[i].buyer_name;
+                var id = global_data.result.orders[i].id;
+                var deliver_number = global_data.result.orders[i].deliver_number;
+                var data_obj = JSON.parse(data);
+                var data_message = "";
+                if(type==0){
+                    data_message = "待支付"
+                }else if(type==1){
+                    data_message = "待发货"
+                }else if(type==2){
+                    data_message = "待收货"
+                }else{
+                    data_message = "全部"
+                }
 
-            orderListStyle(data_message,deliver_number, id, buyer_description, buyer_mobile, total_price, buyer_location, deliver_name, create_time, buyer_name);
+                orderListStyle(data_message,deliver_number, id, buyer_description, buyer_mobile, total_price, buyer_location, deliver_name, create_time, buyer_name);
+                for (var j = 0; j < data_obj.data.length; j++) {
+                    var name = data_obj.data[j].name;
+                    var price = data_obj.data[j].price;
+                    var number = data_obj.data[j].number;
+                    var ke = data_obj.data[j].name.substring(0,3);
+                    orderList(i,ke,name,price,number)
+                }
 
+                if(deliver_number==""){
+                    $($('.express_box')[i]).hide();
+                }
+                if(type==0){
+                    $('.delete_list').show();
+                    $('.express_box').hide();
+                }
+                else{
+                    $('.delete_list').hide();
+                    $('.express_box').show();
+                }
 
-            for (var j = 0; j < data_obj.data.length; j++) {
-                var name = data_obj.data[j].name;
-                var price = data_obj.data[j].price;
-                var number = data_obj.data[j].number;
-                var ke = data_obj.data[j].name.substring(0,3);
-                orderList(i,ke,name,price,number)
-            }
-            if(type==0 || type==1){
-                $('.delete_list').show();
-                $('.express_box').hide();
-            }
-            else{
-                $('.delete_list').hide();
-                $('.express_box').show();
-            }
+                if (buyer_description == "") {
+                    $($('.buyer_description')[i]).hide();
+                }
 
-            if (buyer_description == "") {
-                $($('.buyer_description')[i]).hide();
             }
-
         }
+
     }
 
     function orderListStyle(data_message,deliver_number, id, buyer_description, buyer_mobile, total_price, buyer_location, deliver_name, create_time, buyer_name) {

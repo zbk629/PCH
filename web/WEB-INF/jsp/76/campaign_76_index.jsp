@@ -722,7 +722,7 @@
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
                     //支付成功
                     formTip("支付成功");
-                    window.location.href='/campaign/76/ddlist?mobile='+data_mobile;
+                    window.location.href='/campaign/76/ddlist?mobile='+data_mobile+'&end';
                 }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
                     //支付取消
                     formTip("支付取消");
