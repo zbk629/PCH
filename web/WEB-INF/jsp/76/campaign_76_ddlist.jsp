@@ -53,6 +53,9 @@
     .express_box span{
         line-height: 20px;
     }
+    .hide_deliver{
+        display: none!important;
+    }
 </style>
 </head>
 <body class="bg1">
@@ -76,7 +79,7 @@
     </div>
 
     <div class="order_container">
-        <span class="not_message">暂无数据</span>
+        <div class="not_message">暂无数据</div>
     </div>
 
 </div>
@@ -126,6 +129,7 @@
         if(global_data.result.orders.length==0){
             $('.not_message').show();
         }else{
+            $('.not_message').hide();
             for (var i = 0; i < global_data.result.orders.length; i++) {
                 var buyer_description = global_data.result.orders[i].buyer_description;
                 var buyer_mobile = global_data.result.orders[i].buyer_mobile;
@@ -139,6 +143,7 @@
                 var deliver_number = global_data.result.orders[i].deliver_number;
                 var data_obj = JSON.parse(data);
                 var data_message = "";
+                var deliver_class="";
                 if(type==0){
                     data_message = "待支付"
                 }else if(type==1){
@@ -148,8 +153,11 @@
                 }else{
                     data_message = "全部"
                 }
+                if(deliver_number==""){
+                    deliver_class="hide_deliver";
+                }
 
-                orderListStyle(data_message,deliver_number, id, buyer_description, buyer_mobile, total_price, buyer_location, deliver_name, create_time, buyer_name);
+                orderListStyle(deliver_class,data_message,deliver_number, id, buyer_description, buyer_mobile, total_price, buyer_location, deliver_name, create_time, buyer_name);
                 for (var j = 0; j < data_obj.data.length; j++) {
                     var name = data_obj.data[j].name;
                     var price = data_obj.data[j].price;
@@ -158,9 +166,7 @@
                     orderList(i,ke,name,price,number)
                 }
 
-                if(deliver_number==""){
-                    $($('.express_box')[i]).hide();
-                }
+
                 if(type==0){
                     $('.delete_list').show();
                     $('.express_box').hide();
@@ -169,7 +175,6 @@
                     $('.delete_list').hide();
                     $('.express_box').show();
                 }
-
                 if (buyer_description == "") {
                     $($('.buyer_description')[i]).hide();
                 }
@@ -179,13 +184,14 @@
 
     }
 
-    function orderListStyle(data_message,deliver_number, id, buyer_description, buyer_mobile, total_price, buyer_location, deliver_name, create_time, buyer_name) {
+    function orderListStyle(deliver_class,data_message,deliver_number, id, buyer_description, buyer_mobile, total_price, buyer_location, deliver_name, create_time, buyer_name) {
+
         $('.not_message').before('<a href="javascript:(0)" data_id="'+id+'" class="order_box">' +
             '<div class="ddlist-i">' +
             '<div class="ddlist-i-t"><span class="t">'+create_time+'</span><span class="zt">'+data_message+'</span></div>' +
             '<div class="ddlist-i-c order_list">' +
             '</div>' +
-            '<div class="express_box">' +
+            '<div class="express_box '+deliver_class+'">' +
             '<span class="">快递公司：'+deliver_name+'</span><br/>' +
             '<span class="">快递单号：'+deliver_number+'</span>' +
             '</div>' +
