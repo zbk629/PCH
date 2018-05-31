@@ -33,6 +33,16 @@ public class LoginController {
         responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
         return new ResponseEntity<String>("suf8fVQzCk0Mh42y",responseHeaders, HttpStatus.OK);
     }
+    @RequestMapping("/sendSMSToMobile")
+    public ResponseEntity<String> sendSMS(HttpServletRequest request){
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Content-Type", "application/json;charset=UTF-8");
+        responseHeaders.set("Access-Control-Allow-Origin","*");
+        String tel_val="#code#="+Utils.random16();
+        String mobile=request.getParameter("mobile");
+        SendSMSUtil.sendSMS(mobile,69186,tel_val);
+        return new ResponseEntity<>("suf8fVQzCk0Mh42y",responseHeaders, HttpStatus.OK);
+    }
     @RequestMapping("/login")
     public String car_departure(Model model, HttpServletRequest request) {
         String mode = request.getParameter("mode");
@@ -193,7 +203,11 @@ public class LoginController {
     public String getCode(HttpServletRequest request) {
         String url=request.getParameter("url");//通过该url指定回调链接及页面
         System.out.println("开始获取code");
-        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2Flaihuiwx.cyparty.com%2Fwx%2Fopen?response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
+        String localhost="laihuiwx.cyparty.com";
+        if(PayConfigUtils.getWebUrl().equals("http://laihui.cyparty.com/")){
+            localhost="laihui.cyparty.com";
+        }
+        return "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx79fccf65feb81e80&redirect_uri=http%3A%2F%2F"+localhost+"%2Fwx%2Fopen?response_type=code&scope=snsapi_base&state=dac24d03f848ce899f28ad787eba74e2&connect_redirect=1#wechat_redirect";
     }
     @RequestMapping("/wx/open")
     public String wx_open(HttpServletRequest request, Model model) {
@@ -214,7 +228,6 @@ public class LoginController {
         if(is_logined){
             return "redirect:/auth/base";
         }else {
-
             return "redirect:https://open.weixin.qq.com/connect/qrconnect?appid=wxc0d2e309454d7e18&redirect_uri=http%3A%2F%2Fwx.pinchenet.com%2Flogin?mode=wx&response_type=code&scope=snsapi_login&state=dac24d03f848ce899f28ad787eba74e2#wechat_redirect";
         }
     }

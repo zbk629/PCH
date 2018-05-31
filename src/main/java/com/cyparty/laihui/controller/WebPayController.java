@@ -38,8 +38,6 @@ import java.util.*;
 public class WebPayController {
     @Autowired
     LaiHuiDB laiHuiDB;
-
-
     @RequestMapping(value = "/alipay/trade")
     public ResponseEntity<String> sendAlipay(HttpServletRequest request, HttpServletResponse httpResponse) throws Exception {
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -52,22 +50,10 @@ public class WebPayController {
         List<OrderOf76> orderList = laiHuiDB.getOrderOf76(where);
         if(orderList.size()>0){
             order=orderList.get(0);
-            double price=0.01;
+            double price=order.getGoods_price();
             String subject="76烩面"; //utf-8
             String body="76烩面"; //utf-8
-            /*AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", PayConfigUtils.getApp_id(), PayConfigUtils.getPrivate_key(), "json", "utf-8", PayConfigUtils.getAlipay_public_key(), "RSA");
-            AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();//创建API对应的request
-            alipayRequest.setReturnUrl("http://laihuiwx.cyparty.com/campaign/76/ddlist");
-            alipayRequest.setNotifyUrl(PayConfigUtils.getAlipay_notify_url());//在公共参数中设置回跳和通知地址
-            alipayRequest.setBizContent("{" +
-                    "    \"out_trade_no\":\""+order.getPay_number()+"\"," +
-                    "    \"total_amount\":\""+price+"\"," +
-                    "    \"subject\":\""+subject+"\"," +
-                    "    \"seller_id\":\"2088421500051433\"," +
-                    "    \"product_code\":\"QUICK_WAP_PAY\"" +
-                    "  }");//填充业务参数
 
-            String form = alipayClient.pageExecute(alipayRequest).getBody(); //调用SDK生成表单 AlipayServiceEnvConstants.CHARSET*/
             String form1="<form id='alipaysubmit' name='alipaysubmit' action='https://openapi.alipay.com/gateway.do?charset=UTF-8' method='POST'><input type='hidden' name='biz_content' value='{\"productCode\":\"QUICK_WAP_PAY\",\"body\":\"支付宝公众号充值\",\"subject\":\"梦想直播充值\",\"out_trade_no\":\"17021712041001000583\",\"total_amount\":\"0.01\",\"timeout_express\":\"1m\"}'/><input type='hidden' name='app_id' value='2016122004460499'/><input type='hidden' name='version' value='1.0'/><input type='hidden' name='format' value='json'/><input type='hidden' name='sign_type' value='RSA'/><input type='hidden' name='method' value='alipay.trade.wap.pay'/><input type='hidden' name='timestamp' value='2017-02-17 12:04:10'/><input type='hidden' name='alipay_sdk' value='alipay-sdk-php-20161101'/><input type='hidden' name='notify_url' value='http://api.dreamlive.tv/deposit/notify_alipay5'/><input type='hidden' name='return_url' value='http://api.dreamlive.tv/deposit/notify_alipay5'/><input type='hidden' name='charset' value='UTF-8'/><input type='hidden' name='sign' value='fQAs7/QIQqkWf/0Z7IM9mpHNygx8L5Y/fO5n80l8ueHMPOfsRVptZzHbUE+8gSunm1QTc1E3V1TW0+peA6gS580q3FQrq+b2fkcQf2uueTp/xDuI6V7rRcwiwRWNl0PksRQNrCvzHWl7Ll+QOlumGmgbHMNuGLxld+3Cv7ZP4Vw='/><input type='submit' value='ok' style='display:none;''></form><script>document.forms['alipaysubmit'].submit();</script>";
             /**
              * 构造支付参数
@@ -82,8 +68,8 @@ public class WebPayController {
             keyValues.put("version", "1.0");
             keyValues.put("timestamp", current_time);
             keyValues.put("biz_content", "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\""+price+"\",\"subject\":\""+subject+"\",\"body\":\""+body+"\",\"out_trade_no\":\"" + defort_pay_number +  "\"}");
-            keyValues.put("notify_url", PayConfigUtils.getAlipay_notify_url());
-            keyValues.put("return_url", "http://laihuiwx.cyparty.com/campaign/76/ddlist?mobile="+mobile);
+            keyValues.put("notify_url", PayConfigUtils.getWebUrl()+"alipay/notify");
+            keyValues.put("return_url", PayConfigUtils.getWebUrl()+"campaign/76/ddlist?mobile="+mobile);
             String sign=getSign(keyValues,PayConfigUtils.getPrivate_key());
 
             httpResponse.setContentType("text/html;charset=utf-8");
@@ -180,7 +166,7 @@ public class WebPayController {
             double inputFee=order.getGoods_price()*100;
             int inputIntFee=(int)inputFee;
             String total_fee=inputIntFee+"";
-            total_fee="1";//
+            //total_fee="1";//
             String prepay_id=null;
             Map<String,String> paraMap=new HashMap<>();
             paraMap.put("appid", PayConfigUtils.getWx_app_id());
@@ -188,7 +174,7 @@ public class WebPayController {
             paraMap.put("body", subject);
             paraMap.put("mch_id", PayConfigUtils.getWx_mch_id());
             paraMap.put("nonce_str", nonce_str);
-            paraMap.put("notify_url", PayConfigUtils.getWx_pay_notify_url());
+            paraMap.put("notify_url", PayConfigUtils.getWebUrl()+"wx_pay/notify");
             paraMap.put("openid", openId);
             paraMap.put("out_trade_no", order.getPay_number());
             paraMap.put("spbill_create_ip", now_ip);
@@ -212,7 +198,7 @@ public class WebPayController {
                     "   <body>"+subject+"</body>\n" +
                     "   <mch_id>"+PayConfigUtils.getWx_mch_id()+"</mch_id>\n" +
                     "   <nonce_str>"+nonce_str+"</nonce_str>\n" +
-                    "   <notify_url>"+PayConfigUtils.getWx_pay_notify_url()+"</notify_url>\n" +
+                    "   <notify_url>"+paraMap.get("notify_url")+"</notify_url>\n" +
                     "   <out_trade_no>"+order.getPay_number()+"</out_trade_no>\n" +
                     "   <spbill_create_ip>"+now_ip+"</spbill_create_ip>\n" +
                     "   <total_fee>"+total_fee+"</total_fee>\n" +

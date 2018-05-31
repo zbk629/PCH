@@ -33,13 +33,20 @@
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-    <!--<error-page>-->
-        <!--<error-code>404</error-code>-->
-        <!--<location>/WEB-INF/jsp/404.jsp</location>-->
-    <!--</error-page>-->
+    <!--<listener>
+        <listener-class>com.cyparty.laihui.utilities.TaskUtils</listener-class>
+    </listener>-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/DispatcherServlet-context.xml</param-value>
     </context-param>
 
+   <!-- <servlet>
+        <servlet-name>AuthImage</servlet-name>
+        <servlet-class>com.cyparty.laihui.utilities.DrawImage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthImage</servlet-name>
+        <url-pattern>/authImage</url-pattern>
+    </servlet-mapping>-->
 </web-app>

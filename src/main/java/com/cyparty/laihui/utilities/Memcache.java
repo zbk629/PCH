@@ -86,5 +86,5 @@ public class Memcache {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }//eof
+    }
 }

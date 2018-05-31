@@ -37,8 +37,10 @@ public class Utils {
         //getTimeSubOrAdd("2016-8-27 05:06:40",2);
         //getTimeDate("2016-8-27 05:06:40");
         /*getRed(10,100f,1d);
+
         System.out.println(LocalDateTime.now().plusDays(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));*/
-        System.out.println(encode("MD5","app_id=2016072001643878&biz_content={\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"0.01\",\"subject\":\"76烩面\",\"body\":\"76烩面\",\"out_trade_no\":\"9decbcf46cd16e4da7a95fcea7f9f235\"}&charset=utf-8&method=alipay.trade.wap.pay&notify_url=http://laihuiwx.cyparty.com/alipay/notify&return_url=http://laihuiwx.cyparty.com/campaign/76/ddlist&sign_type=RSA&timestamp=2017-02-17 17:24:37&version=1.0"));
+        //System.out.println(getCharAndNum(16));
+        sendCodeMessage("13838741275");
     }
     public static String getCurrentTime() {
         Date inputDate = new Date();
@@ -275,6 +277,7 @@ public class Utils {
     public static long date2TimeStamp(String date){
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             //return String.valueOf(sdf.parse(date).getTime()/1000);
             return sdf.parse(date).getTime();
         } catch (Exception e) {
@@ -298,7 +301,7 @@ public class Utils {
     public static String sendCodeMessage(String mobile){
         String rand= SendSMSUtil.randomNum();
         String typ_val="#code#="+rand;
-        boolean send_isSuccess= SendSMSUtil.sendSMS(mobile, 18365, typ_val);
+        boolean send_isSuccess= SendSMSUtil.sendSMS(mobile, 29230, typ_val);
         if(!send_isSuccess){
             typ_val=null;
         }else {
@@ -403,7 +406,14 @@ public class Utils {
         return math;
     }
 
-
+    public static String stampToDate(String s){
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long lt = new Long(s);
+        Date date = new Date(lt);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
     public static String  transformID(int id){
         String now_id=id+"";
         int ascValue=0;

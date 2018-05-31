@@ -16,12 +16,12 @@ public class PayConfigUtils {
    /* private final static String wx_pay_notify_url="http://laihui.cyparty.com/wx_pay/notify";//运行环境
     private final static String alipay_notify_url="http://laihui.cyparty.com/alipay/notify";*/
 
-    private final static String wx_pay_notify_url="http://laihuiwx.cyparty.com/wx_pay/notify";//测试环境
-    private final static String alipay_notify_url="http://laihuiwx.cyparty.com/alipay/notify";
+    /*private final static String wx_pay_notify_url="http://laihuiwx.cyparty.com/wx_pay/notify";//测试环境
+    private final static String alipay_notify_url="http://laihuiwx.cyparty.com/alipay/notify";*/
 
-   /* //测试通知地址
-    private final static String wx_pay_notify_url="http://laihuiapi.cyparty.com/wx_pay/notify";
-    private final static String alipay_notify_url="http://laihuiapi.cyparty.com/alipay/notify";*/
+    private final static String WEB_URL="http://laihui.cyparty.com/"; //生产环境
+    //private final static String WEB_URL="http://laihuiwx.cyparty.com/"; //测试环境
+
 
     public static String getWx_app_id() {
         return wx_app_id;
@@ -47,11 +47,8 @@ public class PayConfigUtils {
         return private_key;
     }
 
-    public static String getWx_pay_notify_url() {
-        return wx_pay_notify_url;
-    }
 
-    public static String getAlipay_notify_url() {
-        return alipay_notify_url;
+    public static String getWebUrl() {
+        return WEB_URL;
     }
 }

@@ -18,14 +18,14 @@ import java.util.Map;
 public class XmlParse {
     public static void main(String args[]) {
         String text ="<xml>\n" +
-                "  <appid><![CDATA[wx2421b1c4370ec43b]]></appid>\n" +
+                "  <appid><![CDATA[wx2421b1c4370ec34a]]></appid>\n" +
                 "  <attach><![CDATA[支付测试]]></attach>\n" +
                 "  <bank_type><![CDATA[CFT]]></bank_type>\n" +
                 "  <fee_type><![CDATA[CNY]]></fee_type>\n" +
                 "  <is_subscribe><![CDATA[Y]]></is_subscribe>\n" +
                 "  <mch_id><![CDATA[10000100]]></mch_id>\n" +
                 "  <nonce_str><![CDATA[5d2b6c2a8db53831f7eda20af46e531c]]></nonce_str>\n" +
-                "  <openid><![CDATA[oUpF8uMEb4qRXf22hE3X68TekukE]]></openid>\n" +
+                "  <openid><![CDATA[oUpF8uMEb4qRXf22hE3X68TecakE]]></openid>\n" +
                 "  <out_trade_no><![CDATA[1409811653]]></out_trade_no>\n" +
                 "  <result_code><![CDATA[SUCCESS]]></result_code>\n" +
                 "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
@@ -53,12 +53,12 @@ public class XmlParse {
                     .parse(new InputSource(new StringReader(protocolXML)));
 
             Element root = doc.getDocumentElement();
-            NodeList books = root.getChildNodes();
-            if (books != null) {
-                for (int i = 0; i < books.getLength(); i++) {
-                    Node book = books.item(i);
-                    String key=book.getNodeName();
-                    String value=book.getTextContent();
+            NodeList nodeList = root.getChildNodes();
+            if (nodeList != null) {
+                for (int i = 0; i < nodeList.getLength(); i++) {
+                    Node node = nodeList.item(i);
+                    String key=node.getNodeName();
+                    String value=node.getTextContent();
                     if(!key.equals("#text")){
                         paraMap.put(key,value);
                         System.out.println(key+ " : " + value);

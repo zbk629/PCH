@@ -113,7 +113,6 @@ public class WxUserBaseUtil {
 
         String nickname=userJsonObject.getString("nickname");
         String headimgurl=userJsonObject.getString("headimgurl");
-        String now_openid=userJsonObject.getString("openid");
         int sex=userJsonObject.getIntValue("sex");
 
         User user=new User();

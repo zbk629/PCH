@@ -23,6 +23,7 @@ public class SendSMSUtil {
 
     //配置您申请的KEY
     public static final String APPKEY ="bce2c0143acc023f67d058a801fe40e6";
+    //public static final String APPKEY ="6c871b315def3b449dbdbce28a4dc55a";
 
     //1.屏蔽词检查测
     public static void getRequest1(){
@@ -247,7 +248,6 @@ public class SendSMSUtil {
     }
 
     public static void main(String [] args){
-
-        //sendSMS("13838741275","2016-8-25","www.baidu.com?token=12344566");
+        sendSMS("13838741275",69186,"#code#=1234");
     }
 }

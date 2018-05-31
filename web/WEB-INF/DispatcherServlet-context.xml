@@ -29,10 +29,14 @@
     <!--Druid数据缓冲池配置-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://rdska466r2fvvzh5vr7gb.mysql.rds.aliyuncs.com:3306/copy_cyparty_pc"/>
-        <!--<property name="url" value="jdbc:mysql://rdska466r2fvvzh5vr7gb.mysql.rds.aliyuncs.com:3306/laihui_version1"/>-->
+        <!--<property name="url" value="jdbc:mysql://rdska466r2fvvzh5vr7gb.mysql.rds.aliyuncs.com:3306/copy_cyparty_pc"/>-->
+        <!--<property name="url" value="jdbc:mysql://rdska466r2fvvzh5vr7gb.mysql.rds.aliyuncs.com:3306/laihui_version1"/>
         <property name="username" value="cyparty_pc"/>
-        <property name="password" value="Cyparty2016"/>
+        <property name="password" value="Cyparty2016"/>-->
+
+        <property name="url" value="jdbc:mysql://rm-m5e1a87u05v50r8vs.mysql.rds.aliyuncs.com:3306/laihui_version1"/>
+        <property name="username" value="laihui"/>
+        <property name="password" value="Laihui2017"/>
         <!-- 配置初始化大小、最小、最大 -->
         <property name="initialSize" value="1"/>
         <property name="minIdle" value="1"/>
@@ -56,11 +60,11 @@
         <property name="filters" value="stat"/>
     </bean>
     <bean id="ossConfigure" class="com.cyparty.laihui.utilities.OssConfigure">
-        <property name="accessKeyId" value="D3TTVw1GOGZyzUCs"/>
-        <property name="accessKeySecret" value="o0lvAyo60wp1LmYrvGay24ZvaY7afs"/>
-        <property name="accessUrl" value="cyparty-now.oss-cn-beijing.aliyuncs.com"/>
-        <property name="bucketName" value="cyparty-now"/>
-        <property name="endpoint" value="http://oss-cn-beijing.aliyuncs.com"/>
+        <property name="accessKeyId" value="LTAIBylxOP12jqp2"/>
+        <property name="accessKeySecret" value="mkjn9cKyGx8mxG0tvMUyO7ceRTIw61"/>
+        <property name="accessUrl" value="laihuipincheoss.oss-cn-qingdao.aliyuncs.com"/>
+        <property name="bucketName" value="laihuipincheoss"/>
+        <property name="endpoint" value="http://oss-cn-qingdao.aliyuncs.com"/>
     </bean>
     <bean id="ossUtil" class="com.cyparty.laihui.utilities.OssUtil">
         <property name="ossConfigure" ref="ossConfigure"/>
